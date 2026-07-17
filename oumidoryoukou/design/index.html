@@ -354,9 +354,11 @@ body.menu-open{overflow:hidden}
 .svc-stage__imgs{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:#141614}
 /* 3段目：製品システム選択タブ（1カラム・横長） */
 .svc-cards{display:flex;gap:10px;margin-top:38px}
-.svc-card{flex:1;display:flex;align-items:baseline;gap:10px;background:#fff;border:0.5px solid var(--line);border-top:3px solid #e2e2e2;cursor:pointer;text-align:left;padding:16px 18px;font-family:var(--jp);color:#9a9a9a;transition:color .25s,border-color .25s,background .25s}
-.svc-card .no{font-family:var(--en);font-size:11px;letter-spacing:.1em}
-.svc-card .nm{font-size:12.5px;font-weight:700;letter-spacing:.04em}
+.svc-card{flex:1;display:flex;align-items:center;gap:16px;background:#fff;border:0.5px solid var(--line);border-top:3px solid #e2e2e2;cursor:pointer;text-align:left;padding:14px 20px 14px 14px;font-family:var(--jp);color:#9a9a9a;transition:color .25s,border-color .25s,background .25s}
+.svc-card .th{flex:none;width:60px;height:60px;background-size:cover;background-position:center;filter:grayscale(1);opacity:.55;transition:filter .25s,opacity .25s}
+.svc-card.is-on .th,.svc-card:hover .th{filter:none;opacity:1}
+.svc-card .no{font-family:var(--en);font-size:12.5px;letter-spacing:.1em}
+.svc-card .nm{font-size:15px;font-weight:700;letter-spacing:.04em}
 .svc-card:hover{color:var(--ink)}
 .svc-card.is-on{color:var(--ink);border-top-color:var(--red);background:#fff}
 .svc-card.is-on .no{color:var(--red)}
@@ -390,7 +392,9 @@ body.menu-open{overflow:hidden}
 @media(max-width:900px){
   .svc__grid{grid-template-columns:1fr;gap:28px}
   .svc-cards{flex-wrap:wrap;margin-top:16px}
-  .svc-card{flex:1 1 46%;padding:12px 14px}
+  .svc-card{flex:1 1 46%;padding:10px 12px;gap:10px}
+  .svc-card .th{width:44px;height:44px}
+  .svc-card .nm{font-size:13px}
 }
 
 /* ============ 数字で見る：カウントアップ＋縦罫マス ============ */
@@ -869,10 +873,10 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     </div>
   </div>
   <div class="svc-cards">
-    <button class="svc-card is-on"><span class="no">01</span><span class="nm">農産物用計量システム</span></button>
-    <button class="svc-card"><span class="no">02</span><span class="nm">穀類用計量システム</span></button>
-    <button class="svc-card"><span class="no">03</span><span class="nm">工業用計量システム</span></button>
-    <button class="svc-card"><span class="no">04</span><span class="nm">その他・特殊用途</span></button>
+    <button class="svc-card is-on"><i class="th" style="background-image:url(photo-agri.jpg)"></i><span class="no">01</span><span class="nm">農産物用計量システム</span></button>
+    <button class="svc-card"><i class="th" style="background-image:url(photo-grain.jpg)"></i><span class="no">02</span><span class="nm">穀類用計量システム</span></button>
+    <button class="svc-card"><i class="th" style="background-image:url(photo-industry.jpg)"></i><span class="no">03</span><span class="nm">工業用計量システム</span></button>
+    <button class="svc-card"><i class="th" style="background-image:url(photo-others.jpg)"></i><span class="no">04</span><span class="nm">その他・特殊用途</span></button>
   </div>
   </div><!-- /svc__pin -->
 </section>
