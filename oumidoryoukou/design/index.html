@@ -669,6 +669,9 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   var de=document.documentElement, bo=document.body;
   var box=l.querySelector('.ldr__box');
   bo.style.overflow='hidden';
+  /* ローダーが入場を担うので、_pt.jsの入場ガード（html赤＋body非表示）は即解除
+     （回線が遅いとpt解除がDOMContentLoaded待ちになり赤画面のまま止まるため） */
+  de.classList.remove('pt-init','pt-veil');
   /* 最初からFVコピーと同じ高さ・水平中央（transform一本＝移動は純水平）
      ※このscriptはFVより先に実行されるため、配置はDOM構築後に行う */
   var ttl=null, ldrY=0;
@@ -678,8 +681,6 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
       l.remove(); bo.style.overflow=''; de.classList.remove('ldr-on');
       return;
     }
-    ttl=document.querySelector('.fv__head-title');
-    if(!ttl){ box.style.visibility='visible'; return; }
     var r0=ttl.getBoundingClientRect(); ldrY=r0.top;
     box.style.transition='none';
     box.style.transform='translate('+((window.innerWidth-box.getBoundingClientRect().width)/2)+'px,'+ldrY+'px)';
@@ -687,8 +688,14 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     box.style.transition='';
     box.style.visibility='visible';
   }
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', initPos); }
-  else{ initPos(); }
+  /* DOMContentLoadedはCSS読込で遅延しうるため使わず、FVタイトルの出現をポーリングで待つ
+     （このscriptの直後にパースされるので通常は数十ms） */
+  (function waitTtl(){
+    ttl=document.querySelector('.fv__head-title');
+    if(ttl){ initPos(); return; }
+    if(document.readyState==='complete'){ box.style.visibility='visible'; return; }
+    setTimeout(waitTtl,30);
+  })();
   setTimeout(function(){ l.classList.add('is-in'); },140);      /* 3本線＋コピー すっすっすっ */
   setTimeout(function(){                                        /* 水平移動しながらロゴが消えていく（一連） */
     if(ttl){ var r=ttl.getBoundingClientRect(); box.style.transform='translate('+r.left+'px,'+ldrY+'px)'; }
