@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="_auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>近江度量衡｜TOP ワイヤー（d_3ベース・モノトーン／ダミー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* ── モノトーン化：赤アクセント→グレー、虹色グラデ→グレースケール ── */
+  --ink:#111315;
+  --paper:#f2f2f2;
+  --red:#8a8a8a;            /* 旧 #f90808。アクセントはグレーに統一 */
+  --mn:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --jp:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
+  --en:"Inter",sans-serif;
+}
+html,body{background:var(--ink);color:var(--paper);font-family:var(--en)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ── ヘッダー：透過・中央ロゴ・左右ナビ ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 40px;color:#fff}
+.nav .n{display:flex;gap:28px;font-family:var(--jp);font-size:13px;letter-spacing:.12em;font-weight:600;color:rgba(255,255,255,.92)}
+.nav .n a{transition:color .2s}.nav .n a:hover{color:#fff;opacity:.75}
+/* グローバルナビ（PC）：ホバーでメガメニュー展開 */
+.gnav{display:flex;gap:30px;font-family:var(--jp);font-size:13px;letter-spacing:.12em;font-weight:600}
+.gnav__item{position:static}
+.gnav__link{position:relative;display:inline-flex;align-items:center;height:44px;color:rgba(255,255,255,.92);transition:color .2s}
+.gnav__link::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.gnav__item:hover>.gnav__link,.gnav__item.is-open>.gnav__link{color:#fff}
+.gnav__item:hover>.gnav__link::after,.gnav__item.is-open>.gnav__link::after{transform:scaleX(1)}
+/* メガパネル：ヘッダー下にフル幅で降りてくる */
+.mega{position:fixed;left:40px;right:40px;top:84px;background:#fff;color:#111;box-shadow:0 28px 56px rgba(0,0,0,.22);border-radius:0 0 14px 14px;
+  opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .26s ease,transform .26s ease,visibility .26s;z-index:29}
+.gnav__item.is-open .mega{opacity:1;visibility:visible;transform:none}
+.mega__inner{max-width:1280px;margin:0 auto;padding:46px 5vw 50px;display:grid;grid-template-columns:240px 1fr;gap:50px;align-items:start}
+.mega__lead{display:flex;flex-direction:column;align-items:flex-start}
+.mega__en{font-family:var(--en);font-size:30px;font-weight:600;line-height:1.05;color:#111;letter-spacing:.01em}
+.mega__jp{font-family:var(--jp);font-size:13px;letter-spacing:.12em;color:#666;margin-top:10px}
+.mega__more{margin-top:26px;font-family:var(--en);font-size:11px;letter-spacing:.14em;border:1px solid #ccc;border-radius:40px;padding:11px 24px;color:#111;transition:.2s}
+.mega__more:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.mega__cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 18px}
+.mega__card{display:block}
+.mega__thumb{display:block;aspect-ratio:16/11;overflow:hidden;border-radius:5px;background:#eee}
+.mega__thumb img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.mega__card:hover .mega__thumb img{transform:scale(1.06)}
+.mega__cap{display:flex;align-items:center;gap:7px;margin-top:11px;font-family:var(--jp);font-size:13px;font-weight:600;color:#111}
+.mega__cap i{font-style:normal;color:var(--red);font-size:15px}
+.mega__links{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-content:start;max-width:680px}
+.mega__links a{display:flex;align-items:center;justify-content:space-between;padding:17px 6px;border-bottom:1px solid #ececec;font-family:var(--jp);font-size:14px;font-weight:600;color:#111;transition:color .2s,padding .2s}
+.mega__links a i{font-style:normal;color:var(--red);font-size:15px}
+.mega__links a:hover{color:var(--red);padding-left:14px}
+.nav .logo{display:flex;align-items:center;gap:16px;line-height:1}
+.nav .logo img{height:48px;width:auto;display:block;margin:0;filter:drop-shadow(0 0 2px rgba(0,0,0,.5)) drop-shadow(0 2px 4px rgba(0,0,0,.32))}
+.nav .logo img.anniv-logo{height:30px;width:auto;display:block;margin:0}
+
+/* ── HERO ── */
+.hero{position:absolute;inset:0;overflow:hidden}
+
+/* FV〜製品で連続する単一の固定背景動画 */
+.bg-video{position:fixed;inset:0;z-index:0;overflow:hidden;background:#0b0c0e}
+.bg-video .bgmovie{position:absolute;inset:0;width:100%;height:100%;filter:brightness(.72) saturate(.92);will-change:filter,transform}
+
+/* ===== スクロール演出：FV退場 → 製品エリア ===== */
+.scene{position:relative;height:160vh}
+.pin{position:sticky;top:0;height:100vh;overflow:hidden}
+.side-band{will-change:transform}
+.hero__title,.hero__intro,.hero__recruit,.scroll{will-change:transform,opacity}
+.cover{position:relative;z-index:5;
+  display:flex;align-items:flex-start}
+.cover__inner{position:relative;z-index:1;max-width:1640px;margin:0 auto;padding:200px 4vw 40px;width:100%}
+.cover .eyebrow{font-family:var(--en);font-size:12px;letter-spacing:.3em;color:var(--red);text-transform:uppercase;margin-bottom:14px}
+.cover h2{font-family:var(--mn);font-weight:700;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:.04em;color:#fff}
+.cover .lead{font-family:var(--jp);font-size:14px;line-height:2;color:rgba(255,255,255,.72);margin-top:16px;max-width:560px}
+/* 背景の大型タイポ：右寄せ・明朝＋ゴシック2段。モノトーンのグレースケールグラデ */
+.cover-bgtext{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
+  display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-end;text-align:right;
+  padding:92px 4vw 0;line-height:1.0;letter-spacing:-.05em;text-transform:uppercase;
+  font-size:min(20vh,12.2vw);
+  background:linear-gradient(125deg, #ffffff 0%, #b9bdc2 38%, #6a6e73 64%, #2b2e32 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  will-change:opacity,transform}
+.cover-bgtext .ser{display:block;white-space:nowrap;font-family:var(--mn);font-weight:800}
+.cover-bgtext .san{display:block;white-space:nowrap;font-family:var(--en);font-weight:900}
+/* 製品4入口 */
+.pgate{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:40px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.18);overflow:hidden}
+.pgate__item{position:relative;aspect-ratio:3/2;min-width:0;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;background:#14161a}
+.pgate__item::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(8,8,11,.1) 0%,rgba(8,8,11,.4) 52%,rgba(8,8,11,.84) 100%);transition:background .45s}
+.pgate__item:hover::before{background:linear-gradient(180deg,rgba(8,8,11,.05) 0%,rgba(8,8,11,.25) 52%,rgba(8,8,11,.7) 100%)}
+.pgate__no{position:absolute;top:18px;left:18px;z-index:2;font-family:var(--en);font-size:11px;letter-spacing:.22em;color:rgba(255,255,255,.55)}
+.pgate__cap{position:relative;z-index:2;padding:26px 22px}
+.pgate__cap .en{font-family:var(--en);font-size:10px;letter-spacing:.24em;color:rgba(255,255,255,.7);text-transform:uppercase}
+.pgate__cap h3{font-family:var(--mn);font-weight:700;font-size:clamp(15px,1.4vw,20px);color:#fff;margin-top:9px;line-height:1.45}
+.pgate__cap p{font-family:var(--jp);font-size:12.5px;line-height:1.9;color:rgba(255,255,255,.82);margin-top:12px;max-width:330px;
+  opacity:0;transform:translateY(10px);transition:opacity .45s .08s,transform .45s .08s}
+.pgate__item:hover .pgate__cap p{opacity:1;transform:none}
+.pgate__cap .go{display:inline-flex;align-items:center;gap:10px;margin-top:16px;font-family:var(--en);font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;font-weight:600;color:#fff;border-bottom:1px solid var(--red);padding-bottom:4px;
+  opacity:0;transform:translateY(10px);transition:opacity .45s .14s,transform .45s .14s}
+.pgate__item:hover .pgate__cap .go{opacity:1;transform:none}
+.pgate__media{position:absolute;inset:0;z-index:0;background:#14161a}
+.pgate__img,.pgate__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pgate__vid{opacity:0;transition:opacity .5s ease}
+.pgate__item:hover .pgate__vid{opacity:1}
+.pgate__item:hover .pgate__img{transform:scale(1.04);transition:transform 6s ease}
+/* ===== 製品：J-CAT型のスタッキング ===== */
+.pshow-scene{position:relative;z-index:6;background:#fff;padding-top:120px}
+.pshow-head{max-width:1640px;margin:0 auto 9vh;padding:0 7vw}
+.pshow-head__eyebrow{font-family:var(--en);font-size:12px;letter-spacing:.3em;color:var(--red);text-transform:uppercase}
+.pshow-head h2{font-family:var(--mn);font-weight:700;font-size:clamp(26px,2.6vw,40px);letter-spacing:.03em;color:#141414;margin-top:14px}
+.pshow-head__lead{font-family:var(--jp);font-size:13px;line-height:1.95;color:#555;margin-top:16px;max-width:560px}
+.pshow-stack{position:relative}
+.prow{position:sticky;display:flex;align-items:stretch;justify-content:center;gap:5vw;padding:0 24px;background:#fff}
+.prow::before{content:"";position:absolute;left:0;right:84px;top:0;height:1px;
+  background:linear-gradient(to right,rgba(0,0,0,.05) 0 16%,rgba(0,0,0,.16) 16% 84%,rgba(0,0,0,.05) 84% 100%)}
+.prow:nth-child(1){top:86px}
+.prow:nth-child(2){top:86px}
+.prow:nth-child(3){top:86px}
+.prow:nth-child(4){top:86px}
+.prow__text{flex:0 1 440px;max-width:440px;display:flex;flex-direction:column;justify-content:center;padding:9vh 0}
+.prow__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;max-width:420px}
+.prow__no{font-family:var(--en);font-size:13px;letter-spacing:.2em;color:#141414;border-bottom:1px solid var(--red);padding-bottom:3px}
+.prow__tag{font-family:var(--en);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#555;border:1px solid rgba(0,0,0,.25);border-radius:999px;padding:5px 14px}
+.pshow-name{font-family:var(--mn);font-weight:700;font-size:clamp(26px,2.6vw,40px);line-height:1.5;margin:0}
+.pshow-name span{display:inline;color:#fff;background:var(--red);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.06em .3em;letter-spacing:.02em}
+.prow__desc{font-family:var(--jp);font-size:14px;line-height:2.05;color:#555;margin-top:24px;max-width:420px}
+.prow__view{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:34px;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:#141414;
+  border:1px solid rgba(0,0,0,.3);border-radius:999px;padding:12px 24px;transition:background .25s,border-color .25s,color .25s}
+.prow__view:hover{background:var(--red);border-color:var(--red);color:#fff}
+.prow__media{flex:0 1 460px;max-width:460px;display:flex;align-items:stretch;justify-content:flex-end;padding:0}
+.prow__frame{position:relative;width:100%;max-width:460px;overflow:hidden;border:1px solid var(--red)}
+.prow__img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1.2s ease}
+.prow:hover .prow__img{transform:scale(1.04)}
+.pshow-ruler{position:fixed;right:24px;top:0;height:100vh;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;pointer-events:none;opacity:0;transition:opacity .4s ease}
+.pshow-ruler.is-on{opacity:1}
+.pshow-ruler__num{font-family:var(--en);font-size:22px;font-weight:600;color:#141414;line-height:1}
+.pshow-ruler__body{position:relative;width:30px;height:58vh}
+.pshow-ruler__body::after{content:"";position:absolute;right:0;top:0;width:1px;height:100%;background:rgba(0,0,0,.22)}
+.pshow-ruler__ticks{position:absolute;right:0;top:0;width:8px;height:100%;
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 9px)}
+.pshow-ruler__major{position:absolute;right:0;transform:translateY(-50%);display:flex;align-items:center;gap:7px}
+.pshow-ruler__major::after{content:"";width:17px;height:1px;background:rgba(0,0,0,.45)}
+.pshow-ruler__major i{order:-1;font-style:normal;font-family:var(--en);font-size:10px;letter-spacing:.08em;color:rgba(0,0,0,.45)}
+.pshow-ruler__pointer{position:absolute;right:-3px;top:0;width:24px;height:2px;background:var(--red);box-shadow:0 0 8px rgba(120,120,120,.6);transition:top .4s cubic-bezier(.2,1,.25,1)}
+.pshow-ruler__cap{font-family:var(--en);font-size:9px;letter-spacing:.16em;color:rgba(0,0,0,.4);text-align:center;line-height:1.6}
+.pshow-ruler.is-on .pshow-ruler__major{pointer-events:auto;cursor:pointer;padding:7px 2px 7px 8px}
+.pshow-ruler.is-on .pshow-ruler__major:hover i{color:var(--red)}
+.pshow-ruler.is-on .pshow-ruler__major:hover::after{background:var(--red)}
+@media(max-width:768px){
+  .pshow-scene{padding-top:60px}
+  .pshow-head{padding:0 24px;margin-bottom:32px}
+  .prow{position:static;flex-direction:column;min-height:0;gap:0;padding:36px 24px 44px}
+  .prow::before{right:24px}
+  .prow:nth-child(1),.prow:nth-child(2),.prow:nth-child(3),.prow:nth-child(4){top:auto}
+  .prow__text{flex:none;width:100%;max-width:none;padding:0}
+  .prow__top{margin-bottom:22px;max-width:none}
+  .prow__media{flex:none;width:100%;max-width:none;padding:24px 0 0;justify-content:center}
+  .prow__frame{max-width:none;height:auto;aspect-ratio:4/3}
+  .pshow-ruler{display:none}
+}
+.hero__bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+/* 上下ヴィネット＋全体の軽い暗幕 */
+.bg-video::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 24%, rgba(0,0,0,.15) 58%, rgba(0,0,0,.72) 100%);}
+
+/* 左の縦帯（横幅 約1/10・縦フル）：モノトーンのグレー */
+.side-band{position:absolute;top:0;left:0;width:10vw;height:100%;z-index:1;
+  background:var(--red)}
+
+/* 主役ビジュアル（中央・縦長：計量器/分銅の切り抜き想定） */
+.hero__product{position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);z-index:1;
+  width:clamp(180px,20vw,300px);height:clamp(360px,62vh,620px);
+  border:1px dashed rgba(255,255,255,.28);
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.hero__product span{font-family:var(--en);font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.5);text-transform:uppercase;line-height:1.9;padding:0 14px}
+
+/* 見出し：左寄せ縦積み */
+.hero__title{position:absolute;left:0;top:52%;transform:translateY(-50%);z-index:2;display:flex;flex-direction:column;align-items:flex-start;padding-left:4vw;gap:.02em;pointer-events:none}
+.hero__title span{display:block;font-family:var(--mn);color:#fff;letter-spacing:-.03em;line-height:1.2;text-shadow:0 2px 40px rgba(0,0,0,.45);white-space:nowrap}
+.t1{font-weight:700;font-size:clamp(2.6rem,7.4vw,6.6rem)}
+.t1 .np{display:inline;white-space:nowrap}
+.t2{font-weight:700;font-size:clamp(2.6rem,7.4vw,6.6rem)}
+
+/* 左下：ムービーチップ＋キャプション */
+.hero__chip{position:absolute;left:40px;bottom:104px;z-index:3;display:flex;align-items:flex-end;gap:14px}
+.hero__chip .thumb{width:148px;aspect-ratio:16/10;border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(135deg,#2a2722,#0e0d0b);display:flex;align-items:center;justify-content:center;
+  font-family:var(--en);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.hero__chip figcaption{font-family:var(--en);font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.7);text-transform:uppercase;line-height:1.8}
+.hero__chip figcaption b{display:block;font-family:var(--jp);font-size:12px;letter-spacing:.08em;color:#fff;font-weight:500;text-transform:none;margin-top:4px}
+
+/* 右下：126年のあゆみ（イラスト枠＋リンク） */
+.hero__intro{position:absolute;right:40px;bottom:44px;z-index:3;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.illust-frame{width:clamp(220px,21vw,290px);aspect-ratio:5/6;margin-bottom:16px;border:1px dashed rgba(255,255,255,.5);background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(1px)}
+.illust-frame span{font-family:var(--en);font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.55);text-transform:uppercase;line-height:1.8}
+.illust-frame span b{display:block;margin-top:10px;font-family:var(--jp);font-size:12.5px;letter-spacing:.08em;color:rgba(255,255,255,.78);font-weight:500;text-transform:none;line-height:1.7}
+.hero__intro p{font-family:var(--jp);font-size:12px;line-height:2;color:rgba(255,255,255,.72);font-weight:400}
+.hero__intro a{display:inline-flex;align-items:center;gap:10px;margin-top:16px;font-family:var(--en);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:3px}
+.hero__intro a:hover{border-color:var(--red);color:var(--red)}
+
+/* CTA：採用バナー（左下・大きめ） */
+.hero__recruit{position:absolute;left:40px;bottom:40px;z-index:3;display:flex;align-items:center;padding:16px 26px;background:rgba(20,20,20,.5);border:1px solid var(--red);backdrop-filter:blur(4px);transition:background .2s}
+.hero__recruit:hover{background:rgba(130,130,130,.45)}
+.hero__recruit .rc-txt{display:flex;flex-direction:column;gap:5px}
+.hero__recruit .rc-txt b{font-family:var(--en);font-size:13px;letter-spacing:.16em;color:#fff;font-weight:700}
+.hero__recruit .rc-txt i{font-family:var(--jp);font-size:12px;color:rgba(255,255,255,.82);font-style:normal;letter-spacing:.06em}
+
+/* SCROLL */
+.scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:3;font-family:var(--en);font-size:9px;letter-spacing:.32em;color:rgba(255,255,255,.6);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll::after{content:"";width:1px;height:30px;background:linear-gradient(rgba(255,255,255,.6),transparent)}
+
+/* ハンバーガー（モバイルのみ） */
+.burger{display:none;position:fixed;top:18px;right:20px;z-index:32;width:34px;height:26px;background:transparent;border:none;cursor:pointer;flex-direction:column;justify-content:center;gap:6px}
+.burger span{display:block;height:1.5px;background:#fff;transition:transform .3s,opacity .3s}
+.burger.is-open span{background:#fff}
+.burger.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+/* SPメニュー：全画面・アコーディオンで下層展開 */
+.spmenu{position:fixed;inset:0;z-index:31;background:#0b0c0e;
+  opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;overflow-y:auto;padding:88px 22px 48px}
+.spmenu.is-open{opacity:1;visibility:visible}
+.spmenu__nav{display:flex;flex-direction:column}
+.spmenu__group{border-bottom:1px solid rgba(255,255,255,.14)}
+.spmenu__top,.spmenu__single{width:100%;text-align:left;background:none;border:none;display:flex;align-items:center;justify-content:space-between;
+  padding:20px 4px;font-family:var(--jp);font-size:17px;font-weight:700;color:#fff;letter-spacing:.04em;cursor:pointer;text-decoration:none}
+.spmenu__single{border-bottom:1px solid rgba(255,255,255,.14)}
+.spmenu__top::after{content:"+";font-family:var(--en);font-size:21px;font-weight:300;color:var(--red);line-height:1}
+.spmenu__top[aria-expanded="true"]::after{content:"−"}
+.spmenu__sub{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.spmenu__group.is-open .spmenu__sub{max-height:420px}
+.spmenu__sub a{display:block;padding:13px 4px 13px 18px;font-family:var(--jp);font-size:14px;color:rgba(255,255,255,.76);text-decoration:none}
+.spmenu__sub a:last-child{padding-bottom:24px}
+body.menu-open{overflow:hidden}
+
+@media (max-width:900px){
+  .nav{padding:14px 20px;gap:10px}
+  .nav .n{display:none}
+  .gnav{display:none}
+  .nav .logo img{height:36px}
+  .nav .logo{gap:10px}
+  .nav .logo img.anniv-logo{height:22px;margin:0}
+  .burger{display:flex}
+  .hero__recruit{left:20px;bottom:20px;padding:12px 18px}
+  .t1,.t2{font-size:clamp(2.6rem,8.4vw,4.6rem)}
+  .hero__intro{right:20px;bottom:100px;max-width:210px}
+  .pgate__item{aspect-ratio:4/3}
+  .cover__inner{padding:150px 24px 90px}
+}
+@media (max-width:560px){
+  .hero{min-height:640px}
+  .hero__product,.bg-label,.scroll{display:none}
+  .hero__title{gap:.1em}
+  .hero__title span{white-space:normal}
+  .t1,.t2{font-size:2.9rem}
+  .hero__intro{position:absolute;left:22px;right:22px;bottom:124px;max-width:none;text-align:left;align-items:flex-start}
+  .illust-frame{width:190px;aspect-ratio:5/6;margin-bottom:12px}
+  .scene{height:200vh}
+  .pgate{margin-top:22px}
+  .pgate__item{aspect-ratio:4/5}
+  .pgate__cap{padding:16px 14px}
+  .pgate__cap p,.pgate__cap .go{opacity:1;transform:none}
+  .pgate__cap p{font-size:11px;margin-top:8px}
+  .cover h2{font-size:1.7rem}
+  .cover .lead{font-size:12px;line-height:1.8;margin-top:12px}
+}
+
+/* ===== FX d_3 ===== */
+.fx-tag{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);z-index:4;font:500 9px/1 var(--en);letter-spacing:.24em;color:rgba(255,255,255,.42);text-transform:uppercase}
+.t2 .cyc{display:inline-block;transition:opacity .38s ease, transform .38s ease}
+.t2 .cyc.out{opacity:0;transform:translateY(-10px)}
+.gloss{position:absolute;top:68%;left:50%;transform:translateX(-50%);z-index:3;font:500 11px/1 var(--en);letter-spacing:.24em;color:var(--red);text-transform:uppercase;white-space:nowrap;transition:opacity .38s ease}
+.gloss.out{opacity:0}
+.kpi{position:absolute;left:7%;top:17%;z-index:3;color:#fff}
+.kpi b{font:600 42px/1 var(--en);letter-spacing:-.01em}
+.kpi sup{font:600 20px/1 var(--en);color:var(--red);vertical-align:top;margin-left:2px}
+.kpi i{display:block;font:500 11px/1.6 var(--jp);color:rgba(255,255,255,.62);font-style:normal;margin-top:8px;letter-spacing:.1em}
+@media(max-width:560px){.gloss{top:auto;bottom:200px}.kpi{display:none}}
+
+/* ===== 納入実績：コンパクト・写真なし（白背景・余白広め） ===== */
+.record{position:relative;background:#fff;color:#111;padding:120px 6vw 130px}
+.record__inner{max-width:1640px;margin:0 auto}
+.record__top{display:flex;justify-content:space-between;align-items:flex-start;gap:48px}
+.record__meta{font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.record__head{font-family:var(--mn);font-weight:700;font-size:clamp(28px,3.6vw,48px);line-height:1.45;letter-spacing:.04em;margin-top:22px;color:#141414}
+.record__viewall{flex:none;margin-top:6px;font-family:var(--en);font-size:12px;letter-spacing:.18em;color:#111;border-bottom:1px solid var(--red);padding-bottom:6px;white-space:nowrap}
+.record__stats{display:flex;flex-wrap:wrap;gap:72px;margin-top:84px}
+.record__stat{display:flex;flex-direction:column}
+.record__num{font-family:var(--mn);font-weight:700;font-size:clamp(3rem,5.8vw,5.4rem);line-height:1;letter-spacing:-.02em;color:#141414}
+.record__num i{font-style:normal;font-size:.3em;font-family:var(--jp);font-weight:700;margin-left:.12em;color:var(--red)}
+.record__label{margin-top:20px;font-family:var(--jp);font-size:14px;letter-spacing:.14em;color:#444;font-weight:600}
+
+/* ===== OUR STATEMENT：白背景に大きな暗トーン画像（ダミー）＋有機的レイアウト ===== */
+.statement{position:relative;background:#fff;padding:96px 0 104px}
+.stmt{position:relative;margin:0 3vw;min-height:132vh;overflow:hidden;
+  background-color:#16181b;
+  background-image:linear-gradient(180deg,rgba(8,10,16,.45) 0%,rgba(8,10,16,.4) 45%,rgba(8,10,16,.66) 100%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 14px,rgba(255,255,255,0) 14px 28px);
+  background-size:cover,auto;background-position:center}
+.stmt__label{position:absolute;top:7%;left:6%;font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+.stmt__en{position:absolute;top:13%;left:6%;margin:0;font-family:var(--mn);font-weight:600;color:#fff;
+  font-size:clamp(34px,5.4vw,88px);line-height:1.18;letter-spacing:.01em}
+.stmt__en span{display:block}
+.stmt__en span:nth-child(2){margin-left:1.6em}
+.stmt__en span:nth-child(3){margin-left:3.2em}
+.stmt__jp{position:absolute;top:8%;right:6%;writing-mode:vertical-rl;font-family:var(--mn);font-weight:600;
+  font-size:clamp(20px,2.3vw,32px);letter-spacing:.2em;line-height:1.95;color:#fff}
+.stmt__body{position:absolute;left:6%;bottom:14%;max-width:440px;font-family:var(--jp);font-size:14px;line-height:2.15;color:rgba(255,255,255,.92)}
+.stmt__more{position:absolute;right:6%;bottom:16%;display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--en);font-size:12px;letter-spacing:.2em;color:#fff}
+.stmt__more::before{content:"";width:64px;height:1px;background:rgba(255,255,255,.6)}
+.stmt__side{position:absolute;right:6%;bottom:30%;writing-mode:vertical-rl;font-family:var(--en);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.stmt__dz{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--en);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+@media(max-width:768px){
+  .statement{padding:48px 0 56px}
+  .stmt{margin:0 16px;min-height:0;padding:64px 22px 56px}
+  .stmt__label,.stmt__en,.stmt__jp,.stmt__body,.stmt__more,.stmt__side{position:static}
+  .stmt__en{margin:18px 0 0;font-size:34px}
+  .stmt__en span:nth-child(2),.stmt__en span:nth-child(3){margin-left:0}
+  .stmt__jp{writing-mode:horizontal-tb;margin-top:26px;font-size:22px;letter-spacing:.12em}
+  .stmt__body{margin-top:30px;max-width:none}
+  .stmt__more{margin-top:34px}
+  .stmt__side,.stmt__dz{display:none}
+}
+
+/* 白背景区間はヘッダーをダークに */
+.nav--dark{color:#111}
+.nav--dark .n{color:rgba(17,17,17,.82)}
+.nav--dark .n a:hover{color:#111;opacity:.55}
+.nav--dark .gnav__link{color:rgba(17,17,17,.82)}
+.nav--dark .gnav__item:hover>.gnav__link,.nav--dark .gnav__item.is-open>.gnav__link{color:#111}
+.nav--dark .burger span{background:#111}
+
+@media (max-width:560px){
+  .record{padding:80px 24px 90px}
+  .record__top{flex-direction:column;gap:18px}
+  .record__stats{gap:48px;margin-top:56px}
+}
+
+/* ===== ヒストリー：下層ページへ引き込むシンプルなエリア（背景画像はダミー） ===== */
+.hentry{position:relative;overflow:hidden;background:var(--ink);min-height:64vh;display:flex}
+.hentry__bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.4) saturate(.92);transform:scale(1.03);transition:transform 1.4s ease}
+.hentry::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,9,12,.72) 0%,rgba(8,9,12,.4) 45%,rgba(8,9,12,.2) 100%)}
+.hentry:hover .hentry__bg{transform:scale(1.08)}
+.hentry__inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;max-width:1640px;width:100%;margin:0 auto;padding:14vh 7vw;color:#fff}
+.hentry__eyebrow{font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.hentry__title{font-family:var(--mn);font-weight:700;font-size:clamp(30px,4.6vw,66px);line-height:1.3;letter-spacing:.04em;margin-top:18px}
+.hentry__lead{font-family:var(--jp);font-size:14px;line-height:2;color:rgba(255,255,255,.82);margin-top:22px;max-width:520px}
+.hentry__more{display:inline-flex;align-items:center;gap:16px;align-self:flex-start;margin-top:46px;
+  font-family:var(--en);font-size:13px;letter-spacing:.2em;border-bottom:1px solid var(--red);padding-bottom:8px}
+.hentry__more i{font-style:normal;color:var(--red);transition:transform .35s ease}
+.hentry:hover .hentry__more i{transform:translateX(10px)}
+.hentry__dz{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:1;font-family:var(--en);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+
+/* ===== 下部CTA：採用・問い合わせ（白・2カラム・ミニマル） ===== */
+.cta{display:grid;grid-template-columns:1fr 1fr;background:#fff;border-top:1px solid #e6e6e6}
+.cta__card{position:relative;display:flex;flex-direction:column;padding:11vh 5vw;color:#141414;transition:background .35s}
+.cta__card+.cta__card{border-left:1px solid #e6e6e6}
+.cta__card:hover{background:#f6f6f6}
+.cta__en{font-family:var(--en);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--red)}
+.cta__ttl{font-family:var(--mn);font-weight:700;font-size:clamp(22px,2.6vw,36px);margin-top:12px;letter-spacing:.03em}
+.cta__txt{font-family:var(--jp);font-size:13px;line-height:1.95;color:#666;margin-top:14px;max-width:380px}
+.cta__more{align-self:flex-start;margin-top:32px;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:#141414;border-bottom:1px solid var(--red);padding-bottom:6px;transition:gap .25s}
+.cta__card:hover .cta__more{color:var(--red)}
+
+/* ===== フッター（ダーク・ブランド＋3カラムリンク＋住所＋コピーライト） ===== */
+.foot{background:var(--ink);color:#fff;padding:96px 7vw 34px;border-top:1px solid rgba(255,255,255,.1)}
+.foot__cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,.14)}
+.foot__brand{display:flex;flex-direction:column}
+.foot__logo{font-family:var(--mn);font-weight:700;font-size:24px;letter-spacing:.06em;color:#fff}
+.foot__tagline{font-family:var(--jp);font-size:13px;line-height:1.9;color:rgba(255,255,255,.6);margin-top:18px}
+.foot__tagline b{display:block;font-family:var(--en);font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.78)}
+.foot__info{font-family:var(--jp);font-size:13px;line-height:2.05;color:rgba(255,255,255,.55);margin-top:24px}
+.foot__col h4{font-family:var(--jp);font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--red);margin-bottom:20px}
+.foot__col ul{list-style:none}
+.foot__col li{margin-bottom:13px}
+.foot__col a{font-family:var(--jp);font-size:13px;color:rgba(255,255,255,.72);transition:color .2s,padding .2s}
+.foot__col a:hover{color:#fff;padding-left:4px}
+.foot__bar{display:flex;justify-content:space-between;align-items:center;margin-top:26px;font-family:var(--en);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.5)}
+.foot__bar a{color:rgba(255,255,255,.5)}.foot__bar a:hover{color:#fff}
+@media(max-width:768px){
+  .hentry{min-height:0}
+  .hentry__inner{padding:80px 24px}
+  .cta{grid-template-columns:1fr}
+  .cta__card{padding:56px 24px}
+  .cta__card+.cta__card{border-left:0;border-top:1px solid #e6e6e6}
+  .foot{padding:60px 24px 28px}
+  .foot__cols{grid-template-columns:1fr 1fr;gap:36px 28px}
+  .foot__brand{grid-column:1 / -1}
+  .foot__bar{flex-direction:column;gap:10px;align-items:flex-start}
+}
+@media(max-width:480px){ .foot__cols{grid-template-columns:1fr} }
+
+/* ===== ワイヤー用ダミー（モノトーン）：画像・映像枠 ===== */
+.dz{display:flex;align-items:center;justify-content:center;text-align:center;
+  background-color:#d7d7d7;
+  background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.07) 0 9px,rgba(0,0,0,0) 9px 18px);
+  color:#666;font-family:var(--en);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.dz--dark{background-color:#16181b;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 11px,rgba(255,255,255,0) 11px 22px);
+  color:rgba(255,255,255,.55)}
+.dz__tag{padding:5px 12px;border:1px solid currentColor;border-radius:2px;line-height:1.5}
+.dzbg{background-color:#16181b !important;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 12px,rgba(255,255,255,0) 12px 24px) !important}
+.dzlabel{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
+  font-family:var(--en);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);pointer-events:none}
+/* テキストロゴ（ダミー） */
+.nav .logo .logo-mark{font-family:var(--mn);font-weight:700;font-size:21px;letter-spacing:.08em;color:currentColor}
+.nav .logo .logo-en{font-family:var(--en);font-size:10px;letter-spacing:.16em;color:var(--red)}
+</style>
+</head>
+<body>
+
+<!-- FV〜製品で途切れず続く、単一の固定背景動画（ダミー） -->
+<div class="bg-video" aria-hidden="true">
+  <div class="bgmovie dz dz--dark"><span class="dz__tag">背景ムービー（ダミー）</span></div>
+</div>
+
+<header class="nav">
+  <div class="logo"><span class="logo-mark">近江度量衡</span><span class="logo-en">126th SINCE 1900</span></div>
+  <nav class="gnav">
+    <div class="gnav__item" data-mega>
+      <a class="gnav__link" href="#">製品・技術</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="mega__en">Products</span><span class="mega__jp">製品・技術</span><a class="mega__more" href="products.html">詳しく見る →</a></div>
+        <div class="mega__cards">
+          <a class="mega__card" href="products-agricultural.html"><span class="mega__thumb dz"><span class="dz__tag">Image</span></span><span class="mega__cap">農産物用計量システム<i>›</i></span></a>
+          <a class="mega__card" href="products-weighing.html"><span class="mega__thumb dz"><span class="dz__tag">Image</span></span><span class="mega__cap">穀類用計量システム<i>›</i></span></a>
+          <a class="mega__card" href="products-industry.html"><span class="mega__thumb dz"><span class="dz__tag">Image</span></span><span class="mega__cap">工業用計量システム<i>›</i></span></a>
+          <a class="mega__card" href="products-other.html"><span class="mega__thumb dz"><span class="dz__tag">Image</span></span><span class="mega__cap">その他・特殊用途<i>›</i></span></a>
+        </div>
+      </div></div>
+    </div>
+    <div class="gnav__item"><a class="gnav__link" href="service.html">サービス案内</a></div>
+    <div class="gnav__item"><a class="gnav__link" href="delivery.html">納入実績</a></div>
+    <div class="gnav__item" data-mega>
+      <a class="gnav__link" href="#">会社案内</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="mega__en">Company</span><span class="mega__jp">会社案内</span><a class="mega__more" href="company.html">詳しく見る →</a></div>
+        <ul class="mega__links"><li><a href="company.html#concept">企業理念<i>›</i></a></li><li><a href="company.html#greeting">代表挨拶<i>›</i></a></li><li><a href="company.html#servicebase">サービス拠点<i>›</i></a></li><li><a href="company.html#clients">取引実績<i>›</i></a></li><li><a href="company.html#profile">会社概要<i>›</i></a></li></ul>
+      </div></div>
+    </div>
+    <div class="gnav__item"><a class="gnav__link" href="history.html">126年ヒストリー</a></div>
+    <div class="gnav__item" data-mega>
+      <a class="gnav__link" href="#">採用情報</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="mega__en">Recruit</span><span class="mega__jp">採用情報</span><a class="mega__more" href="recruit.html">詳しく見る →</a></div>
+        <ul class="mega__links"><li><a href="recruit-interview.html">社員インタビュー<i>›</i></a></li><li><a href="recruit-news.html">採用ニュース<i>›</i></a></li><li><a href="recruit-jobs.html">募集要項<i>›</i></a></li><li><a href="recruit-jobs-graduate.html">新卒採用<i>›</i></a></li><li><a href="recruit-jobs-career.html">中途採用<i>›</i></a></li></ul>
+      </div></div>
+    </div>
+  </nav>
+</header>
+<button class="burger" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
+
+<!-- SP：ハンバーガー格納メニュー（アコーディオンで下層展開） -->
+<div class="spmenu" id="spmenu" aria-hidden="true">
+  <nav class="spmenu__nav">
+    <div class="spmenu__group">
+      <button class="spmenu__top" aria-expanded="false">製品・技術</button>
+      <div class="spmenu__sub"><a href="products-agricultural.html">農産物用計量システム</a><a href="products-weighing.html">穀類用計量システム</a><a href="products-industry.html">工業用計量システム</a><a href="products-other.html">その他・特殊用途</a></div>
+    </div>
+    <a class="spmenu__single" href="service.html">サービス案内</a>
+    <a class="spmenu__single" href="delivery.html">納入実績</a>
+    <div class="spmenu__group">
+      <button class="spmenu__top" aria-expanded="false">会社案内</button>
+      <div class="spmenu__sub"><a href="company.html#concept">企業理念</a><a href="company.html#greeting">代表挨拶</a><a href="company.html#servicebase">サービス拠点</a><a href="company.html#profile">会社概要</a></div>
+    </div>
+    <a class="spmenu__single" href="history.html">126年ヒストリー</a>
+    <div class="spmenu__group">
+      <button class="spmenu__top" aria-expanded="false">採用情報</button>
+      <div class="spmenu__sub"><a href="recruit-interview.html">社員インタビュー</a><a href="recruit-news.html">採用ニュース</a><a href="recruit-jobs.html">募集要項</a><a href="recruit-jobs-graduate.html">新卒採用</a><a href="recruit-jobs-career.html">中途採用</a></div>
+    </div>
+  </nav>
+</div>
+
+<div class="scene">
+<div class="pin">
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="side-band"></div>
+
+  <a class="hero__recruit" href="recruit.html">
+    <span class="rc-txt"><b>RECRUITMENT 2027</b><i>採用情報を見る →</i></span>
+  </a>
+
+  <h1 class="hero__title">
+    <span class="t1"><span class="np">いきるを</span><span class="np">はかり、</span></span>
+    <span class="t2">豊かな世界へ。</span>
+  </h1>
+
+  <div class="hero__intro">
+    <div class="illust-frame"><span>SCREEN CAPTURE<b>126年ヒストリーページの<br>キャプチャー設置予定（ダミー）</b></span></div>
+    <a href="history.html">126年のあゆみ — History →</a>
+  </div>
+
+  <div class="scroll">Scroll</div>
+</section>
+</div>
+</div>
+
+<section class="cover">
+  <div class="cover-bgtext" aria-hidden="true"><span class="ser">We measure</span><span class="san">the future</span></div>
+  <div class="cover__inner"></div>
+</section>
+
+<!-- ===== 製品：左=製品名／右=枠にカチッとハマる画像（ダミー）。ピン留めで1品ずつ。右端に目盛りバー ===== -->
+<section class="pshow-scene" id="products">
+  <div class="pshow-head">
+    <p class="pshow-head__eyebrow">Products &amp; Technology</p>
+    <h2>製品・技術紹介</h2>
+    <p class="pshow-head__lead">農産物・穀類・工業用——あらゆる現場の計量ニーズに、一品一様で応えます。</p>
+  </div>
+  <div class="pshow-stack">
+    <article class="prow" id="prod-01">
+      <div class="prow__text">
+        <div class="prow__top"><span class="prow__no">01</span><span class="prow__tag">Agricultural</span></div>
+        <h3 class="pshow-name"><span>農産物用計量システム</span></h3>
+        <p class="prow__desc">果物・野菜向けの計量・選別。品質管理・等級選別に対応します。</p>
+        <a class="prow__view" href="products-agricultural.html">View More →</a>
+      </div>
+      <div class="prow__media"><div class="prow__frame"><div class="prow__img dzbg"><span class="dzlabel">Dummy Image</span></div></div></div>
+    </article>
+    <article class="prow" id="prod-02">
+      <div class="prow__text">
+        <div class="prow__top"><span class="prow__no">02</span><span class="prow__tag">Grain</span></div>
+        <h3 class="pshow-name"><span>穀類用計量システム</span></h3>
+        <p class="prow__desc">米・大豆などの穀類計量。全国約2,000施設への納入実績。</p>
+        <a class="prow__view" href="products-weighing.html">View More →</a>
+      </div>
+      <div class="prow__media"><div class="prow__frame"><div class="prow__img dzbg"><span class="dzlabel">Dummy Image</span></div></div></div>
+    </article>
+    <article class="prow" id="prod-03">
+      <div class="prow__text">
+        <div class="prow__top"><span class="prow__no">03</span><span class="prow__tag">Industrial</span></div>
+        <h3 class="pshow-name"><span>工業用計量システム</span></h3>
+        <p class="prow__desc">ガラス・鉄鋼・肥料・化学など7カテゴリに対応します。</p>
+        <a class="prow__view" href="products-industry.html">View More →</a>
+      </div>
+      <div class="prow__media"><div class="prow__frame"><div class="prow__img dzbg"><span class="dzlabel">Dummy Image</span></div></div></div>
+    </article>
+    <article class="prow" id="prod-04">
+      <div class="prow__text">
+        <div class="prow__top"><span class="prow__no">04</span><span class="prow__tag">Others</span></div>
+        <h3 class="pshow-name"><span>その他・特殊用途</span></h3>
+        <p class="prow__desc">家畜・競走馬向け動物計量など、特殊用途の計量にも対応。</p>
+        <a class="prow__view" href="products-other.html">View More →</a>
+      </div>
+      <div class="prow__media"><div class="prow__frame"><div class="prow__img dzbg"><span class="dzlabel">Dummy Image</span></div></div></div>
+    </article>
+  </div>
+  <div class="pshow-ruler" aria-hidden="true">
+    <span class="pshow-ruler__num">01</span>
+    <div class="pshow-ruler__body">
+      <span class="pshow-ruler__ticks"></span>
+      <span class="pshow-ruler__major" style="top:0%"><i>01</i></span>
+      <span class="pshow-ruler__major" style="top:33.33%"><i>02</i></span>
+      <span class="pshow-ruler__major" style="top:66.66%"><i>03</i></span>
+      <span class="pshow-ruler__major" style="top:100%"><i>04</i></span>
+      <span class="pshow-ruler__pointer"></span>
+    </div>
+    <span class="pshow-ruler__cap">SCALE<br>01—04</span>
+  </div>
+</section>
+
+<!-- ===== 納入実績：スクロール連動 ===== -->
+<section class="record" id="record">
+  <div class="record__inner">
+    <div class="record__top">
+      <div>
+        <p class="record__meta">Delivery Record</p>
+        <h2 class="record__head">納入実績</h2>
+      </div>
+      <a class="record__viewall" href="delivery.html">納入実績 View All →</a>
+    </div>
+    <div class="record__stats">
+      <div class="record__stat"><span class="record__num">126<i>年</i></span><span class="record__label">創業からの歩み</span></div>
+      <div class="record__stat"><span class="record__num">2,000<i>+</i></span><span class="record__label">累計納入施設数</span></div>
+      <div class="record__stat"><span class="record__num">6<i>拠点</i></span><span class="record__label">国内サービス拠点</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUR STATEMENT：白背景＋大きな暗トーン画像（ダミー）＋有機的レイアウト ===== -->
+<section class="statement" id="statement">
+  <div class="stmt">
+    <span class="stmt__dz">背景画像（ダミー）</span>
+    <p class="stmt__label">Our Statement</p>
+    <h2 class="stmt__en"><span>We Measure</span><span>the Value</span><span>of Living.</span></h2>
+    <div class="stmt__jp">はかることは、<br>くらしを支えること。</div>
+    <p class="stmt__body">1900年の創業以来、私たちは「はかる」という行為に向き合い続けてきました。農産物から工業製品まで、あらゆる現場の確かさを、一台の計量器が静かに支えています。正確に、公正に、はかること。それは、人と社会の信頼を未来へつないでいく営みそのものです。</p>
+    <span class="stmt__side">Statement — Since 1900</span>
+    <a class="stmt__more" href="company.html">View more →</a>
+  </div>
+</section>
+
+<!-- ===== ヒストリー：下層ページへ引き込むシンプルなエリア（背景画像はダミー） ===== -->
+<section class="hentry" id="history">
+  <div class="hentry__bg dzbg"></div>
+  <span class="hentry__dz">背景画像（ダミー）</span>
+  <a class="hentry__inner" href="history.html">
+    <p class="hentry__eyebrow">126 Years History</p>
+    <h2 class="hentry__title">「はかる」と歩んだ、<br>126年のあゆみ。</h2>
+    <p class="hentry__lead">1900年の創業から今日まで。社会の確かさを支えてきた、近江度量衡の歴史をご覧ください。</p>
+    <span class="hentry__more">View History <i>→</i></span>
+  </a>
+</section>
+
+<!-- ===== 下部CTA：採用・問い合わせ ===== -->
+<section class="cta">
+  <a class="cta__card" href="recruit.html">
+    <p class="cta__en">Recruit</p>
+    <h3 class="cta__ttl">採用情報</h3>
+    <p class="cta__txt">「はかる」で社会の確かさを支える仲間を募集しています。</p>
+    <span class="cta__more">View More →</span>
+  </a>
+  <a class="cta__card" href="contact.html">
+    <p class="cta__en">Contact</p>
+    <h3 class="cta__ttl">お問い合わせ</h3>
+    <p class="cta__txt">製品・サービスに関するご相談・お見積りはこちらから。</p>
+    <span class="cta__more">View More →</span>
+  </a>
+</section>
+
+<!-- ===== フッター（ブランド＋3カラム：製品・技術／企業情報／採用情報） ===== -->
+<footer class="foot">
+  <div class="foot__cols">
+    <div class="foot__brand">
+      <span class="foot__logo">近江度量衡株式会社</span>
+      <p class="foot__tagline"><b>OMISCALE CO.,LTD.</b>「いきる」をはかり、豊かな世界へ。</p>
+      <div class="foot__info">
+        〒525-0054　滋賀県草津市東矢倉三丁目11番70号<br>
+        TEL 077-562-7111／受付 平日 9:00〜17:00<br>
+        国内6拠点＋海外3拠点（上海・バンコク・韓国）
+      </div>
+    </div>
+    <div class="foot__col">
+      <h4>製品・技術</h4>
+      <ul>
+        <li><a href="products.html">製品・技術紹介</a></li>
+        <li><a href="products-agricultural.html">農産物用計量システム</a></li>
+        <li><a href="products-weighing.html">穀類用計量システム</a></li>
+        <li><a href="products-industry.html">工業用計量システム</a></li>
+        <li><a href="products-other.html">その他・特殊用途</a></li>
+        <li><a href="service.html">サービス案内</a></li>
+        <li><a href="delivery.html">納入実績</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>企業情報</h4>
+      <ul>
+        <li><a href="company.html">会社案内</a></li>
+        <li><a href="history.html">126年ヒストリー</a></li>
+        <li><a href="news.html">新着情報</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="privacy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>採用情報</h4>
+      <ul>
+        <li><a href="recruit.html">採用TOP</a></li>
+        <li><a href="recruit-interview.html">社員インタビュー</a></li>
+        <li><a href="recruit-news.html">採用ニュース</a></li>
+        <li><a href="recruit-jobs.html">募集要項</a></li>
+        <li><a href="recruit-jobs-graduate.html">新卒採用</a></li>
+        <li><a href="recruit-jobs-career.html">中途採用</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__bar"><a href="privacy.html">Privacy Policy</a><span>© 2026 OMISCALE CO.,LTD. All Rights Reserved.</span></div>
+</footer>
+
+<script>
+(function(){
+  var rm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var scene  = document.querySelector('.scene');
+  var band   = document.querySelector('.side-band');
+  var video  = document.querySelector('.bg-video .bgmovie');
+  var title  = document.querySelector('.hero__title');
+  var intro  = document.querySelector('.hero__intro');
+  var recruit= document.querySelector('.hero__recruit');
+  var scroll = document.querySelector('.scroll');
+  var cover  = document.querySelector('.cover');
+  if(!scene || !cover) return;
+  if(rm){ scene.style.height='100vh'; return; }
+  function eo(t){ return 1-Math.pow(1-t,2); }
+  function cl(v){ return v<0?0:(v>1?1:v); }
+  var ticking=false;
+  function upd(){
+    var vh = window.innerHeight;
+    var max = scene.offsetHeight - vh;
+    var p = cl(window.scrollY / max);
+    band.style.transform = 'translateX(' + (-120*eo(cl(p/0.24))) + '%)';
+    if(video){
+      video.style.filter = 'brightness(' + (0.72-0.2*p) + ') saturate(.9) blur(' + (4*p) + 'px)';
+      video.style.transform = 'scale(' + (1+0.03*p) + ')';
+    }
+    var fade = cl(1 - (p-0.08)/0.78);
+    title.style.transform   = 'translateY(' + (80*p) + 'px)';
+    title.style.opacity     = String(fade);
+    intro.style.transform   = 'translateY(' + (54*p) + 'px)';
+    intro.style.opacity     = String(fade);
+    recruit.style.transform = 'translateY(' + (54*p) + 'px)';
+    recruit.style.opacity   = String(fade);
+    if(scroll) scroll.style.opacity = String(cl(1-p*3.5));
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } }, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+/* 製品パネル：ホバーでループ映像（pgate使用時） */
+(function(){
+  document.querySelectorAll('.pgate__item').forEach(function(it){
+    var v = it.querySelector('.pgate__vid'); if(!v) return;
+    it.addEventListener('mouseenter', function(){
+      if(v.preload==='none'){ v.preload='auto'; v.load(); }
+      var p=v.play(); if(p&&p.catch) p.catch(function(){});
+    });
+    it.addEventListener('mouseleave', function(){ v.pause(); });
+  });
+})();
+/* 納入実績〜製品〜CTA：白背景区間でヘッダー反転 */
+(function(){
+  var sec = document.querySelector('.record'); if(!sec) return;
+  var whiteSecs = [sec, document.querySelector('.pshow-scene'), document.querySelector('.cta')].filter(Boolean);
+  var nav  = document.querySelector('.nav');
+  var ticking=false, dark=null;
+  function upd(){
+    if(nav){
+      var onWhite = whiteSecs.some(function(el){ var rr=el.getBoundingClientRect(); return rr.top < 78 && rr.bottom > 78; });
+      if(onWhite!==dark){
+        dark = onWhite;
+        nav.classList.toggle('nav--dark', onWhite);
+      }
+    }
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } }, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+/* 背景タイポ：製品セクションでふわっと浮かび上がり、ビューポートに固定 */
+(function(){
+  var bg  = document.querySelector('.cover-bgtext');
+  var bgv = document.querySelector('.bg-video');
+  var sec = document.querySelector('.cover');
+  var psc = document.querySelector('.pshow-scene');
+  if(!bg || !sec) return;
+  var rm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function cl(v){ return v<0?0:(v>1?1:v); }
+  var ticking=false;
+  function upd(){
+    var r = sec.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var pin = vh*0.3;
+    var eIn = cl((vh - r.top) / (vh*0.7));
+    if(rm){
+      bg.style.opacity = String(Math.min(eIn, cl(r.bottom/(vh*0.7))));
+    } else {
+      bg.style.opacity = String(eIn);
+      var ty = (r.top >= pin) ? (1-eIn)*60 : (r.top - pin);
+      bg.style.transform = 'translateY(' + ty + 'px)';
+    }
+    if(bgv){
+      var fade = 1;
+      if(psc){ var pr = psc.getBoundingClientRect(); fade = cl(pr.bottom / vh); }
+      bgv.style.opacity = String(fade);
+    }
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } }, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+/* 製品：J-CAT型スタッキングの現在位置バー追従 */
+(function(){
+  var scene = document.querySelector('.pshow-scene');
+  if(!scene) return;
+  var rows  = [].slice.call(scene.querySelectorAll('.prow'));
+  var num   = scene.querySelector('.pshow-ruler__num');
+  var pointer = scene.querySelector('.pshow-ruler__pointer');
+  var ruler = scene.querySelector('.pshow-ruler');
+  var small = matchMedia('(max-width:768px)').matches;
+  if(small || !rows.length){ return; }
+  var N = rows.length;
+  var stack = scene.querySelector('.pshow-stack');
+  function cardTop(i){
+    var base = stack.getBoundingClientRect().top + window.pageYOffset;
+    return base + i * rows[0].offsetHeight;
+  }
+  function jumpTo(y){ window.scrollTo(0, Math.max(0,y)); }
+  var majors = [].slice.call(scene.querySelectorAll('.pshow-ruler__major'));
+  majors.forEach(function(m,i){
+    m.setAttribute('role','button'); m.setAttribute('tabindex','0');
+    m.setAttribute('aria-label', '製品 0'+(i+1)+' へ移動');
+    function go(){ jumpTo(cardTop(i)-100); }
+    m.addEventListener('click', go);
+    m.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+  });
+  var ticking=false;
+  function upd(){
+    var vh = window.innerHeight, mid = vh*0.5;
+    var sr = scene.getBoundingClientRect();
+    if(ruler) ruler.classList.toggle('is-on', sr.top < mid && sr.bottom > mid);
+    var active=0;
+    rows.forEach(function(r,i){ if(r.getBoundingClientRect().top <= mid){ active = i; } });
+    if(num) num.textContent = ('0'+(active+1)).slice(-2);
+    if(pointer) pointer.style.top = ((active/(N-1))*100) + '%';
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(upd); ticking=true; } }, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+/* グローバルナビ：PC=ホバーでメガメニュー展開 / SP=ハンバーガー格納＋アコーディオン */
+(function(){
+  var nav = document.querySelector('.nav');
+  var allItems = [].slice.call(document.querySelectorAll('.gnav__item'));
+  function closeAll(){ allItems.forEach(function(it){ it.classList.remove('is-open'); }); }
+  allItems.forEach(function(it){
+    it.addEventListener('mouseenter', function(){
+      closeAll();
+      if(it.hasAttribute('data-mega')) it.classList.add('is-open');
+    });
+  });
+  if(nav) nav.addEventListener('mouseleave', closeAll);
+
+  var burger = document.querySelector('.burger');
+  var sp = document.getElementById('spmenu');
+  if(burger && sp){
+    function setSp(open){
+      sp.classList.toggle('is-open', open);
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', open?'true':'false');
+      sp.setAttribute('aria-hidden', open?'false':'true');
+      document.body.classList.toggle('menu-open', open);
+    }
+    burger.addEventListener('click', function(){ setSp(!sp.classList.contains('is-open')); });
+    sp.querySelectorAll('.spmenu__top').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var g = btn.parentNode;
+        var open = g.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open?'true':'false');
+      });
+    });
+    sp.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setSp(false); }); });
+  }
+})();
+</script>
+</body>
+</html>

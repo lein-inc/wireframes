@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,email=no,address=no,date=no"/>
+<title>LOGIN | 近江度量衡 Webリニューアル wier</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif; }
+  .card { background: #1c1c1c; border: 1px solid #333; padding: 48px 44px; width: 360px; }
+  .label { font-size: 10px; letter-spacing: .18em; color: #555; margin-bottom: 20px; }
+  .title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; letter-spacing: .04em; }
+  .sub { font-size: 11px; color: #666; margin-bottom: 36px; }
+  input[type="password"] {
+    width: 100%; padding: 11px 14px; background: #111; border: 1px solid #333;
+    color: #fff; font-size: 13px; outline: none; margin-bottom: 12px;
+  }
+  input[type="password"]:focus { border-color: #666; }
+  /* 自動入力の青/黄ハイライト・青文字を打ち消して白文字に */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff !important;
+    caret-color: #fff;
+    -webkit-box-shadow: 0 0 0 1000px #111 inset !important;
+    box-shadow: 0 0 0 1000px #111 inset !important;
+  }
+  a, a:link, a:visited { color: #fff; }
+  button {
+    width: 100%; padding: 11px; background: #fff; color: #111;
+    font-size: 12px; font-weight: 700; letter-spacing: .1em; border: none; cursor: pointer;
+  }
+  button:hover { background: #e0e0e0; }
+  .error { color: #c0392b; font-size: 11px; margin-top: 10px; display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="label">PRIVATE PREVIEW</p>
+  <h1 class="title">近江度量衡 Webリニューアル</h1>
+  <p class="sub">ワイヤーフレーム確認用（wier）</p>
+  <input type="password" id="pw" placeholder="パスワード" />
+  <button onclick="check()">入室する</button>
+  <p class="error" id="err">パスワードが正しくありません</p>
+</div>
+<script>
+  document.getElementById('pw').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') check();
+  });
+  function check() {
+    var pw = document.getElementById('pw').value;
+    if (pw === 'stgleinoumi') {
+      sessionStorage.setItem('oumi_auth', '1');
+      var p = new URLSearchParams(location.search).get('next');
+      location.href = p || 'index.html';
+    } else {
+      document.getElementById('err').style.display = 'block';
+      document.getElementById('pw').value = '';
+      document.getElementById('pw').focus();
+    }
+  }
+</script>
+</body>
+</html>

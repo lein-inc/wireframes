@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="_auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【ダミー下層】近江度量衡 — index_8 · マス目グリッド（gmining参考）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#ffffff;
+  --ink:#000000;
+  --red:#ff0000;
+  --line:#000;
+  --en:"Oswald",sans-serif;
+  --jp:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+::selection{background:var(--red);color:#fff}
+::-moz-selection{background:var(--red);color:#fff}
+body{background:var(--paper);color:var(--ink);font-family:var(--jp)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ============ ヘッダー：白バー・マス区切り ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:stretch;height:64px;background:transparent;border-bottom:0.5px solid #fff;transition:background .35s,border-color .35s}
+.nav__logo{display:flex;align-items:center;padding:0 22px;background:transparent;border-right:0.5px solid #fff;transition:background .35s,border-color .35s}
+.nav__logo img{height:30px;width:auto;filter:brightness(0) invert(1);transition:filter .35s}
+.nav__menu{display:flex;align-items:stretch;flex:1;padding-left:26px;gap:30px}
+.nitem{display:flex;align-items:stretch}
+.nav__menu .nlink{position:relative;display:flex;align-items:center;font-family:var(--jp);font-size:12.5px;font-weight:700;letter-spacing:.1em;color:#fff;transition:color .35s}
+.nav__menu .nlink sup{font-family:var(--en);font-size:9px;color:var(--red);margin-left:3px;letter-spacing:.06em;transform:translateY(-4px)}
+.nav__menu .nlink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav__menu .nitem:hover .nlink::after,.nav__menu .nlink:hover::after{transform:scaleX(1)}
+.nav__menu .nitem:hover>.nlink,.nav__menu .nlink:hover{color:var(--red)}
+.nav.is-solid .nav__menu .nitem:hover>.nlink,.nav.is-solid .nav__menu .nlink:hover{color:var(--red)}
+.nav__lang{display:none;align-items:center;padding:0 18px;border-left:0.5px solid rgba(255,255,255,.32);color:#fff;font-family:var(--en);font-size:11px;letter-spacing:.14em;transition:color .35s,border-color .35s}
+@media(min-width:901px){.nav__lang{display:flex}}
+.nav__cta{display:flex;align-items:center;padding:0 30px;background:#fff;color:var(--ink);font-family:var(--jp);font-size:12.5px;font-weight:700;letter-spacing:.14em;transition:background .25s,color .25s}
+.nav__cta:hover{background:var(--red);color:#fff}
+/* PC：ホバーで下層メガメニュー */
+.mega{position:fixed;left:0;right:0;top:64px;background:#fff;border-bottom:0.5px solid var(--line);opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .25s,transform .25s,visibility .25s;z-index:29}
+.nitem:hover .mega{opacity:1;visibility:visible;transform:none}
+.mega__inner{display:grid;grid-template-columns:240px minmax(0,1fr);gap:6vw;padding:44px 7vw 48px}
+.mega__lead .men{display:block;font-family:var(--en);font-size:26px;font-weight:600;text-transform:uppercase;color:var(--ink);line-height:1}
+.mega__lead .mjp{display:block;font-size:12.5px;font-weight:700;letter-spacing:.14em;color:#777;margin-top:12px}
+.mega__links{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;align-content:start}
+.mega__links a{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:0.5px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);transition:color .2s,padding .2s}
+.mega__links a:nth-child(1),.mega__links a:nth-child(2){border-top:0.5px solid var(--line)}
+.mega__links a:hover{color:var(--red);padding-left:14px}
+/* タブレット（〜1100px）：ハンバーガー格納 */
+.burger{display:none;margin-left:auto;width:64px;background:transparent;border:0;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.burger span{display:block;width:26px;height:3px;background:#fff;transition:transform .3s,opacity .3s,background .35s}
+.nav.is-solid .burger span,body.menu-open .burger span{background:var(--ink)}
+.burger.is-open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
+body.menu-open .nav__logo{border-right-color:var(--line)}
+body.menu-open .nav__logo img{filter:none}
+.drawer{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:38;background:#fff;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;overflow-y:auto;padding:12px 24px 64px}
+.drawer.is-open{opacity:1;visibility:visible}
+.drawer__group{border-bottom:0.5px solid var(--line)}
+.drawer__top{width:100%;display:flex;justify-content:space-between;align-items:center;padding:19px 4px;background:none;border:0;cursor:pointer;font-family:var(--jp);font-size:16px;font-weight:900;letter-spacing:.06em;color:var(--ink);text-align:left}
+.drawer__top::after{content:"+";font-family:var(--en);font-size:22px;font-weight:400;color:var(--red);line-height:1}
+.drawer__group.is-open .drawer__top::after{content:"−"}
+.drawer__sub{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.drawer__group.is-open .drawer__sub{max-height:420px}
+.drawer__sub a{position:relative;display:block;padding:12px 4px 12px 22px;font-size:13.5px;font-weight:500;color:#444}
+.drawer__sub a::before{content:"";position:absolute;left:2px;top:50%;width:9px;height:3px;background:var(--red)}
+.drawer__sub a:last-child{margin-bottom:14px}
+.drawer__single{display:block;padding:19px 4px;font-family:var(--jp);font-size:16px;font-weight:900;letter-spacing:.06em;color:var(--ink);border-bottom:0.5px solid var(--line)}
+.drawer__top:hover,.drawer__single:hover,.drawer__sub a:hover{color:var(--red)}
+body.menu-open{overflow:hidden}
+@media(max-width:1100px){
+  .nav__menu{display:none}
+  .burger{display:flex}
+  .mega{display:none}
+}
+.nav.is-solid{background:#fff;border-bottom-color:var(--line)}
+.nav.is-solid .nav__logo{border-right-color:var(--line)}
+.nav.is-solid .nav__logo img{filter:none}
+.nav.is-solid .nav__menu .nlink{color:var(--ink)}
+
+/* ============ 共通レイアウト ============ */
+.wrap{margin-left:0}
+@media(max-width:900px){.wrap{margin-left:0}}
+.gsec{position:relative;padding:110px 7vw 120px;border-bottom:0.5px solid var(--line)}
+.eyebrow{font-family:var(--jp);font-size:13px;font-weight:700;letter-spacing:.18em;color:rgba(24,26,23,.55)}
+.disp{font-family:var(--en);font-weight:600;text-transform:uppercase;line-height:1.02;letter-spacing:.005em}
+.disp-jp{font-family:var(--jp);font-weight:900;line-height:1.3;letter-spacing:.06em}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;font-family:var(--jp);font-size:13px;font-weight:700;letter-spacing:.14em;padding:16px 30px;transition:background .25s}
+.btn:hover{background:#c50000}
+.arrow-i{font-style:normal;color:var(--red);font-family:var(--en)}
+
+/* ============ 出現アニメ（マスごとにフェード＆スライド） ============ */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.is-in{opacity:1;transform:none}
+.rv-d1{transition-delay:.12s}.rv-d2{transition-delay:.24s}.rv-d3{transition-delay:.36s}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* ============ FV：動画＋特大コンデンス＋重なる白マス ============ */
+.fv{position:relative;border-bottom:0.5px solid var(--line)}
+.fv__stage{position:relative;height:100vh;min-height:640px;background:var(--ink);overflow:hidden}
+.fv__stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.9)}
+.fv__stage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,11,10,.62) 0%,rgba(10,11,10,.28) 55%,rgba(10,11,10,.12) 100%)}
+.fv__inner{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:0 7vw}
+.fv__title{color:var(--paper)}
+.fv__title span{display:block}
+.fv__title .jp-main{font-family:"Noto Serif JP","Yu Mincho",serif;font-weight:900;font-size:clamp(2.6rem,6.6vw,6.2rem);letter-spacing:normal;line-height:1.38}
+.fv__title .q{font-style:normal}
+.fv__title .en-sub{display:block;font-family:var(--en);font-weight:500;font-size:clamp(12px,1vw,15px);letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-top:30px}
+.fv__lead{color:rgba(244,241,234,.86);font-size:14px;line-height:2;margin-top:20px;max-width:460px}
+/* 右下：FVに重なる白マス（126周年） */
+.fv__cell{position:absolute;z-index:3;right:32px;bottom:36px;width:min(480px,86%);background:#fff;border:0}
+.fv__cell .inner{padding:30px 34px;display:flex;flex-direction:column;gap:14px}
+.fv__cell .en{font-family:var(--en);font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.fv__cell h3{font-family:var(--jp);font-weight:900;font-size:20px;letter-spacing:.06em}
+.fv__cell p{font-size:13px;line-height:1.95;color:#555}
+.fv__cell-link{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:8px 34px 22px;font-family:var(--en);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:color .2s}
+.fv__cell-link:hover{color:var(--red)}
+.fv__cell--recruit{background:var(--red);color:#fff;transition:background .25s}
+.fv__cell--recruit:hover{background:#d60000}
+.fv__cell--recruit .ren{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.88)}
+.fv__cell--recruit h3{margin-top:12px}
+.fv__cell--recruit .fv__cell-link{color:#fff}
+.fv__cell--recruit .fv__cell-link:hover{color:#fff;opacity:.8}
+.arrow-i--w{color:#fff}
+/* 左下：採用動線（初期は背景なし・白罫線） */
+.fv__recruit{position:absolute;z-index:3;left:7vw;bottom:6vh;display:flex;align-items:center;gap:18px;padding:18px 28px;border:0.5px solid var(--red);color:#fff;background:var(--red);transition:background .3s,border-color .3s}
+.fv__recruit .en{font-family:var(--en);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.fv__recruit b{font-size:13.5px;font-weight:700;letter-spacing:.12em}
+.fv__recruit .arrow-i{color:#fff;transition:transform .3s}
+.fv__recruit:hover{background:#c50000;border-color:#c50000}
+.fv__recruit:hover .arrow-i{transform:translateX(6px)}
+@media(max-width:900px){
+  .fv__stage{height:72vh}
+  .fv__cell{right:12px;bottom:12px;left:auto;width:min(480px,92%)}
+  .fv__cell .inner{padding:20px 22px;gap:8px}
+  .fv__cell p{display:none}
+}
+
+/* ============ 製品・技術：特大見出し＋矢印リスト（マス罫線） ============ */
+.svc .disp-jp{font-size:clamp(1.9rem,4.6vw,3.9rem);margin-top:22px}
+.svc__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:6vw;margin-top:72px;align-items:start}
+.svc__lead{font-size:14px;line-height:2.15;color:#444}
+.svc__lead .btn{margin-top:34px}
+.svc__list{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
+.svc__list a{display:flex;align-items:center;gap:14px;padding:19px 6px;border-bottom:0.5px solid var(--line);font-size:14.5px;font-weight:700;letter-spacing:.06em;transition:padding .25s,color .25s}
+.svc__list a:first-child,.svc__list a:nth-child(2){border-top:0.5px solid var(--line)}
+.svc__list a:hover{color:var(--red);padding-left:16px}
+.svc__list .arrow-i{font-size:16px}
+/* 製品ショーケース：計量皿に載せるドロップ＋針振れ目盛り */
+.svc-show{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:20px;align-items:stretch}
+.svc-stage{position:relative}
+.svc-stage__imgs{position:relative;aspect-ratio:16/10;overflow:hidden;background:#141614}
+.svc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .45s;z-index:1}
+.svc-img.is-on{opacity:1;z-index:2;animation:svcDrop .8s cubic-bezier(.24,1.45,.4,1) both}
+@keyframes svcDrop{0%{opacity:0;transform:translateY(-32px) scale(1.02)}58%{opacity:1;transform:translateY(6px) scale(1)}100%{opacity:1;transform:none}}
+.svc-cell{position:relative;z-index:3;margin:-72px 24px 0;background:#fff;border:0.5px solid var(--line)}
+.svc-cell__ttl{padding:20px 24px 4px;font-family:var(--jp);font-weight:900;font-size:clamp(17px,1.7vw,23px);letter-spacing:.05em;transition:opacity .24s}
+.svc-cell__sub{padding:0 24px 16px;font-family:var(--en);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777;transition:opacity .24s}
+.svc-cell__row{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:0.5px solid var(--line);padding:11px 24px;font-family:var(--en);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.svc-cell__row .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
+.svc-cell__meta{transition:opacity .24s;text-align:right}
+.svc-cell.is-fade .svc-cell__ttl,.svc-cell.is-fade .svc-cell__sub,.svc-cell.is-fade .svc-cell__meta{opacity:0}
+.svc-ruler{position:relative}
+.svc-ruler::before{content:"";position:absolute;top:0;bottom:0;right:24px;width:3px;background:var(--line)}
+.svc-ruler__ticks{position:absolute;top:0;bottom:0;right:24px;width:9px;background:repeating-linear-gradient(to bottom,var(--line) 0 1px,transparent 1px 9px)}
+.svc-ruler__no{position:absolute;right:40px;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-family:var(--en);font-size:11px;letter-spacing:.08em;color:#a5a5a5;padding:5px}
+.svc-ruler__no.is-on{color:var(--ink);font-weight:700}
+.svc-ruler__no:hover{color:var(--red)}
+.svc-ruler__pointer{position:absolute;right:19px;width:24px;height:2px;background:var(--red);box-shadow:0 0 8px rgba(255,0,0,.55);transition:top .75s cubic-bezier(.2,1.7,.35,1)}
+@media(max-width:900px){
+  .svc__grid{grid-template-columns:1fr;gap:44px}
+  .svc-show{grid-template-columns:minmax(0,1fr) 48px;gap:12px}
+  .svc-cell{margin:-56px 14px 0}
+  .svc-ruler__no{right:30px}
+  .svc-ruler::before,.svc-ruler__ticks{right:14px}
+  .svc-ruler__pointer{right:9px}
+}
+
+/* ============ 数字で見る：カウントアップ＋縦罫マス ============ */
+.stats{border-bottom:0}
+.stats__top{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:6vw;align-items:start}
+.stats__top .disp-jp{font-size:clamp(1.5rem,3.2vw,2.7rem);line-height:1.55}
+.stats__cells{display:grid;grid-template-columns:repeat(4,1fr);margin-top:96px}
+.stat{position:relative;padding:26px 26px 34px;text-align:center}
+.stat+.stat{border-left:0.5px solid var(--line)}
+.stat b{display:block;font-family:var(--en);font-weight:600;font-size:clamp(2.6rem,4.6vw,4.4rem);line-height:1;letter-spacing:.01em}
+.stat b i{font-style:normal;font-family:var(--jp);font-weight:900;font-size:.38em;margin-left:4px}
+.stat .lbl{display:block;font-size:12.5px;color:#555;margin-top:16px;line-height:1.8}
+@media(max-width:900px){
+  .stats__top{grid-template-columns:1fr;gap:28px}
+  .stats__cells{grid-template-columns:1fr 1fr;margin-top:48px}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:0.5px solid var(--line)}
+}
+
+/* ============ 製品カード：写真マス＋段差の白キャプションセル ============ */
+.prods__head{display:flex;justify-content:space-between;align-items:center}
+.prods__head h2{font-family:var(--jp);font-weight:900;font-size:22px;letter-spacing:.08em}
+.viewall{display:inline-flex;align-items:center;gap:10px;font-family:var(--en);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.viewall:hover{color:var(--red)}
+.prods__grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:44px}
+.pcard{position:relative;display:block}
+.pcard__img{position:relative;aspect-ratio:16/10;background-size:cover;background-position:center;filter:saturate(.88)}
+.pcard__img::after{content:"";position:absolute;inset:0;background:rgba(20,22,20,.18);transition:background .35s}
+.pcard:hover .pcard__img::after{background:rgba(20,22,20,0)}
+.pcard__cell{position:relative;margin:-84px 0 0 24px;width:calc(100% - 24px);background:#fff;border:0.5px solid var(--line)}
+.pcard__cell .ttl{padding:22px 26px 6px;font-family:var(--jp);font-weight:900;font-size:clamp(18px,1.8vw,25px);letter-spacing:.05em}
+.pcard__cell .sub{padding:0 26px 18px;font-family:var(--en);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777}
+.pcard__cell .row{display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--line);padding:12px 26px;font-family:var(--en);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.pcard__cell .row .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
+.pcard__step{width:56%;height:44px;background:#fff;border:0.5px solid var(--line);border-top:0;display:flex;align-items:center;padding:0 26px;font-size:11.5px;color:#666;letter-spacing:.06em}
+.pcard:hover .ttl{color:var(--red)}
+@media(max-width:900px){.prods__grid{grid-template-columns:1fr;gap:34px}}
+
+/* ============ 採用バンド：インク地＋目盛りパターン＋巨大矢印 ============ */
+.recruit{position:relative;margin:0;padding:0;border-bottom:0}
+.recruit__band{position:relative;background:linear-gradient(rgba(12,13,12,.78),rgba(12,13,12,.66)),url(photo-industry.jpg) center/cover no-repeat var(--ink);color:var(--paper);padding:16vh 7vw;overflow:hidden;
+  clip-path:polygon(0 42px,46% 42px,46% 0,100% 0,100% calc(100% - 42px),58% calc(100% - 42px),58% 100%,0 100%)}
+.recruit__band::before{content:"";position:absolute;inset:0;opacity:.16;
+  background:repeating-linear-gradient(to right,rgba(244,241,234,.5) 0 1px,transparent 1px 56px),
+             repeating-linear-gradient(to bottom,rgba(244,241,234,.35) 0 1px,transparent 1px 56px)}
+.recruit__inner{position:relative;display:flex;justify-content:space-between;align-items:center;gap:6vw}
+.recruit__txt .en{font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.recruit__txt h2{font-family:var(--jp);font-weight:900;font-size:clamp(1.8rem,4.4vw,3.6rem);letter-spacing:.08em;margin-top:20px;line-height:1.5}
+.recruit__txt p{font-size:14px;line-height:2;color:rgba(244,241,234,.72);margin-top:18px;max-width:480px}
+.recruit__arrow{flex:none;font-family:var(--en);font-weight:600;font-size:clamp(80px,10vw,150px);color:var(--red);line-height:1;transition:transform .4s}
+.recruit:hover .recruit__arrow{transform:translateX(18px)}
+@media(max-width:900px){
+  .recruit__band{clip-path:polygon(0 24px,40% 24px,40% 0,100% 0,100% calc(100% - 24px),60% calc(100% - 24px),60% 100%,0 100%)}
+  .recruit__inner{flex-direction:column;align-items:flex-start}
+}
+
+/* ============ 新着情報：段違いの白マス ============ */
+.news__rows{display:flex;flex-direction:column;gap:18px;margin-top:44px}
+.nrow{display:grid;grid-template-areas:"t b g";grid-template-columns:auto minmax(0,1fr) 56px;gap:30px;align-items:center;background:#fff;border:0.5px solid var(--line);padding:26px 30px}
+.nrow time{grid-area:t;writing-mode:vertical-rl;font-family:var(--en);font-size:11px;letter-spacing:.16em;color:#888}
+.nrow__body{grid-area:b}
+.nrow__cat{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.14em;padding:6px 16px}
+.nrow__body h3{font-family:var(--jp);font-weight:900;font-size:17px;line-height:1.7;letter-spacing:.04em;margin-top:14px}
+.nrow__go{grid-area:g;width:56px;height:56px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--en);font-size:19px;transition:background .25s}
+.nrow:hover .nrow__go{background:var(--red)}
+.nrow:hover .nrow__body h3{color:var(--red)}
+.nrow{transition:border-color .25s}
+.nrow:hover{border-color:var(--red)}
+@media(max-width:900px){
+  .nrow{grid-template-areas:"t t" "b g";grid-template-columns:minmax(0,1fr) 44px;gap:12px 16px;padding:16px 18px}
+  .nrow time{writing-mode:horizontal-tb}
+  .nrow__go{width:44px;height:44px;font-size:16px}
+}
+
+/* ============ フォトマーキー帯（WE MEASURE THE FUTURE） ============ */
+.strip{position:relative;overflow:hidden;height:46vh;min-height:340px;background:var(--ink)}
+.strip__bg{position:absolute;inset:0;background:url(photo-grain.jpg) center/cover no-repeat;filter:brightness(.8) saturate(.9)}
+.strip::after{content:"";position:absolute;inset:0;background:rgba(12,13,12,.28)}
+.strip__marquee{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:2;display:flex;white-space:nowrap;overflow:hidden}
+.strip__track{display:flex;flex-shrink:0;min-width:100%;animation:stripScroll 26s linear infinite}
+.strip__track span{font-family:var(--en);font-weight:600;text-transform:uppercase;line-height:1;font-size:clamp(64px,9.5vw,150px);letter-spacing:.02em;color:#fff;padding-right:1.1em}
+@keyframes stripScroll{to{transform:translateX(-100%)}}
+@media(prefers-reduced-motion:reduce){.strip__track{animation:none}}
+
+/* ============ フッター（ロゴ+住所／サイトマップ／CONTACTパネル） ============ */
+.foot{background:var(--paper);color:var(--ink);margin-left:0;padding:96px 7vw 36px;border-top:0.5px solid var(--line)}
+@media(max-width:900px){.foot{margin-left:0}}
+.foot__grid{display:grid;grid-template-columns:minmax(220px,.85fr) minmax(0,1fr) minmax(380px,.95fr);gap:4.5vw;align-items:start}
+.foot__brand img{height:38px}
+.foot__brand .name{font-size:14px;font-weight:700;letter-spacing:.08em;margin-top:24px}
+.foot__brand p{font-size:12.5px;line-height:2.05;color:#666;margin-top:12px}
+.foot__brand p a{text-decoration:underline;text-underline-offset:3px}
+.foot__brand p a:hover{color:var(--red)}
+.foot__nav{display:grid;grid-template-columns:1fr 1fr;gap:2px 44px;align-content:start}
+.foot__nav a{display:block;padding:9px 0;font-size:13.5px;font-weight:700;letter-spacing:.06em}
+.foot__nav a:hover{color:var(--red)}
+.foot__nav a.sub{position:relative;font-size:12px;font-weight:500;color:#666;padding:5px 0 5px 16px}
+.foot__nav a.sub::before{content:"";position:absolute;left:0;top:50%;width:9px;height:2px;background:var(--red)}
+.foot__contact{position:relative;z-index:3;margin-top:calc(-34vh - 96px);margin-right:-7vw;align-self:stretch;background:var(--ink);color:#fff;padding:72px 56px 64px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.foot__contact .en{font-family:var(--en);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.foot__contact h3{font-family:var(--jp);font-weight:900;font-size:clamp(20px,1.9vw,29px);letter-spacing:.04em;margin-top:22px;white-space:nowrap}
+.foot__contact p{font-size:14.5px;line-height:2.15;color:rgba(255,255,255,.78);margin-top:24px}
+.foot__contact .cbtn{display:inline-flex;align-items:center;gap:16px;margin-top:36px;background:#fff;color:var(--ink);font-family:var(--en);font-size:13.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:22px 46px;transition:background .25s,color .25s}
+.foot__contact .cbtn:hover{background:var(--red);color:#fff}
+.foot__recruit{display:flex;justify-content:space-between;align-items:center;gap:4vw;background:var(--red);color:#fff;padding:36px 7vw 36px 44px;margin:80px -7vw 0 0}
+.foot__recruit .rtxt .en{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.foot__recruit .rtxt h3{font-family:var(--jp);font-weight:900;font-size:clamp(18px,2vw,26px);letter-spacing:.06em;margin-top:10px}
+.foot__recruit .go{flex:none;display:inline-flex;align-items:center;gap:14px;border:0.5px solid #fff;padding:16px 30px;font-size:13px;font-weight:700;letter-spacing:.12em;transition:background .25s,color .25s}
+.foot__recruit:hover .go{background:#fff;color:var(--red)}
+.foot__bar{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:24px;border-top:0.5px solid var(--line);font-family:var(--en);font-size:11px;letter-spacing:.1em;color:#888}
+@media(max-width:900px){
+  .foot{padding:60px 24px 28px}
+  .foot__grid{grid-template-columns:1fr;gap:44px}
+  .foot__contact{margin-top:0;margin-right:-24px}
+  .foot__recruit{flex-direction:column;align-items:flex-start;padding:28px 24px;margin:48px -24px 0 0}
+  .foot__bar{flex-direction:column;gap:8px;align-items:flex-start}
+}
+.nav .nav__cta{background:#151618;color:#fff;}
+</style>
+<style id="dummy-fix">/* 下層: ヘッダー・レールは白地に黒ライン固定 */
+.nav{background:#fff;border-bottom-color:var(--line);}
+.nav .nav__logo{border-right-color:var(--line);}
+.nav .nav__logo img{filter:none;}
+.nav .nav__menu .nlink{color:var(--ink);}
+</style>
+<script>document.documentElement.classList.add('pt-init');</script>
+<style>html.pt-init{background:#ff0000;}html.pt-init body{visibility:hidden;}</style>
+<style id="fv-tweaks">
+/* ── ロゴ：他のヘッダーメニューと同じ帯（64px）内に収める。罫線はnav下辺の1本 ── */
+.nav .nav__logo img{height:28px;}
+@media(max-width:900px){.nav .nav__logo{padding:0 20px;}.nav .nav__logo img{height:26px;}}
+/* ── FV採用バナー：四角形の組み合わせ（ラベル小箱＋右端まで伸びる帯）・FV下端ベタ付け・リンクだけはみ出し ── */
+.fv .fv__cell--recruit{position:absolute;right:0;bottom:0;z-index:6;background:transparent;width:auto;max-width:min(780px,94%);display:flex;flex-direction:column;align-items:flex-start;}
+.fv .fv__cell--recruit .inner{background:transparent;padding:0;display:block;}
+.fv .fv__cell--recruit .ren{display:inline-block;background:var(--red);padding:22px 56px 16px 40px;transition:background .25s;}
+.fv .fv__cell--recruit h3{background:var(--red);margin:0;padding:24px 88px 32px 40px;transition:background .25s;}
+.fv .fv__cell--recruit:hover .ren,.fv .fv__cell--recruit:hover h3{background:#d60000;}
+.fv .fv__cell--recruit .fv__cell-link{position:absolute;top:100%;right:0;background:var(--ink);color:#fff;padding:15px 38px;transition:background .25s;}
+.fv .fv__cell--recruit .fv__cell-link:hover{background:var(--red);color:#fff;opacity:1;}
+.fv .fv__cell--recruit .fv__cell-link .arrow-i--w{color:#fff;}
+@media(max-width:700px){.fv .fv__cell--recruit h3{padding:18px 40px 24px 24px;font-size:16px;}.fv .fv__cell--recruit .ren{padding:16px 32px 12px 24px;}}
+/* ── お問い合わせ：ヘッダーが白背景のときは黒ボタン ── */
+.nav.is-solid .nav__cta{background:var(--ink);color:#fff;}
+.nav.is-solid .nav__cta:hover{background:var(--red);color:#fff;}
+body.menu-open .nav .nav__cta{background:var(--ink);color:#fff;}
+/* ── メインコピー：少しサイズダウン＆少し下げ ── */
+.fv__title .jp-main{font-size:clamp(2.4rem,5.9vw,5.5rem);}
+.fv__inner{padding-top:7vh;}
+/* ── セクション・ボタンのあしらい（赤四角の組み合わせ） ── */
+.gsec::before{content:"";position:absolute;top:0;left:0;width:26px;height:26px;background:var(--red);}
+.btn{position:relative;padding:20px 40px;font-size:13.5px;}
+.btn::after{content:"";position:absolute;width:26px;height:26px;background:var(--red);right:-34px;bottom:0;box-shadow:-34px 34px 0 var(--red);transition:background .25s,box-shadow .25s;}
+.btn::before{content:"";position:absolute;width:26px;height:26px;right:-34px;bottom:-34px;background:var(--red);opacity:0;transition:opacity .25s;}
+.btn:hover{background:var(--ink);}
+.btn:hover::after{background:var(--ink);box-shadow:-34px 34px 0 var(--ink);}
+.btn:hover::before{opacity:1;}
+/* ── SP：お問い合わせはハンバーガー内に格納（ヘッダーのボタンは非表示） ── */
+@media(max-width:900px){.nav__cta{display:none;}}
+</style>
+<style id="dummy-line-fix">
+.nav__menu,.nav__cta,.nav__lang{border-bottom-color:var(--line);}
+/* 下層: ロゴは常時 白箱＋カラーロゴ＋黒ライン（FV用の透過・白ロゴ指定を上書き） */
+.nav .nav__logo{background:#fff;border-right:0.5px solid var(--line);border-bottom:0.5px solid var(--line);}
+.nav .nav__logo img{filter:none;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="nav__logo" href="index.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
+  <nav class="nav__menu">
+    <div class="nitem">
+      <a class="nlink" href="#products">製品・技術<sup>04</sup></a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="men">Products</span><span class="mjp">製品・技術</span></div>
+        <div class="mega__links">
+          <a href="#"><i class="arrow-i">→</i>農産物用計量システム</a>
+          <a href="#"><i class="arrow-i">→</i>工業用計量システム</a>
+          <a href="#"><i class="arrow-i">→</i>穀類用計量システム</a>
+          <a href="#"><i class="arrow-i">→</i>その他・特殊用途</a>
+        </div>
+      </div></div>
+    </div>
+    <div class="nitem">
+      <a class="nlink" href="#">サービス案内</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="men">Service</span><span class="mjp">サービス案内</span></div>
+        <div class="mega__links">
+          <a href="#"><i class="arrow-i">→</i>保守・定期点検</a>
+          <a href="#"><i class="arrow-i">→</i>導入・設置サポート</a>
+          <a href="#"><i class="arrow-i">→</i>校正・検査</a>
+          <a href="#"><i class="arrow-i">→</i>修理・オーバーホール</a>
+        </div>
+      </div></div>
+    </div>
+    <div class="nitem"><a class="nlink" href="dummy.html">納入実績</a></div>
+    <div class="nitem">
+      <a class="nlink" href="#">会社案内</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="men">Company</span><span class="mjp">会社案内</span></div>
+        <div class="mega__links">
+          <a href="#"><i class="arrow-i">→</i>企業理念</a>
+          <a href="#"><i class="arrow-i">→</i>サービス拠点</a>
+          <a href="#"><i class="arrow-i">→</i>代表挨拶</a>
+          <a href="#"><i class="arrow-i">→</i>会社概要</a>
+        </div>
+      </div></div>
+    </div>
+    <div class="nitem"><a class="nlink" href="#">126年ヒストリー</a></div>
+    <div class="nitem">
+      <a class="nlink" href="#recruit">採用情報</a>
+      <div class="mega"><div class="mega__inner">
+        <div class="mega__lead"><span class="men">Recruit</span><span class="mjp">採用情報</span></div>
+        <div class="mega__links">
+          <a href="#"><i class="arrow-i">→</i>新卒採用</a>
+          <a href="#"><i class="arrow-i">→</i>社員インタビュー</a>
+          <a href="#"><i class="arrow-i">→</i>キャリア採用</a>
+          <a href="#"><i class="arrow-i">→</i>募集要項</a>
+        </div>
+      </div></div>
+    </div>
+  </nav>
+  <button class="burger" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a class="nav__cta" href="#">お問い合わせ</a>
+</header>
+
+<!-- タブレット/SP：格納メニュー -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav>
+    <div class="drawer__group">
+      <button class="drawer__top">製品・技術</button>
+      <div class="drawer__sub"><a href="#">農産物用計量システム</a><a href="#">穀類用計量システム</a><a href="#">工業用計量システム</a><a href="#">その他・特殊用途</a></div>
+    </div>
+    <div class="drawer__group">
+      <button class="drawer__top">サービス案内</button>
+      <div class="drawer__sub"><a href="#">保守・定期点検</a><a href="#">校正・検査</a><a href="#">導入・設置サポート</a><a href="#">修理・オーバーホール</a></div>
+    </div>
+    <a class="drawer__single" href="dummy.html">納入実績</a>
+    <div class="drawer__group">
+      <button class="drawer__top">会社案内</button>
+      <div class="drawer__sub"><a href="#">企業理念</a><a href="#">代表挨拶</a><a href="#">サービス拠点</a><a href="#">会社概要</a></div>
+    </div>
+    <a class="drawer__single" href="#">126年ヒストリー</a>
+    <div class="drawer__group">
+      <button class="drawer__top">採用情報</button>
+      <div class="drawer__sub"><a href="#">新卒採用</a><a href="#">キャリア採用</a><a href="#">社員インタビュー</a><a href="#">募集要項</a></div>
+    </div>
+    <a class="drawer__single" href="#">お問い合わせ</a>
+  </nav>
+</div>
+
+<!-- ============ FV ============ -->
+<section class="gsec" style="padding-top:140px;">
+  <p class="eyebrow">DELIVERY — 納入実績（遷移確認用ダミー）</p>
+  <h2 class="disp-jp">下層ページのダミーです。<br>幕の演出をご確認ください。</h2>
+</section>
+
+<div class="wrap">
+
+<section class="gsec">
+  <p class="eyebrow">BLOCK 01</p>
+  <h2 class="disp-jp">ブロックごとに幕がかかります</h2>
+  <p style="max-width:640px;line-height:2.1;margin-top:24px;">このページは遷移演出の確認用ダミーです。トップ（index_8）の「納入実績」リンクから遷移すると、赤い幕が各ブロックを覆ってから抜けていきます。下のボタンでトップへ戻ると、退場の幕（下から覆う）も確認できます。</p>
+  <a class="btn" href="index.html" style="margin-top:32px;">← トップへ戻る <span>→</span></a>
+</section>
+
+<section class="gsec">
+  <p class="eyebrow">BLOCK 02</p>
+  <h2 class="disp-jp">ダミーブロック</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;">
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#eee 0 2px,#f7f7f7 2px 14px);border:0.5px solid #ddd;"></div>
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#eee 0 2px,#f7f7f7 2px 14px);border:0.5px solid #ddd;"></div>
+    <div style="aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#eee 0 2px,#f7f7f7 2px 14px);border:0.5px solid #ddd;"></div>
+  </div>
+</section>
+
+<section class="gsec">
+  <p class="eyebrow">BLOCK 03</p>
+  <h2 class="disp-jp">ダミーブロック</h2>
+  <p style="max-width:640px;line-height:2.1;margin-top:24px;">ブロック数が多いほどスタガー（時間差）の流れが見えます。フッターの各ブロックにも個別に幕がかかります。</p>
+</section>
+
+</div>
+
+<footer class="foot">
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <img src="logo_r.png" alt="近江度量衡株式会社">
+      <p class="name">近江度量衡株式会社</p>
+      <p>〒525-0054<br>滋賀県草津市東矢倉三丁目11番70号<br>TEL 077-562-7111 ／ FAX 077-562-7116<br><a href="#">Google map</a></p>
+    </div>
+    <nav class="foot__nav">
+      <div>
+        <a href="index.html">トップページ</a>
+        <a href="#products">製品・技術</a>
+        <a class="sub" href="#">農産物用計量システム</a>
+        <a class="sub" href="#">穀類用計量システム</a>
+        <a class="sub" href="#">工業用計量システム</a>
+        <a class="sub" href="#">その他・特殊用途</a>
+        <a href="#">サービス案内</a>
+        <a href="dummy.html">納入実績</a>
+      </div>
+      <div>
+        <a href="#">会社案内</a>
+        <a href="#">126年ヒストリー</a>
+        <a href="#">新着情報</a>
+        <a href="#recruit">採用情報</a>
+        <a href="#">お問い合わせ</a>
+        <a href="#">プライバシーポリシー</a>
+      </div>
+    </nav>
+    <div class="foot__contact">
+      <span class="en">( Contact )</span>
+      <h3>お問い合わせ・ご相談</h3>
+      <p>お気軽にご相談ください。<br>お見積もり依頼も可能です。</p>
+      <a class="cbtn" href="#">Contact Form <i class="arrow-i" style="color:inherit">→</i></a>
+    </div>
+  </div>
+  <a class="foot__recruit" id="recruit" href="#">
+    <span class="rtxt">
+      <span class="en">Recruitment 2027</span>
+      <h3>「いきる」の単位とは、なんだろう。</h3>
+    </span>
+    <span class="go">採用情報を見る <i class="arrow-i" style="color:inherit">→</i></span>
+  </a>
+  <div class="foot__bar"><span>OMISCALE CO.,LTD.</span><span>© 近江度量衡株式会社 ALL RIGHTS RESERVED.</span></div>
+</footer>
+
+<script>
+/* タブレット：ハンバーガー格納メニュー */
+(function(){
+  var burger = document.querySelector('.burger');
+  var drawer = document.getElementById('drawer');
+  if(!burger || !drawer) return;
+  function set(open){
+    drawer.classList.toggle('is-open', open);
+    burger.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open?'true':'false');
+    drawer.setAttribute('aria-hidden', open?'false':'true');
+  }
+  burger.addEventListener('click', function(){ set(!drawer.classList.contains('is-open')); });
+  drawer.querySelectorAll('.drawer__top').forEach(function(btn){
+    btn.addEventListener('click', function(){ btn.parentNode.classList.toggle('is-open'); });
+  });
+  drawer.querySelectorAll('a').forEach(function(el){ el.addEventListener('click', function(){ set(false); }); });
+})();
+/* ヘッダー：初期透明→スクロールで白背景 */
+(function(){
+  var nav = document.querySelector('.nav');
+  function u(){ var on = window.scrollY > 40; nav.classList.toggle('is-solid', on); }
+  window.addEventListener('scroll', u, {passive:true});
+  u();
+})();
+/* マスごとのスクロール出現 */
+(function(){
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  },{threshold:.18});
+  document.querySelectorAll('.rv:not(.is-in)').forEach(function(el){ io.observe(el); });
+})();
+/* 製品ショーケース：計量皿ドロップ＋針振れで4製品を巡回 */
+(function(){
+  var DATA = [
+    {t:'農産物用計量システム', s:'Agricultural Weighing System', m:'Calistar / Millistar / Rollerstar'},
+    {t:'穀類用計量システム', s:'Grain Weighing System', m:'全国約2,000施設'},
+    {t:'工業用計量システム', s:'Industrial Weighing System', m:'ガラス・鉄鋼・化学 ほか'},
+    {t:'その他・特殊用途', s:'Special Applications', m:'動物計量・研究用途 ほか'}
+  ];
+  var imgs = [].slice.call(document.querySelectorAll('.svc-img'));
+  if(!imgs.length) return;
+  var nos = [].slice.call(document.querySelectorAll('.svc-ruler__no'));
+  var pointer = document.querySelector('.svc-ruler__pointer');
+  var cell = document.querySelector('.svc-cell');
+  var cur = 0, timer = null;
+  function go(i){
+    if(i===cur) return;
+    imgs[cur].classList.remove('is-on');
+    imgs[i].classList.add('is-on');
+    nos[cur].classList.remove('is-on');
+    nos[i].classList.add('is-on');
+    if(pointer) pointer.style.top = nos[i].style.top;
+    cell.classList.add('is-fade');
+    setTimeout(function(){
+      var d = DATA[i];
+      cell.querySelector('.svc-cell__ttl').textContent = d.t;
+      cell.querySelector('.svc-cell__sub').textContent = d.s;
+      cell.querySelector('.svc-cell__meta').textContent = d.m;
+      cell.classList.remove('is-fade');
+    }, 240);
+    cur = i;
+  }
+  function next(){ go((cur+1)%imgs.length); }
+  function play(){ stop(); timer = setInterval(next, 4200); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+  nos.forEach(function(btn,i){ btn.addEventListener('click', function(){ go(i); play(); }); });
+  var show = document.querySelector('.svc-show');
+  show.addEventListener('mouseenter', stop);
+  show.addEventListener('mouseleave', play);
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches) play();
+})();
+/* 数字カウントアップ（表示された時に開始） */
+(function(){
+  function fmt(n, mode){ return mode==='comma' ? n.toLocaleString('en-US') : String(n); }
+  function run(el){
+    var to = parseInt(el.getAttribute('data-to'),10);
+    var mode = el.getAttribute('data-fmt');
+    var t0 = null, dur = 1600;
+    function step(t){
+      if(!t0) t0 = t;
+      var p = Math.min((t-t0)/dur, 1);
+      var e = 1-Math.pow(1-p,3);
+      el.textContent = fmt(Math.round(to*e), mode);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+  },{threshold:.6});
+  document.querySelectorAll('.cnt').forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script src="_pt.js"></script>
+
+</body>
+</html>
