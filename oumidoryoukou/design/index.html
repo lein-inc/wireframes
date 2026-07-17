@@ -224,8 +224,8 @@ body.menu-open{overflow:hidden}
   .hist__txt{padding:30px 26px 34px}
 }
 /* ============ 採用動線（見出し＋新卒/中途の大窓・左右で上下ずらし） ============ */
-.recjoin{background:#000;color:#fff;padding:150px 7vw 170px;overflow:hidden}
-.recjoin::after{content:"";position:absolute;left:0;bottom:100%;width:28%;height:64px;background:#000}
+.recjoin{background:#000;color:#fff;padding:150px 7vw 170px}
+.recjoin::after{content:"";position:absolute;left:0;bottom:100%;width:60%;height:26px;background:#000}
 /* FVと同じ6分割の薄い点線罫線をセクション全面に */
 .recjoin::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   background-image:
@@ -265,7 +265,7 @@ body.menu-open{overflow:hidden}
 .recjoin__card--mid:hover .go{background:#000;color:#fff}
 @media(max-width:900px){
   .recjoin{padding:90px 5vw 110px}
-  .recjoin::after{width:36%;height:36px}
+  .recjoin::after{width:64%;height:16px}
   .recjoin__head{grid-template-columns:1fr;gap:18px}
   .recjoin__grid{grid-template-columns:1fr;gap:20px;margin-top:44px}
   .recjoin__card{min-height:320px;padding:44px 24px}
