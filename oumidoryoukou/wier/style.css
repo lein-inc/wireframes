@@ -689,7 +689,7 @@ body{padding-top:64px}
 .wnav__cta:hover{opacity:.65}
 
 /* --- メガメニュー --- */
-.wmega{position:fixed;left:54px;right:0;top:64px;background:#fff;border-bottom:1px solid var(--wline);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s,transform .22s,visibility .22s;z-index:29}
+.wmega{position:fixed;left:0;right:0;top:64px;background:#fff;border-bottom:1px solid var(--wline);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s,transform .22s,visibility .22s;z-index:29}
 .witem:hover .wmega{opacity:1;visibility:visible;transform:none}
 .wmega__inner{display:grid;grid-template-columns:240px minmax(0,1fr);gap:6vw;padding:40px 7vw 44px}
 .wmega__lead .men{display:block;font-family:var(--font-en);font-size:24px;font-weight:600;text-transform:uppercase;color:var(--wink);line-height:1}
@@ -737,7 +737,7 @@ body.menu-open{overflow:hidden}
 .wrail__item b{font-family:var(--font-en);font-size:10px;letter-spacing:.18em;font-weight:600;margin-bottom:14px;color:#888;}
 .wrail__item span{font-size:11.5px;letter-spacing:.14em;line-height:1.35;max-height:52vh;overflow:hidden;}
 .wrail__tick{width:8px;flex:1;margin:20px 0;background:repeating-linear-gradient(to bottom,var(--wline) 0 1px,transparent 1px 10px)}
-.wwrap{margin-left:54px}
+.wwrap{margin-left:0}
 @media(max-width:900px){.wrail{display:none}.wwrap{margin-left:0}}
 
 /* --- 見出しトーン：明朝→ゴシック900＋Oswald eyebrow --- */

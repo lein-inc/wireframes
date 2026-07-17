@@ -105,14 +105,7 @@ def header(active="", recruit=False, overlay=False):
   <button class="wburger" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
   <a class="wnav__cta" href="contact.html">お問い合わせ</a>
 </header>
-<div class="wdrawer" id="wdrawer" aria-hidden="true"><nav>{dr_html}<a class="wdrawer__single" href="contact.html">お問い合わせ</a></nav></div>
-<div class="wrail"><span class="wrail__cap">News</span>
-<div class="wrail__news">
-<a class="wrail__item is-on" href="news-detail.html"><b>2026.07.01</b><span>夏季休業のお知らせ（8/13〜8/16）</span></a>
-<a class="wrail__item" href="news-detail.html"><b>2026.06.20</b><span>フルオートドライヤー納入事例を公開しました</span></a>
-<a class="wrail__item" href="news-detail.html"><b>2026.06.01</b><span>2027年度 採用情報を更新しました</span></a>
-</div>
-<span class="wrail__label">Kusatsu, Shiga</span></div>'''
+<div class="wdrawer" id="wdrawer" aria-hidden="true"><nav>{dr_html}<a class="wdrawer__single" href="contact.html">お問い合わせ</a></nav></div>'''
 
 def breadcrumb(items):
     parts = []
@@ -199,131 +192,134 @@ PAGES = []  # 後でindex生成に使う: (No, 名称, url, file, group, cms)
 
 # ======================= A. TOP =======================
 top_body = '''
+<!-- ① FV：全画面動画＋メインコピー（左中央）＋採用バナー -->
 <section class="fv fv--full fv--center">
   <div class="fv__bg">
-    <div class="fv__ph"><span>FV：全画面動画エリア（枠のみ・動画は後で挿入）</span></div>
+    <div class="fv__ph"><span>FV：全画面動画エリア（工場・選果ライン映像）</span></div>
   </div>
   <div class="fv__content">
-    <h1 class="fv__title"><span>「いきる」をはかり、</span><span>豊かな世界へ。</span></h1>
+    <h1 class="fv__title"><span>“いきる”をはかり、</span><span>豊かな世界へ</span></h1>
+    <p style="margin-top:16px;color:#888;font-size:12px;letter-spacing:.2em;">WE MEASURE THE VALUE OF LIVING.</p>
   </div>
   <div class="fv__scroll">SCROLL</div>
 </section>
 
-<!-- ② 採用テザー（FV直下バナー） -->
+<!-- ② 採用バナー（デザインではFV右下に重ねて表示） -->
 <div class="recruit-banner">
   <div class="recruit-banner__inner">
-    <div class="recruit-banner__text"><h2>「いきる」の単位とは、なんだろう。</h2><p>RECRUITMENT 採用情報</p></div>
-    <div class="recruit-banner__cta"><a class="btn btn--white" href="recruit.html">採用サイトへ ↗</a></div>
+    <div class="recruit-banner__text"><h2>いきるの単位とは、なんだろう。</h2><p>RECRUITMENT 2027</p></div>
+    <div class="recruit-banner__cta"><a class="btn btn--white" href="recruit.html">採用情報を見る ↗</a></div>
   </div>
 </div>
 
-<!-- ③ PRODUCTS -->
+<!-- ③ PHILOSOPHY 企業理念（ステートメント＋滋賀マップ） -->
 <section class="section">
   <div class="container">
-    <p class="section-meta">Products &amp; Technology</p>
-    <h2 class="section-title">製品・技術紹介</h2>
-    <div class="grid-4" style="margin-top:32px;">
-      <a class="card" href="products-agricultural.html"><div class="card__img">''' + ph('農産物 選果イメージ') + '''</div><div class="card__body"><div class="card__title">農産物用計量システム</div><p class="card__text">果物・野菜向けの計量・選別システム。品質管理・等級選別に対応。</p></div></a>
-      <a class="card" href="products-weighing.html"><div class="card__img">''' + ph('穀類施設イメージ') + '''</div><div class="card__body"><div class="card__title">穀類用計量システム</div><p class="card__text">米・大豆などの穀類計量システム。全国約2,000施設への納入実績。</p></div></a>
-      <a class="card" href="products-industry.html"><div class="card__img">''' + ph('工場ラインイメージ') + '''</div><div class="card__body"><div class="card__title">工業用計量システム</div><p class="card__text">ガラス・鉄鋼・肥料・化学など7カテゴリに対応する計量ソリューション。</p></div></a>
-      <a class="card" href="products-other.html"><div class="card__img">''' + ph('特殊用途イメージ') + '''</div><div class="card__body"><div class="card__title">その他・特殊用途</div><p class="card__text">家畜・競走馬向け動物計量など、特殊用途の計量システム。</p></div></a>
+    <p class="section-meta">Philosophy</p>
+    <h2 class="section-title">企業理念</h2>
+    <div class="grid-2" style="margin-top:32px;align-items:start;">
+      <div>
+        <p class="section-lead">私たちの暮らしは、数えきれない「はかる」で、できている。</p>
+        <p class="section-lead">一粒の米も、一滴の水も、正しくはかられて、はじめて価値になる。公正な取引も、たしかな品質も、安心できる毎日も、すべては、正確にはかることから始まる。</p>
+        <p class="section-lead">1900年の創業から126年。近江度量衡は、あらゆる現場の「はかる」に、一品一様のものづくりで応えつづけてきた。</p>
+        <p class="section-lead">暮らしを、産業を、その先の未来を。私たちは、これからもはかりつづける。</p>
+        <h3 style="margin-top:32px;font-size:22px;">近江から、世界をはかる</h3>
+        <a class="btn btn--outline btn--sm" href="company.html" style="margin-top:24px;">会社案内を見る</a>
+      </div>
+      <div>''' + ph('滋賀県マップ（草津市にピン＋「近江度量衡 滋賀県草津市」ラベル）','','aspect-ratio:3/4;max-width:340px;margin-left:auto;') + '''</div>
     </div>
   </div>
 </section>
 
-<!-- ④ 納入実績テザー -->
+<!-- ④ PRODUCTS 製品・技術（詳細表示＋カテゴリタブ切替） -->
 <section class="section section--grey">
   <div class="container">
-    <div class="grid-2" style="align-items:center;">
-      <div>''' + ph('導入現場 写真（選果場／カントリーエレベーター／工場ライン）','','aspect-ratio:4/3') + '''</div>
+    <p class="section-meta">Products</p>
+    <h2 class="section-title">現場の「はかる」に、一品一様で応える。</h2>
+    <p class="section-lead">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。</p>
+    <div class="grid-2" style="margin-top:32px;align-items:center;">
       <div>
-        <p class="section-meta">Delivery Record</p>
-        <h2 class="section-title">導入事例・納入実績</h2>
-        <p class="section-lead">農産物選果場・米麦カントリーエレベーター・工場ラインなど、多岐にわたる現場への納入実績をご紹介します。</p>
-        <a class="btn btn--outline btn--sm" href="delivery.html" style="margin-top:24px;">納入実績を見る</a>
+        <div class="section-meta">01</div>
+        <h3 style="font-size:22px;">農産物用計量システム</h3>
+        <p style="color:#888;font-size:11px;letter-spacing:.15em;margin-top:4px;">AGRICULTURAL WEIGHING SYSTEM</p>
+        <p class="card__text" style="margin-top:14px;">選果場や集出荷施設で使われる、青果物の計量・選別システム。品目や処理量、施設のレイアウトに合わせて、搬送から計量・箱詰めまでのライン全体を一品一様で設計します。（3行程度の説明文）</p>
+        <a class="btn btn--outline btn--sm" href="products.html" style="margin-top:20px;">製品・技術を詳しく見る</a>
+      </div>
+      <div>''' + ph('選択中システムの代表画像（16:9・タブ切替で入替）','','aspect-ratio:16/9') + '''</div>
+    </div>
+    <div class="grid-4" style="margin-top:24px;">
+      <a class="card" href="products-agricultural.html"><div class="card__body"><div class="card__title" style="font-size:13px;">01 農産物用計量システム</div></div></a>
+      <a class="card" href="products-weighing.html"><div class="card__body"><div class="card__title" style="font-size:13px;">02 穀類用計量システム</div></div></a>
+      <a class="card" href="products-industry.html"><div class="card__body"><div class="card__title" style="font-size:13px;">03 工業用計量システム</div></div></a>
+      <a class="card" href="products-other.html"><div class="card__body"><div class="card__title" style="font-size:13px;">04 その他・特殊用途</div></div></a>
+    </div>
+    <div class="cms-note">★ タブ（01〜04）クリックで上の詳細テキストと画像が切り替わる想定。</div>
+  </div>
+</section>
+
+<!-- ⑤ NUMBERS 数字で見る（納入実績）＋納入先ロゴ -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="statement__en">Numbers</p>
+    <h2 class="section-title" style="color:#fff;">数字で見る近江度量衡</h2>
+    <p class="section-lead" style="color:#bbb;">創業126年。全国約2,000施設へ、一品一様の計量システムを届けてきました。</p>
+    <div class="grid-2" style="margin-top:40px;">
+      <div style="text-align:center;">''' + ph('代表写真：大規模納入施設（16:9）','','aspect-ratio:16/9') + '''<div style="font-size:44px;font-weight:700;margin-top:20px;">2,000<span style="font-size:18px;">＋</span></div><p style="color:#bbb;font-size:12px;margin-top:8px;">累計納入施設数<br>全国のJA・工場・プラント</p></div>
+      <div style="text-align:center;">''' + ph('代表写真：サービス現場（16:9）','','aspect-ratio:16/9') + '''<div style="font-size:44px;font-weight:700;margin-top:20px;">9<span style="font-size:18px;">拠点</span></div><p style="color:#bbb;font-size:12px;margin-top:8px;">サービス網<br>国内6＋海外3</p></div>
+    </div>
+    <div class="cms-note" style="margin-top:32px;">★ 数字はスクロール到達でカウントアップ→強調表示の演出想定。</div>
+    <div style="margin-top:24px;">''' + ph('主な納入先：企業ロゴ約20社（横に流れるスクロール表示）','','height:80px') + '''</div>
+  </div>
+</section>
+
+<!-- ⑥ HISTORY 126年ヒストリー動線 -->
+<section class="section">
+  <div class="container">
+    <div class="grid-2" style="align-items:center;">
+      <div>''' + ph('背景写真：1900年創業期の店舗（モノクロ）','','aspect-ratio:4/3') + '''</div>
+      <div>
+        <p class="section-meta">History</p>
+        <h2 class="section-title">計量ひとすじ、126年。</h2>
+        <p class="section-lead">明治33年、近江の地で創業。一世紀を超えて「はかる」に向き合いつづけた歩みを、年表でたどる。</p>
+        <a class="btn btn--outline btn--sm" href="history.html" style="margin-top:24px;">126年ヒストリーを見る</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ⑤ STATEMENT -->
-<section class="section section--dark">
-  <div class="container statement">
-    <p class="statement__en">OUR STATEMENT</p>
-    <h2 class="statement__main">「いきる」をはかり、豊かな世界へ。</h2>
-    <p class="statement__body">1900年の創業以来、客観的に、正確に「はかる」ことを命題として歩んできた近江度量衡。農産物から工業製品まで——あらゆる現場で今も使われ続けている、現在進行形の技術力と誠実さ。「はかる」という仕事を通じて、日本と世界の社会を確かに支え続けること。それが、126年間変わらない私たちの使命です。</p>
-    <div class="grid-3" style="margin-top:48px;text-align:left;">
-      <div class="pillar"><div class="pillar__no">社是 01</div><div class="pillar__title">社会への貢献</div><p class="pillar__body">企業を通じた社会貢献と従業員の生活向上</p></div>
-      <div class="pillar"><div class="pillar__no">社是 02</div><div class="pillar__title">技術の公用</div><p class="pillar__body">技術発展と優良品の製造</p></div>
-      <div class="pillar"><div class="pillar__no">社是 03</div><div class="pillar__title">互助の精神</div><p class="pillar__body">職場の繁栄に向けた互助・協力</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ⑥ HISTORY ダイジェスト -->
-<section class="section">
-  <div class="container">
-    <p class="section-meta">126 Years History</p>
-    <h2 class="section-title">明治から令和へ。測り続けた126年。</h2>
-    <p class="section-lead">1900年の創業から現在まで、時代とともに進化してきた近江度量衡の歩みをダイジェストでご紹介します。</p>
-    <div class="timeline" style="margin-top:32px;">
-      <div class="timeline-item"><div class="timeline-year"><span class="timeline-year__era">明治33年</span><span class="timeline-year__num">1900</span></div><div class="timeline-dot"></div><div class="timeline-content"><h3>創業</h3><p>滋賀県にて計量器の製造・販売を開始。農産物の取引計量を支える地域の職人集団として出発。</p></div></div>
-      <div class="timeline-item"><div class="timeline-year"><span class="timeline-year__era">昭和中期</span><span class="timeline-year__num">1950s</span></div><div class="timeline-dot"></div><div class="timeline-content"><h3>選果機需要が急拡大</h3><p>高度経済成長期、農協向け選果・計量システムの供給体制を確立。全国への展開が始まる。</p></div></div>
-      <div class="timeline-item"><div class="timeline-year"><span class="timeline-year__era">平成12年</span><span class="timeline-year__num">2000</span></div><div class="timeline-dot"></div><div class="timeline-content"><h3>ISO 9001 認証取得</h3><p>品質保証体制を国際規格で整備。全数検査・精度管理の仕組みを標準化。</p></div></div>
-      <div class="timeline-item"><div class="timeline-year"><span class="timeline-year__era">平成期</span><span class="timeline-year__num">2010s</span></div><div class="timeline-dot"></div><div class="timeline-content"><h3>海外展開開始（上海・バンコク・韓国）</h3><p>アジアの農産物・食品産業の成長とともに海外3拠点を設立。技術と誇りを海外へ。</p></div></div>
-      <div class="timeline-item"><div class="timeline-year"><span class="timeline-year__era">令和7年</span><span class="timeline-year__num">2025</span></div><div class="timeline-dot"></div><div class="timeline-content"><h3>創業126周年</h3><p>国内6拠点・海外3拠点・累計2,000施設への納入実績。次の126年へ向けたWebリニューアルプロジェクト進行中。</p></div></div>
-    </div>
-    <a class="btn btn--outline btn--sm" href="history.html" style="margin-top:32px;">126年ヒストリーを見る</a>
-  </div>
-</section>
-
-<!-- ⑦ RECRUITMENT -->
+<!-- ⑦ RECRUIT 採用動線（新卒／中途） -->
 <section class="section section--dark theme-recruit" style="background:#111315;">
   <div class="container">
-    <p class="statement__en" style="color:#888;">RECRUITMENT</p>
-    <h2 class="statement__main" style="text-align:left;color:#fff;">「いきる」の単位とは、なんだろう。</h2>
-    <p class="section-lead" style="color:#bbb;">地に足のついた仕事のリアル・職場環境・社員の声——飾らず正直に。あなたの確かな仕事で、豊かな未来を担う力になる。</p>
+    <p class="statement__en" style="color:#888;">Recruit</p>
+    <h2 class="statement__main" style="text-align:left;color:#fff;">「はかる」の未来を、一緒につくる仲間へ。</h2>
+    <p class="section-lead" style="color:#bbb;">1900年から続く「はかる」のものづくりを、次の世代へ。設計から製造・施工・保守まですべてを自社で担う近江度量衡で、あなたの力を活かしませんか。</p>
     <div class="entry-split" style="margin-top:40px;">
-      <div class="entry-card"><div class="entry-card__label">NEW GRADUATE 新卒採用</div><div class="entry-card__copy">「未来を、ここからはかる。」</div><p class="entry-card__desc">理系・工学系だけじゃない。着実にものをつくる誠実さに共感できる人を求めています。</p><a class="btn btn--red" href="recruit-jobs-graduate.html" style="background:#111315;color:#fff;">新卒採用を見る</a></div>
-      <div class="entry-card"><div class="entry-card__label">MID-CAREER 中途採用</div><div class="entry-card__copy">「培った経験を、126年の精度に加えてください。」</div><p class="entry-card__desc">年齢・業界不問。あなたの経験が、次の100年の基盤になる。</p><a class="btn btn--red" href="recruit-jobs-career.html" style="background:#111315;color:#fff;">中途採用を見る</a></div>
+      <div class="entry-card"><div class="entry-card__label">NEW GRADUATES 新卒採用</div><p class="entry-card__desc">文系・理系は問いません。ものづくりを一から学び、一品一様の計量システムを担う技術者へ。</p><a class="btn btn--red" href="recruit-jobs-graduate.html" style="background:#111315;color:#fff;">募集要項を見る</a></div>
+      <div class="entry-card"><div class="entry-card__label">MID-CAREER 中途採用</div><p class="entry-card__desc">経験を、現場で活かす。設計・製造・制御・営業など、各職種で仲間を募集しています。</p><a class="btn btn--red" href="recruit-jobs-career.html" style="background:#111315;color:#fff;">募集要項を見る</a></div>
     </div>
   </div>
 </section>
 
-<!-- ⑧ PEOPLE -->
-<section class="section section--grey">
-  <div class="container">
-    <p class="section-meta">People</p>
-    <h2 class="section-title">技術と誇りを持って働く、近江の現場のことば。</h2>
-    <p class="section-lead">現場・設計・営業——それぞれの視点で語る、近江度量衡の仕事。''' + todo('実在する社員情報・コメントに差し替え') + '''</p>
-    <div class="grid-3" style="margin-top:32px;">
-      <div class="interview-card"><div class="interview-card__img">''' + ph('社員写真') + '''</div><div class="interview-card__body"><div class="interview-card__dept">製造部</div><div class="interview-card__name">山田 〇〇</div><p class="interview-card__quote">毎回違う課題に向き合うから、技術者として本当に成長できる。誇りを持てる仕事です。</p></div></div>
-      <div class="interview-card"><div class="interview-card__img">''' + ph('社員写真') + '''</div><div class="interview-card__body"><div class="interview-card__dept">設計部</div><div class="interview-card__name">鈴木 〇〇</div><p class="interview-card__quote">図面通りにつくるのではなく、現場に合わせてつくる。グローバルな現場を支える実感があります。</p></div></div>
-      <div class="interview-card"><div class="interview-card__img">''' + ph('社員写真') + '''</div><div class="interview-card__body"><div class="interview-card__dept">営業部</div><div class="interview-card__name">田中 〇〇</div><p class="interview-card__quote">お客様の現場を見て、何が必要か考える。「いきる」をはかるという仕事の意味がここにあります。</p></div></div>
-    </div>
-    <a class="btn btn--outline btn--sm" href="recruit-interview.html" style="margin-top:32px;">社員インタビューを見る</a>
-  </div>
-</section>
+<!-- ⑧ フォトマーキー帯 -->
+<div>''' + ph('フォトマーキー帯：現場写真背景＋「WE MEASURE THE FUTURE」テキストが横に流れる','','height:140px') + '''</div>
 
-<!-- ⑨ NEWS -->
+<!-- ⑨ NEWS 新着情報 -->
 <section class="section">
   <div class="container">
     <p class="section-meta">News</p>
     <h2 class="section-title">新着情報 ''' + cms('クライアント更新') + '''</h2>
     <ul class="news-list" style="margin-top:24px;">
-      <li class="news-item"><span class="news-item__date">2025.06.01</span><span class="news-item__cat">お知らせ</span><span class="news-item__title">北海道営業所を開設しました</span></li>
-      <li class="news-item"><span class="news-item__date">2025.03.01</span><span class="news-item__cat">お知らせ</span><span class="news-item__title">会社設立126周年を達成しました</span></li>
-      <li class="news-item"><span class="news-item__date">2025.04.01</span><span class="news-item__cat">採用</span><span class="news-item__title">2027年度採用エントリー受付開始のご案内</span></li>
+      <li class="news-item"><span class="news-item__date">2026.08.13</span><span class="news-item__cat">お知らせ</span><span class="news-item__title">札幌営業所を移転しました</span></li>
+      <li class="news-item"><span class="news-item__date">2026.08.10</span><span class="news-item__cat">休業案内</span><span class="news-item__title">夏季休業のお知らせ（8/13〜8/16）</span></li>
+      <li class="news-item"><span class="news-item__date">2026.07.15</span><span class="news-item__cat">プレスリリース</span><span class="news-item__title">新型フルオートドライヤーシステムを発表しました</span></li>
     </ul>
-    <div class="cms-note">★ 表示はサンプル。実際の記事はクライアントがWordPress管理画面から都度更新（月1〜2本）。</div>
-    <a class="btn btn--outline btn--sm" href="news.html" style="margin-top:24px;">新着情報一覧へ</a>
+    <div class="cms-note">★ 記事はWordPressから更新。カテゴリタグは複数付与あり。</div>
+    <a class="btn btn--outline btn--sm" href="news.html" style="margin-top:24px;">記事一覧はこちら</a>
   </div>
 </section>
 '''
-# 【TOP は別管理】TOPページは d_3 デザインベースの専用HTML（モノトーン・ダミー、自己完結のCSS/JS）を
-#   手管理しているため、build.py では top.html を生成・上書きしない。
-#   （旧ワイヤーTOPの top_body は未使用。レイアウト参考として残置）
-# page("top.html", "近江度量衡株式会社｜「いきる」をはかり、豊かな世界へ。", top_body, active="", overlay=True)
+# 2026-07-17: TOPデザイン（design/index.html）の構成をワイヤーに反映（段差装飾・文字強弱・有機レイアウトは排除しシンプル化）
+page("top.html", "近江度量衡株式会社｜「いきる」をはかり、豊かな世界へ。", top_body, active="", overlay=True)
 PAGES.append(("A","トップページ","/","top.html","corp",False))
 
 # ======================= B. 製品・技術紹介 =======================
