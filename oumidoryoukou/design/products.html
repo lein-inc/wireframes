@@ -4,7 +4,7 @@
 <script src="_auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>近江度量衡 — index_8 · マス目グリッド（gmining参考）</title>
+<title>製品・技術｜近江度量衡株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -618,105 +618,11 @@ body.menu-open .nav{background:transparent;border:none}
 </head>
 <body>
 
-<!-- ▼▼ LOADER実験（初期表示ローディング。不要ならこのブロックごと削除でOK） ▼▼ -->
-<style id="ldr-css">
-#loader{--ldrmw:clamp(70px,7.5vw,110px);--ldrgap:30px;position:fixed;inset:0;z-index:9990;pointer-events:none}
-#loader .ldr__bg{position:absolute;inset:0;background:var(--red);transition:transform .75s cubic-bezier(.7,0,.25,1)}
-#loader.is-out .ldr__bg{transform:translateY(100%)}
-.ldr__box{position:absolute;left:0;top:0;visibility:hidden;display:flex;flex-direction:column;align-items:flex-start;transition:transform .7s cubic-bezier(.65,0,.3,1),opacity .55s}
-#loader.is-fade .ldr__box{opacity:0}
-/* 行＝バー＋テキスト。バーの縦幅は各行の文字高さと同じ（3行=3本） */
-.ldr__row{display:flex;align-items:center;gap:var(--ldrgap);font-size:clamp(2.3rem,5.6vw,5.2rem);line-height:1.32}
-.ldr__bar{display:block;flex:none;width:var(--ldrmw);height:.94em;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
-#loader.is-in .ldr__row:nth-child(1) .ldr__bar{transition-delay:.05s}
-#loader.is-in .ldr__row:nth-child(2) .ldr__bar{transition-delay:.29s}
-#loader.is-in .ldr__row:nth-child(3) .ldr__bar{transition-delay:.53s}
-#loader.is-in .ldr__bar{transform:scaleX(1)}
-.ldr__txt{display:block;font-family:"Gen Interface JP Display",var(--jp);font-weight:800;font-size:inherit;line-height:inherit;letter-spacing:.04em;color:#fff;opacity:0;transform:translateX(14px);transition:opacity .4s,transform .45s cubic-bezier(.2,.8,.2,1)}
-.ldr__txt b{font-weight:inherit}
-.ldr__txt .lg{font-size:1.16em}
-.ldr__txt .sm{font-size:.64em}
-#loader.is-in .ldr__row:nth-child(1) .ldr__txt{transition-delay:.16s}
-#loader.is-in .ldr__row:nth-child(2) .ldr__txt{transition-delay:.4s}
-#loader.is-in .ldr__row:nth-child(3) .ldr__txt{transition-delay:.64s}
-#loader.is-in .ldr__txt{opacity:1;transform:none}
-/* 左移動＝一連のモーション：箱の水平スライドと同時に、バーが縮んで消え、
-   テキストはバーのあった位置（FVコピー位置）まで続けて滑る */
-#loader.is-left .ldr__bar{transform:scaleX(0)!important;transition:transform .6s cubic-bezier(.65,0,.3,1)!important}
-#loader.is-left .ldr__row:nth-child(2) .ldr__bar{transition-delay:.06s!important}
-#loader.is-left .ldr__row:nth-child(3) .ldr__bar{transition-delay:.12s!important}
-#loader.is-left .ldr__txt{transform:translateX(calc(-1*(var(--ldrmw) + var(--ldrgap))))!important;transition:transform .7s cubic-bezier(.65,0,.3,1)!important;transition-delay:0s!important;opacity:1}
-html.ldr-on .fv__head{opacity:0}
-html:not(.ldr-on) .fv__head{transition:opacity .6s}
-</style>
-<div id="loader" aria-hidden="true">
-  <div class="ldr__bg"></div>
-  <div class="ldr__box">
-    <div class="ldr__row"><i class="ldr__bar"></i><span class="ldr__txt"><b class="lg">いきる</b><b class="sm">を</b></span></div>
-    <div class="ldr__row"><i class="ldr__bar"></i><span class="ldr__txt"><b class="lg">はかり</b><b class="sm">、</b></span></div>
-    <div class="ldr__row"><i class="ldr__bar"></i><span class="ldr__txt"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span></div>
-  </div>
-</div>
-<script>
-(function(){
-  var l=document.getElementById('loader');
-  if(!l) return;
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ l.remove(); return; }
-  /* ページを離れる時のスクロール位置を保存（次回ロード時の「ページ頭かどうか」判定用。
-     ブラウザのスクロール復元はDOMContentLoadedより後なので、復元前に自前の記録で判定する） */
-  var prevY=0; try{ prevY=+(sessionStorage.getItem('ldrY')||0); }catch(e){}
-  window.addEventListener('pagehide', function(){ try{ sessionStorage.setItem('ldrY', String(window.scrollY||0)); }catch(e){} });
-  /* ★最初に判定：ページ頭以外（スクロール復元見込み or アンカー付き）ならフルローディングは出さず、
-     従来の赤パネルがパラパラ捲れる入場（_pt.js）に任せる */
-  if(prevY > 40 || location.hash){ l.remove(); return; }
-  document.documentElement.classList.add('ldr-on');
-  var de=document.documentElement, bo=document.body;
-  var box=l.querySelector('.ldr__box');
-  bo.style.overflow='hidden';
-  /* ローダーが入場を担うので、_pt.jsの入場ガード（html赤＋body非表示）は即解除
-     （回線が遅いとpt解除がDOMContentLoaded待ちになり赤画面のまま止まるため） */
-  de.classList.remove('pt-init','pt-veil');
-  /* 最初からFVコピーと同じ高さ・水平中央（transform一本＝移動は純水平）
-     ※このscriptはFVより先に実行されるため、配置はDOM構築後に行う */
-  var ttl=null, ldrY=0;
-  function initPos(){
-    /* 保険：この時点でスクロール復元が起きていたらスキップ */
-    if(window.scrollY > 40){
-      l.remove(); bo.style.overflow=''; de.classList.remove('ldr-on');
-      return;
-    }
-    var r0=ttl.getBoundingClientRect(); ldrY=r0.top;
-    box.style.transition='none';
-    box.style.transform='translate('+((window.innerWidth-box.getBoundingClientRect().width)/2)+'px,'+ldrY+'px)';
-    void box.offsetWidth;
-    box.style.transition='';
-    box.style.visibility='visible';
-  }
-  /* DOMContentLoadedはCSS読込で遅延しうるため使わず、FVタイトルの出現をポーリングで待つ
-     （このscriptの直後にパースされるので通常は数十ms） */
-  (function waitTtl(){
-    ttl=document.querySelector('.fv__head-title');
-    if(ttl){ initPos(); return; }
-    if(document.readyState==='complete'){ box.style.visibility='visible'; return; }
-    setTimeout(waitTtl,30);
-  })();
-  setTimeout(function(){ l.classList.add('is-in'); },140);      /* 3本線＋コピー すっすっすっ */
-  setTimeout(function(){                                        /* 水平移動しながらロゴが消えていく（一連） */
-    if(ttl){ var r=ttl.getBoundingClientRect(); box.style.transform='translate('+r.left+'px,'+ldrY+'px)'; }
-    l.classList.add('is-left');
-  },1700);
-  setTimeout(function(){ l.classList.add('is-out'); },2550);    /* 赤背景が下に抜けて集約 */
-  setTimeout(function(){ l.classList.add('is-fade'); de.classList.remove('ldr-on'); },3300); /* FVコピーへ引き継ぎ */
-  setTimeout(function(){ l.remove(); bo.style.overflow=''; },4050);
-})();
-</script>
-<!-- ▲▲ LOADER実験 ここまで ▲▲ -->
-
 <header class="nav">
   <a class="nav__logo" href="#"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
   <nav class="nav__menu">
     <div class="nitem">
-      <a class="nlink" href="#products">製品・技術<sup>04</sup></a>
+      <a class="nlink" href="products.html">製品・技術<sup>04</sup></a>
       <div class="mega"><div class="mega__inner">
         <div class="mega__lead"><span class="men">Products</span><span class="mjp">製品・技術</span></div>
         <div class="mega__links">
@@ -795,212 +701,149 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   </nav>
 </div>
 
-<!-- ============ FV ============ -->
-<section class="fv">
-  <div class="fv__stage">
-    <video autoplay muted loop playsinline src="home.mp4"></video>
-    <div class="fv__lines" aria-hidden="true"></div>
-  </div>
-  <div class="fv__head">
-    <h1 class="fv__head-title">
-      <span class="ln1"><b class="lg">いきる</b><b class="sm">を</b></span>
-      <span class="ln2"><b class="lg">はかり</b><b class="sm">、</b></span>
-      <span class="ln3"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span>
-    </h1>
-    <span class="fv__head-sub">WE MEASURE THE VALUE OF LIVING.</span>
-  </div>
-  <div class="fv__cell fv__cell--recruit rv is-in rv-d3">
-    <div class="inner">
-      <img class="rec-logo" src="rec2027_w.png" alt="Recruitment 2027">
-      <h3>いきるの単位とは、なんだろう。</h3>
-    </div>
-    <a class="fv__cell-link" href="#recruit">採用情報を見る <i class="arrow-i arrow-i--w">→</i></a>
-  </div>
+
+<style id="ppage-css">
+/* ── 製品ページ共通（TOPデザインルール準拠） ── */
+.pmain .btn::before,.pmain .btn::after{content:none}
+.nav.is-solid .nav__logo img{filter:none}
+.phero{position:relative;background:#000;color:#fff;padding:210px 7vw 110px}
+.phero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px);
+  background-size:0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px;
+  background-repeat:no-repeat;
+  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0,0 calc(100%*1/6),0 calc(100%*2/6),0 calc(100%*3/6),0 calc(100%*4/6),0 calc(100%*5/6)}
+.phero .sec-ttl,.phero .sec-jp{color:#fff;position:relative}
+.phero__lead{position:relative;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin-top:26px;max-width:640px}
+.phero .tab-down{position:absolute;left:0;top:100%;width:24%;height:54px;background:#000;z-index:2}
+.pcrumb{position:relative;display:flex;gap:10px;align-items:center;font-family:var(--en);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:34px}
+.pcrumb a:hover{color:var(--red)}
+.olno{font-family:var(--en);font-weight:700;color:transparent;-webkit-text-stroke:1.6px var(--red);line-height:1;letter-spacing:.02em}
+.pcta{position:relative;background:#000;color:#fff;padding:130px 7vw 140px}
+.pcta::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px);
+  background-size:0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px;
+  background-repeat:no-repeat;
+  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0,0 calc(100%*1/6),0 calc(100%*2/6),0 calc(100%*3/6),0 calc(100%*4/6),0 calc(100%*5/6)}
+.pcta .tab-up{position:absolute;left:0;bottom:100%;width:24%;height:48px;background:#000}
+.pcta__in{position:relative;display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,.4fr);gap:5vw;align-items:center}
+.pcta h2{font-family:var(--jp);font-weight:900;font-size:clamp(1.6rem,3vw,2.6rem);letter-spacing:.06em}
+.pcta p{font-size:14px;line-height:2.1;color:rgba(255,255,255,.78);margin-top:20px;max-width:560px}
+.pcta__btns{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.pcta__btns .cbtn{display:inline-flex;align-items:center;gap:14px;background:#fff;color:#000;font-size:13.5px;font-weight:700;letter-spacing:.12em;padding:20px 42px;transition:background .25s,color .25s}
+.pcta__btns .cbtn:hover{background:var(--red);color:#fff}
+.pcta__btns .lbtn{display:inline-flex;align-items:center;gap:10px;color:rgba(255,255,255,.75);font-size:12.5px;letter-spacing:.1em;margin-top:6px}
+.pcta__btns .lbtn:hover{color:var(--red)}
+@media(max-width:900px){
+  .phero{padding:150px 6vw 70px}
+  .pcta{padding:90px 6vw 100px}
+  .pcta__in{grid-template-columns:1fr;gap:36px}
+}
+</style>
+
+<style id="plist-css">
+.plist{background:var(--paper);padding:150px 7vw 170px}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5vw;align-items:center}
+.prow + .prow{margin-top:130px}
+.prow__ph{position:relative;width:100%;aspect-ratio:16/10;background-size:cover;background-position:center}
+.prow__ph .olno{position:absolute;top:0;right:0;transform:translate(50%,-50%);font-size:clamp(70px,8vw,120px)}
+.prow--rev .prow__ph{order:2}
+.prow--rev .prow__ph .olno{right:auto;left:0;transform:translate(-50%,-50%)}
+.prow__ttl{font-family:var(--jp);font-weight:900;font-size:clamp(22px,2.4vw,32px);letter-spacing:.05em;color:var(--red)}
+.prow__sub{font-family:var(--en);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#000000;margin-top:10px}
+.prow__txt{font-size:13.5px;line-height:2.05;color:#000000;margin-top:20px;max-width:520px}
+.prow__meta{font-size:13px;color:#000000;margin-top:14px}
+.prow__meta .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
+.prow .btn{margin-top:34px}
+@media(max-width:900px){
+  .plist{padding:90px 6vw 110px}
+  .prow{grid-template-columns:1fr;gap:24px}
+  .prow + .prow{margin-top:70px}
+  .prow--rev .prow__ph{order:0}
+}
+</style>
+
+<main class="pmain">
+<section class="phero">
+  <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><span>Products</span></p>
+  <h1 class="sec-ttl rv">Products</h1>
+  <p class="sec-jp rv"><i class="dot"></i>製品・技術</p>
+  <p class="phero__lead rv rv-d1">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。同じものはひとつとしてありません。</p>
+  <i class="tab-down" aria-hidden="true"></i>
 </section>
-
-<div class="wrap">
-
-<!-- ============ 企業理念（コピー＋会社案内への動線） ============ -->
-<section class="gsec phil" id="philosophy">
-  <h2 class="sec-ttl rv">Philosophy</h2>
-  <p class="sec-jp rv"><i class="dot"></i>企業理念</p>
-  <div class="phil__box">
-  <div class="phil__st js-chars">
-    <p><span class="ln"><span class="lt">私たちの暮らしは、</span></span><span class="ln"><span class="lt">数えきれない「はかる」で、できている。</span></span></p>
-    <p><span class="ln"><span class="lt">一粒の米も、一滴の水も、</span></span><span class="ln"><span class="lt">正しくはかられて、はじめて価値になる。</span></span><span class="ln"><span class="lt">公正な取引も、たしかな品質も、安心できる毎日も、</span></span><span class="ln"><span class="lt">すべては、正確にはかることから始まる。</span></span></p>
-    <p><span class="ln"><span class="lt">1900年の創業から126年。</span></span><span class="ln"><span class="lt">近江度量衡は、あらゆる現場の「はかる」に、</span></span><span class="ln"><span class="lt">一品一様のものづくりで応えつづけてきた。</span></span></p>
-    <p><span class="ln"><span class="lt">暮らしを、産業を、その先の未来を。</span></span><span class="ln"><span class="lt">私たちは、これからもはかりつづける。</span></span></p>
-  </div>
-  <h2 class="phil__close js-chars" data-once><span><b class="lg">近江</b><b class="sm">から、</b></span><span><b class="lg">世界</b><b class="sm">を</b><b class="lg">はかる</b></span></h2>
-  <div class="phil__cta rv"><a class="btn" href="#">会社案内を見る <span>→</span></a></div>
-  </div>
-  <div class="phil__map" aria-hidden="true">
-    <div class="mapwrap rv">
-      <img class="shiga" src="shiga.webp" alt="滋賀県">
-      <span class="mappin"><i class="ring"></i></span>
-      <span class="maplabel">近江度量衡<small>滋賀県草津市</small></span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 製品・技術 ============ -->
-<section class="gsec svc" id="products">
-  <div class="svc__pin">
-  <div class="svc__grid">
-    <div class="svc__lead">
-      <h2 class="sec-ttl">Products</h2>
-      <p class="sec-jp"><i class="dot"></i>製品・技術</p>
-      <h2 class="disp-jp">現場の「はかる」に、<br>一品一様で応える。</h2>
-      <p class="svc__leadtxt">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。同じものはひとつとしてありません。</p>
-      <div class="svc-detail">
-        <h3 class="svc-detail__ttl">農産物用計量システム</h3>
-        <p class="svc-detail__sub">Agricultural Weighing System</p>
-        <p class="svc-detail__txt">選果場や集出荷施設で使われる、青果物の計量・選別システム。品目や処理量、施設のレイアウトに合わせて、搬送から計量・箱詰めまでのライン全体を一品一様で設計します。産地の出荷品質と作業効率を支えます。</p>
-        <p class="svc-detail__meta"><i class="dot"></i>Made-to-order — Calistar / Millistar / Rollerstar</p>
+<section class="plist">
+    <div class="prow">
+      <div class="prow__ph rv" style="background-image:url(photo-agri.jpg)"><span class="olno">01</span></div>
+      <div class="rv rv-d1">
+        <h2 class="prow__ttl">農産物用計量システム</h2>
+        <p class="prow__sub">Agricultural Weighing System</p>
+        <p class="prow__txt">選果場や集出荷施設で使われる、青果物の計量・選別システム。品目や処理量、施設のレイアウトに合わせて、搬送から計量・箱詰めまでのライン全体を一品一様で設計します。</p>
+        <p class="prow__meta"><i class="dot"></i>Made-to-order — Calistar / Millistar / Rollerstar</p>
+        <a class="btn" href="product-agri.html">詳しく見る <span>→</span></a>
       </div>
-      <a class="btn" href="products.html">製品・技術を詳しく見る <span>→</span></a>
     </div>
-    <div class="svc-show">
-      <div class="svc-stage">
-        <div class="svc-stage__imgs">
-          <div class="svc-img is-on" style="background-image:url(photo-agri.jpg)"></div>
-          <div class="svc-img" style="background-image:url(photo-grain.jpg)"></div>
-          <div class="svc-img" style="background-image:url(photo-industry.jpg)"></div>
-          <div class="svc-img" style="background-image:url(photo-others.jpg)"></div>
-        </div>
-        <span class="svc-stage__no">01</span>
+    <div class="prow prow--rev">
+      <div class="prow__ph rv" style="background-image:url(photo-grain.jpg)"><span class="olno">02</span></div>
+      <div class="rv rv-d1">
+        <h2 class="prow__ttl">穀類用計量システム</h2>
+        <p class="prow__sub">Grain Weighing System</p>
+        <p class="prow__txt">カントリーエレベーターやライスセンターなど、穀類施設の計量設備。荷受から乾燥・調製・出荷までの各工程に、正確な「はかる」を組み込みます。</p>
+        <p class="prow__meta"><i class="dot"></i>全国約2,000施設に納入</p>
+        <a class="btn" href="#">詳しく見る <span>→</span></a>
       </div>
     </div>
-  </div>
-  <div class="svc-cards">
-    <button class="svc-card is-on"><i class="th" style="background-image:url(photo-agri.jpg)"></i><span class="no">01</span><span class="nm">農産物用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-grain.jpg)"></i><span class="no">02</span><span class="nm">穀類用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-industry.jpg)"></i><span class="no">03</span><span class="nm">工業用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-others.jpg)"></i><span class="no">04</span><span class="nm">その他・特殊用途</span></button>
-  </div>
-  </div><!-- /svc__pin -->
+    <div class="prow">
+      <div class="prow__ph rv" style="background-image:url(photo-industry.jpg)"><span class="olno">03</span></div>
+      <div class="rv rv-d1">
+        <h2 class="prow__ttl">工業用計量システム</h2>
+        <p class="prow__sub">Industrial Weighing System</p>
+        <p class="prow__txt">ガラス・鉄鋼・化学をはじめとする産業プラント向けの計量制御システム。原料の配合計量から搬送・データ管理まで、製造プロセスに合わせて設計します。</p>
+        <p class="prow__meta"><i class="dot"></i>ガラス・鉄鋼・化学 ほか</p>
+        <a class="btn" href="#">詳しく見る <span>→</span></a>
+      </div>
+    </div>
+    <div class="prow prow--rev">
+      <div class="prow__ph rv" style="background-image:url(photo-others.jpg)"><span class="olno">04</span></div>
+      <div class="rv rv-d1">
+        <h2 class="prow__ttl">その他・特殊用途</h2>
+        <p class="prow__sub">Special Applications</p>
+        <p class="prow__txt">動物用の体重計、研究機関向けの特殊計量装置など、規格品では応えられない「はかりたい」にも対応します。設計から製造・据付・保守までを自社一貫で。</p>
+        <p class="prow__meta"><i class="dot"></i>動物計量・研究用途 ほか</p>
+        <a class="btn" href="#">詳しく見る <span>→</span></a>
+      </div>
+    </div>
 </section>
-
-<!-- ============ 数字で見る ============ -->
-<section class="gsec stats">
-  <i class="stats__step" aria-hidden="true"></i>
-  <div class="stats__top">
+<section class="pcta">
+  <i class="tab-up" aria-hidden="true"></i>
+  <div class="pcta__in">
     <div class="rv">
-      <h2 class="sec-ttl">Numbers</h2>
-      <p class="sec-jp"><i class="dot"></i>数字で見る近江度量衡</p>
+      <h2>導入のご相談・お見積り</h2>
+      <p>現場の状況、品目、処理量をお聞かせください。計画段階からエンジニアが伺い、最適なラインをご提案します。</p>
     </div>
-    <h2 class="disp-jp rv rv-d1">創業126年。全国約2,000施設へ、<br>一品一様の計量システムを<br>届けてきました。</h2>
-  </div>
-  <div class="stats__cells">
-    <div class="stat rv"><div class="stat__ph" style="background-image:url(stat-facilities.jpg)"></div><b><span class="cnt" data-to="2000" data-fmt="comma">0</span><i>＋</i></b><span class="lbl">累計納入施設数<br>全国のJA・工場・プラント</span></div>
-    <div class="stat rv rv-d1"><div class="stat__ph" style="background-image:url(stat-service.jpg)"></div><b><span class="cnt" data-to="9">0</span><i>拠点</i></b><span class="lbl">サービス網<br>国内6＋海外3</span></div>
-  </div>
-  <div class="stats__clients rv">
-    <p class="cl-lbl">CLIENTS — 主な納入先</p>
-    <div class="clients-marquee">
-      <div class="clients-track">
-        <div class="clients-set">
-          <img class="clogo" src="clogos/c01.svg" alt=""><img class="clogo" src="clogos/c02.svg" alt=""><img class="clogo" src="clogos/c03.svg" alt=""><img class="clogo" src="clogos/c04.svg" alt=""><img class="clogo" src="clogos/c05.svg" alt=""><img class="clogo" src="clogos/c06.svg" alt=""><img class="clogo" src="clogos/c07.svg" alt=""><img class="clogo" src="clogos/c08.svg" alt=""><img class="clogo" src="clogos/c09.svg" alt=""><img class="clogo" src="clogos/c10.svg" alt=""><img class="clogo" src="clogos/c11.svg" alt=""><img class="clogo" src="clogos/c12.svg" alt=""><img class="clogo" src="clogos/c13.svg" alt=""><img class="clogo" src="clogos/c14.svg" alt=""><img class="clogo" src="clogos/c15.svg" alt=""><img class="clogo" src="clogos/c16.svg" alt=""><img class="clogo" src="clogos/c17.svg" alt=""><img class="clogo" src="clogos/c18.svg" alt=""><img class="clogo" src="clogos/c19.svg" alt=""><img class="clogo" src="clogos/c20.svg" alt="">
-        </div>
-        <div class="clients-set" aria-hidden="true">
-          <img class="clogo" src="clogos/c01.svg" alt=""><img class="clogo" src="clogos/c02.svg" alt=""><img class="clogo" src="clogos/c03.svg" alt=""><img class="clogo" src="clogos/c04.svg" alt=""><img class="clogo" src="clogos/c05.svg" alt=""><img class="clogo" src="clogos/c06.svg" alt=""><img class="clogo" src="clogos/c07.svg" alt=""><img class="clogo" src="clogos/c08.svg" alt=""><img class="clogo" src="clogos/c09.svg" alt=""><img class="clogo" src="clogos/c10.svg" alt=""><img class="clogo" src="clogos/c11.svg" alt=""><img class="clogo" src="clogos/c12.svg" alt=""><img class="clogo" src="clogos/c13.svg" alt=""><img class="clogo" src="clogos/c14.svg" alt=""><img class="clogo" src="clogos/c15.svg" alt=""><img class="clogo" src="clogos/c16.svg" alt=""><img class="clogo" src="clogos/c17.svg" alt=""><img class="clogo" src="clogos/c18.svg" alt=""><img class="clogo" src="clogos/c19.svg" alt=""><img class="clogo" src="clogos/c20.svg" alt="">
-        </div>
-      </div>
+    <div class="pcta__btns rv rv-d1">
+      <a class="cbtn" href="#">お問い合わせ <i class="arrow-i" style="color:inherit">→</i></a>
+      <a class="lbtn" href="index.html"><i class="arrow-i">→</i> TOPへ戻る</a>
     </div>
   </div>
 </section>
-
-
-
-<!-- ============ 126年ヒストリー（TOP動線） ============ -->
-<a class="gsec hist" id="history" href="#">
-  <span class="hist__ph" aria-hidden="true">
-    <i class="is-on" style="background-image:url(hist.jpg)"></i>
-    <i style="background-image:url(hist2.jpg)"></i>
-    <i style="background-image:url(hist3.jpg)"></i>
-    <i style="background-image:url(hist4.jpg)"></i>
-  </span>
-  <div class="hist__grid">
-    <div class="hist__txt">
-      <h2 class="sec-ttl rv">History</h2>
-      <p class="sec-jp rv"><i class="dot"></i>126年ヒストリー</p>
-      <h2 class="disp-jp rv rv-d1">計量ひとすじ、126年。</h2>
-      <p class="hist__lead rv rv-d1">明治33年、近江の地で創業。一世紀を超えて「はかる」に向き合いつづけた歩みを、年表でたどる。</p>
-      <span class="hist__go rv rv-d2">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></span>
-    </div>
-  </div>
-</a>
-
-<!-- ============ 採用動線（新卒・中途） ============ -->
-<section class="gsec recjoin" id="recruit">
-  <div class="recjoin__head">
-    <div class="rv">
-      <h2 class="sec-ttl">Recruit</h2>
-      <p class="sec-jp"><i class="dot"></i>採用情報</p>
-    </div>
-    <div class="rv rv-d1">
-      <h2 class="disp-jp" style="margin-top:0">「はかる」の未来を、<br>一緒につくる仲間へ。</h2>
-      <p class="recjoin__lead" style="margin-top:20px">1900年から続く「はかる」のものづくりを、次の世代へ。設計から製造・施工・保守まですべてを自社で担う近江度量衡で、あなたの力を活かしませんか。</p>
-    </div>
-  </div>
-  <div class="recjoin__grid">
-    <a class="recjoin__card recjoin__card--new rv" href="#">
-      <span class="ren">( New Graduates )</span>
-      <span class="ttl">新卒採用</span>
-      <p class="desc">文系・理系は問いません。ものづくりを一から学び、一品一様の計量システムを担う技術者へ。</p>
-      <span class="go">募集要項を見る <i class="arrow-i" style="color:inherit">→</i></span>
-    </a>
-    <a class="recjoin__card recjoin__card--mid rv rv-d1" href="#">
-      <span class="ren">( Mid-Career )</span>
-      <span class="ttl">中途採用</span>
-      <p class="desc">経験を、現場で活かす。設計・製造・制御・営業など、各職種で仲間を募集しています。</p>
-      <span class="go">募集要項を見る <i class="arrow-i" style="color:inherit">→</i></span>
-    </a>
-  </div>
-</section>
-
-<!-- ============ 新着情報 ============ -->
-<section class="gsec newsblock">
-  <div class="news__grid">
-    <div class="news__head rv">
-      <h2 class="news__ttl">News</h2>
-      <p class="news__jp"><i class="dot"></i>新着情報</p>
-      <a class="news__all" href="#">記事一覧はこちら <i class="arrow-i">→</i></a>
-    </div>
-    <div class="news__rows">
-      <a class="nrow rv" href="#">
-        <div class="nrow__meta"><time>2026.08.13</time><span class="tag">お知らせ</span><span class="tag">企業情報</span></div>
-        <h3>札幌営業所を移転しました</h3>
-      </a>
-      <a class="nrow rv rv-d1" href="#">
-        <div class="nrow__meta"><time>2026.08.10</time><span class="tag">休業案内</span></div>
-        <h3>夏季休業のお知らせ（8/13〜8/16）</h3>
-      </a>
-      <a class="nrow rv rv-d2" href="#">
-        <div class="nrow__meta"><time>2026.07.15</time><span class="tag">プレスリリース</span><span class="tag">製品・技術</span></div>
-        <h3>新型フルオートドライヤーシステムを発表しました</h3>
-      </a>
-    </div>
-  </div>
-</section>
-
-</div><!-- /wrap -->
-
-<!-- ============ フォトマーキー帯 ============ -->
-<section class="strip">
-  <div class="strip__bg"></div>
-  <div class="strip__marquee">
-    <div class="strip__track"><span>We Measure the Future</span><span>We Measure the Future</span></div>
-    <div class="strip__track" aria-hidden="true"><span>We Measure the Future</span><span>We Measure the Future</span></div>
-  </div>
-
-  <div class="strip__contact">
-    <span class="en">( Contact )</span>
-    <h3>お問い合わせ・ご相談</h3>
-    <p>お気軽にご相談ください。<br>お見積もり依頼も可能です。</p>
-    <a class="cbtn" href="#">Contact Form <i class="arrow-i" style="color:inherit">→</i></a>
-  </div>
-</section>
+</main>
 
 <footer class="foot">
   <div class="foot__grid">
