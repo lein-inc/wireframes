@@ -341,11 +341,30 @@ body.menu-open{overflow:hidden}
 .svc__head1{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:6vw;align-items:start;padding:30px 0 36px}
 .svc__head1 .disp-jp{margin-top:0}
 .svc__pinwrap{height:300vh}
-.svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:96px}
-.svc__grid{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
+.svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
+.svc__grid{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,1fr);gap:3.4vw;align-items:center}
 .svc-show{display:flex;justify-content:flex-end}
-.svc-stage{width:min(100%,56vh)}
+.svc-stage{width:min(100%,56vh);perspective:1200px}
 .svc__lead .svc-detail{margin-top:0}
+/* 左：メモリ風スライド位置インジケーター */
+.svc-ruler2{position:relative;width:44px;height:min(52vh,480px);align-self:center;justify-self:start}
+.svc-ruler2::before{content:"";position:absolute;top:0;bottom:0;left:6px;width:1px;background:rgba(0,0,0,.4)}
+.svc-ruler2__ticks{position:absolute;top:0;bottom:0;left:6px;width:9px;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.4) 0 1px,transparent 1px 10px)}
+.svc-ruler2__no{position:absolute;left:24px;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-family:var(--en);font-size:11.5px;letter-spacing:.08em;color:#9a9a9a;padding:4px;transition:color .2s}
+.svc-ruler2__no.is-on{color:#000;font-weight:700}
+.svc-ruler2__no:hover{color:var(--red)}
+.svc-ruler2__pointer{position:absolute;left:0;top:0;width:15px;height:2px;background:var(--red);box-shadow:0 0 8px rgba(255,0,0,.55);transform:translateY(-50%);transition:top .6s cubic-bezier(.2,1.6,.35,1)}
+/* 画像：パネル反転切替 */
+.svc-stage__imgs{transition:transform .3s cubic-bezier(.6,0,.75,.55);transform-style:preserve-3d}
+.svc-stage.is-flip .svc-stage__imgs{transform:rotateY(88deg)}
+/* テキスト：上へスライドアウト→下から入る */
+.svc-detail{transition:opacity .26s,transform .26s cubic-bezier(.4,0,.6,1)}
+.svc-detail.is-fade{opacity:0;transform:translateY(-26px)}
+.svc-detail.is-enter{transition:none;opacity:0;transform:translateY(26px)}
+/* 番号（システム名の上・小さめ線画＋母数） */
+.svc-detail__no{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.svc-detail__no b{font-family:var(--en);font-weight:700;font-size:38px;line-height:1;color:transparent;-webkit-text-stroke:1.4px var(--red)}
+.svc-detail__no span{font-family:var(--en);font-size:12.5px;letter-spacing:.12em;color:#000000}
 @media(max-width:900px){
   .svc__head1{grid-template-columns:1fr;gap:20px;padding:10px 0 40px}
   .svc__pinwrap{height:auto}
@@ -382,7 +401,7 @@ body.menu-open{overflow:hidden}
 .svc-detail__txt{font-size:13.5px;line-height:2.05;color:#000000;margin-top:18px}
 .svc-detail__meta{font-size:13px;color:#000000;margin-top:14px}
 .svc-detail__meta .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
-.svc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .45s;z-index:1}
+.svc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:none;z-index:1}
 .svc-img.is-on{opacity:1;z-index:2}
 /* 画像右上：座布団なし・赤の線画ナンバー（画像の角から上・右に半分はみ出す） */
 .svc-stage__no{position:absolute;top:0;right:0;transform:translate(50%,-50%);z-index:3;background:none;color:transparent;-webkit-text-stroke:1.8px var(--red);paint-order:stroke;font-family:var(--en);font-weight:700;font-size:clamp(80px,9vw,130px);letter-spacing:.02em;line-height:1}
@@ -403,6 +422,7 @@ body.menu-open{overflow:hidden}
 .svc-ruler__pointer{position:absolute;right:19px;width:24px;height:2px;background:var(--red);box-shadow:0 0 8px rgba(255,0,0,.55);transition:top .75s cubic-bezier(.2,1.7,.35,1)}
 @media(max-width:900px){
   .svc__grid{grid-template-columns:1fr;gap:28px}
+  .svc-ruler2{display:none}
   .svc-cards{flex-wrap:wrap;margin-top:16px}
   .svc-card{flex:1 1 46%;padding:10px 12px;gap:10px}
   .svc-card .th{width:44px;height:44px}
@@ -870,8 +890,17 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   <div class="svc__pinwrap">
   <div class="svc__pin">
   <div class="svc__grid">
+    <div class="svc-ruler2">
+      <i class="svc-ruler2__ticks" aria-hidden="true"></i>
+      <button class="svc-ruler2__no is-on" style="top:0%">01</button>
+      <button class="svc-ruler2__no" style="top:33.33%">02</button>
+      <button class="svc-ruler2__no" style="top:66.66%">03</button>
+      <button class="svc-ruler2__no" style="top:100%">04</button>
+      <i class="svc-ruler2__pointer" aria-hidden="true"></i>
+    </div>
     <div class="svc__lead">
       <div class="svc-detail">
+        <p class="svc-detail__no"><b>01</b><span>/ 04</span></p>
         <h3 class="svc-detail__ttl">農産物用計量システム</h3>
         <p class="svc-detail__sub">Agricultural Weighing System</p>
         <p class="svc-detail__txt">選果場や集出荷施設で使われる、青果物の計量・選別システム。品目や処理量、施設のレイアウトに合わせて、搬送から計量・箱詰めまでのライン全体を一品一様で設計します。産地の出荷品質と作業効率を支えます。</p>
@@ -887,15 +916,8 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
           <div class="svc-img" style="background-image:url(photo-industry.jpg)"></div>
           <div class="svc-img" style="background-image:url(photo-others.jpg)"></div>
         </div>
-        <span class="svc-stage__no">01</span>
       </div>
     </div>
-  </div>
-  <div class="svc-cards">
-    <button class="svc-card is-on"><i class="th" style="background-image:url(photo-agri.jpg)"></i><span class="no">01</span><span class="nm">農産物用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-grain.jpg)"></i><span class="no">02</span><span class="nm">穀類用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-industry.jpg)"></i><span class="no">03</span><span class="nm">工業用計量システム</span></button>
-    <button class="svc-card"><i class="th" style="background-image:url(photo-others.jpg)"></i><span class="no">04</span><span class="nm">その他・特殊用途</span></button>
   </div>
   </div><!-- /svc__pin -->
   </div><!-- /svc__pinwrap -->
@@ -1232,29 +1254,41 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   ];
   var imgs = [].slice.call(document.querySelectorAll('.svc-img'));
   if(!imgs.length) return;
-  var nos = [].slice.call(document.querySelectorAll('.svc-card'));
+  var stage = document.querySelector('.svc-stage');
+  var nos = [].slice.call(document.querySelectorAll('.svc-ruler2__no'));
+  var ptr = document.querySelector('.svc-ruler2__pointer');
   var detail = document.querySelector('.svc-detail');
   var cur = 0;
   function go(i){
     if(i===cur) return;
-    imgs[cur].classList.remove('is-on');
-    imgs[i].classList.add('is-on');
-    nos[cur].classList.remove('is-on');
-    nos[i].classList.add('is-on');
-    var sno = document.querySelector('.svc-stage__no');
-    if(sno) sno.textContent = '0' + (i+1);
+    var from = cur; cur = i;
+    if(nos.length){ nos[from].classList.remove('is-on'); nos[i].classList.add('is-on'); }
+    if(ptr) ptr.style.top = (i/(imgs.length-1)*100)+'%';
+    /* 画像：パネルがひっくり返って切替 */
+    if(stage){
+      stage.classList.add('is-flip');
+      setTimeout(function(){
+        imgs[from].classList.remove('is-on');
+        imgs[cur].classList.add('is-on');
+        stage.classList.remove('is-flip');
+      }, 300);
+    }
+    /* テキスト：上へスライドアウト→内容差し替え→下からスライドイン */
     if(detail){
       detail.classList.add('is-fade');
       setTimeout(function(){
-        var d = DATA[i];
+        var d = DATA[cur];
+        detail.querySelector('.svc-detail__no b').textContent = '0' + (cur+1);
         detail.querySelector('.svc-detail__ttl').textContent = d.t;
         detail.querySelector('.svc-detail__sub').textContent = d.s;
         detail.querySelector('.svc-detail__txt').textContent = d.d;
         detail.querySelector('.svc-detail__meta').innerHTML = '<i class="dot"></i>' + d.m;
+        detail.classList.add('is-enter');
         detail.classList.remove('is-fade');
-      }, 200);
+        void detail.offsetWidth;
+        detail.classList.remove('is-enter');
+      }, 260);
     }
-    cur = i;
   }
   nos.forEach(function(btn,i){ btn.addEventListener('click', function(){ go(i); }); });
   /* ページFIX中のスクロール量で4製品を順送り（PCのみ。終わるとstickyが外れて下に抜ける） */
