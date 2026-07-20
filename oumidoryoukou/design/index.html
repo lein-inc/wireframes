@@ -343,8 +343,10 @@ body.menu-open{overflow:hidden}
 .svc__pinwrap{height:300vh}
 .svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
 .svc__grid{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,1fr);gap:3.4vw;align-items:center}
-.svc-show{display:flex;justify-content:flex-end}
-.svc-stage{width:min(100%,56vh);perspective:1200px}
+/* 画像：通常は正方形。ページFIX中は右半分いっぱいに拡大し、終わると元のサイズへ */
+.svc-show{position:relative;height:min(56vh,520px)}
+.svc-stage{position:absolute;top:50%;right:0;transform:translateY(-50%);width:min(100%,56vh);height:min(100%,56vh);transition:width .65s cubic-bezier(.65,0,.3,1),height .65s cubic-bezier(.65,0,.3,1),right .65s cubic-bezier(.65,0,.3,1)}
+.svc__pin.is-fixed .svc-stage{width:46vw;height:100vh;right:-5vw}
 .svc__lead .svc-detail{margin-top:0}
 /* 左：メモリ風スライド位置インジケーター */
 .svc-ruler2{position:relative;width:44px;height:min(52vh,480px);align-self:center;justify-self:start}
@@ -354,9 +356,7 @@ body.menu-open{overflow:hidden}
 .svc-ruler2__no.is-on{color:#000;font-weight:700}
 .svc-ruler2__no:hover{color:var(--red)}
 .svc-ruler2__pointer{position:absolute;left:0;top:0;width:15px;height:2px;background:var(--red);box-shadow:0 0 8px rgba(255,0,0,.55);transform:translateY(-50%);transition:top .6s cubic-bezier(.2,1.6,.35,1)}
-/* 画像：パネル反転切替 */
-.svc-stage__imgs{transition:transform .3s cubic-bezier(.6,0,.75,.55);transform-style:preserve-3d}
-.svc-stage.is-flip .svc-stage__imgs{transform:rotateY(88deg)}
+.svc-stage__imgs{width:100%;height:100%}
 /* テキスト：上へスライドアウト→下から入る */
 .svc-detail{transition:opacity .26s,transform .26s cubic-bezier(.4,0,.6,1)}
 .svc-detail.is-fade{opacity:0;transform:translateY(-26px)}
@@ -369,7 +369,9 @@ body.menu-open{overflow:hidden}
   .svc__head1{grid-template-columns:1fr;gap:20px;padding:10px 0 40px}
   .svc__pinwrap{height:auto}
   .svc__pin{position:static;height:auto;padding-top:0}
-  .svc-stage{width:100%}
+  .svc-show{height:auto}
+  .svc-stage{position:static;transform:none;width:100%;height:auto}
+  .svc-stage__imgs{height:auto;aspect-ratio:1/1}
 }
 .svc__lead{font-size:14px;line-height:2.15;color:#000000}
 .svc__lead .btn{margin-top:44px}
@@ -378,11 +380,7 @@ body.menu-open{overflow:hidden}
 .svc__list a:first-child,.svc__list a:nth-child(2){border-top:0.5px solid var(--line)}
 .svc__list a:hover{color:var(--red);padding-left:16px}
 .svc__list .arrow-i{font-size:16px}
-/* 製品ショーケース：計量皿に載せるドロップ＋針振れ目盛り */
-.svc-show{position:relative}
-/* 画像：5:5カラムの右側いっぱい */
-.svc-stage{position:relative;width:100%}
-.svc-stage__imgs{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:#141614}
+.svc-stage__imgs{position:relative;overflow:hidden;background:#141614}
 /* 3段目：製品システム選択タブ（1カラム・横長） */
 .svc-cards{display:flex;gap:10px;margin-top:38px}
 .svc-card{flex:1;display:flex;align-items:center;gap:16px;background:#fff;border:0.5px solid var(--line);border-top:3px solid #e2e2e2;cursor:pointer;text-align:left;padding:14px 20px 14px 14px;font-family:var(--jp);color:#9a9a9a;transition:color .25s,border-color .25s,background .25s}
@@ -401,7 +399,7 @@ body.menu-open{overflow:hidden}
 .svc-detail__txt{font-size:13.5px;line-height:2.05;color:#000000;margin-top:18px}
 .svc-detail__meta{font-size:13px;color:#000000;margin-top:14px}
 .svc-detail__meta .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
-.svc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:none;z-index:1}
+.svc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .45s;z-index:1}
 .svc-img.is-on{opacity:1;z-index:2}
 /* 画像右上：座布団なし・赤の線画ナンバー（画像の角から上・右に半分はみ出す） */
 .svc-stage__no{position:absolute;top:0;right:0;transform:translate(50%,-50%);z-index:3;background:none;color:transparent;-webkit-text-stroke:1.8px var(--red);paint-order:stroke;font-family:var(--en);font-weight:700;font-size:clamp(80px,9vw,130px);letter-spacing:.02em;line-height:1}
@@ -1264,15 +1262,9 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     var from = cur; cur = i;
     if(nos.length){ nos[from].classList.remove('is-on'); nos[i].classList.add('is-on'); }
     if(ptr) ptr.style.top = (i/(imgs.length-1)*100)+'%';
-    /* 画像：パネルがひっくり返って切替 */
-    if(stage){
-      stage.classList.add('is-flip');
-      setTimeout(function(){
-        imgs[from].classList.remove('is-on');
-        imgs[cur].classList.add('is-on');
-        stage.classList.remove('is-flip');
-      }, 300);
-    }
+    /* 画像：フェード切替 */
+    imgs[from].classList.remove('is-on');
+    imgs[cur].classList.add('is-on');
     /* テキスト：上へスライドアウト→内容差し替え→下からスライドイン */
     if(detail){
       detail.classList.add('is-fade');
@@ -1293,12 +1285,15 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   nos.forEach(function(btn,i){ btn.addEventListener('click', function(){ go(i); }); });
   /* ページFIX中のスクロール量で4製品を順送り（PCのみ。終わるとstickyが外れて下に抜ける） */
   var wrap = document.querySelector('.svc__pinwrap');
+  var pinEl = document.querySelector('.svc__pin');
   if(wrap){
     function onPinScroll(){
       if(window.innerWidth <= 900) return;
       var r = wrap.getBoundingClientRect();
       var total = wrap.offsetHeight - window.innerHeight;
       if(total <= 0) return;
+      /* FIX中は画像が右半分いっぱいに拡大・抜けたら元のサイズへ */
+      if(pinEl) pinEl.classList.toggle('is-fixed', r.top <= 0 && r.bottom >= window.innerHeight);
       var p = Math.max(0, Math.min(1, -r.top / total));
       go(Math.min(imgs.length - 1, Math.floor(p * imgs.length)));
     }
