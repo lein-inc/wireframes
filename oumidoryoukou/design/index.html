@@ -345,12 +345,12 @@ body.menu-open{overflow:hidden}
 .svc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4vw;align-items:center}
 /* 画像：通常は正方形。ページFIX中は右半分いっぱいに拡大し、終わると元のサイズへ */
 .svc-show{position:relative;height:min(56vh,520px)}
-.svc-stage{position:absolute;top:50%;right:0;transform:translateY(-50%);width:min(100%,56vh);height:min(100%,56vh);transition:width .65s cubic-bezier(.65,0,.3,1),height .65s cubic-bezier(.65,0,.3,1),right .65s cubic-bezier(.65,0,.3,1)}
-.svc__pin.is-fixed .svc-stage{width:50vw;height:100vh;right:-5vw;top:calc(50% - 32px)}
+.svc-stage{position:absolute;top:calc(50% - 32px);right:-5vw;transform:translateY(-50%);width:50vw;height:100vh}
+
 .svc__lead .svc-detail{margin-top:0}
 /* 進行インジケーター：画像スライド左側・画面上から下までの太めトラック線＋赤バー
    （拡大でFIXした時だけすっと表示。初期=バーなし・04で最下部まで。FIX解除の瞬間パッと消える） */
-.svc-prog{position:absolute;left:calc(45vw - 32px);top:0;bottom:0;width:6px;opacity:0;visibility:hidden;transition:none}
+.svc-prog{position:absolute;left:calc(45vw - 6px);top:0;bottom:0;width:6px;opacity:0;visibility:hidden;transition:none}
 .svc-prog::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.12)}
 .svc-prog__bar{position:absolute;left:0;top:0;width:100%;height:0;background:var(--red);transition:height .6s cubic-bezier(.65,0,.3,1)}
 .svc__pin.is-fixed .svc-prog{opacity:1;visibility:visible;transition:opacity .5s ease .05s}
