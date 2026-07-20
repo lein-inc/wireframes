@@ -346,12 +346,12 @@ body.menu-open{overflow:hidden}
 /* 画像：通常は正方形。ページFIX中は右半分いっぱいに拡大し、終わると元のサイズへ */
 .svc-show{position:relative;height:min(56vh,520px)}
 .svc-stage{position:absolute;top:50%;right:0;transform:translateY(-50%);width:min(100%,56vh);height:min(100%,56vh);transition:width .65s cubic-bezier(.65,0,.3,1),height .65s cubic-bezier(.65,0,.3,1),right .65s cubic-bezier(.65,0,.3,1)}
-.svc__pin.is-fixed .svc-stage{width:46vw;height:100vh;right:-5vw}
+.svc__pin.is-fixed .svc-stage{width:50vw;height:100vh;right:-5vw}
 .svc__lead .svc-detail{margin-top:0}
 /* 左：メモリ風スライド位置インジケーター */
-.svc-ruler2{position:relative;width:44px;height:min(52vh,480px);align-self:center;justify-self:start}
+.svc-ruler2{position:relative;width:44px;height:calc(100vh - 200px);align-self:center;justify-self:start}
 .svc-ruler2::before{content:"";position:absolute;top:0;bottom:0;left:6px;width:1px;background:rgba(0,0,0,.4)}
-.svc-ruler2__ticks{position:absolute;top:0;bottom:0;left:6px;width:9px;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.4) 0 1px,transparent 1px 10px)}
+.svc-ruler2__ticks{position:absolute;top:0;bottom:0;left:6px;width:9px;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.4) 0 1px,transparent 1px 24px)}
 .svc-ruler2__no{position:absolute;left:24px;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-family:var(--en);font-size:11.5px;letter-spacing:.08em;color:#9a9a9a;padding:4px;transition:color .2s}
 .svc-ruler2__no.is-on{color:#000;font-weight:700}
 .svc-ruler2__no:hover{color:var(--red)}
@@ -394,7 +394,7 @@ body.menu-open{overflow:hidden}
 /* スライド内容詳細：左カラム（5:5の左）に表示・スライド連動フェード */
 .svc-detail{max-width:520px;transition:opacity .25s}
 .svc-detail.is-fade{opacity:0}
-.svc-detail__ttl{font-family:var(--jp);font-size:clamp(20px,2.2vw,30px);font-weight:900;letter-spacing:.05em;color:var(--red)}
+.svc-detail__ttl{font-family:var(--jp);font-size:clamp(26px,3.1vw,44px);font-weight:900;letter-spacing:.05em;color:var(--red)}
 .svc-detail__sub{font-family:var(--en);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#000000;margin-top:8px}
 .svc-detail__txt{font-size:13.5px;line-height:2.05;color:#000000;margin-top:18px}
 .svc-detail__meta{font-size:13px;color:#000000;margin-top:14px}
