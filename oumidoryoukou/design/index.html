@@ -342,21 +342,18 @@ body.menu-open{overflow:hidden}
 .svc__head1 .disp-jp{margin-top:0}
 .svc__pinwrap{height:500vh}
 .svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
-.svc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4vw;align-items:center;padding-left:70px}
+.svc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4vw;align-items:center}
 /* 画像：通常は正方形。ページFIX中は右半分いっぱいに拡大し、終わると元のサイズへ */
 .svc-show{position:relative;height:min(56vh,520px)}
 .svc-stage{position:absolute;top:50%;right:0;transform:translateY(-50%);width:min(100%,56vh);height:min(100%,56vh);transition:width .65s cubic-bezier(.65,0,.3,1),height .65s cubic-bezier(.65,0,.3,1),right .65s cubic-bezier(.65,0,.3,1)}
 .svc__pin.is-fixed .svc-stage{width:50vw;height:100vh;right:-5vw;top:calc(50% - 32px)}
 .svc__lead .svc-detail{margin-top:0}
-/* 左：進行インジケーター（画面上から下までのトラック＋進行ナンバー＋赤バー） */
-.svc-prog{position:absolute;left:0;top:0;bottom:0;width:44px}
-.svc-prog::before{content:"";position:absolute;left:6px;top:0;bottom:0;width:1px;background:rgba(0,0,0,.22)}
-.svc-prog__bar{position:absolute;left:5px;top:0;width:3px;height:25%;background:var(--red);box-shadow:0 0 8px rgba(255,0,0,.4);transition:height .6s cubic-bezier(.65,0,.3,1)}
-.svc-prog__no{position:absolute;left:22px;transform:translateY(-50%);background:none;border:0;cursor:pointer;font-family:var(--en);font-size:11.5px;letter-spacing:.08em;color:#9a9a9a;padding:4px;transition:color .2s}
-.svc-prog__no:first-of-type{transform:none}
-.svc-prog__no:last-of-type{transform:translateY(-100%)}
-.svc-prog__no.is-on{color:var(--red);font-weight:700}
-.svc-prog__no:hover{color:var(--red)}
+/* 進行インジケーター：画像スライド左側・画面上から下までの太めトラック線＋赤バー
+   （拡大でFIXした時だけすっと表示。初期=バーなし・04で最下部まで。FIX解除の瞬間パッと消える） */
+.svc-prog{position:absolute;left:calc(45vw - 32px);top:0;bottom:0;width:6px;opacity:0;visibility:hidden;transition:none}
+.svc-prog::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.12)}
+.svc-prog__bar{position:absolute;left:0;top:0;width:100%;height:0;background:var(--red);transition:height .6s cubic-bezier(.65,0,.3,1)}
+.svc__pin.is-fixed .svc-prog{opacity:1;visibility:visible;transition:opacity .5s ease .05s}
 .svc-stage__imgs{width:100%;height:100%}
 /* テキスト：上へスライドアウト→下から入る */
 .svc-detail{transition:opacity .26s,transform .26s cubic-bezier(.4,0,.6,1)}
@@ -422,7 +419,6 @@ body.menu-open{overflow:hidden}
 @media(max-width:900px){
   .svc__grid{grid-template-columns:1fr;gap:28px}
   .svc-prog{display:none}
-  .svc__grid{padding-left:0}
   .svc-cards{flex-wrap:wrap;margin-top:16px}
   .svc-card{flex:1 1 46%;padding:10px 12px;gap:10px}
   .svc-card .th{width:44px;height:44px}
@@ -889,12 +885,8 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   </div>
   <div class="svc__pinwrap">
   <div class="svc__pin">
-  <div class="svc-prog" aria-hidden="false">
-    <i class="svc-prog__bar" aria-hidden="true"></i>
-    <button class="svc-prog__no is-on" style="top:2px">01</button>
-    <button class="svc-prog__no" style="top:33.33%">02</button>
-    <button class="svc-prog__no" style="top:66.66%">03</button>
-    <button class="svc-prog__no" style="top:100%">04</button>
+  <div class="svc-prog" aria-hidden="true">
+    <i class="svc-prog__bar"></i>
   </div>
   <div class="svc__grid">
     <div class="svc__lead">
@@ -1262,7 +1254,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     if(i===cur) return;
     var from = cur; cur = i;
     if(nos.length){ nos[from].classList.remove('is-on'); nos[i].classList.add('is-on'); }
-    if(bar) bar.style.height = ((i+1)/imgs.length*100)+'%';
+    if(bar) bar.style.height = (i/(imgs.length-1)*100)+'%';
     /* 画像：フェード切替 */
     imgs[from].classList.remove('is-on');
     imgs[cur].classList.add('is-on');
