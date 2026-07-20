@@ -332,14 +332,26 @@ body.menu-open{overflow:hidden}
 /* ============ 製品・技術：特大見出し＋矢印リスト（マス罫線） ============ */
 .svc{padding:96px 5vw 176px}
 @media(max-width:900px){.svc{padding:64px 5vw 104px}}
-.svc .disp-jp{font-size:clamp(1.7rem,3.1vw,3rem);margin-top:18px}
+.svc .disp-jp{font-size:clamp(1.7rem,3.1vw,3rem);margin-top:30px}
 /* 1段目：見出し＋エリア説明（1カラム） */
 .svc__head1{max-width:1020px}
-.svc__leadtxt{font-size:14px;line-height:2.1;color:#000000;margin-top:20px;max-width:820px}
+.svc__leadtxt{font-size:14px;line-height:2.1;color:#000000;margin-top:26px;max-width:820px}
 /* 2段目：スライドテキスト｜画像（5:5） */
-.svc__grid{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:end}
-.svc__lead .disp-jp{margin-top:26px}
-.svc__lead .svc-detail{margin-top:44px}
+/* 見出しブロック（上下ゆとり）とスライドブロックを分離。スライドはページFIX（sticky）で4枚順送り→終わったら下に抜ける */
+.svc__head1{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:6vw;align-items:start;padding:30px 0 64px}
+.svc__head1 .disp-jp{margin-top:0}
+.svc__pinwrap{height:300vh}
+.svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:70px}
+.svc__grid{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
+.svc-show{display:flex;justify-content:flex-end}
+.svc-stage{width:min(100%,56vh)}
+.svc__lead .svc-detail{margin-top:0}
+@media(max-width:900px){
+  .svc__head1{grid-template-columns:1fr;gap:20px;padding:10px 0 40px}
+  .svc__pinwrap{height:auto}
+  .svc__pin{position:static;height:auto;padding-top:0}
+  .svc-stage{width:100%}
+}
 .svc__lead{font-size:14px;line-height:2.15;color:#000000}
 .svc__lead .btn{margin-top:44px}
 .svc__list{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
@@ -845,13 +857,20 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
 
 <!-- ============ 製品・技術 ============ -->
 <section class="gsec svc" id="products">
+  <div class="svc__head1">
+    <div>
+      <h2 class="sec-ttl">Products</h2>
+      <p class="sec-jp"><i class="dot"></i>製品・技術</p>
+    </div>
+    <div>
+      <h2 class="disp-jp">現場の「はかる」に、<br>一品一様で応える。</h2>
+      <p class="svc__leadtxt">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。同じものはひとつとしてありません。</p>
+    </div>
+  </div>
+  <div class="svc__pinwrap">
   <div class="svc__pin">
   <div class="svc__grid">
     <div class="svc__lead">
-      <h2 class="sec-ttl">Products</h2>
-      <p class="sec-jp"><i class="dot"></i>製品・技術</p>
-      <h2 class="disp-jp">現場の「はかる」に、<br>一品一様で応える。</h2>
-      <p class="svc__leadtxt">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。同じものはひとつとしてありません。</p>
       <div class="svc-detail">
         <h3 class="svc-detail__ttl">農産物用計量システム</h3>
         <p class="svc-detail__sub">Agricultural Weighing System</p>
@@ -879,6 +898,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     <button class="svc-card"><i class="th" style="background-image:url(photo-others.jpg)"></i><span class="no">04</span><span class="nm">その他・特殊用途</span></button>
   </div>
   </div><!-- /svc__pin -->
+  </div><!-- /svc__pinwrap -->
 </section>
 
 <!-- ============ 数字で見る ============ -->
@@ -1237,6 +1257,21 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     cur = i;
   }
   nos.forEach(function(btn,i){ btn.addEventListener('click', function(){ go(i); }); });
+  /* ページFIX中のスクロール量で4製品を順送り（PCのみ。終わるとstickyが外れて下に抜ける） */
+  var wrap = document.querySelector('.svc__pinwrap');
+  if(wrap){
+    function onPinScroll(){
+      if(window.innerWidth <= 900) return;
+      var r = wrap.getBoundingClientRect();
+      var total = wrap.offsetHeight - window.innerHeight;
+      if(total <= 0) return;
+      var p = Math.max(0, Math.min(1, -r.top / total));
+      go(Math.min(imgs.length - 1, Math.floor(p * imgs.length)));
+    }
+    window.addEventListener('scroll', onPinScroll, {passive:true});
+    window.addEventListener('resize', onPinScroll);
+    onPinScroll();
+  }
 })();
 /* 数字カウントアップ（表示された時に開始） */
 (function(){
