@@ -392,7 +392,7 @@ body.menu-open{overflow:hidden}
 /* スライド内容詳細：左カラム（5:5の左）に表示・スライド連動フェード */
 .svc-detail{max-width:620px;display:flex;gap:44px;align-items:flex-start;transition:opacity .25s}
 .svc-detail.is-fade{opacity:0}
-.svc-detail__ttl{flex:none;writing-mode:vertical-rl;font-family:var(--jp);font-size:clamp(34px,4.4vw,62px);font-weight:900;letter-spacing:.14em;color:var(--red)}
+.svc-detail__ttl{flex:none;writing-mode:vertical-rl;font-family:var(--jp);font-size:clamp(34px,4.4vw,62px);font-weight:900;letter-spacing:.14em;color:var(--red);margin-left:calc(-5vw + 14px)}
 .svc-detail__ttl .ttl-sm{font-size:.72em}
 .svc-detail__body{align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
 .svc-detail__body .btn{margin-top:30px}
@@ -422,6 +422,7 @@ body.menu-open{overflow:hidden}
 @media(max-width:900px){
   .svc__grid{grid-template-columns:1fr;gap:28px}
   .svc-prog{display:none}
+  .svc-detail__ttl{margin-left:0}
   .svc-cards{flex-wrap:wrap;margin-top:16px}
   .svc-card{flex:1 1 46%;padding:10px 12px;gap:10px}
   .svc-card .th{width:44px;height:44px}
