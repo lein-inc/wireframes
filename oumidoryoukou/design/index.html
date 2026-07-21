@@ -342,10 +342,12 @@ body.menu-open{overflow:hidden}
 .svc__head1 .disp-jp{margin-top:0}
 .svc__pinwrap{height:500vh}
 .svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
-.svc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4vw;align-items:center}
+.svc__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4vw;align-items:stretch}
+.svc-show{align-self:center}
 /* 画像：通常は正方形。ページFIX中は右半分いっぱいに拡大し、終わると元のサイズへ */
 .svc-show{position:relative;height:min(56vh,520px)}
-.svc-stage{position:absolute;top:calc(50% - 32px);right:-5vw;transform:translateY(-50%);width:50vw;height:100vh}
+.svc-stage{position:absolute;top:calc(50% - 32px);right:0;transform:translateY(-50%);width:40vw;height:80vh;transition:width .65s cubic-bezier(.65,0,.3,1),height .65s cubic-bezier(.65,0,.3,1),right .65s cubic-bezier(.65,0,.3,1)}
+.svc__pin.is-fixed .svc-stage{width:50vw;height:100vh;right:-5vw}
 
 .svc__lead .svc-detail{margin-top:0}
 /* 進行インジケーター：画像スライド左側・画面上から下までの太めトラック線＋赤バー
@@ -390,9 +392,9 @@ body.menu-open{overflow:hidden}
 .svc-card.is-on{color:var(--ink);border-top-color:var(--red);background:#fff}
 .svc-card.is-on .no{color:var(--red)}
 /* スライド内容詳細：左カラム（5:5の左）に表示・スライド連動フェード */
-.svc-detail{max-width:620px;display:flex;gap:44px;align-items:flex-start;transition:opacity .25s}
+.svc-detail{max-width:620px;height:100%;display:flex;gap:44px;align-items:flex-start;transition:opacity .25s}
 .svc-detail.is-fade{opacity:0}
-.svc-detail__ttl{flex:none;writing-mode:vertical-rl;font-family:var(--jp);font-size:clamp(34px,4.4vw,62px);font-weight:900;letter-spacing:.14em;color:var(--red);margin-left:calc(-5vw + 14px)}
+.svc-detail__ttl{flex:none;writing-mode:vertical-rl;font-family:var(--jp);font-size:clamp(44px,5.6vw,80px);font-weight:900;letter-spacing:.1em;color:transparent;-webkit-text-stroke:2px var(--red);margin-left:calc(-5vw + 14px);margin-top:-110px}
 .svc-detail__ttl .ttl-sm{font-size:.72em}
 .svc-detail__body{align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
 .svc-detail__body .btn{margin-top:30px}
@@ -895,7 +897,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   <div class="svc__grid">
     <div class="svc__lead">
       <div class="svc-detail">
-        <h3 class="svc-detail__ttl">農産物用計量<span class="ttl-sm">システム</span></h3>
+        <h3 class="svc-detail__ttl">農産物用計量</h3>
         <div class="svc-detail__body">
           <p class="svc-detail__no"><b>01</b><span>/ 04</span></p>
           <p class="svc-detail__sub">Agricultural Weighing System</p>
@@ -1271,7 +1273,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
         var d = DATA[cur];
         detail.querySelector('.svc-detail__no b').textContent = '0' + (cur+1);
         var tm = d.t.match(/^(.*?)(システム)$/);
-        detail.querySelector('.svc-detail__ttl').innerHTML = tm ? tm[1] + '<span class="ttl-sm">' + tm[2] + '</span>' : d.t;
+        detail.querySelector('.svc-detail__ttl').textContent = tm ? tm[1] : d.t;
         detail.querySelector('.svc-detail__sub').textContent = d.s;
         detail.querySelector('.svc-detail__txt').textContent = d.d;
         detail.querySelector('.svc-detail__meta').innerHTML = '<i class="dot"></i>' + d.m;
