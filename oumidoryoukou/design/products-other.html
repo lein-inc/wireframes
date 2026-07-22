@@ -4,7 +4,7 @@
 <script src="_auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>製品・技術｜近江度量衡株式会社</title>
+<title>その他・特殊用途｜製品・技術｜近江度量衡株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -706,13 +706,7 @@ body.menu-open .nav{background:transparent;border:none}
 /* ── 製品ページ共通（TOPデザインルール準拠） ── */
 .pmain .btn::before,.pmain .btn::after{content:none}
 .nav.is-solid .nav__logo img{filter:none}
-.phero{position:relative;background:#000;color:#fff;padding:210px 7vw 116px;
-  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 54px), 24% calc(100% - 54px), 24% 100%, 0 100%)}
-.phero__photo{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;filter:grayscale(.08) contrast(1.02)}
-.phero__photo::after{content:"";position:absolute;inset:0;background:rgba(8,9,8,.56)}
-.phero::before{z-index:1}
-.phero .pcrumb,.phero .phero-jp,.phero .phero-en,.phero .phero__lead{position:relative;z-index:2}
-@media(max-width:900px){.phero{clip-path:polygon(0 0, 100% 0, 100% calc(100% - 34px), 40% calc(100% - 34px), 40% 100%, 0 100%)}}
+.phero{position:relative;background:#000;color:#fff;padding:210px 7vw 110px}
 .phero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:
     repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
     repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
@@ -728,12 +722,8 @@ body.menu-open .nav{background:transparent;border:none}
   background-repeat:no-repeat;
   background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0,0 calc(100%*1/6),0 calc(100%*2/6),0 calc(100%*3/6),0 calc(100%*4/6),0 calc(100%*5/6)}
 .phero .sec-ttl,.phero .sec-jp{color:#fff;position:relative}
-/* 日本語メイン（大・明朝）＋（英語）サブ（小・( ) ） */
-.phero .phero-jp{position:relative;font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2.6rem,5.6vw,4.9rem);letter-spacing:.04em;line-height:1.12;color:#fff}
-.phero .phero-en{position:relative;font-family:var(--en);font-weight:500;font-size:clamp(.85rem,1.05vw,1.1rem);letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-top:18px}
-.phero .phero-en::before{content:"( "}.phero .phero-en::after{content:" )"}
 .phero__lead{position:relative;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin-top:26px;max-width:640px}
-.phero .tab-down{display:none}
+.phero .tab-down{position:absolute;left:0;top:100%;width:24%;height:54px;background:#000;z-index:2}
 .pcrumb{position:relative;display:flex;gap:10px;align-items:center;font-family:var(--en);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:34px}
 .pcrumb a:hover{color:var(--red)}
 .olno{font-family:var(--en);font-weight:700;color:transparent;-webkit-text-stroke:1.6px var(--red);line-height:1;letter-spacing:.02em}
@@ -768,79 +758,115 @@ body.menu-open .nav{background:transparent;border:none}
 }
 </style>
 
-<style id="plist-css">
-.plist{background:var(--paper);padding:150px 7vw 170px}
-.prow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5vw;align-items:center}
-.prow + .prow{margin-top:130px}
-.prow__ph{position:relative;width:100%;aspect-ratio:16/10;background-size:cover;background-position:center}
-.prow__ph .olno{position:absolute;top:0;right:0;transform:translate(50%,-50%);font-size:clamp(56px,6.4vw,94px)}
-.prow--rev .prow__ph{order:2}
-.prow--rev .prow__ph .olno{right:auto;left:0;transform:translate(-50%,-50%)}
-.prow__ttl{font-family:var(--jp);font-weight:900;font-size:clamp(28px,3.6vw,46px);letter-spacing:.04em;color:var(--red);line-height:1.3}
-.prow__sub{font-family:var(--en);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#000000;margin-top:10px}
-.prow__txt{font-size:13.5px;line-height:2.05;color:#000000;margin-top:20px;max-width:520px}
-.prow__meta{font-size:13px;color:#000000;margin-top:14px}
-.prow__meta .dot{width:8px;height:8px;background:var(--red);display:inline-block;margin-right:8px}
-.prow .btn{margin-top:34px}
+<style id="pagri-css">
+/* ヒーロー：背景写真＋薄い黒膜＋左下段差（products.html基準） */
+.phero{position:relative;background:#000;color:#fff;padding:210px 7vw 116px;
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 54px), 24% calc(100% - 54px), 24% 100%, 0 100%)}
+.phero__photo{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;filter:grayscale(.08) contrast(1.02)}
+.phero__photo::after{content:"";position:absolute;inset:0;background:rgba(8,9,8,.58)}
+.phero::before{z-index:1}
+.phero .pcrumb,.phero .dhero{position:relative;z-index:2}
+.phero .tab-down{display:none}
+.dhero{max-width:880px}
+.dhero__no{font-size:clamp(72px,8vw,120px);display:block}
+.dhero__ttl{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2.2rem,5vw,4.4rem);letter-spacing:.04em;margin-top:12px;line-height:1.16}
+.dhero__sub{font-family:var(--en);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:16px}
+.dhero__sub::before{content:"( "}.dhero__sub::after{content:" )"}
+/* 各セクション見出し：日本語メイン（明朝大）＋（英語）サブ（小） */
+.lineup .sec-jp,.flow .sec-jp,.feat .sec-jp{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:.04em;line-height:1.15;display:block;gap:0;margin:0}
+.lineup .sec-jp .dot,.flow .sec-jp .dot,.feat .sec-jp .dot{display:none}
+.lineup .sec-ttl,.flow .sec-ttl,.feat .sec-ttl{font-family:var(--en);font-weight:500;font-size:clamp(.78rem,1vw,1rem);line-height:1;letter-spacing:.24em;text-transform:uppercase;opacity:.55;margin-top:14px;display:block}
+.lineup .sec-ttl::before,.flow .sec-ttl::before,.feat .sec-ttl::before{content:"( "}
+.lineup .sec-ttl::after,.flow .sec-ttl::after,.feat .sec-ttl::after{content:" )"}
+@media(max-width:900px){.phero{clip-path:polygon(0 0,100% 0,100% calc(100% - 34px),40% calc(100% - 34px),40% 100%,0 100%)}}
+.lineup{background:var(--paper);padding:150px 7vw 150px}
+.lineup .sec-jp,.feat .sec-jp{margin-top:22px}
+.lineup__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:64px}
+.lcard{background:#fff;border:0.5px solid var(--line)}
+.lcard__ph{width:100%;aspect-ratio:4/3;background-size:cover;background-position:center}
+.lcard__body{padding:24px 26px 30px}
+.lcard__en{font-family:var(--en);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.lcard__nm{font-family:var(--jp);font-weight:900;font-size:19px;letter-spacing:.05em;margin-top:10px}
+.lcard__tx{font-size:13px;line-height:2;color:#000000;margin-top:12px}
+.flow{position:relative;background:#000;color:#fff;padding:150px 7vw 160px}
+.flow::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.22) 0 2px,transparent 2px 6px);
+  background-size:0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px;
+  background-repeat:no-repeat;
+  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0,0 calc(100%*1/6),0 calc(100%*2/6),0 calc(100%*3/6),0 calc(100%*4/6),0 calc(100%*5/6)}
+.flow .tab-up{position:absolute;left:0;bottom:100%;width:24%;height:48px;background:#000}
+.flow .sec-ttl,.flow .sec-jp{color:#fff;position:relative}
+.flow__lead{position:relative;font-size:14px;line-height:2.1;color:rgba(255,255,255,.75);margin-top:24px;max-width:600px}
+.flow__grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px 26px;margin-top:70px}
+.fstep__ph{width:100%;aspect-ratio:4/3;background-size:cover;background-position:center}
+.fstep__cap{display:flex;align-items:center;gap:14px;margin-top:16px}
+.fstep__cap .olno{font-size:30px;-webkit-text-stroke:1.2px var(--red)}
+.fstep__cap b{font-size:14.5px;font-weight:700;letter-spacing:.06em}
+.feat{background:var(--paper);padding:150px 7vw 170px}
+.feat__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:64px}
+.fitem{border-top:0.5px solid #000;padding-top:26px}
+.fitem .olno{font-size:44px;-webkit-text-stroke:1.4px var(--red)}
+.fitem h3{font-family:var(--jp);font-weight:900;font-size:18px;letter-spacing:.05em;margin-top:16px;line-height:1.7}
+.fitem p{font-size:13.5px;line-height:2.05;color:#000000;margin-top:12px}
 @media(max-width:900px){
-  .plist{padding:90px 6vw 110px}
-  .prow{grid-template-columns:1fr;gap:24px}
-  .prow + .prow{margin-top:70px}
-  .prow--rev .prow__ph{order:0}
+  .dhero__grid{grid-template-columns:1fr;gap:30px}
+  .lineup,.feat{padding:90px 6vw 100px}
+  .flow{padding:90px 6vw 110px}
+  .lineup__grid,.flow__grid,.feat__grid{grid-template-columns:1fr;gap:26px;margin-top:40px}
 }
 </style>
 
 <main class="pmain">
 <section class="phero">
-  <div class="phero__photo" style="background-image:url(photo-industry.jpg)"></div>
-  <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><span>Products</span></p>
-  <h1 class="phero-jp rv">製品・技術</h1>
-  <p class="phero-en rv">Products</p>
-  <p class="phero__lead rv rv-d1">農産物から穀類、工業まで。計画・設計から制御・製造・施工・保守までを一貫して自社で担い、現場ごとに最適な計量システムをつくり上げます。同じものはひとつとしてありません。</p>
-  <i class="tab-down" aria-hidden="true"></i>
+  <div class="phero__photo" style="background-image:url(photo-others.jpg)"></div>
+  <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><a href="products.html">Products</a><span>/</span><span>Others</span></p>
+  <div class="dhero">
+    <span class="olno dhero__no rv">04</span>
+    <h1 class="dhero__ttl rv rv-d1">その他・特殊用途</h1>
+    <p class="dhero__sub rv rv-d1">Others / Special Use</p>
+    <p class="phero__lead rv rv-d2">家畜・競走馬向けの動物計量など、標準品にない特殊な計量ニーズにも一品一様で対応。特殊形状・特殊環境に合わせて、設計から製造まで自社で担います。</p>
+  </div>
 </section>
-<section class="plist">
-    <div class="prow">
-      <div class="prow__ph rv" style="background-image:url(photo-agri.jpg)"><span class="olno">01</span></div>
-      <div class="rv rv-d1">
-        <h2 class="prow__ttl">農産物用計量システム</h2>
-        <p class="prow__sub">Agricultural Weighing System</p>
-        <p class="prow__txt">選果場や集出荷施設で使われる、青果物の計量・選別システム。品目や処理量、施設のレイアウトに合わせて、搬送から計量・箱詰めまでのライン全体を一品一様で設計します。</p>
-        <p class="prow__meta"><i class="dot"></i>Made-to-order — Calistar / Millistar / Rollerstar</p>
-        <a class="btn" href="product-agri.html">詳しく見る <span>→</span></a>
-      </div>
-    </div>
-    <div class="prow prow--rev">
-      <div class="prow__ph rv" style="background-image:url(photo-grain.jpg)"><span class="olno">02</span></div>
-      <div class="rv rv-d1">
-        <h2 class="prow__ttl">穀類用計量システム</h2>
-        <p class="prow__sub">Grain Weighing System</p>
-        <p class="prow__txt">カントリーエレベーターやライスセンターなど、穀類施設の計量設備。荷受から乾燥・調製・出荷までの各工程に、正確な「はかる」を組み込みます。</p>
-        <p class="prow__meta"><i class="dot"></i>全国約2,000施設に納入</p>
-        <a class="btn" href="products-grain.html">詳しく見る <span>→</span></a>
-      </div>
-    </div>
-    <div class="prow">
-      <div class="prow__ph rv" style="background-image:url(photo-industry.jpg)"><span class="olno">03</span></div>
-      <div class="rv rv-d1">
-        <h2 class="prow__ttl">工業用計量システム</h2>
-        <p class="prow__sub">Industrial Weighing System</p>
-        <p class="prow__txt">ガラス・鉄鋼・化学をはじめとする産業プラント向けの計量制御システム。原料の配合計量から搬送・データ管理まで、製造プロセスに合わせて設計します。</p>
-        <p class="prow__meta"><i class="dot"></i>ガラス・鉄鋼・化学 ほか</p>
-        <a class="btn" href="products-industry.html">詳しく見る <span>→</span></a>
-      </div>
-    </div>
-    <div class="prow prow--rev">
-      <div class="prow__ph rv" style="background-image:url(photo-others.jpg)"><span class="olno">04</span></div>
-      <div class="rv rv-d1">
-        <h2 class="prow__ttl">その他・特殊用途</h2>
-        <p class="prow__sub">Special Applications</p>
-        <p class="prow__txt">動物用の体重計、研究機関向けの特殊計量装置など、規格品では応えられない「はかりたい」にも対応します。設計から製造・据付・保守までを自社一貫で。</p>
-        <p class="prow__meta"><i class="dot"></i>動物計量・研究用途 ほか</p>
-        <a class="btn" href="products-other.html">詳しく見る <span>→</span></a>
-      </div>
-    </div>
+
+<style>
+.ucase{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
+.ucase>div{border-top:2px solid var(--red);padding:22px 6px 0;font-weight:700;font-size:15px}
+.ucase .n{font-family:var(--en);color:var(--red);font-size:13px;display:block;margin-bottom:10px}
+.onote{position:relative;font-size:13.5px;line-height:2.05;color:rgba(255,255,255,.7);margin-top:40px;max-width:720px}
+@media(max-width:700px){.ucase{grid-template-columns:repeat(2,1fr)}}
+</style>
+<section class="feat">
+  <h2 class="sec-jp rv">主な特長</h2>
+  <p class="sec-ttl rv">Features</p>
+  <div class="feat__grid">
+    <div class="fitem rv"><span class="olno">01</span><h3>動物計量システム</h3><p>家畜・競走馬向けの体重計・動物計量システム。生体をやさしく、正確にはかります。</p></div>
+    <div class="fitem rv rv-d1"><span class="olno">02</span><h3>特殊形状・特殊環境への対応</h3><p>高温・多湿・防塵など、現場の条件に合わせて個別に設計。標準品では応えられない要望にも対応します。</p></div>
+    <div class="fitem rv rv-d2"><span class="olno">03</span><h3>一品一様の設計・製造</h3><p>計画段階からエンジニアが伺い、設計から製造・施工・保守まで自社で一貫して担います。</p></div>
+  </div>
 </section>
+
+<section class="flow">
+  <i class="tab-up" aria-hidden="true"></i>
+  <h2 class="sec-jp rv">主な用途・導入現場</h2>
+  <p class="sec-ttl rv">Use Case</p>
+  <div class="ucase rv rv-d1">
+    <div><span class="n">01</span>畜産施設</div>
+    <div><span class="n">02</span>競走馬育成・管理施設</div>
+    <div><span class="n">03</span>研究機関</div>
+    <div><span class="n">04</span>その他特殊計量現場</div>
+  </div>
+  <p class="onote rv rv-d1">詳細仕様・写真は機密保持の都合により非掲載としています。用途に応じた資料を別途ご用意しますので、お気軽にお問い合わせください。</p>
+</section>
+
 <section class="pcta">
   <i class="tab-up" aria-hidden="true"></i>
   <div class="pcta__in">
@@ -850,7 +876,7 @@ body.menu-open .nav{background:transparent;border:none}
     </div>
     <div class="pcta__btns rv rv-d1">
       <a class="cbtn" href="contact.html">お問い合わせ <i class="arrow-i" style="color:inherit">→</i></a>
-      <a class="lbtn" href="index.html"><i class="arrow-i">→</i> TOPへ戻る</a>
+      <a class="lbtn" href="products.html"><i class="arrow-i">→</i> 製品一覧へ戻る</a>
     </div>
   </div>
 </section>

@@ -49,11 +49,11 @@ img{max-width:100%;display:block}
 /* PC：ホバーで下層メガメニュー */
 .mega{position:fixed;left:0;right:0;top:64px;background:#fff;border-bottom:0.5px solid var(--line);opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .25s,transform .25s,visibility .25s;z-index:29}
 .nitem:hover .mega{opacity:1;visibility:visible;transform:none}
-.mega__inner{display:grid;grid-template-columns:240px minmax(0,1fr);gap:6vw;padding:44px 7vw 48px}
-.mega__lead .men{display:block;font-family:var(--en);font-size:26px;font-weight:600;text-transform:uppercase;color:var(--ink);line-height:1}
+.mega__inner{display:grid;grid-template-columns:150px minmax(0,1fr);gap:30px;padding:28px 34px 32px}
+.mega__lead .men{display:block;font-family:var(--en);font-size:21px;font-weight:600;text-transform:uppercase;color:var(--ink);line-height:1}
 .mega__lead .mjp{display:block;font-size:12.5px;font-weight:700;letter-spacing:.14em;color:#000000;margin-top:12px}
-.mega__links{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;align-content:start}
-.mega__links a{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:0.5px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);transition:color .2s,padding .2s}
+.mega__links{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;align-content:start}
+.mega__links a{display:flex;align-items:center;gap:10px;padding:13px 4px;border-bottom:0.5px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);transition:color .2s,padding .2s}
 .mega__links a:nth-child(1),.mega__links a:nth-child(2){border-top:0.5px solid var(--line)}
 .mega__links a:hover{color:var(--red);padding-left:14px}
 /* タブレット（〜1100px）：ハンバーガー格納 */
@@ -580,14 +580,14 @@ body.menu-open .nav{background:transparent;border:none}
 .nav .nav__logo{background:transparent;border:0}
 .nav .nav__logo img,.nav.is-solid .nav__logo img{filter:brightness(0) invert(1)}
 .nav.is-logo-red .nav__logo img,.nav.is-solid.is-logo-red .nav__logo img,body.menu-open .nav .nav__logo img{filter:none}
-.nav .nav__menu{flex:0 1 auto;margin-left:auto;background:#fff;border:0.5px solid var(--line);border-right:0;padding:0 34px 0 34px}
+.nav .nav__menu{position:relative;flex:0 1 auto;margin-left:auto;background:#fff;border:0.5px solid var(--line);border-right:0;padding:0 34px 0 34px}
 .nav .nav__menu .nlink{color:var(--ink);font-weight:600;letter-spacing:.05em}
 .nav .nav__cta{background:var(--ink);color:#fff;border:0.5px solid var(--ink);letter-spacing:.08em;font-weight:600}
 .nav .nav__cta:hover{background:var(--red);border-color:var(--red)}
 .nav .burger{background:#fff;border:0.5px solid var(--line);margin-left:auto}
 .nav .burger span,body.menu-open .burger span{background:var(--ink)}
 .nav.is-hidden{transform:translateY(calc(-100% - 22px))}
-.mega{top:calc(18px + 64px);left:18px;right:18px}
+.mega{position:absolute;top:100%;left:0;right:0;border:0.5px solid var(--line)}
 .drawer{top:calc(18px + 64px)}
 @media(max-width:900px){
   .nav{top:12px;left:12px;right:12px}
@@ -619,7 +619,7 @@ body.menu-open .nav{background:transparent;border:none}
 <body>
 
 <header class="nav">
-  <a class="nav__logo" href="#"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
+  <a class="nav__logo" href="index.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
   <nav class="nav__menu">
     <div class="nitem">
       <a class="nlink" href="products.html">製品・技術<sup>04</sup></a>
@@ -627,53 +627,53 @@ body.menu-open .nav{background:transparent;border:none}
         <div class="mega__lead"><span class="men">Products</span><span class="mjp">製品・技術</span></div>
         <div class="mega__links">
           <a href="product-agri.html"><i class="arrow-i">→</i>農産物用計量システム</a>
-          <a href="products.html"><i class="arrow-i">→</i>工業用計量システム</a>
-          <a href="products.html"><i class="arrow-i">→</i>穀類用計量システム</a>
-          <a href="products.html"><i class="arrow-i">→</i>その他・特殊用途</a>
+          <a href="products-industry.html"><i class="arrow-i">→</i>工業用計量システム</a>
+          <a href="products-grain.html"><i class="arrow-i">→</i>穀類用計量システム</a>
+          <a href="products-other.html"><i class="arrow-i">→</i>その他・特殊用途</a>
         </div>
       </div></div>
     </div>
     <div class="nitem">
-      <a class="nlink" href="#">サービス案内</a>
+      <a class="nlink" href="service.html">サービス案内</a>
       <div class="mega"><div class="mega__inner">
         <div class="mega__lead"><span class="men">Service</span><span class="mjp">サービス案内</span></div>
         <div class="mega__links">
-          <a href="#"><i class="arrow-i">→</i>保守・定期点検</a>
-          <a href="#"><i class="arrow-i">→</i>導入・設置サポート</a>
-          <a href="#"><i class="arrow-i">→</i>校正・検査</a>
-          <a href="#"><i class="arrow-i">→</i>修理・オーバーホール</a>
+          <a href="service.html"><i class="arrow-i">→</i>保守・定期点検</a>
+          <a href="service.html"><i class="arrow-i">→</i>導入・設置サポート</a>
+          <a href="service.html"><i class="arrow-i">→</i>校正・検査</a>
+          <a href="service.html"><i class="arrow-i">→</i>修理・オーバーホール</a>
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="dummy.html">納入実績</a></div>
+    <div class="nitem"><a class="nlink" href="delivery.html">納入実績</a></div>
     <div class="nitem">
-      <a class="nlink" href="#">会社案内</a>
+      <a class="nlink" href="company.html">会社案内</a>
       <div class="mega"><div class="mega__inner">
         <div class="mega__lead"><span class="men">Company</span><span class="mjp">会社案内</span></div>
         <div class="mega__links">
-          <a href="#"><i class="arrow-i">→</i>企業理念</a>
-          <a href="#"><i class="arrow-i">→</i>サービス拠点</a>
-          <a href="#"><i class="arrow-i">→</i>代表挨拶</a>
-          <a href="#"><i class="arrow-i">→</i>会社概要</a>
+          <a href="company.html#concept"><i class="arrow-i">→</i>企業理念</a>
+          <a href="company.html#base"><i class="arrow-i">→</i>サービス拠点</a>
+          <a href="company.html#message"><i class="arrow-i">→</i>代表挨拶</a>
+          <a href="company.html#profile"><i class="arrow-i">→</i>会社概要</a>
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="#">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
     <div class="nitem">
       <a class="nlink" href="#recruit">採用情報</a>
       <div class="mega"><div class="mega__inner">
         <div class="mega__lead"><span class="men">Recruit</span><span class="mjp">採用情報</span></div>
         <div class="mega__links">
-          <a href="#"><i class="arrow-i">→</i>新卒採用</a>
-          <a href="#"><i class="arrow-i">→</i>社員インタビュー</a>
-          <a href="#"><i class="arrow-i">→</i>キャリア採用</a>
-          <a href="#"><i class="arrow-i">→</i>募集要項</a>
+          <a href="recruit.html#new"><i class="arrow-i">→</i>新卒採用</a>
+          <a href="recruit.html#people"><i class="arrow-i">→</i>社員インタビュー</a>
+          <a href="recruit.html#mid"><i class="arrow-i">→</i>キャリア採用</a>
+          <a href="recruit.html"><i class="arrow-i">→</i>募集要項</a>
         </div>
       </div></div>
     </div>
   </nav>
   <button class="burger" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
-  <a class="nav__cta" href="#">お問い合わせ</a>
+  <a class="nav__cta" href="contact.html">お問い合わせ</a>
 </header>
 
 <!-- タブレット/SP：格納メニュー -->
@@ -681,23 +681,23 @@ body.menu-open .nav{background:transparent;border:none}
   <nav>
     <div class="drawer__group">
       <button class="drawer__top">製品・技術</button>
-      <div class="drawer__sub"><a href="product-agri.html">農産物用計量システム</a><a href="products.html">穀類用計量システム</a><a href="products.html">工業用計量システム</a><a href="products.html">その他・特殊用途</a></div>
+      <div class="drawer__sub"><a href="product-agri.html">農産物用計量システム</a><a href="products-grain.html">穀類用計量システム</a><a href="products-industry.html">工業用計量システム</a><a href="products-other.html">その他・特殊用途</a></div>
     </div>
     <div class="drawer__group">
       <button class="drawer__top">サービス案内</button>
-      <div class="drawer__sub"><a href="#">保守・定期点検</a><a href="#">校正・検査</a><a href="#">導入・設置サポート</a><a href="#">修理・オーバーホール</a></div>
+      <div class="drawer__sub"><a href="service.html">保守・定期点検</a><a href="service.html">校正・検査</a><a href="service.html">導入・設置サポート</a><a href="service.html">修理・オーバーホール</a></div>
     </div>
-    <a class="drawer__single" href="dummy.html">納入実績</a>
+    <a class="drawer__single" href="delivery.html">納入実績</a>
     <div class="drawer__group">
       <button class="drawer__top">会社案内</button>
-      <div class="drawer__sub"><a href="#">企業理念</a><a href="#">代表挨拶</a><a href="#">サービス拠点</a><a href="#">会社概要</a></div>
+      <div class="drawer__sub"><a href="company.html#concept">企業理念</a><a href="company.html#message">代表挨拶</a><a href="company.html#base">サービス拠点</a><a href="company.html#profile">会社概要</a></div>
     </div>
-    <a class="drawer__single" href="#">126年ヒストリー</a>
+    <a class="drawer__single" href="history.html">126年ヒストリー</a>
     <div class="drawer__group">
       <button class="drawer__top">採用情報</button>
-      <div class="drawer__sub"><a href="#">新卒採用</a><a href="#">キャリア採用</a><a href="#">社員インタビュー</a><a href="#">募集要項</a></div>
+      <div class="drawer__sub"><a href="recruit.html#new">新卒採用</a><a href="recruit.html#mid">キャリア採用</a><a href="recruit.html#people">社員インタビュー</a><a href="recruit.html">募集要項</a></div>
     </div>
-    <a class="drawer__single" href="#">お問い合わせ</a>
+    <a class="drawer__single" href="contact.html">お問い合わせ</a>
   </nav>
 </div>
 
@@ -759,11 +759,26 @@ body.menu-open .nav{background:transparent;border:none}
 </style>
 
 <style id="pagri-css">
-.dhero__grid{position:relative;display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,.45fr);gap:5vw;align-items:end}
-.dhero__no{font-size:clamp(90px,10vw,150px);display:block}
-.dhero__ttl{font-family:var(--jp);font-weight:900;font-size:clamp(2rem,4.2vw,3.8rem);letter-spacing:.05em;margin-top:22px;line-height:1.4}
-.dhero__sub{font-family:var(--en);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:14px}
-.dhero__ph{width:100%;aspect-ratio:1/1;background-size:cover;background-position:center}
+/* ヒーロー：背景写真＋薄い黒膜＋左下段差（products.html基準） */
+.phero{position:relative;background:#000;color:#fff;padding:210px 7vw 116px;
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 54px), 24% calc(100% - 54px), 24% 100%, 0 100%)}
+.phero__photo{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;filter:grayscale(.08) contrast(1.02)}
+.phero__photo::after{content:"";position:absolute;inset:0;background:rgba(8,9,8,.58)}
+.phero::before{z-index:1}
+.phero .pcrumb,.phero .dhero{position:relative;z-index:2}
+.phero .tab-down{display:none}
+.dhero{max-width:880px}
+.dhero__no{font-size:clamp(72px,8vw,120px);display:block}
+.dhero__ttl{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2.2rem,5vw,4.4rem);letter-spacing:.04em;margin-top:12px;line-height:1.16}
+.dhero__sub{font-family:var(--en);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:16px}
+.dhero__sub::before{content:"( "}.dhero__sub::after{content:" )"}
+/* 各セクション見出し：日本語メイン（明朝大）＋（英語）サブ（小） */
+.lineup .sec-jp,.flow .sec-jp,.feat .sec-jp{font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:.04em;line-height:1.15;display:block;gap:0;margin:0}
+.lineup .sec-jp .dot,.flow .sec-jp .dot,.feat .sec-jp .dot{display:none}
+.lineup .sec-ttl,.flow .sec-ttl,.feat .sec-ttl{font-family:var(--en);font-weight:500;font-size:clamp(.78rem,1vw,1rem);line-height:1;letter-spacing:.24em;text-transform:uppercase;opacity:.55;margin-top:14px;display:block}
+.lineup .sec-ttl::before,.flow .sec-ttl::before,.feat .sec-ttl::before{content:"( "}
+.lineup .sec-ttl::after,.flow .sec-ttl::after,.feat .sec-ttl::after{content:" )"}
+@media(max-width:900px){.phero{clip-path:polygon(0 0,100% 0,100% calc(100% - 34px),40% calc(100% - 34px),40% 100%,0 100%)}}
 .lineup{background:var(--paper);padding:150px 7vw 150px}
 .lineup .sec-jp,.feat .sec-jp{margin-top:22px}
 .lineup__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:64px}
@@ -812,22 +827,19 @@ body.menu-open .nav{background:transparent;border:none}
 
 <main class="pmain">
 <section class="phero">
+  <div class="phero__photo" style="background-image:url(photo-agri.jpg)"></div>
   <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><a href="products.html">Products</a><span>/</span><span>Agricultural</span></p>
-  <div class="dhero__grid">
-    <div>
-      <span class="olno dhero__no rv">01</span>
-      <h1 class="dhero__ttl rv rv-d1">農産物用計量システム</h1>
-      <p class="dhero__sub rv rv-d1">Agricultural Weighing System</p>
-      <p class="phero__lead rv rv-d2">選果場や集出荷施設で使われる、青果物の計量・選別システム。荷受から選別・箱詰・パレタイズまで、ライン全体を品目と施設に合わせて一品一様で設計します。</p>
-    </div>
-    <div class="dhero__ph rv rv-d1" style="background-image:url(photo-agri.jpg)"></div>
+  <div class="dhero">
+    <span class="olno dhero__no rv">01</span>
+    <h1 class="dhero__ttl rv rv-d1">農産物用計量システム</h1>
+    <p class="dhero__sub rv rv-d1">Agricultural Weighing System</p>
+    <p class="phero__lead rv rv-d2">選果場や集出荷施設で使われる、青果物の計量・選別システム。荷受から選別・箱詰・パレタイズまで、ライン全体を品目と施設に合わせて一品一様で設計します。</p>
   </div>
-  <i class="tab-down" aria-hidden="true"></i>
 </section>
 
 <section class="lineup">
-  <h2 class="sec-ttl rv">Lineup</h2>
-  <p class="sec-jp rv"><i class="dot"></i>製品ラインナップ</p>
+  <h2 class="sec-jp rv">製品ラインナップ</h2>
+  <p class="sec-ttl rv">Lineup</p>
   <div class="lineup__grid">
     <div class="lcard rv"><div class="lcard__ph" style="background-image:url(photo-agri.jpg)"></div><div class="lcard__body"><p class="lcard__en">Calistar</p><h3 class="lcard__nm">キャリスター</h3><p class="lcard__tx">大規模選果施設向けのフラッグシップライン。AI画像処理と内部品位センサーで、外観と中身を同時に選別します。</p></div></div>
     <div class="lcard rv rv-d1"><div class="lcard__ph" style="background-image:url(prod-millistar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Millistar</p><h3 class="lcard__nm">ミリスター</h3><p class="lcard__tx">全周10方向の画像処理と糖度センサーを備えた選別機。中規模施設のラインに柔軟に組み込めます。</p></div></div>
@@ -837,8 +849,8 @@ body.menu-open .nav{background:transparent;border:none}
 
 <section class="flow">
   <i class="tab-up" aria-hidden="true"></i>
-  <h2 class="sec-ttl rv">Line Flow</h2>
-  <p class="sec-jp rv"><i class="dot"></i>選果ラインの流れ</p>
+  <h2 class="sec-jp rv">選果ラインの流れ</h2>
+  <p class="sec-ttl rv">Line Flow</p>
   <p class="flow__lead rv rv-d1">荷受からパレタイズまで、ひとつのラインとして設計します。（Calistarラインの例）</p>
   <div class="flow__grid">
       <div class="fstep rv"><div class="fstep__ph" style="background-image:url(agri-step1.jpg)"></div><div class="fstep__cap"><span class="olno">01</span><b>荷受ホッパー</b></div></div>
@@ -854,8 +866,8 @@ body.menu-open .nav{background:transparent;border:none}
 </section>
 
 <section class="feat">
-  <h2 class="sec-ttl rv">Features</h2>
-  <p class="sec-jp rv"><i class="dot"></i>特長</p>
+  <h2 class="sec-jp rv">特長</h2>
+  <p class="sec-ttl rv">Features</p>
   <div class="feat__grid">
     <div class="fitem rv"><span class="olno">01</span><h3>一品一様のライン設計</h3><p>品目・処理量・施設のかたちに合わせて、搬送から箱詰までをゼロから設計。既製ラインの流用はしません。</p></div>
     <div class="fitem rv rv-d1"><span class="olno">02</span><h3>外観も、中身も、はかる</h3><p>AI画像処理による外観選別に加え、内部品位センサーで糖度や熟度も非破壊で計測。産地の出荷品質を支えます。</p></div>
@@ -871,48 +883,62 @@ body.menu-open .nav{background:transparent;border:none}
       <p>現場の状況、品目、処理量をお聞かせください。計画段階からエンジニアが伺い、最適なラインをご提案します。</p>
     </div>
     <div class="pcta__btns rv rv-d1">
-      <a class="cbtn" href="#">お問い合わせ <i class="arrow-i" style="color:inherit">→</i></a>
+      <a class="cbtn" href="contact.html">お問い合わせ <i class="arrow-i" style="color:inherit">→</i></a>
       <a class="lbtn" href="products.html"><i class="arrow-i">→</i> 製品一覧へ戻る</a>
     </div>
   </div>
 </section>
 </main>
 
+<section class="strip">
+  <div class="strip__bg"></div>
+  <div class="strip__marquee">
+    <div class="strip__track"><span>We Measure the Future</span><span>We Measure the Future</span></div>
+    <div class="strip__track" aria-hidden="true"><span>We Measure the Future</span><span>We Measure the Future</span></div>
+  </div>
+  <div class="strip__contact">
+    <span class="en">( Contact )</span>
+    <h3>お問い合わせ・ご相談</h3>
+    <p>お気軽にご相談ください。<br>お見積もり依頼も可能です。</p>
+    <a class="cbtn" href="contact.html">Contact Form <i class="arrow-i" style="color:inherit">→</i></a>
+  </div>
+</section>
+
 <footer class="foot">
   <div class="foot__grid">
     <div class="foot__brand">
       <img src="logo_r.png" alt="近江度量衡株式会社">
       <p class="name">近江度量衡株式会社</p>
-      <p>〒525-0054<br>滋賀県草津市東矢倉三丁目11番70号<br>TEL 077-562-7111 ／ FAX 077-562-7116<br><a href="#">Google map</a></p>
+      <p>〒525-0054<br>滋賀県草津市東矢倉三丁目11番70号<br>TEL 077-562-7111 ／ FAX 077-562-7116<br><a href="https://maps.google.com/?q=%E6%BB%8B%E8%B3%80%E7%9C%8C%E8%8D%89%E6%B4%A5%E5%B8%82%E6%9D%B1%E7%9F%A2%E5%80%893%E4%B8%81%E7%9B%AE11%E7%95%AA70%E5%8F%B7" target="_blank" rel="noopener">Google map</a></p>
     </div>
     <nav class="foot__nav">
       <div>
-        <a href="#">トップページ</a>
+        <a href="index.html">トップページ</a>
         <a href="#products">製品・技術</a>
-        <a class="sub" href="#">農産物用計量システム</a>
-        <a class="sub" href="#">穀類用計量システム</a>
-        <a class="sub" href="#">工業用計量システム</a>
-        <a class="sub" href="#">その他・特殊用途</a>
-        <a href="#">サービス案内</a>
-        <a href="dummy.html">納入実績</a>
+        <a class="sub" href="product-agri.html">農産物用計量システム</a>
+        <a class="sub" href="products-grain.html">穀類用計量システム</a>
+        <a class="sub" href="products-industry.html">工業用計量システム</a>
+        <a class="sub" href="products-other.html">その他・特殊用途</a>
+        <a href="service.html">サービス案内</a>
+        <a href="delivery.html">納入実績</a>
       </div>
       <div>
-        <a href="#">会社案内</a>
-        <a href="#">126年ヒストリー</a>
-        <a href="#">新着情報</a>
+        <a href="company.html">会社案内</a>
+        <a href="history.html">126年ヒストリー</a>
+        <a href="news.html">新着情報</a>
         <a href="#recruit">採用情報</a>
-        <a href="#">お問い合わせ</a>
-        <a href="#">プライバシーポリシー</a>
+        <a href="contact.html">お問い合わせ</a>
+        <a href="privacy.html">プライバシーポリシー</a>
       </div>
     </nav>
     <div class="foot__contact">
       <span class="en">( Contact )</span>
       <h3>お問い合わせ・ご相談</h3>
       <p>お気軽にご相談ください。<br>お見積もり依頼も可能です。</p>
-      <a class="cbtn" href="#">Contact Form <i class="arrow-i" style="color:inherit">→</i></a>
+      <a class="cbtn" href="contact.html">Contact Form <i class="arrow-i" style="color:inherit">→</i></a>
     </div>
   </div>
-  <a class="foot__recruit" href="#">
+  <a class="foot__recruit" href="recruit.html">
     <span class="rtxt">
       <span class="en">Recruitment 2027</span>
       <h3>いきるの単位とは、なんだろう。</h3>
@@ -1138,5 +1164,6 @@ body.menu-open .nav{background:transparent;border:none}
 })();
 </script>
 <script src="_pt.js"></script>
+<script src="_simg.js"></script>
 </body>
 </html>

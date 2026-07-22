@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="_auth.js"></script>
+<title>126年ヒストリー｜近江度量衡株式会社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@latest/cdn/all.css">
+<link rel="stylesheet" href="site.css">
+<script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('pt-init');</script>
+<style>html.pt-init{background:#ff0000;}html.pt-init body{visibility:hidden;}</style>
+<style id="pagebg">body{background:var(--ink)}</style>
+<style>
+/* ===== 126年ヒストリー：奥から手前へ迫る透視スクロール（TOPトーン） ===== */
+.hc-scene{position:relative;background:var(--ink);color:#fff}
+.hc-pin{position:sticky;top:0;height:100vh;overflow:hidden;perspective:1200px;perspective-origin:62% 44%}
+.hc-bg{position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(56% 52% at 64% 42%, rgba(255,255,255,.06), rgba(0,0,0,0) 70%)}
+/* 0.5px方眼（TOPの罫線モチーフ・白は極薄） */
+.hc-lines{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px);
+  background-size:1px 100%;background-repeat:no-repeat;
+  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
+.hc-photos{position:absolute;inset:0;pointer-events:none}
+.hc-photo{position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity 1.1s ease,transform 1.8s ease;
+  background-size:cover;background-position:center;filter:saturate(.95)}
+.hc-photo.is-on{opacity:1;transform:scale(1)}
+.hc-stage{position:absolute;inset:0;transform-style:preserve-3d}
+/* カード＝ブラー＋黒透過の座布団（赤枠なし） */
+.hc-panel{position:absolute;left:50%;top:50%;width:min(860px,92vw);transform:translate(-50%,-50%);opacity:0;
+  will-change:transform,opacity;text-align:center;padding:54px 58px 58px;
+  border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.46);
+  -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1)}
+.hc-panel.is-active{background:rgba(10,12,11,.56)}
+/* 段階送り：activeが変わった時だけ手前へ抜け／奥から中央へ、をアニメ（初期配置後に有効化）*/
+.hc-scene.hc-anim .hc-panel{transition:transform .85s cubic-bezier(.22,1,.36,1),opacity .7s ease}
+.hc-panel__era{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--red)}
+.hc-panel__era::before{content:"( "}.hc-panel__era::after{content:" )"}
+.hc-panel__year{font-family:var(--en);font-weight:600;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:.02em;margin-top:16px;color:#fff}
+.hc-panel__year small{display:inline-block;font-family:var(--jp);font-weight:500;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.55);margin-left:14px;vertical-align:middle}
+.hc-panel__title{font-family:var(--mincho);font-weight:600;font-size:clamp(22px,3vw,40px);margin-top:22px;line-height:1.4;letter-spacing:.03em}
+.hc-panel__desc{font-family:var(--jp);font-weight:500;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin:22px auto 0;max-width:640px}
+.hc-hud{position:absolute;left:7vw;top:104px;z-index:6;pointer-events:none}
+.hc-hud__era{font-family:var(--en);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.hc-hud__era::before{content:"— "}
+/* 年代インジケーターの座布団＝カードと同じブラー＋黒透過 */
+.hc-progress__pad{position:absolute;left:calc(7vw - 28px);right:calc(7vw - 28px);bottom:36px;height:48px;z-index:5;border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.46);
+  -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1);pointer-events:none}
+.hc-progress{position:absolute;left:7vw;right:7vw;bottom:66px;height:1px;background:rgba(255,255,255,.18);z-index:6}
+.hc-progress__fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--red)}
+.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(255,255,255,.3);transform:translateX(-.5px)}
+.hc-tick.--era{top:-5px;height:11px;background:rgba(255,255,255,.5)}
+.hc-tick b{position:absolute;top:11px;left:50%;transform:translateX(-50%);font:500 9px/1 var(--en);letter-spacing:.1em;color:rgba(255,255,255,.36);white-space:nowrap}
+.hc-tick.--era b{color:rgba(255,255,255,.6)}
+.hc-tick.is-on{background:var(--red);top:-6px;height:13px}
+.hc-tick.is-on b{color:#fff;font-weight:700;top:13px}
+.hc-scroll{position:absolute;left:50%;bottom:98px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+@media(max-width:640px){
+  .hc-hud{left:24px;top:80px}
+  .hc-progress{left:24px;right:24px;bottom:44px}
+  .hc-progress__pad{left:6px;right:6px;bottom:22px;height:44px}
+  .hc-tick b{display:none}.hc-tick.is-on b,.hc-tick.--era b{display:block}
+  .hc-panel{width:86vw;min-height:60vh;padding:40px 24px;display:flex;flex-direction:column;justify-content:center}
+}
+.hc--static .hc-pin{position:static;height:auto;overflow:visible;perspective:none;padding:60px 0}
+.hc--static .hc-stage{position:static;transform:none}
+.hc--static .hc-bg,.hc--static .hc-lines,.hc--static .hc-photos,.hc--static .hc-progress,.hc--static .hc-progress__pad,.hc--static .hc-scroll,.hc--static .hc-hud{display:none}
+.hc--static .hc-panel{position:relative;left:auto;top:auto;transform:none!important;opacity:1!important;width:min(680px,90vw);margin:0 auto 18px}
+/* 証言（写真とセット） */
+.quote-card{display:grid;grid-template-columns:0.82fr 1fr;border:0.5px solid var(--line);background:#fff;overflow:hidden}
+.quote-card__ph{background:center/cover no-repeat;min-height:230px;filter:grayscale(.15)}
+.quote-card__body{padding:38px 36px;display:flex;flex-direction:column;justify-content:center}
+.quote-card p.q{font-family:var(--mincho);font-weight:500;font-size:17px;line-height:1.9;letter-spacing:.02em}
+.quote-card p.by{font-size:12px;color:rgba(0,0,0,.5);margin-top:16px}
+@media(max-width:680px){.quote-card{grid-template-columns:1fr}.quote-card__ph{min-height:180px}}
+/* ヘッダー＝写真なし・段差を右側に。段差の切り欠きから、下のトンネル背景写真が覗く */
+.phero{position:relative;z-index:2;clip-path:polygon(0 0, 100% 0, 100% calc(100% - 54px), 76% calc(100% - 54px), 76% 100%, 0 100%)}
+@media(max-width:900px){.phero{clip-path:polygon(0 0, 100% 0, 100% calc(100% - 34px), 58% calc(100% - 34px), 58% 100%, 0 100%)}}
+.hc-scene{z-index:1;margin-top:-54px}
+@media(max-width:900px){.hc-scene{margin-top:-34px}}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="phero phero--ink">
+  <div class="phero__lines" aria-hidden="true"></div>
+  <div class="phero__in">
+    <p class="crumb"><a href="index.html">TOP</a> &rsaquo; 126年ヒストリー</p>
+    <span class="phero__jp">近江度量衡の歴史</span>
+    <span class="phero__en">History</span>
+    <p class="phero__lead">1900年、大津の地に生まれた計量器メーカー。時代とともに移りゆく景色を、奥から手前へ、ひとつずつ辿ってください。</p>
+  </div>
+</section>
+
+<section class="hc-scene" id="hc">
+  <div class="hc-pin">
+    <div class="hc-bg"></div>
+    <div class="hc-lines" aria-hidden="true"></div>
+    <div class="hc-photos"></div>
+    <div class="hc-hud"><p class="hc-hud__era"></p></div>
+    <div class="hc-stage"></div>
+    <div class="hc-progress__pad" aria-hidden="true"></div>
+    <div class="hc-progress"><span class="hc-progress__fill"></span></div>
+    <div class="hc-scroll">Scroll — 1900 → 2026</div>
+  </div>
+</section>
+
+<!-- 証言 -->
+<section class="section section--gray">
+  <div class="container">
+    <div class="sec-head rv"><h2 class="sec-jp">受け継がれることば。</h2><p class="sec-ttl">Voices</p></div>
+    <div class="grid-2 rv rv-d1">
+      <div class="quote-card">
+        <div class="quote-card__ph" style="background-image:url(hist2.jpg)"></div>
+        <div class="quote-card__body"><p class="q">「計量とは、人と人の信頼を結ぶ仕事だ。一グラムのずれも、嘘をつく。」</p><p class="by">元社員・昭和40年代入社 ／ 本番用原稿に差し替え予定</p></div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-card__ph" style="background-image:url(photo-industry.jpg)"></div>
+        <div class="quote-card__body"><p class="q">「一品一様とは、ただ特注を作ることではない。お客様の現場を理解し、最適な精度で答えることだ。」</p><p class="by">現役エンジニア ／ 本番用原稿に差し替え予定</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--ink section--tight">
+  <div class="container" style="text-align:center;">
+    <p class="statement__lead rv" style="color:#fff;max-width:760px;margin:0 auto;">次の100年へ。<br>ともに歩む人を募集しています。</p>
+    <p class="body-txt rv rv-d1" style="margin:24px auto 0;max-width:560px;">126年の技術と誇りを受け継ぎ、更なる進化を担う仲間を求めています。</p>
+    <p class="rv rv-d1" style="margin-top:34px;"><a class="btn btn--white" href="recruit.html">採用情報を見る <i class="arrow-i">→</i></a></p>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script>window.OMI_ACTIVE="history";</script>
+<script src="site.js"></script>
+<script src="_pt.js"></script>
+<script>
+(function(){
+  var DATA=[
+    ["1900","明治33年","明治・大正","創業 ― 大津市にて株式会社を設立","衡器の販売と製作免許の申請をもって大津市港町に設立。初代社長 池田仙右衛門、資本金2万円・発起人27名。"],
+    ["1904","明治37年","明治・大正","衡器製作免許を取得","会社記号を登録し、計量器メーカーとしての基盤を確立。"],
+    ["1906","明治39年","明治・大正","本社・工場を大津市鍛冶屋町へ","事業拡大にともない移転。2代社長 西村市良右衛門が就任。"],
+    ["1944","昭和19年","昭和","戦時特需生産","軍の指定工場として大型・精密計量機を製作。前年焼失の本社を再建。"],
+    ["1946","昭和21年","昭和","米軍用バススケールを納入","10,000台の契約に対応するため野洲工場を拡充。戦後復興を支える。"],
+    ["1961","昭和36年","昭和","草津工場が完成","草津市東矢倉に新工場。6代社長 服部喜久次郎が就任。以降、草津を製造の中核に。"],
+    ["1973","昭和48年","昭和","鉄鋼施設事業部を開設","工業分野へ本格進出。大阪衡器と吸収合併し大阪営業所・工場を開設。"],
+    ["1974","昭和49年","昭和","海外への計量機輸出を開始","韓国・台湾・アメリカ・ポーランドなどへ輸出を開始。"],
+    ["1981","昭和56年","昭和","全国へ営業網を拡充","東京(1975)・札幌(1981)・帯広(1982)・仙台(1988)を相次いで開設。"],
+    ["1992","平成4年","平成","韓国に現地法人を設立","新潟出張所を開設し、韓国近江度量衡を設立。海外展開の第一歩。"],
+    ["2000","平成12年","平成","創立100周年 ― ISO 9001 認証取得","品質保証体制を国際規格で整備（JQA-QM4385）。100周年を迎える。"],
+    ["2008","平成20年","平成","海外3拠点体制を確立","上海(2003)・タイ(2008)に現地法人。韓国と合わせアジアをカバー。"],
+    ["2012","平成24年","平成","8代社長 田中秀康が就任","翌2013年に本社工場を増設し、九州営業所(熊本)を開設。"],
+    ["2018","平成30年","平成","地域未来牽引企業・優良100年企業に","経済産業省の選定(2017)、100年企業顕彰で表彰(2018)。"],
+    ["2024","令和6年","令和","開発技術開発賞を受賞","関西農業食料工学 ― ボックスフィリング定量箱詰めシステムで受賞。"],
+    ["2025","令和7年","令和","創立125周年 ― 新社長就任","3月に創立125周年。9月、小谷俊彦が代表取締役社長に就任。"],
+    ["2026","令和8年","令和","創立126周年 ― Webサイトをリニューアル","新ブランド「いきる」をはかり、豊かな世界へ。のもと次の100年へ。"]
+  ];
+  var ERAPIC={"明治・大正":"hist.jpg","昭和":"hist2.jpg","平成":"hist3.jpg","令和":"hist4.jpg"};
+  var scene=document.getElementById('hc'); if(!scene) return;
+  var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
+      prog=scene.querySelector('.hc-progress'), fill=scene.querySelector('.hc-progress__fill'),
+      hud=scene.querySelector('.hc-hud__era'), scroll=scene.querySelector('.hc-scroll');
+  var N=DATA.length, prevEra=null, ph='', tk='';
+  DATA.forEach(function(d,i){
+    stage.insertAdjacentHTML('beforeend',
+      '<article class="hc-panel" data-era="'+d[2]+'">'+
+      '<p class="hc-panel__era">'+d[2]+'</p>'+
+      '<h3 class="hc-panel__year">'+d[0]+'<small>'+d[1]+'</small></h3>'+
+      '<p class="hc-panel__title">'+d[3]+'</p>'+
+      '<p class="hc-panel__desc">'+d[4]+'</p></article>');
+    photos.insertAdjacentHTML('beforeend','<div class="hc-photo" style="background-image:url('+(ERAPIC[d[2]]||'hist.jpg')+')"></div>');
+    var pos=(N>1?(i/(N-1))*100:0), era=(d[2]!==prevEra);
+    tk+='<span class="hc-tick'+(era?' --era':'')+'" style="left:'+pos.toFixed(2)+'%"><b>'+d[0]+'</b></span>';
+    prevEra=d[2];
+  });
+  prog.insertAdjacentHTML('beforeend',tk);
+  scene.style.height='calc(115vh * '+N+' + 70vh)';
+  var panels=[].slice.call(stage.children), pics=[].slice.call(photos.children), ticks=[].slice.call(prog.querySelectorAll('.hc-tick'));
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ scene.classList.add('hc--static'); return; }
+  var STEP=900,last=-1,ticking=false;
+  function cl(v,a,b){a=(a==null?0:a);b=(b==null?1:b);return v<a?a:(v>b?b:v);}
+  // active を基準に、各ボックスを離散位置へ（中央=固定／手前=抜けて消える／奥=待機）
+  function place(active){
+    for(var i=0;i<N;i++){
+      var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP, op=(d===0?1:0);
+      el.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px) translateZ('+z+'px)';
+      el.style.opacity=String(op);
+      el.style.zIndex=String(3000-Math.abs(d)*12);
+      var act=(i===active); if(act!==el._act){ el.classList.toggle('is-active',act); el._act=act; }
+    }
+  }
+  function swap(active){
+    if(pics[last]) pics[last].classList.remove('is-on');
+    if(pics[active]) pics[active].classList.add('is-on');
+    if(ticks[last]) ticks[last].classList.remove('is-on');
+    if(ticks[active]) ticks[active].classList.add('is-on');
+    if(hud){ var ap=panels[active]; if(ap) hud.textContent=ap.getAttribute('data-era'); }
+  }
+  function upd(){
+    var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
+    var p= max>0 ? cl(-r.top,0,max)/max : 0;
+    // スクロール一定ごとに active が1つ進む（間はボックス固定）。閾値を越えるとCSSトランジションで自動送り
+    var active=Math.round(p*(N-1)); active=active<0?0:(active>N-1?N-1:active);
+    if(fill) fill.style.width=(p*100)+'%';
+    if(scroll) scroll.style.opacity=String(cl(1-p*6));
+    if(active!==last){ place(active); swap(active); last=active; }
+    ticking=false;
+  }
+  // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
+  place(0); last=0; swap(0);
+  setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
+  window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
+  window.addEventListener('resize',upd); upd();
+})();
+</script>
+</body>
+</html>

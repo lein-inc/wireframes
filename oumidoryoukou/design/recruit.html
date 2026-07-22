@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="_auth.js"></script>
+<title>採用情報｜近江度量衡 ―「いきる」の単位とは、なんだろう。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@latest/cdn/all.css">
+<link rel="stylesheet" href="site.css">
+<script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('pt-init');</script>
+<style>html.pt-init{background:#ff0000;}html.pt-init body{visibility:hidden;}</style>
+<style>
+/* ===== 採用TOP：ワイヤーのレイアウト × TOPトーン ===== */
+.rct-fv{padding:132px 7vw 0;overflow:hidden}
+.rct-fv__eyebrow{font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.rct-fv__title{font-family:"Noto Serif JP",var(--mincho);font-weight:900;font-size:clamp(34px,6vw,80px);line-height:1.35;letter-spacing:.04em;margin-top:18px;position:relative;z-index:2}
+.rct-fv__title span{display:block}
+.rct-fv__title .idnt{margin-left:1.4em}
+.rct-fv__grid{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:start;margin-top:24px}
+.rct-fv__main{margin-top:-70px}
+.rct-fv__sub{padding-top:34px;display:flex;flex-direction:column;gap:26px}
+.rct-fv__sub p{font-size:14.5px;line-height:2.2;max-width:400px;color:rgba(0,0,0,.72)}
+.rct-fv__btns{display:flex;gap:14px;flex-wrap:wrap}
+.rct-fv__subphoto{width:72%}
+.rct-marq{overflow:hidden;border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);padding:16px 0;margin-top:60px}
+.rct-marq__in{display:flex;gap:56px;white-space:nowrap;width:max-content;animation:rctmarq 28s linear infinite}
+.rct-marq__in span{font-family:var(--en);font-size:13px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.42)}
+@keyframes rctmarq{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.rct-marq__in{animation:none}}
+.rct-wm{font-family:var(--en);font-weight:700;font-size:clamp(52px,9vw,120px);line-height:1;letter-spacing:.02em;color:#ececec;user-select:none;white-space:nowrap}
+.section--ink .rct-wm{color:rgba(255,255,255,.06)}
+.section--gray .rct-wm{color:#e2e2e2}
+.rct-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rct-menu a{display:flex;flex-direction:column;border:0.5px solid var(--line);background:#fff;transition:opacity .2s}
+.rct-menu a:hover{opacity:.72}
+.rct-menu a .ph{aspect-ratio:16/10}
+.rct-menu a:first-child{grid-row:span 2}
+.rct-menu a:first-child .ph{flex:1;aspect-ratio:auto;min-height:300px}
+.rct-menu__bar{display:flex;align-items:baseline;gap:14px;padding:18px 20px}
+.rct-menu__no{font-family:var(--en);font-size:11px;font-weight:600;letter-spacing:.18em;color:var(--red)}
+.rct-menu__ttl{font-size:15px;font-weight:700;letter-spacing:.03em}
+.rct-menu__bar i{margin-left:auto;font-style:normal;color:var(--red)}
+.rct-vision{display:grid;grid-template-columns:6fr 5fr;gap:56px;align-items:start;margin-top:-18px}
+.rct-vision__photos{display:flex;flex-direction:column;align-items:flex-end}
+.rct-vision__p1{width:100%}
+.rct-vision__p2{width:56%;margin-top:-18%;margin-right:58%}
+.pillar{border:0.5px solid var(--line);padding:22px 10px;text-align:center}
+.pillar__title{font-family:var(--jp);font-weight:900;font-size:16px;letter-spacing:.08em}
+.rct-num{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5px;background:rgba(255,255,255,.16);border:0.5px solid rgba(255,255,255,.16);margin-top:28px}
+.rct-num__cell{background:var(--ink);padding:34px 26px}
+.rct-num__cell.--wide{grid-column:span 2}
+.rct-num__val{font-family:var(--en);font-weight:600;font-size:clamp(40px,4.6vw,72px);line-height:1;color:#fff}
+.rct-num__cell.--wide .rct-num__val{font-size:clamp(58px,7vw,104px)}
+.rct-num__val small{font-size:.38em;margin-left:6px;color:var(--red);letter-spacing:.04em}
+.rct-num__label{font-size:12px;color:rgba(255,255,255,.6);margin-top:12px}
+.rct-people{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start;margin-top:38px}
+.rct-people .interview-card:nth-child(2){margin-top:64px}
+.rct-people .interview-card:nth-child(3){margin-top:128px}
+.rct-welf{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:start;margin-top:-10px}
+.rct-welf__row{display:grid;grid-template-columns:44px 1fr;gap:4px 18px;padding:20px 0;border-bottom:0.5px solid var(--line)}
+.rct-welf__no{font-family:var(--en);font-weight:600;color:var(--red);font-size:13px}
+.rct-welf__ttl{font-weight:900;font-size:15px;letter-spacing:.04em}
+.rct-welf__desc{grid-column:2;font-size:13px;color:rgba(0,0,0,.66);line-height:1.8}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.process-step{border-top:2px solid var(--red);padding:18px 6px 0}
+.process-step__num{font-family:var(--en);font-size:12px;font-weight:600;color:var(--red);letter-spacing:.1em}
+.process-step__title{font-weight:900;font-size:15px;margin-top:10px}
+.process-step__desc{font-size:12.5px;color:rgba(0,0,0,.66);margin-top:8px;line-height:1.8}
+.use-item{border:0.5px solid var(--line);padding:16px;text-align:center;font-size:13px;font-weight:700}
+@media(max-width:820px){
+  .rct-fv{padding:110px 24px 0}
+  .rct-fv__grid,.rct-vision,.rct-welf{grid-template-columns:1fr}
+  .rct-fv__main{margin-top:0}
+  .rct-menu{grid-template-columns:1fr}.rct-menu a:first-child{grid-row:auto}.rct-menu a:first-child .ph{min-height:0;aspect-ratio:16/10}
+  .rct-num{grid-template-columns:repeat(2,1fr)}
+  .rct-people{grid-template-columns:1fr}.rct-people .interview-card:nth-child(2),.rct-people .interview-card:nth-child(3){margin-top:0}
+  .process{grid-template-columns:repeat(2,1fr)}
+  .rct-vision__p2{width:70%;margin:-14% 0 0 0}
+}
+.rimg{background-size:cover;background-position:center}
+.rimg::before{display:none}
+.rimg>span{display:none}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<!-- ① FV：大タイポ×写真の重なり -->
+<section class="rct-fv">
+  <p class="rct-fv__eyebrow">OMISCALE Recruit 2027</p>
+  <h1 class="rct-fv__title"><span>「いきる」の単位とは、</span><span class="idnt">なんだろう。</span></h1>
+  <div class="rct-fv__grid">
+    <div class="rct-fv__sub rv">
+      <p>「働く人を大切にする」という理念のもと、あなたの確かな仕事で、豊かな未来を担う力になる。</p>
+      <div class="rct-fv__btns">
+        <a class="btn" href="#entry">募集要項を見る <i class="arrow-i" style="color:#fff">→</i></a>
+        <a class="btn btn--outline" href="#people">社員インタビュー</a>
+      </div>
+      <div class="rct-fv__subphoto ph rimg" style="aspect-ratio:4/5;background-image:url(agri-step2.jpg)"></div>
+    </div>
+    <div class="rct-fv__main ph rimg rv rv-d1" style="aspect-ratio:4/3;background-image:url(photo-industry.jpg)"></div>
+  </div>
+  <div class="rct-marq"><div class="rct-marq__in">
+    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+  </div></div>
+</section>
+
+<!-- ② コンテンツメニュー -->
+<section class="section">
+  <div class="container">
+    <div class="rct-menu rv">
+      <a href="#people"><span class="ph rimg" style="background-image:url(stat-service.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">01</span><span class="rct-menu__ttl">社員インタビュー</span><i>→</i></span></a>
+      <a href="#vision"><span class="ph rimg" style="background-image:url(stat-facilities.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">02</span><span class="rct-menu__ttl">ビジョン</span><i>→</i></span></a>
+      <a href="#numbers"><span class="ph rimg" style="background-image:url(photo-grain.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">03</span><span class="rct-menu__ttl">数字で見る近江度量衡</span><i>→</i></span></a>
+      <a href="#welfare"><span class="ph rimg" style="background-image:url(photo-others.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">04</span><span class="rct-menu__ttl">福利厚生・職場環境</span><i>→</i></span></a>
+      <a href="#entry"><span class="ph rimg" style="background-image:url(agri-step7.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">05</span><span class="rct-menu__ttl">募集要項</span><i>→</i></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ③ VISION -->
+<section class="section section--gray" id="vision" style="overflow:hidden;">
+  <div class="container">
+    <p class="rct-wm rv">VISION</p>
+    <div class="rct-vision">
+      <div class="rv rv-d1">
+        <p class="sec-ttl" style="margin-top:0;">Vision &amp; Values</p>
+        <h2 class="sec-jp" style="font-size:clamp(1.6rem,3vw,2.6rem);margin-top:10px;">「いきる」をはかり、<br>豊かな世界へ。</h2>
+        <p class="body-txt" style="margin-top:22px;max-width:520px;">「技術」と「誇り」を礎に、日本から世界へ、計量という仕事で社会を豊かにし続けること。それが、近江度量衡の使命です。採用においても「働く人を大切にする」という理念を核に、長く誇りを持って働ける環境を目指しています。</p>
+        <div class="grid-3" style="margin-top:30px;gap:14px;">
+          <div class="pillar"><div class="pillar__title">技術</div></div>
+          <div class="pillar"><div class="pillar__title">誇り</div></div>
+          <div class="pillar"><div class="pillar__title">グローバル</div></div>
+        </div>
+        <p style="font-size:13px;margin-top:26px;"><a href="history.html" style="border-bottom:1px solid #999;">126年ヒストリーを見る →</a></p>
+      </div>
+      <div class="rct-vision__photos rv rv-d1">
+        <div class="rct-vision__p1 ph rimg" style="aspect-ratio:4/3;background-image:url(stat-service.jpg)"></div>
+        <div class="rct-vision__p2 ph rimg" style="aspect-ratio:1/1;background-image:url(agri-step5.jpg)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ NUMBERS -->
+<section class="section section--ink" id="numbers" style="overflow:hidden;">
+  <div class="container">
+    <p class="rct-wm rv">NUMBERS</p>
+    <p class="sec-ttl rv" style="margin-top:-6px;color:rgba(255,255,255,.6);">Numbers</p>
+    <div class="rct-num rv rv-d1">
+      <div class="rct-num__cell --wide"><div class="rct-num__val">126<small>年</small></div><div class="rct-num__label">創業からの歴史（1900年創業）</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">2,000<small>+</small></div><div class="rct-num__label">累計納入施設数</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">9<small>拠点</small></div><div class="rct-num__label">国内6＋海外3</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">約150<small>名</small></div><div class="rct-num__label">従業員数（関連会社含む）</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">〇〇<small>%</small></div><div class="rct-num__label">新卒3年定着率（数値提供待ち）</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">〇〇<small>歳</small></div><div class="rct-num__label">平均年齢（数値提供待ち）</div></div>
+      <div class="rct-num__cell"><div class="rct-num__val">3<small>カ国</small></div><div class="rct-num__label">海外展開（中国・タイ・韓国）</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ PEOPLE -->
+<section class="section" id="people" style="overflow:hidden;">
+  <div class="container">
+    <p class="rct-wm rv">PEOPLE</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;margin-top:-6px;">
+      <h2 class="sec-jp rv" style="font-size:clamp(1.5rem,2.6vw,2.3rem);">技術と誇りを持って働く、近江の現場のことば。</h2>
+      <a class="btn btn--outline rv" href="#people" style="margin-left:auto;padding:12px 24px;">インタビュー一覧へ</a>
+    </div>
+    <p class="body-txt rv" style="margin-top:14px;">現場・設計・営業——それぞれの視点で語る、近江度量衡の仕事。（実在社員に差し替え予定）</p>
+    <div class="rct-people rv rv-d1">
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(photo-industry.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">製造部 / 20代</div><div class="interview-card__name">社員 A</div><p class="interview-card__quote">毎回違う課題に向き合うから、技術者として本当に成長できる。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(stat-service.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">設計部 / 30代</div><div class="interview-card__name">社員 B</div><p class="interview-card__quote">図面通りにつくるのではなく、現場に合わせてつくる。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(agri-step2.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">営業部 / 30代</div><div class="interview-card__name">社員 C</div><p class="interview-card__quote">お客様の現場を見て、何が必要か考える。</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ WELFARE -->
+<section class="section section--gray" id="welfare" style="overflow:hidden;">
+  <div class="container">
+    <p class="rct-wm rv">WELFARE</p>
+    <div class="rct-welf">
+      <div class="rv rv-d1">
+        <p class="sec-ttl" style="margin-top:0;">Welfare</p>
+        <h2 class="sec-jp" style="font-size:clamp(1.6rem,3vw,2.6rem);margin-top:10px;">福利厚生・職場環境</h2>
+        <p class="body-txt" style="margin-top:14px;">「働く人を大切にする」という理念を体現する制度・環境を整えています。</p>
+        <div class="ph rimg" style="margin-top:26px;aspect-ratio:4/3;background-image:url(photo-others.jpg)"></div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="rct-welf__row"><span class="rct-welf__no">01</span><span class="rct-welf__ttl">各種社会保険完備</span><span class="rct-welf__desc">健康保険・厚生年金・雇用保険・労災保険</span></div>
+        <div class="rct-welf__row"><span class="rct-welf__no">02</span><span class="rct-welf__ttl">有給休暇・育児休暇</span><span class="rct-welf__desc">取得実績・取得率は掲載時に記載</span></div>
+        <div class="rct-welf__row"><span class="rct-welf__no">03</span><span class="rct-welf__ttl">住宅手当・通勤手当</span><span class="rct-welf__desc">支給条件の詳細は募集要項に記載</span></div>
+        <div class="rct-welf__row"><span class="rct-welf__no">04</span><span class="rct-welf__ttl">研修制度</span><span class="rct-welf__desc">入社時研修・OJT・資格取得支援</span></div>
+        <div class="rct-welf__row"><span class="rct-welf__no">05</span><span class="rct-welf__ttl">フレックス・リモート対応</span><span class="rct-welf__desc">実施状況を確認のうえ掲載</span></div>
+        <div class="rct-welf__row"><span class="rct-welf__no">06</span><span class="rct-welf__ttl">社内施設・福利厚生</span><span class="rct-welf__desc">食堂・保養施設など</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ CAREER PATH -->
+<section class="section" id="career">
+  <div class="container">
+    <div class="sec-head rv"><h2 class="sec-jp">研修・キャリアパス</h2><p class="sec-ttl">Career Path</p></div>
+    <p class="body-txt rv" style="max-width:720px;">入社後の育成プログラム・OJT・キャリアパス事例をご紹介。技術者として誇りを持って成長できる環境を、具体的なロードマップで描きます。</p>
+    <div class="process rv rv-d1" style="margin-top:34px;">
+      <div class="process-step"><div class="process-step__num">STEP 01</div><div class="process-step__title">入社〜3ヶ月</div><div class="process-step__desc">入社時研修・OJT開始</div></div>
+      <div class="process-step"><div class="process-step__num">STEP 02</div><div class="process-step__title">〜1年</div><div class="process-step__desc">OJT・現場実務</div></div>
+      <div class="process-step"><div class="process-step__num">STEP 03</div><div class="process-step__title">〜3年</div><div class="process-step__desc">独立担当・専門性強化</div></div>
+      <div class="process-step"><div class="process-step__num">STEP 04</div><div class="process-step__title">5年〜</div><div class="process-step__desc">リーダー・専門職</div></div>
+    </div>
+    <div class="grid-3 rv rv-d1" style="margin-top:24px;">
+      <div class="use-item">技術スペシャリスト</div><div class="use-item">プロジェクトマネジャー</div><div class="use-item">海外担当</div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ ENTRY -->
+<section class="section section--ink section--tight" id="entry">
+  <div class="container" style="text-align:center;margin-bottom:40px;">
+    <p class="statement__lead rv" style="color:#fff;">あなたの「はかる」を、見つけてください。</p>
+    <p class="body-txt rv rv-d1" style="margin:18px auto 0;max-width:560px;">新卒・中途、いずれも募集中です。126年の技術と誇りを、次の世代へ。</p>
+  </div>
+</section>
+<div class="entry-split rv" id="new">
+  <a class="entry-card entry-card--new" href="contact.html">
+    <span class="entry-card__en">New Graduate</span>
+    <span class="entry-card__ttl">新卒採用</span>
+    <p class="entry-card__copy">未来を測る第一歩を、ここから。文系・理系は問いません。ものづくりを一から学ぶ技術者へ。</p>
+    <span class="entry-card__go">募集要項へ <i class="arrow-i" style="color:#fff">→</i></span>
+  </a>
+  <a class="entry-card entry-card--mid" href="contact.html" id="mid">
+    <span class="entry-card__en">Mid-Career</span>
+    <span class="entry-card__ttl">中途採用</span>
+    <p class="entry-card__copy">培った経験を、126年の精度に加えてください。設計・製造・制御・営業など各職種で募集。</p>
+    <span class="entry-card__go">募集要項へ <i class="arrow-i" style="color:#fff">→</i></span>
+  </a>
+</div>
+
+<div id="site-footer"></div>
+<script>window.OMI_ACTIVE="recruit";</script>
+<script src="site.js"></script>
+<script src="_simg.js"></script>
+<script src="_pt.js"></script>
+</body>
+</html>

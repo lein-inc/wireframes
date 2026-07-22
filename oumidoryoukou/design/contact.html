@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="_auth.js"></script>
+<title>お問い合わせ｜近江度量衡株式会社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@latest/cdn/all.css">
+<link rel="stylesheet" href="site.css">
+<script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('pt-init');</script>
+<style>html.pt-init{background:#ff0000;}html.pt-init body{visibility:hidden;}</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="phero">
+  <div class="phero__photo" style="background-image:url(photo-others.jpg)"></div>
+  <div class="phero__lines" aria-hidden="true"></div>
+  <div class="phero__in">
+    <p class="crumb"><a href="index.html">TOP</a> &rsaquo; お問い合わせ</p>
+    <span class="phero__jp">お問い合わせ</span>
+    <span class="phero__en">Contact</span>
+    <p class="phero__lead">製品・サービス・採用に関するご相談・お問い合わせはこちらから。仕様・価格・納期・カスタマイズについてもご相談いただけます。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <form class="form rv" onsubmit="return false;">
+      <div class="form__row">
+        <span class="form__label">お問い合わせ種別</span>
+        <div class="form__radios">
+          <label><input type="radio" name="type" checked> 製品・技術について</label>
+          <label><input type="radio" name="type"> サービス・保守</label>
+          <label><input type="radio" name="type"> 採用について</label>
+          <label><input type="radio" name="type"> その他</label>
+        </div>
+      </div>
+      <div class="form__row"><label class="form__label">会社名</label><input class="form__ctrl" type="text" placeholder="株式会社〇〇"></div>
+      <div class="form__row"><label class="form__label">お名前<span class="req">必須</span></label><input class="form__ctrl" type="text" placeholder="山田 太郎"></div>
+      <div class="form__row"><label class="form__label">部署・役職</label><input class="form__ctrl" type="text"></div>
+      <div class="form__row"><label class="form__label">メールアドレス<span class="req">必須</span></label><input class="form__ctrl" type="email" placeholder="name@example.com"></div>
+      <div class="form__row"><label class="form__label">電話番号</label><input class="form__ctrl" type="tel"></div>
+      <div class="form__row"><label class="form__label">お問い合わせ内容<span class="req">必須</span></label><textarea class="form__ctrl"></textarea></div>
+      <label class="form__agree"><input type="checkbox"> <a href="privacy.html" style="border-bottom:1px solid #999;">プライバシーポリシー</a>に同意する</label>
+      <button class="btn" type="submit">送信する <i class="arrow-i" style="color:#fff">→</i></button>
+      <p class="form__note">※ このフォームはデザイン確認用のため、現在は送信機能を実装していません。送信後は自動返信メールをお送りする仕様です。</p>
+    </form>
+
+    <div class="card rv rv-d1" style="margin-top:56px;max-width:760px;">
+      <div class="card__no">Head Office</div>
+      <div class="card__ttl">本社</div>
+      <p class="card__txt">〒525-0054 滋賀県草津市東矢倉3丁目11番70号<br>TEL 077-562-7111 ／ 受付時間：平日 9:00〜17:00<br>北海道・東京・九州など全国6拠点が対応します。最寄りの拠点へ直接お問い合わせいただくことも可能です。</p>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script>window.OMI_ACTIVE="";</script>
+<script src="site.js"></script>
+<script src="_simg.js"></script>
+<script src="_pt.js"></script>
+</body>
+</html>
