@@ -7,7 +7,7 @@
 <title>近江度量衡 — index_8 · マス目グリッド（gmining参考）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@latest/cdn/all.css">
 <style>
@@ -18,9 +18,9 @@
   --red:#ff0000;
   --line:#000;
   --frame:28px;
-  --en:"Geist","Oswald",sans-serif;
+  --en:"Albert Sans",sans-serif;
   --jp:"Gen Interface JP","Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
-  --mincho:"Noto Serif JP","Hiragino Mincho ProN",serif;
+  --mincho:"Shippori Mincho","Hiragino Mincho ProN",serif;
 }
 @media(max-width:900px){:root{--frame:16px}}
 html{scroll-behavior:smooth}
@@ -99,7 +99,7 @@ body.menu-open{overflow:hidden}
 /* 各セクション共通の英語大見出し（Newsと同サイズ）＋赤ドット日本語ラベル */
 /* 参考(22art)：英字ラベルは（）付きで小さく(Geist・字間広め)、日本語見出しは大きく(明朝) */
 /* 英字ショルダーは見出しの下・（）付き小さめ／日本語見出しは大きく明朝・改行なし・頭の赤マークなし */
-.sec-ttl,.news__ttl{font-family:var(--en);font-weight:500;font-size:clamp(.8rem,1vw,1.02rem);line-height:1;letter-spacing:.24em;text-transform:uppercase;margin-top:16px;opacity:.6}
+.sec-ttl,.news__ttl{font-family:var(--en);font-weight:500;font-size:clamp(9px,.72vw,11px);line-height:1;letter-spacing:.24em;text-transform:uppercase;margin-top:14px;opacity:.6}
 .sec-ttl::before,.news__ttl::before{content:"( "}
 .sec-ttl::after,.news__ttl::after{content:" )"}
 .sec-jp,.news__jp{font-family:var(--mincho);font-weight:600;font-size:clamp(2.4rem,4.8vw,4.6rem);letter-spacing:.04em;line-height:1.15;white-space:nowrap}
@@ -146,7 +146,7 @@ body.menu-open{overflow:hidden}
 .fv__inner{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:0 7vw}
 .fv__title{color:var(--paper)}
 .fv__title span{display:block}
-.fv__title .jp-main{font-family:"Noto Serif JP","Yu Mincho",serif;font-weight:900;font-size:clamp(2.6rem,6.6vw,6.2rem);letter-spacing:normal;line-height:1.38}
+.fv__title .jp-main{font-family:"Shippori Mincho","Yu Mincho",serif;font-weight:900;font-size:clamp(2.6rem,6.6vw,6.2rem);letter-spacing:normal;line-height:1.38}
 .fv__title .q{font-style:normal}
 .fv__title .en-sub{display:block;font-family:var(--en);font-weight:500;font-size:clamp(12px,1vw,15px);letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-top:30px}
 .fv__lead{color:rgba(244,241,234,.86);font-size:14px;line-height:2;margin-top:20px;max-width:460px}
@@ -183,7 +183,7 @@ body.menu-open{overflow:hidden}
 /* ============ FVコピー：映像の上・FV左下配置（背景なし・白文字・帯なし／英字は日本語の下） ============ */
 .fv__head{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:22px;padding:0 7vw 10vh var(--frame);text-align:left}
 .fv__head-title{display:flex;flex-direction:column;align-items:flex-start}
-.fv__head-title > span{display:block;color:#fff;font-family:"Gen Interface JP Display",var(--jp);font-weight:800;font-size:clamp(2.3rem,5.6vw,5.2rem);line-height:1.32;letter-spacing:.04em}
+.fv__head-title > span{display:block;color:#fff;font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:800;font-size:clamp(2.7rem,6.5vw,6rem);line-height:1.32;letter-spacing:.04em}
 /* 有機的レイアウト：2行目を少し右へずらし、キーワード4つは級数アップ・接続詞は小さく */
 .fv__head-title .ln1{transform:none}
 .fv__head-title .ln2{transform:none}
@@ -206,8 +206,8 @@ body.menu-open{overflow:hidden}
 }
 .phil .eyebrow{position:relative;grid-column:1 / -1;color:rgba(255,255,255,.88)}
 /* 各ブロック上端の段差（高さはバラバラ。製品は凹型＝右29%を切り欠いて映像が食い込む） */
-.svc{clip-path:polygon(0 0,71% 0,71% 130px,100% 130px,100% 100%,0 100%)}
-@media(max-width:900px){.svc{clip-path:polygon(0 0,60% 0,60% 64px,100% 64px,100% 100%,0 100%)}}
+.svc{clip-path:polygon(0 130px,71% 130px,71% 0,100% 0,100% 100%,0 100%)}
+@media(max-width:900px){.svc{clip-path:polygon(0 64px,60% 64px,60% 0,100% 0,100% 100%,0 100%)}}
 .stats::after{content:"";position:absolute;left:0;bottom:100%;width:24%;height:60px;background:var(--ink)}
 .stats .stats__step{position:absolute;left:24%;bottom:100%;width:9%;height:30px;background:var(--ink)}
 .newsblock{background:#f2f2f2}
@@ -218,24 +218,39 @@ body.menu-open{overflow:hidden}
   .newsblock::after{height:40px;width:44%}
 }
 
-/* ============ 126年ヒストリー：昔の計量器写真を背景にしたTOP動線 ============ */
-.hist{display:block;position:relative;background:var(--ink);color:#fff;overflow:hidden;padding:320px 7vw 240px}
-/* 写真はgsmd風の段差マスクで表示（暗幕なし）：上辺=左が深く右が浅い（右上に段差）、下辺=右下を切り欠き */
-/* 中の年代写真は4秒間隔でフェード切替 */
-.hist__ph{position:absolute;inset:0;
-  clip-path:polygon(0 140px,62% 140px,62% 56px,100% 56px,100% 100%,0 100%)}
-.hist__ph i{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.1s ease}
-.hist__ph i.is-on{opacity:1}
-.hist__grid{position:relative;z-index:2}
-/* 文字エリアは白カード */
-.hist__txt{background:rgba(12,14,13,.42);backdrop-filter:blur(20px) saturate(1.1);-webkit-backdrop-filter:blur(20px) saturate(1.1);border:0.5px solid rgba(255,255,255,.16);width:fit-content;max-width:840px;padding:48px 62px 54px;margin-inline:auto}
+/* ============ 126年ヒストリー：左＝見出し固定／右＝写真7枚が直進で上がり、上端で右斜めに傾きフェード（motoya参考） ============ */
+.hist{display:block;position:relative;background:#ececec;color:var(--ink)}
+.hist__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:minmax(300px,.42fr) minmax(0,1fr);align-items:stretch;padding:0 4vw 0 16px;gap:5vw}
+/* 左エリア：見出しは上・ボタンはステージ下端に張り付け */
+.hist__left{padding-top:96px;display:block;align-items:flex-start}
+/* 正方形マスの点線罫線（薄灰地に黒） */
+.hist__stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.16) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.16) 0 2px,transparent 2px 6px);
+  background-size:0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,0.5px 100%,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px,100% 0.5px;
+  background-repeat:no-repeat;
+  background-position:calc(100vw*1/6) 0,calc(100vw*2/6) 0,calc(100vw*3/6) 0,calc(100vw*4/6) 0,calc(100vw*5/6) 0,0 calc(100vw*1/6),0 calc(100vw*2/6),0 calc(100vw*3/6),0 calc(100vw*4/6),0 calc(100vw*5/6)}
+.hist__left{position:relative;z-index:2}
+.hist__stream{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* 写真はブラウザ右付け */
+.hist__track{position:absolute;right:0;top:0;width:52vw;height:100%}
+.hist__track i{position:absolute;left:0;top:0;width:100%;aspect-ratio:16/9;background-size:cover;background-position:center;will-change:transform,opacity}
 @media(max-width:900px){
-  .hist{padding:120px 5vw 130px}
-  .hist__ph{clip-path:polygon(0 72px,58% 72px,58% 30px,100% 30px,100% 100%,0 100%)}
-  .hist__txt{padding:30px 26px 34px}
+  .hist__stage{grid-template-columns:1fr;align-items:start;padding:0 6vw}
+  .hist__left{padding-top:110px}
+  .hist__track{width:88vw}
 }
 /* ============ 採用動線（見出し＋新卒/中途の大窓・左右で上下ずらし） ============ */
-.recjoin{background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
+/* ヒストリー末尾：ピン中のステージ（右の写真）に被さって次セクションがせり上がる */
+.recjoin{position:relative;z-index:5;margin-top:-85vh;background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
 .recjoin::after{content:"";position:absolute;left:0;bottom:100%;width:60%;height:26px;background:var(--paper)}
 /* FVと同じ6分割の薄い点線罫線をセクション全面に（納入実績） */
 .stats::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -256,11 +271,11 @@ body.menu-open{overflow:hidden}
 .recjoin .eyebrow{color:rgba(0,0,0,.55)}
 .recjoin .disp-jp{color:var(--ink);font-size:clamp(1.15rem,2vw,1.75rem);margin-top:20px}
 /* 見出しとコピーは横並び */
-.recjoin__head{display:grid;grid-template-columns:minmax(240px,.4fr) minmax(0,.6fr);gap:6vw;align-items:center}
-.recjoin__lead{font-size:14px;line-height:2.1;color:rgba(0,0,0,.7);max-width:560px}
+.recjoin__head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9vw;align-items:center}
+.recjoin__lead{font-size:14px;line-height:2.1;color:rgba(0,0,0,.7)}
 /* 新卒/中途：delfonics風の横アコーディオン（ホバーで広がる2枚パネル・全幅） */
-.recjoin__split{margin-top:70px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;
-  display:flex;height:clamp(440px,60vh,640px);overflow:hidden}
+.recjoin__split{margin-top:70px;
+  display:flex;height:clamp(360px,48vh,520px);overflow:hidden}
 .rj2{position:relative;flex:1 1 0;min-width:0;overflow:hidden;text-decoration:none;color:#fff;
   display:flex;flex-direction:column;justify-content:center;padding:0 clamp(40px,6vw,104px);
   transition:flex-grow .7s cubic-bezier(.22,1,.36,1)}
@@ -303,12 +318,10 @@ body.menu-open{overflow:hidden}
   .recjoin__split:hover .rj2{flex-grow:1}
   .rj2__reveal{max-height:220px;opacity:1;transform:none}
 }
-.hist .eyebrow{color:rgba(0,0,0,.55)}
-.hist__grid{display:block}
 .hist .disp-jp{font-size:clamp(1.15rem,2vw,1.75rem);margin-top:20px}
-.hist__lead{font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin-top:24px;max-width:520px}
-.hist__go{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--ink);font-size:13px;font-weight:700;letter-spacing:.1em;padding:18px 34px;margin-top:40px;transition:background .25s,color .25s}
-.hist:hover .hist__go{background:var(--red);color:#fff}
+.hist__lead{font-size:14px;line-height:2.1;color:rgba(0,0,0,.72);margin-top:24px}
+.hist__go{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;letter-spacing:.1em;padding:18px 34px;margin-top:40px;transition:background .25s,color .25s}
+.hist__go:hover{background:var(--red);color:#fff}
 .phil__box{position:relative;grid-column:1;width:fit-content;margin:0}
 /* 右側：滋賀・琵琶湖の線画マップ（想い表示中はsticky固定、スクロールで一度スッと出現） */
 .phil__map{position:relative;grid-column:2}
@@ -328,7 +341,7 @@ body.menu-open{overflow:hidden}
 .phil .btn::after{background:var(--ink);box-shadow:-34px 34px 0 var(--ink)}
 .phil .btn::before{background:var(--ink)}
 .phil .btn:hover{background:#fff;color:var(--ink)}
-.phil__st{margin-top:90px;font-weight:900;font-size:clamp(15px,1.8vw,23px);letter-spacing:.14em}
+.phil__st{margin-top:90px;font-weight:500;font-size:clamp(15px,1.8vw,23px);letter-spacing:.14em}
 .phil__st .ln{position:relative;display:block;width:fit-content;color:#fff;line-height:1.6;padding:.3em .7em .34em .55em;overflow:hidden}
 .phil__st .ln::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(var(--lp,0));transform-origin:left center;transition:transform .5s ease}
 /* 黒帯が出たら白文字が下線マスクからすっと上がる（文字の1字フェードは使わない） */
@@ -341,7 +354,7 @@ body.menu-open{overflow:hidden}
 .js-chars .ch.is-on{opacity:1}
 @media(prefers-reduced-motion:reduce){.js-chars .ch{opacity:1;transition:none}.phil__st .ln::before{transform:none;transition:none}}
 .phil__close{margin-top:220px}
-.phil__close > span{position:relative;display:block;width:fit-content;font-family:"Gen Interface JP Display",var(--jp);font-weight:800;font-size:clamp(2.4rem,6vw,5.6rem);line-height:1.42;letter-spacing:.04em;color:var(--red);padding:0 .24em 0 .16em}
+.phil__close > span{position:relative;display:block;width:fit-content;font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:800;font-size:clamp(2.4rem,6vw,5.6rem);line-height:1.42;letter-spacing:.04em;color:var(--red);padding:0 .24em 0 .16em}
 .phil__close > span::before{content:"";position:absolute;inset:0;background:#fff;transform:scaleX(var(--lp,0));transform-origin:left center;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .phil__close > span:nth-child(2)::before{transition-delay:.15s}
 .phil__close > span + span{margin-top:.18em}
@@ -359,15 +372,14 @@ body.menu-open{overflow:hidden}
 }
 
 /* ============ 製品・技術：特大見出し＋矢印リスト（マス罫線） ============ */
-.svc{padding:96px 5vw 176px}
-@media(max-width:900px){.svc{padding:64px 5vw 104px}}
+.svc{padding:226px 5vw 176px}
+@media(max-width:900px){.svc{padding:128px 5vw 104px}}
 .svc .disp-jp{font-size:clamp(1.1rem,1.9vw,1.7rem);margin-top:26px}
 /* 1段目：見出し＋エリア説明（1カラム） */
-.svc__head1{max-width:1020px}
-.svc__leadtxt{font-size:14px;line-height:2.1;color:#000000;margin-top:26px;max-width:820px}
+.svc__leadtxt{font-size:14px;line-height:2.1;color:#000000;margin-top:26px}
 /* 2段目：スライドテキスト｜画像（5:5） */
 /* 見出しブロック（上下ゆとり）とスライドブロックを分離。スライドはページFIX（sticky）で4枚順送り→終わったら下に抜ける */
-.svc__head1{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:6vw;align-items:start;padding:30px 0 130px}
+.svc__head1{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9vw;align-items:start;padding:30px 0 130px}
 .svc__head1 .disp-jp{margin-top:0}
 .svc__pinwrap{height:500vh}
 .svc__pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:0}
@@ -458,12 +470,14 @@ body.menu-open{overflow:hidden}
 
 /* ============ 数字で見る：カウントアップ＋縦罫マス ============ */
 .stats{border-bottom:0}
-.stats__top{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:6vw;align-items:start}
+.stats__top{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9vw;align-items:start}
 .stats__top .disp-jp{font-size:clamp(1.05rem,1.8vw,1.55rem);line-height:1.75}
 /* 3枚を1ブロック（隙間なし・各画像6スライスで下から順に立ち上げ）。数字なし／中央に詳しくはこちら／ホバーで全体に赤い内側枠線 */
 .stats__cells{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:clamp(56px,7vw,110px)}
-.stats__cells::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;box-shadow:inset 0 0 0 0 var(--red);transition:box-shadow .28s}
-.stats__cells:hover::after{box-shadow:inset 0 0 0 10px var(--red)}
+.stats__cells::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;box-shadow:inset 0 0 0 10px var(--red)}
+/* バナー全体ホバーで3枚まとめて滲みながら赤い焼き込み（multiply） */
+.stat3::after{content:"";position:absolute;inset:-12%;z-index:4;background:var(--red);mix-blend-mode:multiply;opacity:0;filter:blur(26px);transition:opacity .5s ease,filter .5s ease;pointer-events:none}
+.stats__cells:hover .stat3::after{opacity:.88;filter:blur(0)}
 .stat3{position:relative;overflow:hidden;height:clamp(360px,52vh,580px);background:#0c0d0c;--d:0s}
 .stat3:nth-child(2){--d:.12s}
 .stat3:nth-child(3){--d:.24s}
@@ -485,15 +499,22 @@ body.menu-open{overflow:hidden}
 .stat3__slice:nth-child(5)::before{left:-400%}
 .stat3__slice:nth-child(6)::before{left:-500%}
 .stat3.is-in .stat3__slice{transform:none;transition-delay:calc(var(--d) + var(--sd))}
-/* 中央の詳しくはこちらボタン（ホバーで赤に） */
-.stats__cta{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;
-  display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--ink);
+/* 右下の詳しくはこちらボタン（デフォルト赤・白文字、ホバーで黒に） */
+.stats__cta{position:absolute;right:10px;bottom:10px;z-index:6;
+  display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;
   font-family:var(--jp);font-weight:700;font-size:clamp(14px,1.3vw,17px);letter-spacing:.06em;padding:17px 38px;
   transition:background .25s,color .25s,gap .25s}
 .stats__cta i{font-style:normal;font-family:var(--en);font-size:1.15em}
-.stats__cells:hover .stats__cta{background:var(--red);color:#fff;gap:16px}
+.stats__band:hover .stats__cta{background:var(--ink);color:#fff;gap:16px}
+/* 全幅1枚画像バンド（スクロールで少し流れるパララックス）＋右側に詳しくはこちら */
+.stats__band{position:relative;z-index:4;display:block;overflow:hidden;height:calc(clamp(320px,50vh,560px) + 56px);width:100vw;margin:clamp(64px,8vw,120px) calc(50% - 50vw) -226px;
+  clip-path:polygon(0 0,100% 0,100% 100%,62% 100%,62% calc(100% - 56px),0 calc(100% - 56px))}
+@media(max-width:900px){.stats__band{height:calc(clamp(320px,50vh,560px) + 32px);margin-bottom:-202px;
+  clip-path:polygon(0 0,100% 0,100% 100%,56% 100%,56% calc(100% - 32px),0 calc(100% - 32px))}}
+.stats__band-ph{position:absolute;left:0;right:0;top:-12%;bottom:-12%;background:url(stat-facilities.jpg) center/cover no-repeat;filter:brightness(.74);will-change:transform}
+.stats__band .stats__cta{position:absolute;right:7vw;top:50%;bottom:auto;transform:translateY(-50%)}
 /* 納入先ロゴマーキー（ダミー20社） */
-.stats__clients{margin-top:110px}
+.stats__clients{margin-top:64px}
 .stats__clients .cl-lbl{font-family:var(--en);font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .clients-marquee{overflow:hidden;margin-top:32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .clients-track{display:flex;width:max-content;animation:clientsScroll 46s linear infinite}
@@ -541,7 +562,7 @@ body.menu-open{overflow:hidden}
 .recruit__inner{position:relative;display:flex;justify-content:space-between;align-items:center;gap:6vw}
 .recruit__txt .en{font-family:var(--en);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
 .recruit__txt h2{font-family:var(--jp);font-weight:900;font-size:clamp(1.8rem,4.4vw,3.6rem);letter-spacing:.08em;margin-top:20px;line-height:1.5}
-.recruit__txt p{font-size:14px;line-height:2;color:rgba(244,241,234,.72);margin-top:18px;max-width:480px}
+.recruit__txt p{font-size:14px;line-height:2;color:rgba(244,241,234,.72);margin-top:18px}
 .recruit__arrow{flex:none;font-family:var(--en);font-weight:600;font-size:clamp(80px,10vw,150px);color:var(--red);line-height:1;transition:transform .4s}
 .recruit:hover .recruit__arrow{transform:translateX(18px)}
 @media(max-width:900px){
@@ -625,14 +646,14 @@ body.menu-open{overflow:hidden}
 .fv .fv__cell--recruit{position:absolute;right:18px;bottom:18px;z-index:6;background:transparent;width:auto;max-width:min(780px,94%);display:flex;flex-direction:column;align-items:flex-start;mix-blend-mode:screen;}
 .fv .fv__cell--recruit:hover{mix-blend-mode:normal;}
 .fv .fv__cell--recruit .inner{background:transparent;padding:0;display:block;}
-.fv .fv__cell--recruit .rec-logo{display:block;width:min(205px,44vw);height:auto;margin:0 0 16px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.25));}
+.fv .fv__cell--recruit .rec-logo{display:block;width:min(270px,58vw);height:auto;margin:0 0 16px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.25));}
 .fv .fv__cell--recruit h3{background:#fff;color:#000;margin:0;padding:16px 26px 19px 26px;font-size:16px;font-weight:700;letter-spacing:.02em;transition:background .25s,color .25s;}
 .fv .fv__cell--recruit .fv__cell-link{position:static;align-self:flex-start;background:#fff;color:#000;padding:12px 26px;font-size:11.5px;letter-spacing:.12em;transition:background .25s,color .25s;}
 /* ホバーは白箱2つで1つ（どちらに乗っても両方赤に） */
 .fv .fv__cell--recruit:hover h3,.fv .fv__cell--recruit:hover .fv__cell-link{background:var(--red);color:#fff;}
 .fv .fv__cell--recruit .fv__cell-link:hover{background:var(--red);color:#fff;opacity:1;}
 .fv .fv__cell--recruit .fv__cell-link .arrow-i--w{color:inherit;}
-@media(max-width:700px){.fv .fv__cell--recruit{right:12px;bottom:12px;}.fv .fv__cell--recruit h3{padding:12px 22px 15px 18px;font-size:13.5px;}.fv .fv__cell--recruit .rec-logo{width:min(150px,38vw);}}
+@media(max-width:700px){.fv .fv__cell--recruit{right:12px;bottom:12px;}.fv .fv__cell--recruit h3{padding:12px 22px 15px 18px;font-size:13.5px;}.fv .fv__cell--recruit .rec-logo{width:min(200px,50vw);}}
 /* ── お問い合わせ：初期は背景なし白文字、ヘッダーが白背景のときは黒ボタン ── */
 .nav.is-solid .nav__cta{background:var(--ink);color:#fff;border-left-color:var(--ink);}
 .nav.is-solid .nav__cta:hover{background:var(--red);color:#fff;border-left-color:var(--red);}
@@ -694,7 +715,7 @@ body.menu-open .nav{background:transparent;border:none}
 .stats{background:var(--ink)}
 .stats .eyebrow{color:rgba(255,255,255,.62)}
 .stats .disp-jp{color:#fff}
-.stats__lead{font-size:14px;line-height:2.1;color:rgba(255,255,255,.72);margin-top:22px;max-width:580px}
+.stats__lead{font-size:14px;line-height:2.1;color:rgba(255,255,255,.72);margin-top:22px}
 .stats .stat b{color:#fff}
 .stats .stat b.is-pop{color:var(--red)}
 .stats .stat .lbl{color:rgba(255,255,255,.72)}
@@ -708,7 +729,16 @@ body.menu-open .nav{background:transparent;border:none}
 .pf{position:absolute;inset:0}
 .pf-stage{position:absolute;top:50%;left:50%;width:60%;height:60%;transform:translate(-50%,-50%);overflow:hidden;background:#0a0b0a;
   transition:width .85s cubic-bezier(.6,0,.22,1),height .85s cubic-bezier(.6,0,.22,1)}
-.svc__pin.is-fixed .pf-stage{width:100%;height:100%}
+.svc__pin.is-fixed .pf-stage{width:calc(100% - 10vw);height:90vh}
+/* 拡大先の四隅を示す十字マーカー（レジストレーションマーク） */
+.pf-mark{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:2}
+.pf-mark::before{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;background:var(--red)}
+.pf-mark::after{content:"";position:absolute;top:0;left:50%;height:100%;width:1.5px;margin-left:-0.75px;background:var(--red)}
+.pf-mark--tl{left:5vw;top:5vh}
+.pf-mark--tr{left:calc(100% - 5vw);top:5vh}
+.pf-mark--bl{left:5vw;top:calc(100% - 5vh)}
+.pf-mark--br{left:calc(100% - 5vw);top:calc(100% - 5vh)}
+@media(max-width:900px){.pf-mark{display:none}}
 .pf-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease}
 .pf-img.is-on{opacity:1}
 .pf-veil{position:absolute;inset:0;pointer-events:none;background:none}
@@ -727,12 +757,10 @@ body.menu-open .nav{background:transparent;border:none}
 .svc__pin.is-fixed .pf-ui{opacity:1}
 .svc__pin.is-fixed .pf-info__btn,.svc__pin.is-fixed .pf-nav__b{pointer-events:auto}
 /* 左上タイトル */
-.pf-head{position:absolute;left:clamp(24px,5vw,80px);bottom:clamp(40px,6vh,64px);color:#fff;z-index:3}
-.pf-head__ttl{font-family:var(--mincho);font-weight:700;color:var(--red);font-size:clamp(42px,5.4vw,88px);line-height:1.14;letter-spacing:.04em}
-.pf-head__jp{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.12em;margin-top:16px;color:#fff}
-.pf-head__jp::before{content:"";width:8px;height:8px;background:var(--red);display:inline-block}
+.pf-head{position:absolute;left:clamp(24px,5vw,80px);top:clamp(64px,8vh,104px);bottom:auto;color:#fff;z-index:3}
+.pf-head__ttl{display:inline;font-family:var(--mincho);font-weight:700;color:var(--red);font-size:clamp(32px,4.2vw,64px);line-height:1.72;letter-spacing:.04em;background:#fff;padding:.06em .26em .1em .2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 /* 右下 情報パネル（濃ブラー） */
-.pf-info{position:absolute;right:clamp(24px,5vw,80px);bottom:clamp(40px,6vh,64px);width:min(38%,440px);color:#fff;
+.pf-info{position:absolute;right:calc(5vw + 32px);bottom:calc(5vh + 36px);width:min(38%,440px);color:#fff;
   background:rgba(12,14,13,.34);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);
   border:0;padding:clamp(24px,2.2vw,38px);transition:opacity .28s,transform .28s}
 .pf-info.is-fade{opacity:0;transform:translateY(12px)}
@@ -766,6 +794,51 @@ body.menu-open .nav{background:transparent;border:none}
   .pf-nav__b.is-on{background:var(--ink);color:#fff;border-color:var(--ink)}
 }
 </style>
+<style id="hd-anim-css">
+/* ── 見出し出現：赤帯が左→右へスッと入り、帯の下線から文字が1字ずつテンポよく上がる ── */
+.sec-jp,.news__jp{position:relative;width:fit-content;overflow:hidden;padding:.03em .28em .08em .2em;color:#fff}
+.sec-jp::before,.news__jp::before{content:"";position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left center;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.sec-jp.hd-on::before,.news__jp.hd-on::before{transform:none}
+.sec-jp .hch,.news__jp .hch{position:relative;display:inline-block;transform:translateY(125%);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.sec-jp.hd-on .hch,.news__jp.hd-on .hch{transform:none}
+@media(prefers-reduced-motion:reduce){
+  .sec-jp::before,.news__jp::before{transform:none;transition:none}
+  .sec-jp .hch,.news__jp .hch{transform:none;transition:none}
+}
+/* 見出し帯を含むrvラッパーはフェードさせない（帯：左→右／文字：下から、の一本化） */
+.rv:has(.sec-jp),.rv:has(.news__jp){opacity:1 !important;transform:none !important;transition:none !important}
+/* その他テキスト：下線マスクからスッと上がりながらフェード */
+.tr{display:block;overflow:hidden}
+.tr__in{display:block;transform:translateY(112%);opacity:0;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .55s ease}
+.tr.tr-on .tr__in{transform:none;opacity:1}
+@media(prefers-reduced-motion:reduce){.tr__in{transform:none;opacity:1;transition:none}}
+</style>
+<style id="obtn-css">
+/* ── 共通ボタン仕様：罫線＋周囲になじむ背景色／ホバーで罫線色が左→右へ塗り替わる／矢印なし ── */
+.btn,.hist__go,.stats__cta,.news__all,.pf-info__btn,.foot__contact .cbtn,.strip__contact .cbtn,.foot__recruit .go{
+  --bc:var(--ink);--bg:#fff;
+  position:relative;overflow:hidden;z-index:0;
+  background:var(--bg);color:var(--bc);border:1px solid var(--bc);
+  transition:color .3s}
+.btn::before,.hist__go::before,.stats__cta::before,.news__all::before,.pf-info__btn::before,.foot__contact .cbtn::before,.strip__contact .cbtn::before,.foot__recruit .go::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bc);
+  transform:scaleX(0);transform-origin:left center;transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.btn:hover,.hist__go:hover,.stats__cta:hover,.news__all:hover,.pf-info__btn:hover,.foot__contact .cbtn:hover,.strip__contact .cbtn:hover,.foot__recruit .go:hover{color:var(--bg)}
+.btn:hover::before,.hist__go:hover::before,.stats__cta:hover::before,.news__all:hover::before,.pf-info__btn:hover::before,.foot__contact .cbtn:hover::before,.strip__contact .cbtn:hover::before,.foot__recruit .go:hover::before{transform:none}
+.btn::after{content:none !important}
+.phil .btn{--bc:#fff;--bg:var(--ink);border:0}
+.hist__go{--bc:var(--ink);--bg:#ececec}
+.stats__cta,.pf-info__btn,.foot__contact .cbtn,.strip__contact .cbtn{--bc:#fff;--bg:#000}
+.foot__recruit .go{--bc:#fff;--bg:var(--red)}
+/* 全面リンク連動ホバーも同じ塗り */
+.stats__band:hover .stats__cta,.foot__recruit:hover .go{color:var(--bg)}
+.stats__band:hover .stats__cta::before,.foot__recruit:hover .go::before{transform:none}
+/* 矢印なし */
+.btn>span,.hist__go .arrow-i,.stats__cta>i,.news__all .arrow-i,.pf-info__btn .ar,.pf-info__btn span,.foot__contact .cbtn .arrow-i,.strip__contact .cbtn .arrow-i,.foot__recruit .go .arrow-i{display:none}
+/* ── 明朝の長体（scaleX 0.8・字間詰め） ── */
+.sec-jp,.news__jp{transform:scaleX(.8);transform-origin:left center;letter-spacing:-.05em}
+.pf-head{transform:scaleX(.8);transform-origin:left center}
+.pf-head__ttl{letter-spacing:-.05em}
+</style>
 </head>
 <body>
 
@@ -777,7 +850,7 @@ body.menu-open .nav{background:transparent;border:none}
 .ldr__box{position:absolute;left:0;top:0;visibility:hidden;display:flex;flex-direction:column;align-items:flex-start;transition:transform .7s cubic-bezier(.65,0,.3,1),opacity .55s}
 #loader.is-fade .ldr__box{opacity:0}
 /* 行＝バー＋テキスト。バーの縦幅は各行の文字高さと同じ（3行=3本） */
-.ldr__row{display:flex;align-items:center;gap:var(--ldrgap);font-size:clamp(2.3rem,5.6vw,5.2rem);line-height:1.32}
+.ldr__row{display:flex;align-items:center;gap:var(--ldrgap);font-size:clamp(2.7rem,6.5vw,6rem);line-height:1.32}
 .ldr__bar{display:block;flex:none;width:var(--ldrmw);height:.94em;background:#fff;transform:scaleX(0);transform-origin:left center;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
 #loader.is-in .ldr__row:nth-child(1) .ldr__bar{transition-delay:.05s}
 #loader.is-in .ldr__row:nth-child(2) .ldr__bar{transition-delay:.29s}
@@ -799,6 +872,15 @@ body.menu-open .nav{background:transparent;border:none}
 #loader.is-left .ldr__txt{transform:translateX(calc(-1*(var(--ldrmw) + var(--ldrgap))))!important;transition:transform .7s cubic-bezier(.65,0,.3,1)!important;transition-delay:0s!important;opacity:1}
 html.ldr-on .fv__head{opacity:0}
 html:not(.ldr-on) .fv__head{transition:opacity .6s}
+</style>
+<style id="mincho-cond2">
+/* ── 明朝見出し・強調明朝の長体統一（scaleX .8／字間-.05em） ── */
+.fv__head-title > span,.fv__head-title .ln1,.fv__head-title .ln2,.fv__head-title .ln3{transform:scaleX(.8);transform-origin:left center;letter-spacing:-.05em}
+.phil__close > span{transform:scaleX(.8);transform-origin:left center;letter-spacing:-.05em}
+/* ローディングの同文コピーも明朝＋同設定（既存のtranslateアニメと合成） */
+.ldr__txt{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;letter-spacing:-.05em;transform-origin:left center;transform:translateX(14px) scaleX(.8)}
+#loader.is-in .ldr__txt{transform:scaleX(.8)}
+#loader.is-left .ldr__txt{transform:translateX(calc(-1*(var(--ldrmw) + var(--ldrgap)))) scaleX(.8)!important}
 </style>
 <div id="loader" aria-hidden="true">
   <div class="ldr__bg"></div>
@@ -867,7 +949,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
   <a class="nav__logo" href="index.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
   <nav class="nav__menu">
     <div class="nitem">
-      <a class="nlink" href="#products">製品・技術<sup>04</sup></a>
+      <a class="nlink" href="products.html">製品・技術</a>
       <div class="mega"><div class="mega__inner">
         <div class="mega__lead"><span class="men">Products</span><span class="mjp">製品・技術</span></div>
         <div class="mega__links">
@@ -1016,12 +1098,15 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
       <div class="pf-img" style="background-image:url(photo-others.jpg)"></div>
       <div class="pf-veil"></div>
     </div>
+    <i class="pf-mark pf-mark--tl" aria-hidden="true"></i>
+    <i class="pf-mark pf-mark--tr" aria-hidden="true"></i>
+    <i class="pf-mark pf-mark--bl" aria-hidden="true"></i>
+    <i class="pf-mark pf-mark--br" aria-hidden="true"></i>
     <a class="pf-hot" href="products.html" aria-label="この製品を詳しく見る"></a>
     <div class="pf-cursor" aria-hidden="true">詳しくは<br>こちら</div>
     <div class="pf-ui">
       <div class="pf-head">
         <h2 class="pf-head__ttl">農産物用計量<br>システム</h2>
-        <p class="pf-head__jp">製品・技術</p>
       </div>
       <div class="pf-info">
         <p class="pf-info__no"><b>01</b></p>
@@ -1052,18 +1137,6 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
       <p class="stats__lead">農産物・穀類から工業分野まで、全国の生産者・メーカーの現場へ計量システムを納入。用途ごとに最適化した一品一様の設計で、確かな「はかる」を支えつづけています。</p>
     </div>
   </div>
-  <a class="stats__cells" href="delivery.html">
-    <div class="stat3 rv" style="--img:url(stat-facilities.jpg)">
-      <span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span>
-    </div>
-    <div class="stat3 rv" style="--img:url(photo-industry.jpg)">
-      <span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span>
-    </div>
-    <div class="stat3 rv" style="--img:url(stat-service.jpg)">
-      <span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span><span class="stat3__slice"></span>
-    </div>
-    <span class="stats__cta">詳しくはこちら <i>→</i></span>
-  </a>
   <div class="stats__clients rv">
     <p class="cl-lbl">CLIENTS — 主な納入先</p>
     <div class="clients-marquee">
@@ -1077,28 +1150,34 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
       </div>
     </div>
   </div>
+  <a class="stats__band" href="delivery.html">
+    <i class="stats__band-ph" aria-hidden="true"></i>
+    <span class="stats__cta">詳しくはこちら <i>→</i></span>
+  </a>
 </section>
 
 
 
 <!-- ============ 126年ヒストリー（TOP動線） ============ -->
-<a class="gsec hist" id="history" href="history.html">
-  <span class="hist__ph" aria-hidden="true">
-    <i class="is-on" style="background-image:url(hist.jpg)"></i>
-    <i style="background-image:url(hist2.jpg)"></i>
-    <i style="background-image:url(hist3.jpg)"></i>
-    <i style="background-image:url(hist4.jpg)"></i>
-  </span>
-  <div class="hist__grid">
-    <div class="hist__txt">
+<section class="gsec hist" id="history">
+  <div class="hist__stage">
+    <div class="hist__left">
       <p class="sec-jp rv"><i class="dot"></i>近江度量衡の歴史</p>
       <h2 class="sec-ttl rv">History</h2>
       <h2 class="disp-jp rv rv-d1">計量ひとすじ、126年。</h2>
       <p class="hist__lead rv rv-d1">明治33年、近江の地で創業。一世紀を超えて「はかる」に向き合いつづけた歩みを、年表でたどる。</p>
-      <span class="hist__go rv rv-d2">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></span>
+      <a class="hist__go rv rv-d2" href="history.html">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></a>
+    </div>
+    <div class="hist__stream" aria-hidden="true">
+      <div class="hist__track">
+        <i style="background-image:url(hist.jpg)"></i>
+        <i style="background-image:url(hist2.jpg)"></i>
+        <i style="background-image:url(hist3.jpg)"></i>
+        <i style="background-image:url(hist4.jpg)"></i>
+      </div>
     </div>
   </div>
-</a>
+</section>
 
 <!-- ============ 採用動線（新卒・中途） ============ -->
 <section class="gsec recjoin" id="recruit">
@@ -1187,7 +1266,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     <nav class="foot__nav">
       <div>
         <a href="index.html">トップページ</a>
-        <a href="#products">製品・技術</a>
+        <a href="products.html">製品・技術</a>
         <a class="sub" href="product-agri.html">農産物用計量システム</a>
         <a class="sub" href="products-grain.html">穀類用計量システム</a>
         <a class="sub" href="products-industry.html">工業用計量システム</a>
@@ -1463,6 +1542,148 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     es.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
   },{threshold:.6});
   document.querySelectorAll('.cnt').forEach(function(el){ io.observe(el); });
+})();
+/* 見出し：赤帯スイープ→帯の下線から文字が1字ずつ上がる */
+(function(){
+  var els = [].slice.call(document.querySelectorAll('.sec-jp, .news__jp'));
+  if(!els.length) return;
+  els.forEach(function(el){
+    el.classList.remove('rv','rv-d1','rv-d2','rv-d3');
+    [].slice.call(el.childNodes).forEach(function(n){
+      if(n.nodeType === 3 && n.textContent.trim()){
+        var frag = document.createDocumentFragment();
+        n.textContent.split('').forEach(function(c){
+          var sp = document.createElement('span');
+          sp.className = 'hch';
+          sp.textContent = c;
+          frag.appendChild(sp);
+        });
+        el.replaceChild(frag, n);
+      }
+    });
+    [].slice.call(el.querySelectorAll('.hch')).forEach(function(sp, i){
+      sp.style.transitionDelay = (380 + i * 55) + 'ms';
+    });
+  });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('hd-on'); io.unobserve(e.target); }
+    });
+  },{threshold:.6});
+  els.forEach(function(el){ io.observe(el); });
+})();
+/* ヒストリー：写真スライド（motoya-united TOP参考）
+   下=重ならず直進（入場時はわずかな傾き→まっすぐに）/中盤から重なり/上端は加速度的にスタックし右斜めに傾きフェード。
+   位置・角度・不透明度は慣性付きの追従（lerp）でぬるっと動く */
+(function(){
+  var hist = document.querySelector('.hist');
+  var track = document.querySelector('.hist__track');
+  if(!hist || !track) return;
+  var items = [].slice.call(track.children);
+  var st = items.map(function(){ return {y:0, r:0, o:1, init:false}; });
+  var H=0, STEP=0, START_RAW=0, END=0, VH=0, TT_RAW=0, EX_RAW=0;
+  var B1=0, B2=0, D1=0, D2=0, S1=0.5, S2=0.12;
+  function g(y){
+    if(y >= B1) return y;
+    var d1 = Math.min(B1 - y, D1);
+    var disp = d1 - 0.5 * (1 - S1) * d1 * d1 / D1;
+    if(y >= B2) return B1 - disp;
+    var dispD1 = D1 - 0.5 * (1 - S1) * D1;
+    var d2 = B2 - y;
+    var disp2 = (d2 <= D2)
+      ? S1 * d2 - 0.5 * (S1 - S2) * d2 * d2 / D2
+      : S1 * D2 - 0.5 * (S1 - S2) * D2 + S2 * (d2 - D2);
+    return B1 - dispD1 - disp2;
+  }
+  function ginv(target){
+    var lo = -VH * 4, hi = VH * 3;
+    for(var k = 0; k < 48; k++){ var m = (lo + hi) / 2; if(g(m) > target) hi = m; else lo = m; }
+    return (lo + hi) / 2;
+  }
+  function layout(){
+    VH = window.innerHeight;
+    H = track.offsetWidth * 9 / 16;
+    STEP = H * 1.6;                 /* 4枚構成：間隔広めでゆったり流す */
+    B1 = VH * 0.62; B2 = VH * 0.28; D1 = B1 - B2; D2 = VH * 0.45;
+    START_RAW = ginv(Math.min(VH * 0.11, 100));
+    TT_RAW = ginv(VH * 0.06);
+    EX_RAW = VH * 0.5;
+    END = START_RAW + (items.length - 1) * STEP - ginv(VH * 0.52);
+    hist.style.height = Math.round(VH + Math.max(END, VH * 0.5) + VH * 0.85) + 'px';
+  }
+  function frame(){
+    var rect = hist.getBoundingClientRect();
+    /* セクションが画面から遠い間は計算だけスキップ */
+    if(rect.bottom > -VH * 0.5 && rect.top < VH * 1.5){
+      var S = -rect.top;   /* オーバーラップ中も写真は流れ続ける */
+      items.forEach(function(el, i){
+        var yr = START_RAW + i * STEP - S;
+        var yv = g(yr);
+        var e = Math.max(0, Math.min(1, (TT_RAW - yr) / EX_RAW));        /* 上端：傾き＋フェード */
+        var q = Math.max(0, Math.min(1, (yv - VH * 0.5) / (VH * 0.5)));  /* 入場時：わずかな傾き→まっすぐ */
+        var tR = -(e * 9) + (i % 2 ? -1.6 : 1.6) * q;
+        var tX = e * window.innerWidth * 0.05;
+        var tO = 1 - e;
+        var c = st[i];
+        if(!c.init){ c.y = yv; c.r = tR; c.o = tO; c.init = true; }
+        c.y += (yv - c.y) * 0.16;   /* 慣性（lerp追従） */
+        c.r += (tR - c.r) * 0.12;
+        c.o += (tO - c.o) * 0.2;
+        el.style.transform = 'translate3d(' + Math.round(tX) + 'px,' + c.y.toFixed(1) + 'px,0) rotate(' + c.r.toFixed(2) + 'deg)';
+        el.style.opacity = c.o.toFixed(3);
+      });
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize', layout);
+  layout();
+  requestAnimationFrame(frame);
+})();
+/* その他テキスト：下線マスクから上がりつつフェード（見出し帯のルールと統一） */
+(function(){
+  var sels = '.sec-ttl, .news__ttl, .disp-jp, .svc__leadtxt, .stats__lead, .recjoin__lead, .hist__lead';
+  var els = [].slice.call(document.querySelectorAll(sels));
+  if(!els.length) return;
+  var wraps = [];
+  els.forEach(function(el){
+    el.classList.remove('rv','rv-d1','rv-d2','rv-d3');
+    var w = document.createElement('div');
+    w.className = 'tr';
+    el.parentNode.insertBefore(w, el);
+    w.appendChild(el);
+    el.classList.add('tr__in');
+    /* 見出し帯の直後に続く英字サブは帯スイープ後に */
+    if(el.classList.contains('sec-ttl') || el.classList.contains('news__ttl')){
+      el.style.transitionDelay = '.5s';
+    }else{
+      el.style.transitionDelay = '.15s';
+    }
+    wraps.push(w);
+  });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('tr-on'); io.unobserve(e.target); }
+    });
+  },{threshold:.4});
+  wraps.forEach(function(w){ io.observe(w); });
+})();
+/* 納入実績：全幅1枚画像バンドがスクロールで少しずれるパララックス */
+(function(){
+  var band = document.querySelector('.stats__band');
+  var ph = document.querySelector('.stats__band-ph');
+  if(!band || !ph) return;
+  var ticking = false;
+  function u(){
+    ticking = false;
+    var r = band.getBoundingClientRect();
+    var vh = window.innerHeight;
+    if(r.bottom < -50 || r.top > vh + 50) return;
+    var p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);  /* 画面中央基準 -1..1 */
+    ph.style.transform = 'translateY(' + Math.round(p * r.height * 0.12) + 'px)';
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(u); } }, {passive:true});
+  window.addEventListener('resize', u);
+  u();
 })();
 </script>
 <script src="_pt.js"></script>

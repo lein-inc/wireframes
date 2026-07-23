@@ -26,7 +26,7 @@
     var sd=[0,.05,.1,.15,.2,.25];
     [].forEach.call(document.querySelectorAll('[style*="background-image"]'), function(el){
       if(el._simg) return;
-      if(el.classList.contains('phero__photo') || el.classList.contains('strip__bg')) return; // ヒーロー背景・帯は除外
+      if(el.classList.contains('phero__photo') || el.classList.contains('strip__bg') || el.classList.contains('kstep__ph')) return; // ヒーロー背景・帯・工程サブ画像は除外
       var bg = el.style.backgroundImage;
       if(!bg || bg.indexOf('url') < 0) return;
       el._simg = 1;
