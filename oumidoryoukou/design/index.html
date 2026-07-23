@@ -250,7 +250,7 @@ body.menu-open{overflow:hidden}
 }
 /* ============ 採用動線（見出し＋新卒/中途の大窓・左右で上下ずらし） ============ */
 /* ヒストリー末尾：ピン中のステージ（右の写真）に被さって次セクションがせり上がる */
-.recjoin{position:relative;z-index:5;margin-top:-105vh;background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
+.recjoin{position:relative;z-index:5;margin-top:-115vh;background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
 .recjoin::after{content:"";position:absolute;left:0;bottom:100%;width:60%;height:26px;background:var(--paper)}
 /* FVと同じ6分割の薄い点線罫線をセクション全面に（納入実績） */
 .stats::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -507,12 +507,12 @@ body.menu-open{overflow:hidden}
 .stats__cta i{font-style:normal;font-family:var(--en);font-size:1.15em}
 .stats__band:hover .stats__cta{background:var(--ink);color:#fff;gap:16px}
 /* 全幅1枚画像バンド（スクロールで少し流れるパララックス）＋右側に詳しくはこちら */
-.stats__band{position:relative;z-index:4;display:block;overflow:hidden;height:calc(clamp(320px,50vh,560px) + 56px);width:100vw;margin:clamp(64px,8vw,120px) calc(50% - 50vw) -226px;
+.stats__band{position:relative;z-index:4;display:block;overflow:hidden;height:calc(clamp(215px,33vh,375px) + 56px);width:100vw;margin:clamp(64px,8vw,120px) calc(50% - 50vw) -226px;
   clip-path:polygon(0 0,100% 0,100% 100%,62% 100%,62% calc(100% - 56px),0 calc(100% - 56px))}
-@media(max-width:900px){.stats__band{height:calc(clamp(320px,50vh,560px) + 32px);margin-bottom:-202px;
+@media(max-width:900px){.stats__band{height:calc(clamp(215px,33vh,375px) + 32px);margin-bottom:-202px;
   clip-path:polygon(0 0,100% 0,100% 100%,56% 100%,56% calc(100% - 32px),0 calc(100% - 32px))}}
-.stats__band-ph{position:absolute;left:0;right:0;top:-12%;bottom:-12%;background:url(stat-facilities.jpg) center/cover no-repeat;filter:brightness(.74);will-change:transform}
-.stats__band .stats__cta{position:absolute;right:7vw;top:50%;bottom:auto;transform:translateY(-50%)}
+.stats__band-ph{position:absolute;left:0;right:0;top:-28%;bottom:-28%;background:url(stat-facilities.jpg) center/cover no-repeat;filter:brightness(.74);will-change:transform}
+.stats__band .stats__cta{position:absolute;left:7vw;right:auto;top:50%;bottom:auto;transform:translateY(-50%);--bc:#000;--bg:#fff;border:0}
 /* 納入先ロゴマーキー（ダミー20社） */
 .stats__clients{margin-top:64px}
 .stats__clients .cl-lbl{font-family:var(--en);font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.55)}
@@ -837,6 +837,8 @@ body.menu-open .nav{background:transparent;border:none}
 .foot__recruit .go{--bc:#fff;--bg:var(--red)}
 /* 全面リンク連動ホバーも同じ塗り */
 .stats__band:hover .stats__cta,.foot__recruit:hover .go{color:var(--bg);background:var(--bg)}
+/* 納入バンドのボタンはホバーで黒背景×赤文字 */
+.stats__band .stats__cta:hover,.stats__band:hover .stats__cta{color:var(--red)}
 .stats__band:hover .stats__cta::before,.foot__recruit:hover .go::before{transform:none}
 /* 矢印なし */
 .btn>span,.hist__go .arrow-i,.stats__cta>i,.news__all .arrow-i,.pf-info__btn .ar,.pf-info__btn span,.foot__contact .cbtn .arrow-i,.strip__contact .cbtn .arrow-i,.foot__recruit .go .arrow-i{display:none}
@@ -1615,7 +1617,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     TT_RAW = ginv(VH * 0.06);
     EX_RAW = VH * 0.5;
     END = START_RAW + (items.length - 1) * STEP - ginv(VH * 0.52);
-    hist.style.height = Math.round(VH + Math.max(END, VH * 0.5) + VH * 1.05) + 'px';
+    hist.style.height = Math.round(VH + Math.max(END, VH * 0.5) + VH * 1.15) + 'px';
   }
   function frame(){
     var rect = hist.getBoundingClientRect();
@@ -1685,7 +1687,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     var vh = window.innerHeight;
     if(r.bottom < -50 || r.top > vh + 50) return;
     var p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);  /* 画面中央基準 -1..1 */
-    ph.style.transform = 'translateY(' + Math.round(p * r.height * 0.12) + 'px)';
+    ph.style.transform = 'translateY(' + Math.round(p * r.height * 0.26) + 'px)';
   }
   window.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(u); } }, {passive:true});
   window.addEventListener('resize', u);
