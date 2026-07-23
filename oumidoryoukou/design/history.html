@@ -826,7 +826,8 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-year.is-on .hc-year__t{transform:none}
 .hc-progress{position:absolute;left:5vw;right:5vw;bottom:64px;height:1px;background:rgba(0,0,0,.18);z-index:6}
 .hc-progress__fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--red)}
-.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(0,0,0,.3);transform:translateX(-.5px)}
+.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(0,0,0,.3);transform:translateX(-.5px);cursor:pointer}
+.hc-tick::after{content:"";position:absolute;top:-14px;bottom:-26px;left:-16px;right:-16px}
 .hc-tick.--era{top:-5px;height:11px;background:rgba(0,0,0,.5)}
 .hc-tick b{position:absolute;top:11px;left:50%;transform:translateX(-50%);font:500 9px/1 var(--en);letter-spacing:.1em;color:rgba(0,0,0,.4);white-space:nowrap}
 .hc-tick.--era b{color:rgba(0,0,0,.62)}
@@ -1358,17 +1359,34 @@ body.menu-open .nav{background:transparent;border:none}
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
+  /* 指定項目の定位置へスクロールジャンプ */
+  function goTo(target){
+    target=Math.max(0, Math.min(N-1, target));
+    if(target===last) return;
+    var vh=window.innerHeight, max=scene.offsetHeight-vh;
+    var top=scene.getBoundingClientRect().top + window.scrollY + (target/(N-1))*max;
+    window.scrollTo({top:Math.round(top), behavior:'smooth'});
+  }
   /* クリック送り：画面左半分=前へ戻る／右半分=次へ進む */
   var pin=scene.querySelector('.hc-pin');
   if(pin){
     pin.style.cursor='pointer';
     pin.addEventListener('click',function(e){
-      var dir=(e.clientX < window.innerWidth/2) ? -1 : 1;
-      var target=Math.max(0, Math.min(N-1, last+dir));
-      if(target===last) return;
-      var vh=window.innerHeight, max=scene.offsetHeight-vh;
-      var top=scene.getBoundingClientRect().top + window.scrollY + (target/(N-1))*max;
-      window.scrollTo({top:Math.round(top), behavior:'smooth'});
+      goTo(last + ((e.clientX < window.innerWidth/2) ? -1 : 1));
+    });
+  }
+  /* シークバー：年号クリックでその年代の頭へジャンプ */
+  if(prog){
+    prog.style.cursor='pointer';
+    prog.addEventListener('click',function(e){
+      e.stopPropagation();
+      var t=e.target.closest('.hc-tick'), target;
+      if(t){ target=+t.getAttribute('data-i'); }
+      else{
+        var r=prog.getBoundingClientRect(), p=(e.clientX-r.left)/r.width;
+        target=Math.round(Math.max(0,Math.min(1,p))*(N-1));
+      }
+      goTo(target);
     });
   }
 })();
