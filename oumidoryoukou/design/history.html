@@ -789,7 +789,15 @@ body.menu-open .nav{background:transparent;border:none}
     repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px);
   background-size:1px 100%;background-repeat:no-repeat;
   background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
-.hc-photos{position:absolute;inset:0;pointer-events:none}
+.hc-photos{position:absolute;inset:5vh 5vw;overflow:hidden;pointer-events:none}
+/* 四隅の十字マーカー（TOP製品スライド踏襲・黒線・常時最大サイズ） */
+.hc-mark{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:4}
+.hc-mark::before{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;background:#000}
+.hc-mark::after{content:"";position:absolute;top:0;left:50%;height:100%;width:1.5px;margin-left:-0.75px;background:#000}
+.hc-mark--tl{left:5vw;top:5vh}
+.hc-mark--tr{left:calc(100% - 5vw);top:5vh}
+.hc-mark--bl{left:5vw;top:calc(100% - 5vh)}
+.hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 5vh)}
 .hc-photo{position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity 1.1s ease,transform 1.8s ease;
   background-size:cover;background-position:center;filter:saturate(.95)}
 .hc-photo.is-on{opacity:1;transform:scale(1)}
@@ -883,6 +891,10 @@ body.menu-open .nav{background:transparent;border:none}
     <div class="hc-bg"></div>
     <div class="hc-lines" aria-hidden="true"></div>
     <div class="hc-photos"></div>
+    <i class="hc-mark hc-mark--tl" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--tr" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--bl" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--br" aria-hidden="true"></i>
     <div class="hc-hud"><p class="hc-hud__era"></p></div>
     <div class="hc-stage"></div>
     <div class="hc-progress__pad" aria-hidden="true"></div>
