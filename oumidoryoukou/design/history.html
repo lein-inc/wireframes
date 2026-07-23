@@ -775,18 +775,17 @@ body.menu-open .nav{background:transparent;border:none}
 
 <style id="phist-css">
 /* ===== 126年ヒストリー：奥から手前へ迫る透視スクロール（TOPトーン） ===== */
-.hc-scene{position:relative;background:var(--ink);color:#fff}
+.hc-scene{position:relative;background:var(--paper);color:var(--ink)}
 .hc-pin{position:sticky;top:0;height:100vh;overflow:hidden;perspective:1200px;perspective-origin:62% 44%}
-.hc-bg{position:absolute;inset:0;pointer-events:none;background:
-  radial-gradient(56% 52% at 64% 42%, rgba(255,255,255,.06), rgba(0,0,0,0) 70%)}
+.hc-bg{display:none}
 /* 0.5px方眼（TOPの罫線モチーフ・白は極薄） */
 .hc-lines{position:absolute;inset:0;pointer-events:none;opacity:.5;
   background-image:
-    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.10) 0 1px,transparent 1px 6px);
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px);
   background-size:1px 100%;background-repeat:no-repeat;
   background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
 .hc-photos{position:absolute;inset:5vh 5vw;overflow:hidden;pointer-events:none}
@@ -820,7 +819,7 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-panel__title{font-family:var(--mincho);font-weight:600;font-size:clamp(22px,3vw,40px);margin-top:22px;line-height:1.4;letter-spacing:.03em}
 .hc-panel__desc{font-family:var(--jp);font-weight:500;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin:22px auto 0;max-width:640px}
 .hc-hud{position:absolute;left:7vw;top:104px;z-index:6;pointer-events:none}
-.hc-hud__era{font-family:var(--en);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.hc-hud__era{font-family:var(--en);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(0,0,0,.55)}
 .hc-hud__era::before{content:"— "}
 /* 年代インジケーターの座布団＝カードと同じブラー＋黒透過 */
 .hc-progress__pad{position:absolute;left:calc(7vw - 28px);right:calc(7vw - 28px);bottom:36px;height:48px;z-index:5;border-radius:0;
@@ -834,7 +833,7 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-tick.--era b{color:rgba(255,255,255,.6)}
 .hc-tick.is-on{background:var(--red);top:-6px;height:13px}
 .hc-tick.is-on b{color:#fff;font-weight:700;top:13px}
-.hc-scroll{position:absolute;left:50%;bottom:98px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.hc-scroll{position:absolute;left:50%;bottom:98px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.5)}
 @media(max-width:640px){
   .hc-hud{left:24px;top:80px}
   .hc-progress{left:24px;right:24px;bottom:44px}
