@@ -1,7 +1,7 @@
-/* 画像リビール：初期は真っ赤な不透過カバーに覆われ、表示時にスッと素早く右へ赤が抜ける
-   - インライン background-image を持つ写真要素を自動で対象化
-   - 除外: ヒーロー背景 phero__photo / 帯 strip__bg / kflow左大画像（独自フェード切替）
-   - スクロールで画面に入ったら発火。ヒストリー（.hc-scene）はこのスクリプト自体を対象外にする */
+/* 画像リビール：初期は真っ赤な不透過カバーに覆われ、画像全体が画面に入ってからスッと右へ赤が抜ける
+   - インライン background-image を持つ写真要素を自動で対象化（カバー付与は即時）
+   - 発火はローディング/ページ遷移演出の完了後に開始（演出中に抜けてしまうのを防止）
+   - 除外: ヒーロー背景 phero__photo / 帯 strip__bg / kflow左大画像（独自フェード切替） */
 (function(){
   if(document.querySelector('.hc-scene')) return;               // ヒストリーは除外
   var st=document.createElement('style');
@@ -12,11 +12,8 @@
    '@media(prefers-reduced-motion:reduce){.simg::after{display:none}}';
   document.head.appendChild(st);
 
+  var els = [];
   function build(){
-    var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    var io = reduce ? null : new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
     [].forEach.call(document.querySelectorAll('[style*="background-image"]'), function(el){
       if(el._simg) return;
       if(el.classList.contains('phero__photo') || el.classList.contains('strip__bg') || el.classList.contains('kflow__img')) return;
@@ -24,9 +21,27 @@
       if(!bg || bg.indexOf('url') < 0) return;
       el._simg = 1;
       if(getComputedStyle(el).position === 'static') el.style.position='relative';
-      el.classList.add('simg');
-      if(io) io.observe(el); else el.classList.add('is-in');
+      el.classList.add('simg');          // 赤カバーは即時ON
+      els.push(el);
     });
   }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+  function arm(){
+    var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){ els.forEach(function(el){ el.classList.add('is-in'); }); return; }
+    function cb(es, io){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); }
+    var ioFull = new IntersectionObserver(cb, {threshold:.98});   // 画像全体が見えてから
+    var ioBig  = new IntersectionObserver(cb, {threshold:.35});   // 画面より大きい画像の救済
+    els.forEach(function(el){
+      (el.offsetHeight > window.innerHeight * .85 ? ioBig : ioFull).observe(el);
+    });
+  }
+  function start(){
+    build();
+    /* ローディング（TOP）/ページ遷移の演出が終わってから観測開始 */
+    var delay = document.getElementById('loader') ? 4600
+              : (document.documentElement.classList.contains('pt-init') || document.querySelector('.pt-grid')) ? 1200
+              : 250;
+    setTimeout(arm, delay);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
