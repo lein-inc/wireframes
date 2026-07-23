@@ -825,6 +825,8 @@ body.menu-open .nav{background:transparent;border:none}
 .btn:hover,.hist__go:hover,.stats__cta:hover,.news__all:hover,.pf-info__btn:hover,.foot__contact .cbtn:hover,.strip__contact .cbtn:hover,.foot__recruit .go:hover{color:var(--bg)}
 .btn:hover::before,.hist__go:hover::before,.stats__cta:hover::before,.news__all:hover::before,.pf-info__btn:hover::before,.foot__contact .cbtn:hover::before,.strip__contact .cbtn:hover::before,.foot__recruit .go:hover::before{transform:none}
 .btn::after{content:none !important}
+/* 旧あしらい打ち消しでスイープ擬似要素まで消えていたのを再有効化 */
+.phil .btn::before,.svc__lead .btn::before{content:"";background:var(--bc)}
 .phil .btn{--bc:#fff;--bg:var(--ink);border:0}
 .hist__go{--bc:var(--ink);--bg:#ececec}
 .stats__cta,.pf-info__btn,.foot__contact .cbtn,.strip__contact .cbtn{--bc:#fff;--bg:#000}
