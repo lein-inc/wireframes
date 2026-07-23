@@ -1358,6 +1358,19 @@ body.menu-open .nav{background:transparent;border:none}
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
+  /* クリック送り：画面左半分=前へ戻る／右半分=次へ進む */
+  var pin=scene.querySelector('.hc-pin');
+  if(pin){
+    pin.style.cursor='pointer';
+    pin.addEventListener('click',function(e){
+      var dir=(e.clientX < window.innerWidth/2) ? -1 : 1;
+      var target=Math.max(0, Math.min(N-1, last+dir));
+      if(target===last) return;
+      var vh=window.innerHeight, max=scene.offsetHeight-vh;
+      var top=scene.getBoundingClientRect().top + window.scrollY + (target/(N-1))*max;
+      window.scrollTo({top:Math.round(top), behavior:'smooth'});
+    });
+  }
 })();
 </script>
 <script src="_simg.js?v=4"></script>
