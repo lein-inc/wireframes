@@ -820,9 +820,11 @@ body.menu-open .nav{background:transparent;border:none}
   position:relative;overflow:hidden;z-index:0;
   background:var(--bg);color:var(--bc);border:1px solid var(--bc);
   transition:color .3s}
-.btn::before,.hist__go::before,.stats__cta::before,.news__all::before,.pf-info__btn::before,.foot__contact .cbtn::before,.strip__contact .cbtn::before,.foot__recruit .go::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bc);
+.btn::before,.hist__go::before,.stats__cta::before,.news__all::before,.pf-info__btn::before,.foot__contact .cbtn::before,.strip__contact .cbtn::before,.foot__recruit .go::before{content:"";position:absolute;inset:0;width:100%;height:100%;opacity:1;z-index:-1;background:var(--bc);
   transform:scaleX(0);transform-origin:left center;transition:transform .38s cubic-bezier(.2,.7,.2,1)}
-.btn:hover,.hist__go:hover,.stats__cta:hover,.news__all:hover,.pf-info__btn:hover,.foot__contact .cbtn:hover,.strip__contact .cbtn:hover,.foot__recruit .go:hover{color:var(--bg)}
+.btn:hover,.hist__go:hover,.stats__cta:hover,.news__all:hover,.pf-info__btn:hover,.foot__contact .cbtn:hover,.strip__contact .cbtn:hover,.foot__recruit .go:hover{color:var(--bg);background:var(--bg)}
+.phil .btn:hover,.svc__lead .btn:hover{background:var(--bg);color:var(--bg)}
+.stats__band:hover .stats__cta{background:var(--bg)}
 .btn:hover::before,.hist__go:hover::before,.stats__cta:hover::before,.news__all:hover::before,.pf-info__btn:hover::before,.foot__contact .cbtn:hover::before,.strip__contact .cbtn:hover::before,.foot__recruit .go:hover::before{transform:none}
 .btn::after{content:none !important}
 /* 旧あしらい打ち消しでスイープ擬似要素まで消えていたのを再有効化 */
@@ -832,7 +834,7 @@ body.menu-open .nav{background:transparent;border:none}
 .stats__cta,.pf-info__btn,.foot__contact .cbtn,.strip__contact .cbtn{--bc:#fff;--bg:#000}
 .foot__recruit .go{--bc:#fff;--bg:var(--red)}
 /* 全面リンク連動ホバーも同じ塗り */
-.stats__band:hover .stats__cta,.foot__recruit:hover .go{color:var(--bg)}
+.stats__band:hover .stats__cta,.foot__recruit:hover .go{color:var(--bg);background:var(--bg)}
 .stats__band:hover .stats__cta::before,.foot__recruit:hover .go::before{transform:none}
 /* 矢印なし */
 .btn>span,.hist__go .arrow-i,.stats__cta>i,.news__all .arrow-i,.pf-info__btn .ar,.pf-info__btn span,.foot__contact .cbtn .arrow-i,.strip__contact .cbtn .arrow-i,.foot__recruit .go .arrow-i{display:none}
