@@ -788,15 +788,15 @@ body.menu-open .nav{background:transparent;border:none}
     repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px);
   background-size:1px 100%;background-repeat:no-repeat;
   background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
-.hc-photos{position:absolute;inset:5vh 5vw;overflow:hidden;pointer-events:none}
+.hc-photos{position:absolute;top:5vh;left:5vw;right:5vw;bottom:130px;overflow:hidden;pointer-events:none}
 /* 四隅の十字マーカー（TOP製品スライド踏襲・黒線・常時最大サイズ） */
 .hc-mark{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:4}
 .hc-mark::before{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;background:#000}
 .hc-mark::after{content:"";position:absolute;top:0;left:50%;height:100%;width:1.5px;margin-left:-0.75px;background:#000}
 .hc-mark--tl{left:5vw;top:5vh}
 .hc-mark--tr{left:calc(100% - 5vw);top:5vh}
-.hc-mark--bl{left:5vw;top:calc(100% - 5vh)}
-.hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 5vh)}
+.hc-mark--bl{left:5vw;top:calc(100% - 130px)}
+.hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 130px)}
 /* 写真切替：右から左へスッと素早いスライド（旧写真はその場に残して被せる） */
 .hc-photo{position:absolute;inset:0;transform:translateX(101%);transition:none;z-index:1;
   background-size:cover;background-position:center;filter:saturate(.95)}
@@ -820,26 +820,22 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-panel__year small{display:inline-block;font-family:var(--jp);font-weight:500;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.55);margin-left:14px;vertical-align:middle}
 .hc-panel__title{font-family:var(--mincho);font-weight:600;font-size:clamp(22px,3vw,40px);margin-top:22px;line-height:1.4;letter-spacing:.03em}
 .hc-panel__desc{font-family:var(--jp);font-weight:500;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin:22px auto 0;max-width:640px}
-.hc-hud{position:absolute;left:7vw;top:104px;z-index:6;pointer-events:none}
-.hc-hud__era{font-family:var(--en);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(0,0,0,.55)}
-.hc-hud__era::before{content:"— "}
-/* 年代インジケーターの座布団＝カードと同じブラー＋黒透過 */
-.hc-progress__pad{position:absolute;left:calc(7vw - 28px);right:calc(7vw - 28px);bottom:36px;height:48px;z-index:5;border-radius:0;
-  border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.46);
-  -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1);pointer-events:none}
-.hc-progress{position:absolute;left:7vw;right:7vw;bottom:66px;height:1px;background:rgba(255,255,255,.18);z-index:6}
+/* 左上：白帯＋赤文字の年代表示（帯は常設、文字だけ下からスッと入れ替わる） */
+.hc-year{position:absolute;left:5vw;top:5vh;z-index:6;pointer-events:none;background:#fff;padding:12px 24px 14px;overflow:hidden}
+.hc-year__t{display:block;font-family:var(--en);font-weight:600;font-size:clamp(24px,2.6vw,38px);line-height:1;color:var(--red);letter-spacing:.02em;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.hc-year.is-on .hc-year__t{transform:none}
+.hc-progress{position:absolute;left:5vw;right:5vw;bottom:64px;height:1px;background:rgba(0,0,0,.18);z-index:6}
 .hc-progress__fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--red)}
-.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(255,255,255,.3);transform:translateX(-.5px)}
-.hc-tick.--era{top:-5px;height:11px;background:rgba(255,255,255,.5)}
-.hc-tick b{position:absolute;top:11px;left:50%;transform:translateX(-50%);font:500 9px/1 var(--en);letter-spacing:.1em;color:rgba(255,255,255,.36);white-space:nowrap}
-.hc-tick.--era b{color:rgba(255,255,255,.6)}
+.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(0,0,0,.3);transform:translateX(-.5px)}
+.hc-tick.--era{top:-5px;height:11px;background:rgba(0,0,0,.5)}
+.hc-tick b{position:absolute;top:11px;left:50%;transform:translateX(-50%);font:500 9px/1 var(--en);letter-spacing:.1em;color:rgba(0,0,0,.4);white-space:nowrap}
+.hc-tick.--era b{color:rgba(0,0,0,.62)}
 .hc-tick.is-on{background:var(--red);top:-6px;height:13px}
-.hc-tick.is-on b{color:#fff;font-weight:700;top:13px}
-.hc-scroll{position:absolute;left:50%;bottom:98px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.5)}
+.hc-tick.is-on b{color:#000;font-weight:700;top:13px}
+.hc-scroll{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.45)}
 @media(max-width:640px){
   .hc-hud{left:24px;top:80px}
-  .hc-progress{left:24px;right:24px;bottom:44px}
-  .hc-progress__pad{left:6px;right:6px;bottom:22px;height:44px}
+  .hc-progress{left:24px;right:24px;bottom:52px}
   .hc-tick b{display:none}.hc-tick.is-on b,.hc-tick.--era b{display:block}
   .hc-panel{width:86vw;min-height:60vh;padding:40px 24px;display:flex;flex-direction:column;justify-content:center}
 }
@@ -896,9 +892,8 @@ body.menu-open .nav{background:transparent;border:none}
     <i class="hc-mark hc-mark--tr" aria-hidden="true"></i>
     <i class="hc-mark hc-mark--bl" aria-hidden="true"></i>
     <i class="hc-mark hc-mark--br" aria-hidden="true"></i>
-    <div class="hc-hud"><p class="hc-hud__era"></p></div>
+    <div class="hc-year is-on"><span class="hc-year__t">1900</span></div>
     <div class="hc-stage"></div>
-    <div class="hc-progress__pad" aria-hidden="true"></div>
     <div class="hc-progress"><span class="hc-progress__fill"></span></div>
     <div class="hc-scroll">Scroll — 1900 → 2026</div>
   </div>
@@ -1248,7 +1243,7 @@ body.menu-open .nav{background:transparent;border:none}
   var scene=document.getElementById('hc'); if(!scene) return;
   var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
       prog=scene.querySelector('.hc-progress'), fill=scene.querySelector('.hc-progress__fill'),
-      hud=scene.querySelector('.hc-hud__era'), scroll=scene.querySelector('.hc-scroll');
+      yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'), scroll=scene.querySelector('.hc-scroll');
   var N=DATA.length, prevEra=null, ph='', tk='';
   DATA.forEach(function(d,i){
     stage.insertAdjacentHTML('beforeend',
@@ -1300,7 +1295,12 @@ body.menu-open .nav{background:transparent;border:none}
     }
     if(ticks[last]) ticks[last].classList.remove('is-on');
     if(ticks[active]) ticks[active].classList.add('is-on');
-    if(hud){ var ap=panels[active]; if(ap) hud.textContent=ap.getAttribute('data-era'); }
+    /* 年代帯：文字が下へスッと消え→入替→下からスッと出現（帯は常設） */
+    if(yearEl){
+      yearEl.classList.remove('is-on');
+      clearTimeout(yearEl._t);
+      yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][0]; yearEl.classList.add('is-on'); }, 200);
+    }
   }
   function upd(){
     var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
