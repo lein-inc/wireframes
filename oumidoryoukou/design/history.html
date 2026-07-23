@@ -812,7 +812,7 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-hud__era{font-family:var(--en);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .hc-hud__era::before{content:"— "}
 /* 年代インジケーターの座布団＝カードと同じブラー＋黒透過 */
-.hc-progress__pad{position:absolute;left:calc(7vw - 28px);right:calc(7vw - 28px);bottom:36px;height:48px;z-index:5;border-radius:16px;
+.hc-progress__pad{position:absolute;left:calc(7vw - 28px);right:calc(7vw - 28px);bottom:36px;height:48px;z-index:5;border-radius:0;
   border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.46);
   -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1);pointer-events:none}
 .hc-progress{position:absolute;left:7vw;right:7vw;bottom:66px;height:1px;background:rgba(255,255,255,.18);z-index:6}
@@ -1255,7 +1255,8 @@ body.menu-open .nav{background:transparent;border:none}
   // active を基準に、各ボックスを離散位置へ（中央=固定／手前=抜けて消える／奥=待機）
   function place(active){
     for(var i=0;i<N;i++){
-      var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP, op=(d===0?1:0);
+      var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP,
+          op=(d===0?1:(d===1?0.32:(d===-1?0.2:0)));   /* 奥の次カード=小さく薄見え／手前の直前カード=大きく薄見え */
       el.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px) translateZ('+z+'px)';
       el.style.opacity=String(op);
       el.style.zIndex=String(3000-Math.abs(d)*12);
@@ -1273,7 +1274,9 @@ body.menu-open .nav{background:transparent;border:none}
     var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
     var p= max>0 ? cl(-r.top,0,max)/max : 0;
     // スクロール一定ごとに active が1つ進む（間はボックス固定）。閾値を越えるとCSSトランジションで自動送り
-    var active=Math.round(p*(N-1)); active=active<0?0:(active>N-1?N-1:active);
+    var raw=p*(N-1);
+    var active=(last<0)?Math.round(raw):(Math.abs(raw-last)>=0.6?Math.round(raw):last);
+    active=active<0?0:(active>N-1?N-1:active);
     if(fill) fill.style.width=(p*100)+'%';
     if(scroll) scroll.style.opacity=String(cl(1-p*6));
     if(active!==last){ place(active); swap(active); last=active; }
