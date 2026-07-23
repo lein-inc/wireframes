@@ -250,7 +250,7 @@ body.menu-open{overflow:hidden}
 }
 /* ============ 採用動線（見出し＋新卒/中途の大窓・左右で上下ずらし） ============ */
 /* ヒストリー末尾：ピン中のステージ（右の写真）に被さって次セクションがせり上がる */
-.recjoin{position:relative;z-index:5;margin-top:-85vh;background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
+.recjoin{position:relative;z-index:5;margin-top:-100vh;background:var(--paper);color:var(--ink);padding:150px 7vw 170px}
 .recjoin::after{content:"";position:absolute;left:0;bottom:100%;width:60%;height:26px;background:var(--paper)}
 /* FVと同じ6分割の薄い点線罫線をセクション全面に（納入実績） */
 .stats::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -1615,7 +1615,7 @@ html:not(.ldr-on) .fv__head{transition:opacity .6s}
     TT_RAW = ginv(VH * 0.06);
     EX_RAW = VH * 0.5;
     END = START_RAW + (items.length - 1) * STEP - ginv(VH * 0.52);
-    hist.style.height = Math.round(VH + Math.max(END, VH * 0.5) + VH * 0.85) + 'px';
+    hist.style.height = Math.round(VH + Math.max(END, VH * 0.5) + VH * 1.0) + 'px';
   }
   function frame(){
     var rect = hist.getBoundingClientRect();
