@@ -1359,6 +1359,33 @@ body.menu-open .nav{background:transparent;border:none}
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
+  /* ── 高速スクロール時の取りこぼし保険：静止したら表示状態を強制整合 ── */
+  var settleTimer=null;
+  window.addEventListener('scroll',function(){
+    clearTimeout(settleTimer);
+    settleTimer=setTimeout(function(){
+      /* 1) rv出現の取りこぼし救済（高速通過でIntersectionObserver未発火 → ヘッダー等が透明のまま） */
+      document.querySelectorAll('.rv:not(.is-in)').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top < window.innerHeight * 0.96) el.classList.add('is-in');
+      });
+      if(last<0) return;
+      /* 2) 背景写真の整合：表示すべき1枚を確定し、迷子のis-on/was-onを掃除 */
+      pics.forEach(function(p,i){ p.classList.remove('was-on'); if(i!==last) p.classList.remove('is-on'); });
+      if(pics[last] && !pics[last].classList.contains('is-on')){
+        pics[last].style.transition='none';
+        pics[last].classList.add('is-on');
+        requestAnimationFrame(function(){ pics[last].style.transition=''; });
+      }
+      /* 3) 中央カードのテキストが出ていなければ出す */
+      if(panels[last] && !panels[last].classList.contains('is-text')){
+        clearTimeout(textTimer);
+        textTimer=setTimeout(function(){ panels[last].classList.add('is-text'); }, 250);
+      }
+      /* 4) 年代帯の整合 */
+      if(yearT && yearT.textContent!==DATA[last][0]){ yearT.textContent=DATA[last][0]; yearEl.classList.add('is-on'); }
+    },170);
+  },{passive:true});
   /* 指定項目の定位置へスクロールジャンプ */
   function goTo(target){
     target=Math.max(0, Math.min(N-1, target));
