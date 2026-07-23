@@ -802,6 +802,9 @@ body.menu-open .nav{background:transparent;border:none}
 .hc-panel.is-active{background:rgba(10,12,11,.56)}
 /* 段階送り：activeが変わった時だけ手前へ抜け／奥から中央へ、をアニメ（初期配置後に有効化）*/
 .hc-scene.hc-anim .hc-panel{transition:transform .85s cubic-bezier(.22,1,.36,1),opacity .7s ease}
+/* テキストは中央カードのみ：移動前に素早く消え、定着後に素早く出る */
+.hc-panel__era,.hc-panel__year,.hc-panel__title,.hc-panel__desc{opacity:0;transition:opacity .18s ease}
+.hc-panel.is-text .hc-panel__era,.hc-panel.is-text .hc-panel__year,.hc-panel.is-text .hc-panel__title,.hc-panel.is-text .hc-panel__desc{opacity:1}
 .hc-panel__era{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--red)}
 .hc-panel__era::before{content:"( "}.hc-panel__era::after{content:" )"}
 .hc-panel__year{font-family:var(--en);font-weight:600;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:.02em;margin-top:16px;color:#fff}
@@ -1253,15 +1256,21 @@ body.menu-open .nav{background:transparent;border:none}
   var STEP=900,last=-1,ticking=false;
   function cl(v,a,b){a=(a==null?0:a);b=(b==null?1:b);return v<a?a:(v>b?b:v);}
   // active を基準に、各ボックスを離散位置へ（中央=固定／手前=抜けて消える／奥=待機）
+  var textTimer=null;
   function place(active){
     for(var i=0;i<N;i++){
       var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP,
-          op=(d===0?1:(d===1?0.32:(d===-1?0.2:0)));   /* 奥の次カード=小さく薄見え／手前の直前カード=大きく薄見え */
+          op=(d===0?1:(d===1?0.32:(d===-1?0.3:0)));   /* 奥の次カード=小さく薄見え／手前の直前カード=大きく見切れ */
+      if(d===-1){ x=-700; y=130; z=1050; }            /* 手前カード：カメラ近くで大きく端に見切れる */
       el.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px) translateZ('+z+'px)';
       el.style.opacity=String(op);
       el.style.zIndex=String(3000-Math.abs(d)*12);
       var act=(i===active); if(act!==el._act){ el.classList.toggle('is-active',act); el._act=act; }
     }
+    /* テキスト：即フェードアウト→カード定着後（送りアニメ後）にフェードイン */
+    for(var j=0;j<N;j++) panels[j].classList.remove('is-text');
+    clearTimeout(textTimer);
+    textTimer=setTimeout(function(){ if(panels[active]) panels[active].classList.add('is-text'); }, 720);
   }
   function swap(active){
     if(pics[last]) pics[last].classList.remove('is-on');
@@ -1284,6 +1293,7 @@ body.menu-open .nav{background:transparent;border:none}
   }
   // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
   place(0); last=0; swap(0);
+  clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
