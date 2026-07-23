@@ -1341,20 +1341,31 @@ body.menu-open .nav{background:transparent;border:none}
       yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][0]; yearEl.classList.add('is-on'); }, 200);
     }
   }
+  /* どれだけ一気にスクロールしても、表示は1枚ずつの順送りで追いつく（乱れ防止）。
+     4枚以上先へ飛んだ時は目的の2枚手前へスナップしてから順送り＝実質3枚程度で静止 */
+  var target=0, stepping=false;
+  function step(){
+    if(stepping || last===target) return;
+    stepping=true;
+    var d=target-last, next;
+    if(Math.abs(d)>3){ next=target-(d>0?2:-2); }
+    else{ next=last+(d>0?1:-1); }
+    place(next); swap(next); last=next;
+    setTimeout(function(){ stepping=false; step(); },150);
+  }
   function upd(){
     var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
     var p= max>0 ? cl(-r.top,0,max)/max : 0;
-    // スクロール一定ごとに active が1つ進む（間はボックス固定）。閾値を越えるとCSSトランジションで自動送り
     var raw=p*(N-1);
-    var active=(last<0)?Math.round(raw):(Math.abs(raw-last)>=0.6?Math.round(raw):last);
-    active=active<0?0:(active>N-1?N-1:active);
+    var nt=Math.abs(raw-target)>=0.6?Math.round(raw):target;
+    nt=nt<0?0:(nt>N-1?N-1:nt);
     if(fill) fill.style.width=(p*100)+'%';
     if(scroll) scroll.style.opacity=String(cl(1-p*6));
-    if(active!==last){ place(active); swap(active); last=active; }
+    if(nt!==target){ target=nt; step(); }
     ticking=false;
   }
   // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
-  place(0); last=0; swap(0);
+  place(0); last=0; target=0; swap(0);
   clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
@@ -1369,7 +1380,7 @@ body.menu-open .nav{background:transparent;border:none}
         var r=el.getBoundingClientRect();
         if(r.top < window.innerHeight * 0.96) el.classList.add('is-in');
       });
-      if(last<0) return;
+      if(last<0 || stepping || last!==target) return;
       /* 2) 背景写真の整合：表示すべき1枚を確定し、迷子のis-on/was-onを掃除 */
       pics.forEach(function(p,i){ p.classList.remove('was-on'); if(i!==last) p.classList.remove('is-on'); });
       if(pics[last] && !pics[last].classList.contains('is-on')){
