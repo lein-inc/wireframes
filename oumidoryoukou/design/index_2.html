@@ -1084,7 +1084,7 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
 .nav.is-compact .nitem::after,.nav.is-compact .nav__cta::after{animation:navWipe .5s cubic-bezier(.6,0,.2,1) backwards}
 .nav.rewind .nitem::after,.nav.rewind .nav__cta::after{animation:navWipeRev .5s cubic-bezier(.6,0,.2,1) backwards}
 /* 7つに時間差（左カラム上から→右カラム上から） */
-.nav .nav__menu > *:nth-child(1) ::after,.nav .nav__menu > *:nth-child(1)::after{animation-delay:0s}
+.nav .nav__menu > *:nth-child(1)::after{animation-delay:0s}
 .nav .nav__menu > *:nth-child(2)::after{animation-delay:.05s}
 .nav .nav__menu > *:nth-child(3)::after{animation-delay:.1s}
 .nav .nav__menu > *:nth-child(4)::after{animation-delay:.15s}
@@ -1111,19 +1111,19 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
   .nav .burger{opacity:1;visibility:visible}
   .nav .burger span{transform:none;opacity:1}
 }
+.foot__brand img{height:76px}
 /* ── ロゴ：共通で2倍サイズ／FV上（下地が出る前）は白ロゴ ── */
 .nav .nav__logo img,.nav.is-solid .nav__logo img{height:104px}
 .nav:not(.is-solid) .nav__logo img{filter:brightness(0) invert(1)}
 .nav.is-solid .nav__logo img,body.menu-open .nav .nav__logo img{filter:none}
-.foot__brand img{height:76px}
-/* ══ ナビ改修：ロゴは追従なしの白ロゴ／メニューはロゴ下端から／地は#ececec ══ */
+/* ══ ナビ：地色#ececec／ホバーで4px下線／ロゴは0.5サイズで追従なし（ナビは右上で追従のまま）══ */
 .site-logo{position:absolute;top:16px;left:16px;z-index:41;display:block}
-.site-logo img{display:block;height:52px;width:auto}
-.nav{top:76px}
+.site-logo img{display:block;height:52px;width:auto;filter:brightness(0) invert(1)}
 .nav .nav__logo{display:none}
-/* 各ボックスの地は #ececec。ホバーで下から4pxの赤い下線が上がる */
+/* 各ボックスの地は #ececec */
 .nav .nav__menu .nlink{background:#ececec;position:relative;overflow:hidden}
 .nav .nav__menu .nitem:hover>.nlink,.nav .nav__menu .nlink:hover{background:#ececec;color:var(--red)}
+/* ホバーで下から4pxの赤い下線が上がる（お問い合わせも共通） */
 .nav .nav__menu .nlink::after{display:block;content:"";position:absolute;left:0;right:0;bottom:0;top:auto;
   width:auto;height:4px;background:var(--red);transform:scaleY(0);transform-origin:bottom center;
   transition:transform .28s cubic-bezier(.2,.7,.2,1);z-index:2}
@@ -1131,18 +1131,15 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
 .nav .nav__cta::before{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--red);
   transform:scaleY(0);transform-origin:bottom center;transition:transform .28s cubic-bezier(.2,.7,.2,1);z-index:2}
 .nav .nav__cta:hover::before{transform:scaleY(1)}
-/* 背景が #ececec のセクション（ヒストリー）に重なる間は白地に反転 */
+/* 背景が #ececec のセクション（ヒストリー）に重なる間だけ白地に反転 */
 .nav.on-gray .nav__menu .nlink,.nav.on-gray .nav__menu .nitem:hover>.nlink{background:#fff}
-@media(max-width:900px){
-  .site-logo img{height:40px}
-  .nav{top:64px}
-}
+@media(max-width:900px){.site-logo img{height:40px}}
 </style>
 </head>
 <body>
 
 
-<a class="site-logo" href="index.html"><img src="logo_w.png" alt="近江度量衡株式会社"></a>
+<a class="site-logo" href="index.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
 <header class="nav">
   <nav class="nav__menu">
     <div class="nitem">
