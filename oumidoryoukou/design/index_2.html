@@ -939,21 +939,21 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
 .stats .stat b,.stats .stat .lbl{color:var(--ink)}
 .stats .stat+.stat{border-left-color:rgba(0,0,0,.2)}
 .stats__band{position:relative;z-index:2;display:block;overflow:visible;clip-path:none;isolation:auto;
-  margin:clamp(56px,6vw,96px) calc(50% - 50vw + 1.5vw) clamp(40px,4.5vw,72px);
+  margin:clamp(56px,6vw,96px) calc(50% - 50vw + 1.5vw) clamp(40px,4.5vw,72px) 0;
   min-height:clamp(340px,36vw,520px);
   background:var(--red);
   background-image:radial-gradient(88% 130% at 80% 36%,rgba(255,255,255,.30),rgba(255,255,255,0) 62%)}
 .stats__band .stats__band-inner{position:relative;z-index:2;display:block;
-  padding:clamp(52px,5.5vw,88px) 42% clamp(52px,5.5vw,88px) clamp(38px,5vw,84px)}
-.stats__band .stats__lead{display:block;color:#fff;max-width:24em;font-size:clamp(16px,1.4vw,21px);line-height:2.05;margin:0}
+  padding:clamp(52px,5.5vw,88px) 42% clamp(52px,5.5vw,88px) 0}
+.stats__band .stats__lead{display:block;color:#fff;max-width:24em;font-size:clamp(16px,1.4vw,21px);line-height:2.05;margin:0;margin-left:90px}
 .stats__band .stats__cta{position:relative;display:inline-flex;transform:none;margin-top:clamp(28px,3vw,46px);
   background:#fff;color:var(--ink);--bc:#fff;--bg:#fff}
 .stats__band .stats__cta::before{content:none;display:none}
 .stats__band:hover .stats__cta,.stats__band .stats__cta:hover{background:#fff;color:var(--ink);gap:12px}
 /* 3D機材：ボックス右下から下へはみ出し、右端はブラウザ外へ少し見切れる */
-.stats__band-ph{position:absolute;left:auto;right:-30vw;top:-270px;bottom:auto;
-  width:min(112vw,2000px);aspect-ratio:1570/1010;height:auto;
-  background:url(stat-facilities.webp) center/100% 100% no-repeat;
+.stats__band-ph{position:absolute;left:auto;right:-50vw;top:-100px;bottom:auto;
+  width:min(112vw,2000px);aspect-ratio:4000/2825;height:auto;
+  background:url(stat-facilities2.webp) center/100% 100% no-repeat;
   filter:none;mix-blend-mode:normal}
 /* 主な納入先＝セクション最下部（白地用の配色） */
 .stats__clients{position:relative;z-index:1;margin-top:clamp(18px,2.2vw,36px)}
@@ -961,9 +961,9 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
 .clchip{background:#f4f4f4}
 .clogo{filter:none}
 @media(max-width:900px){
-  .stats__band{min-height:0;margin-bottom:clamp(120px,34vw,200px)}
-  .stats__band .stats__band-inner{padding:44px 24px 200px}
-  .stats__band-ph{width:124vw;right:-14vw;top:auto;bottom:-14vw;height:auto;aspect-ratio:1570/1010}
+  .stats__band{min-height:0;margin-left:0;margin-bottom:clamp(120px,34vw,200px)}
+  .stats__band .stats__band-inner{padding:44px 24px 200px 0}
+  .stats__band-ph{width:124vw;right:-14vw;top:auto;bottom:-14vw;height:auto;aspect-ratio:4000/2825}
   .stats__band .stats__cta{top:auto;bottom:0;transform:none}
 }
 /* ── グローバルナビ：メニュー文字は赤（FV上・下地が出た後とも） ── */
@@ -976,7 +976,7 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
   border-bottom:0.5px solid rgba(0,0,0,.07)}
 .nav.is-solid{background:rgba(255,255,255,.78)}
 /* 透過白の上に載るので、ロゴ・バーガー・罫線は濃色で固定 */
-.nav .nav__logo img,.nav.is-solid .nav__logo img{filter:none}
+.nav .nav__logo img,.nav.is-solid .nav__logo img{filter:none;height:52px}
 .nav .burger span{background:var(--ink)}
 .nav .nav__cta,.nav.is-solid .nav__cta{border-left-color:rgba(0,0,0,.14)}
 /* ── ナビ：上・左右に余白をとって浮かせる ── */
@@ -1022,14 +1022,95 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
 .fv__head-title > span + span{margin-top:-.05em}
 @media(max-width:900px){.fv__head-title > span,.fv__head-title .ln1,.fv__head-title .ln2,.fv__head-title .ln3{font-size:clamp(2.6rem,11vw,4.8rem)}}
 /* ── 製品リード文の右下：40×40の薄灰角に大きめ矢印 ── */
-.svc__arrow{position:relative;display:block;width:40px;height:40px;margin:28px 0 0 auto;
+.svc__arrow{position:relative;display:block;width:80px;height:80px;margin:28px 0 0 auto;
   background:#ebebeb;transition:background .28s ease}
-.svc__arrow::after{content:"";position:absolute;left:50%;top:50%;width:24px;height:24px;
-  transform:translate(-50%,-50%);background:var(--red);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M6 18L18 6'/%3E%3Cpath d='M9 6h9v9'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M6 18L18 6'/%3E%3Cpath d='M9 6h9v9'/%3E%3C/svg%3E") center/contain no-repeat;
+.svc__arrow::after{content:"";position:absolute;inset:5px;width:auto;height:auto;
+  transform:none;background:var(--red);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='0.7' stroke-linecap='square'%3E%3Cpath d='M4 20L20 4'/%3E%3Cpath d='M8 4h12v12'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='0.7' stroke-linecap='square'%3E%3Cpath d='M4 20L20 4'/%3E%3Cpath d='M8 4h12v12'/%3E%3C/svg%3E") center/contain no-repeat;
   transition:transform .32s cubic-bezier(.2,.7,.2,1)}
 .svc__arrow:hover{background:rgba(204,7,0,.10)}
-.svc__arrow:hover::after{transform:translate(calc(-50% + 5px),calc(-50% - 5px))}
+.svc__arrow:hover::after{transform:translate(5px,-5px)}
+/* ══ グローバルナビ：2カラムのボックス型（symdirect.co.jp参考）══
+   ・各項目は真っ白の独立ボックス（ブラーなし）／お問い合わせだけ黒地
+   ・下スクロールでハンバーガーに畳み、上スクロールで2カラムに戻す */
+.nav{height:auto;padding:0;align-items:flex-start;background:transparent;border:0;
+  -webkit-backdrop-filter:none;backdrop-filter:none}
+.nav,.nav.is-solid,body.menu-open .nav{background:transparent;border:0;
+  -webkit-backdrop-filter:none;backdrop-filter:none}
+.nav .nav__logo{padding:6px 0 0 6px;background:transparent;border:0}
+.nav .nav__logo img{height:52px;filter:none}
+/* メニュー本体＝2カラムのグリッド */
+.nav .nav__menu{display:grid;grid-template-columns:repeat(2,minmax(150px,206px));gap:2px;
+  margin-left:auto;margin-right:0;justify-self:end;padding:0;background:transparent;border:0;align-items:stretch;flex:none}
+.nav .nav__menu .nitem{display:block;position:relative}
+.nav .nav__menu .nlink,.nav .nav__cta{
+  display:flex;align-items:center;width:100%;height:100%;
+  background:#fff;color:var(--red);border:0;
+  font-family:var(--jp);font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.2;
+  padding:11px 14px;margin:0;transition:background .2s,color .2s}
+.nav .nav__menu .nlink::after{display:none}
+.nav .nav__menu .nitem:hover>.nlink,.nav .nav__menu .nlink:hover{background:#f2f2f2;color:var(--red)}
+/* お問い合わせ＝右カラム最下段・黒地 */
+.nav .nav__cta{grid-column:2;background:var(--ink);color:#fff}
+.nav .nav__cta:hover,.nav.is-solid .nav__cta:hover{background:var(--red);color:#fff}
+.nav.is-solid .nav__cta,body.menu-open .nav .nav__cta{background:var(--ink);color:#fff}
+/* 下スクロール時＝ハンバーガーに集約（is-hiddenでナビごと隠す挙動は廃止） */
+.nav.is-hidden{transform:none}
+.nav .burger{display:none;background:#fff;border:0;margin-left:auto;align-self:flex-start}
+.nav.is-compact .nav__menu{display:none}
+.nav.is-compact .burger{display:flex}
+.nav .burger span{background:var(--red)}
+@media(max-width:900px){
+  .nav .nav__menu{display:none}
+  .nav .burger{display:flex}
+}
+/* ══ ナビ：メガメニュー廃止／切替時に赤幕ワイプ／ハンバーガーは赤80pxで線が右→左 ══ */
+.nav .mega{display:none!important}
+.nav{position:fixed;overflow:visible}
+/* 赤幕：メニュー7つの各ボックス単位で、左→右に覆い そのまま左→右へ抜けていく（戻す時は逆再生） */
+.nav .nav__menu > *{position:relative}
+.nav .nitem::after,.nav .nav__cta::after{content:"";position:absolute;left:0;right:0;top:0;bottom:0;z-index:5;
+  background:var(--red);transform:scaleX(0);transform-origin:left center;pointer-events:none}
+@keyframes navWipe{
+  0%{transform:scaleX(0);transform-origin:left center}
+  46%{transform:scaleX(1);transform-origin:left center}
+  54%{transform:scaleX(1);transform-origin:right center}
+  100%{transform:scaleX(0);transform-origin:right center}}
+@keyframes navWipeRev{
+  0%{transform:scaleX(0);transform-origin:right center}
+  46%{transform:scaleX(1);transform-origin:right center}
+  54%{transform:scaleX(1);transform-origin:left center}
+  100%{transform:scaleX(0);transform-origin:left center}}
+.nav.is-compact .nitem::after,.nav.is-compact .nav__cta::after{animation:navWipe .5s cubic-bezier(.6,0,.2,1) backwards}
+.nav.rewind .nitem::after,.nav.rewind .nav__cta::after{animation:navWipeRev .5s cubic-bezier(.6,0,.2,1) backwards}
+/* 7つに時間差（左カラム上から→右カラム上から） */
+.nav .nav__menu > *:nth-child(1) ::after,.nav .nav__menu > *:nth-child(1)::after{animation-delay:0s}
+.nav .nav__menu > *:nth-child(2)::after{animation-delay:.05s}
+.nav .nav__menu > *:nth-child(3)::after{animation-delay:.1s}
+.nav .nav__menu > *:nth-child(4)::after{animation-delay:.15s}
+.nav .nav__menu > *:nth-child(5)::after{animation-delay:.2s}
+.nav .nav__menu > *:nth-child(6)::after{animation-delay:.25s}
+.nav .nav__menu > *:nth-child(7)::after{animation-delay:.3s}
+/* ナビは右付け */
+.nav{justify-content:flex-end}
+.nav .nav__logo{position:absolute;left:6px;top:6px}
+/* 幕が覆っている最中に中身を入れ替える（displayは切らずopacityで） */
+.nav .nav__menu{transition:opacity .01s .42s,visibility 0s .42s}
+.nav.is-compact .nav__menu{display:grid;opacity:0;visibility:hidden}
+.nav .burger{position:absolute;right:0;top:0;z-index:6;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;
+  width:80px;height:80px;background:var(--red);border:0;margin:0;padding:0;overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .01s .42s,visibility 0s .42s}
+.nav.is-compact .burger{display:flex;opacity:1;visibility:visible}
+.nav .burger span{width:34px;height:2px;background:#fff;border-radius:0;
+  transform:translateX(70px);opacity:0;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.nav.is-compact .burger span{transform:none;opacity:1;transition-delay:.46s}
+.nav.is-compact .burger span:nth-child(2){transition-delay:.52s}
+.nav.is-compact .burger span:nth-child(3){transition-delay:.58s}
+@media(max-width:900px){
+  .nav .burger{opacity:1;visibility:visible}
+  .nav .burger span{transform:none;opacity:1}
+}
 </style>
 </head>
 <body>
@@ -1088,9 +1169,9 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
         </div>
       </div></div>
     </div>
+    <a class="nav__cta" href="contact.html">お問い合わせ</a>
   </nav>
   <button class="burger" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
-  <a class="nav__cta" href="contact.html">お問い合わせ</a>
 </header>
 
 <!-- タブレット/SP：格納メニュー -->
@@ -1430,12 +1511,17 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
     nav.classList.toggle('is-solid', y > fvH);
     /* ロゴ：製品エリア以下に入ったら赤に着替え */
     if(prodSec) nav.classList.toggle('is-logo-red', prodSec.getBoundingClientRect().top <= 70);
-    if(document.body.classList.contains('menu-open') || y <= 120){
-      nav.classList.remove('is-hidden');
-    }else if(y > lastY + 4){
-      nav.classList.add('is-hidden');
-    }else if(y < lastY - 4){
-      nav.classList.remove('is-hidden');
+    var wantCompact = nav.classList.contains('is-compact');
+    if(document.body.classList.contains('menu-open') || y <= 120){ wantCompact = false; }
+    else if(y > lastY + 4){ wantCompact = true; }
+    else if(y < lastY - 4){ wantCompact = false; }
+    if(wantCompact !== nav.classList.contains('is-compact')){
+      nav.classList.toggle('is-compact', wantCompact);
+      if(!wantCompact){            /* 上スクロールで戻す時は幕を逆再生 */
+        nav.classList.add('rewind');
+        clearTimeout(nav._rw);
+        nav._rw = setTimeout(function(){ nav.classList.remove('rewind'); }, 700);
+      }
     }
     lastY = y;
   }
@@ -1828,6 +1914,6 @@ body.menu-open .nav{background:#fff;border-bottom-color:var(--line)}
   u();
 })();
 </script>
-<script src="_simg.js?v=4"></script>
+<script src="_simg.js?v=5"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   var st=document.createElement('style');
   st.textContent =
    '.simg{overflow:hidden}'+
-   '.simg::after{content:"";position:absolute;inset:0;background:#ff0000;transform:scaleX(1);transform-origin:right center;transition:transform .5s cubic-bezier(.72,0,.18,1);z-index:2;pointer-events:none}'+
+   '.simg::after{content:"";position:absolute;inset:0;background:#cc0700;transform:scaleX(1);transform-origin:right center;transition:transform .5s cubic-bezier(.72,0,.18,1);z-index:2;pointer-events:none}'+
    '.simg.is-in::after{transform:scaleX(0)}'+
    '@media(prefers-reduced-motion:reduce){.simg::after{display:none}}';
   document.head.appendChild(st);
