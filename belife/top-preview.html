@@ -1463,8 +1463,8 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
     }, {rootMargin: '300px 0px'});
     for (var j=0;j<els.length;j++) io.observe(els[j]);
   }
-  if (document.readyState === 'complete') { boot(); }
-  else { window.addEventListener('load', boot); }
+  // ページのload完了は待たない（外部スクリプトが1つでも詰まるとloadが来ないため）
+  boot();
 })();
 </script>
 </body>
