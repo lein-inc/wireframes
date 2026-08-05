@@ -722,7 +722,7 @@ gtag("config", "G-WGJK2G61RE");
                             </div>
                             <div class="col-12">
                                 <div class="bf-add__frame">
-                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" data-src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
+                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
                                 </div>
                             </div>
                         </div><!-- .row -->
@@ -1107,7 +1107,7 @@ gtag("config", "G-WGJK2G61RE");
                             </div>
                             <div class="col-12">
                                 <div class="bf-add__frame bf-add__review">
-                                    <iframe data-src="https://embed.i-user-voice.com/34a6fc4fd03ad4c004aa" title="口コミ" width="100%" height="600" frameborder="0"></iframe>
+                                    <iframe src="https://embed.i-user-voice.com/34a6fc4fd03ad4c004aa" title="口コミ" width="100%" height="600" frameborder="0"></iframe>
                                 </div>
                             </div>
                         </div><!-- .row -->
@@ -1442,31 +1442,6 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
     }
 </style>
 
-<!-- 埋め込み(iframe)は「画面内に入ってから」srcを与える。ページ読み込み中に初期化させると埋め込み側が失敗して真っ白になるため -->
-<script>
-(function(){
-  var els = [].slice.call(document.querySelectorAll('iframe[data-src]'));
-  function inView(el){
-    var r = el.getBoundingClientRect();
-    return r.top < (window.innerHeight + 300) && r.bottom > -300;
-  }
-  function check(){
-    for (var i=els.length-1; i>=0; i--){
-      var f = els[i];
-      if (inView(f)) {
-        els.splice(i,1);
-        (function(el){ setTimeout(function(){ el.src = el.getAttribute('data-src'); }, 250); })(f);
-      }
-    }
-    if (!els.length) {
-      window.removeEventListener('scroll', check);
-      window.removeEventListener('resize', check);
-    }
-  }
-  window.addEventListener('scroll', check, {passive:true});
-  window.addEventListener('resize', check);
-  setTimeout(check, 1500);
-})();
-</script>
+
 </body>
 </html>
