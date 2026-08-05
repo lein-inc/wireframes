@@ -1442,18 +1442,30 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
     }
 </style>
 
-<!-- 埋め込み(iframe)は少し遅らせてsrcを与える。テーマの重いJSと同時に初期化させると埋め込み側が失敗して真っ白になるため -->
+<!-- 埋め込み(iframe)は「画面内に入ってから」srcを与える。ページ読み込み中に初期化させると埋め込み側が失敗して真っ白になるため -->
 <script>
 (function(){
-  function boot(){
-    var els = document.querySelectorAll('iframe[data-src]');
-    for (var i=0;i<els.length;i++){
+  var els = [].slice.call(document.querySelectorAll('iframe[data-src]'));
+  function inView(el){
+    var r = el.getBoundingClientRect();
+    return r.top < (window.innerHeight + 300) && r.bottom > -300;
+  }
+  function check(){
+    for (var i=els.length-1; i>=0; i--){
       var f = els[i];
-      if (f.getAttribute('src')) continue;
-      f.src = f.getAttribute('data-src');
+      if (inView(f)) {
+        els.splice(i,1);
+        (function(el){ setTimeout(function(){ el.src = el.getAttribute('data-src'); }, 250); })(f);
+      }
+    }
+    if (!els.length) {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
     }
   }
-  setTimeout(boot, 1200);
+  window.addEventListener('scroll', check, {passive:true});
+  window.addEventListener('resize', check);
+  setTimeout(check, 1500);
 })();
 </script>
 </body>
