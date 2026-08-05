@@ -1442,29 +1442,18 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
     }
 </style>
 
-<!-- 埋め込みは「表示領域に入ってから」srcを与える（先に読み込むと埋め込み側の初期化が失敗して真っ白になることがあるため） -->
+<!-- 埋め込み(iframe)は少し遅らせてsrcを与える。テーマの重いJSと同時に初期化させると埋め込み側が失敗して真っ白になるため -->
 <script>
 (function(){
-  function load(f){
-    if (f.dataset.bfLoaded) return;
-    f.dataset.bfLoaded = '1';
-    f.src = f.getAttribute('data-src');
-  }
   function boot(){
     var els = document.querySelectorAll('iframe[data-src]');
-    if (!('IntersectionObserver' in window)) {
-      for (var i=0;i<els.length;i++) load(els[i]);
-      return;
+    for (var i=0;i<els.length;i++){
+      var f = els[i];
+      if (f.getAttribute('src')) continue;
+      f.src = f.getAttribute('data-src');
     }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting) { load(en.target); io.unobserve(en.target); }
-      });
-    }, {rootMargin: '300px 0px'});
-    for (var j=0;j<els.length;j++) io.observe(els[j]);
   }
-  // ページのload完了は待たない（外部スクリプトが1つでも詰まるとloadが来ないため）
-  boot();
+  setTimeout(boot, 1200);
 })();
 </script>
 </body>
