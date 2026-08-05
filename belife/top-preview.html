@@ -722,7 +722,7 @@ gtag("config", "G-WGJK2G61RE");
                             </div>
                             <div class="col-12">
                                 <div class="bf-add__frame">
-                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
+                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" data-src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
                                 </div>
                             </div>
                         </div><!-- .row -->
@@ -1441,5 +1441,19 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
         bottom:50px!important;
     }
 </style>
+
+<!-- 埋め込みはページ読み込み完了後にsrcを与える（テーマのJSと同時実行すると埋め込み側がハイドレーション失敗して真っ白になるため） -->
+<script>
+(function(){
+  function boot(){
+    var els = document.querySelectorAll('iframe[data-src]');
+    for (var i=0;i<els.length;i++){
+      (function(f){ setTimeout(function(){ f.src = f.getAttribute('data-src'); }, 300); })(els[i]);
+    }
+  }
+  if (document.readyState === 'complete') { boot(); }
+  else { window.addEventListener('load', boot); }
+})();
+</script>
 </body>
 </html>
