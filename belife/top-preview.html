@@ -1442,14 +1442,26 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/belief-inc.com\/wp-json\/contact-f
     }
 </style>
 
-<!-- 埋め込みはページ読み込み完了後にsrcを与える（テーマのJSと同時実行すると埋め込み側がハイドレーション失敗して真っ白になるため） -->
+<!-- 埋め込みは「表示領域に入ってから」srcを与える（先に読み込むと埋め込み側の初期化が失敗して真っ白になることがあるため） -->
 <script>
 (function(){
+  function load(f){
+    if (f.dataset.bfLoaded) return;
+    f.dataset.bfLoaded = '1';
+    f.src = f.getAttribute('data-src');
+  }
   function boot(){
     var els = document.querySelectorAll('iframe[data-src]');
-    for (var i=0;i<els.length;i++){
-      (function(f){ setTimeout(function(){ f.src = f.getAttribute('data-src'); }, 300); })(els[i]);
+    if (!('IntersectionObserver' in window)) {
+      for (var i=0;i<els.length;i++) load(els[i]);
+      return;
     }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { load(en.target); io.unobserve(en.target); }
+      });
+    }, {rootMargin: '300px 0px'});
+    for (var j=0;j<els.length;j++) io.observe(els[j]);
   }
   if (document.readyState === 'complete') { boot(); }
   else { window.addEventListener('load', boot); }
