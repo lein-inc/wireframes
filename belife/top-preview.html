@@ -128,18 +128,26 @@ gtag("config", "G-WGJK2G61RE");
 <!-- End Google Analytics snippet added by Site Kit -->
 <link rel="https://api.w.org/" href="https://belief-inc.com/wp-json/" /><meta name="generator" content="Site Kit by Google 1.99.0" /><!-- Tracking code easily added by NK Google Analytics -->
 
-<!-- ==== 追加ブロック用CSS（プレビュー） ==== -->
+<!-- ==== 追加ブロック用CSS ==== -->
 <style>
-.bf-add .sec-inner{padding:120px 0}
-.bf-add--map{background-color:#f2f2f2}
-.bf-add__frame{width:100%;overflow:hidden;border-radius:8px}
+.bf-add .sec-inner{padding:100px 0}
+.bf-add__ttl{color:#2a4066;font-size:calc(26px + 8 * (100vw - 320px)/ 1600);font-weight:700;letter-spacing:.08em;text-align:center;margin:0 0 14px}
+.bf-add__lead{color:#3e3e3e;font-size:calc(13px + 2 * (100vw - 320px)/ 1600);text-align:center;margin:0 0 34px;line-height:1.9}
+.bf-add__frame{width:100%;overflow:hidden}
 .bf-add__frame iframe{display:block;width:100%;border:0;margin:0 auto}
-#embed_map{height:465px}
+/* 売買成約実績（マップ＋成約実績テーブル） */
+.bf-add--map{background-color:#fff}
+#embed_map{height:960px}
+/* REVIEW（口コミ） */
+.bf-add--review{background-color:#fdf7e6}
+.bf-add--review .ttl-unit{margin-bottom:0}
+.bf-add__rule{width:100%;height:2px;background-color:#e6c35c;margin:26px 0 34px}
 .bf-add__review iframe{height:600px}
 @media screen and (max-width:767px){
-  .bf-add .sec-inner{padding:70px 0 80px}
-  #embed_map{height:640px}
+  .bf-add .sec-inner{padding:60px 0 70px}
+  #embed_map{height:1180px}
   .bf-add__review iframe{height:640px}
+  .bf-add__lead{margin-bottom:24px}
 }
 </style>
 </head>
@@ -700,6 +708,28 @@ gtag("config", "G-WGJK2G61RE");
                 </div>
             </section>
 
+
+            <!-- ======= 売買成約実績（追加） ======= -->
+            <section class="bf-add bf-add--map">
+                <div class="sec-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="ttl-unit">
+                                    <h2 class="bf-add__ttl">売買成約実績</h2>
+                                    <p class="bf-add__lead">少しでも高い値段での売却をお手伝いします。まずはご相談ください。</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="bf-add__frame">
+                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" loading="lazy" src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
+                                </div>
+                            </div>
+                        </div><!-- .row -->
+                    </div><!-- .container-fluid -->
+                </div>
+            </section>
+
             <!-- ======= info /  ======= -->
             <section class="info">
                 <div class="sec-inner">
@@ -1063,28 +1093,7 @@ gtag("config", "G-WGJK2G61RE");
             </section>
 
 
-            <!-- ======= 販売実績マップ（追加） ======= -->
-            <section class="bf-add bf-add--map">
-                <div class="sec-inner">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="ttl-unit">
-                                    <h2 class="ttl-en">ACHIEVEMENT</h2>
-                                    <p class="ttl-ja">販売実績マップ</p>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="bf-add__frame">
-                                    <iframe id="embed_map" title="販売実績マップ" allowfullscreen frameborder="0" loading="lazy" src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
-                                </div>
-                            </div>
-                        </div><!-- .row -->
-                    </div><!-- .container-fluid -->
-                </div>
-            </section>
-
-            <!-- ======= 口コミ（追加） ======= -->
+            <!-- ======= REVIEW 口コミ（追加） ======= -->
             <section class="bf-add bf-add--review">
                 <div class="sec-inner">
                     <div class="container-fluid">
@@ -1092,8 +1101,9 @@ gtag("config", "G-WGJK2G61RE");
                             <div class="col-12">
                                 <div class="ttl-unit">
                                     <h2 class="ttl-en">REVIEW</h2>
-                                    <p class="ttl-ja">口コミ</p>
+                                    <p class="ttl-ja">お客様の声</p>
                                 </div>
+                                <div class="bf-add__rule"></div>
                             </div>
                             <div class="col-12">
                                 <div class="bf-add__frame bf-add__review">
