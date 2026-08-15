@@ -3268,17 +3268,17 @@ body.is-logo-mini .site-logo{
 </script>
 
 <style id="hist-veil">
-/* ══ 採用セクションのせり上がりに合わせて、下に残るヒストリーへ薄い黒幕をかける ══
+/* ══ 採用セクションのせり上がりに合わせて、下に残るヒストリーへ薄い赤幕をかける ══
    .recjoin は margin-top:-100vh で、sticky で固定中の .hist__stage の上にせり上がる。
    その1画面ぶんの重なりの進行度を JS が --veil（0→1）で流し込む。
-   濃さを変えたいときは --veil-max だけ触ればよい。SP（900px以下）は重なり自体が
+   色は --veil-color、濃さは --veil-max だけ触ればよい。SP（900px以下）は重なり自体が
    無効なので幕も出さない。 */
 /* ⚠️幕は .hist__stage ではなく .gsec.hist 側に置くこと。
    .hist__stage は overflow:hidden なので、そこに置くと .gsec の左右余白
    （padding:var(--frame)）が幕から取り残されて明るいままになる。 */
-.gsec.hist{--veil-max:.45}
+.gsec.hist{--veil-color:var(--red);--veil-max:.62}
 .gsec.hist::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:#000;opacity:calc(var(--veil,0) * var(--veil-max));
+  background:var(--veil-color);opacity:calc(var(--veil,0) * var(--veil-max));
   transition:opacity .3s ease-out}
 @media(max-width:900px){
   .gsec.hist::after{content:none}
