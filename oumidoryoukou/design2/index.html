@@ -3429,9 +3429,6 @@ body.is-logo-mini .site-logo{
    ⚠️.hist__stage の overflow:hidden が効いているので、バンドを画面幅より
    広く（左右に -10vw）取ると両端で切れて「突っ切っている」ように見える。 */
 @media(min-width:901px){
-  /* ヒストリーは左右の余白（.gsec の padding:var(--frame)）をなくして全面ベタ */
-  .gsec.hist{padding-left:0;padding-right:0}
-
   /* 見出しは上寄せの1カラムに。右カラムの写真ストリームは廃止したので2カラムは不要。
      ⚠️.hist__stage に position:relative を書いてはいけない（sticky を打ち消して
      固定が効かなくなる）。sticky 自体が絶対配置の基準になるので指定は不要。 */
@@ -3446,8 +3443,10 @@ body.is-logo-mini .site-logo{
     opacity:0;transition:opacity .6s ease}
   .gsec.hist.is-band .hist__band{opacity:1}
 
+  /* 帯だけは左右の余白ナシ＝写真が端まで詰まって画面を突っ切る。
+     見出し・コピー側は他セクションと同じ .gsec の padding をそのまま使う。 */
   .hist__rail{display:flex;align-items:flex-end;gap:clamp(18px,2vw,38px);
-    width:max-content;padding:0 6vw;will-change:transform;
+    width:max-content;padding:0;will-change:transform;
     transform:translate3d(var(--hx,0px),0,0)}
 
   .hb{flex:0 0 auto;width:clamp(210px,21vw,360px);margin:0}
