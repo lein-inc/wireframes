@@ -3305,5 +3305,66 @@ body.is-logo-mini .site-logo{
 })();
 </script>
 
+<style id="tw-css">
+/* ══ 各セクション共通の大見出し（.disp-jp）を1文字ずつタイプライター表示 ══
+   対象＝製品・技術／納入実績／126年ヒストリー／採用情報 の4本。
+   ⚠️文字は最初から全部置いたまま opacity だけで出す。差し込み方式にすると
+   .disp-jp の width:fit-content が伸び縮みして赤い下線がガタつく。 */
+.js-tw .twch{opacity:0}
+.js-tw .twch.is-on{opacity:1}
+@media(prefers-reduced-motion:reduce){
+  .js-tw .twch{opacity:1}
+}
+</style>
+<script>
+/* .disp-jp を1文字ずつ出す。画面に入ったら1回だけ、一定間隔で淡々と送る */
+(function(){
+  var SPEED = 55;                                   /* 1文字あたりのms。速さはここだけ */
+  var els = [].slice.call(document.querySelectorAll('.disp-jp'));
+  if (!els.length) return;
+
+  els.forEach(function(el){
+    var chars = [];
+    (function walk(node){
+      [].slice.call(node.childNodes).forEach(function(n){
+        if (n.nodeType === 3){                      /* テキストノード → 1文字ずつ span 化 */
+          if (!n.nodeValue.trim()) return;          /* 空白だけのノードは触らない */
+          var t = n.nodeValue, frag = document.createDocumentFragment();
+          for (var i = 0; i < t.length; i++){
+            var s = document.createElement('span');
+            s.className = 'twch';
+            s.textContent = t[i];
+            frag.appendChild(s);
+            chars.push(s);
+          }
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1){               /* <br> などの要素はそのまま残す */
+          walk(n);
+        }
+      });
+    })(el);
+    if (!chars.length) return;
+    el.classList.add('js-tw');
+    el._twChars = chars;
+  });
+
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      var chars = e.target._twChars, i = 0;
+      (function tick(){
+        if (i >= chars.length) return;
+        chars[i++].classList.add('is-on');
+        setTimeout(tick, SPEED);
+      })();
+    });
+  }, {threshold:.35});
+  els.forEach(function(el){ if (el._twChars) io.observe(el); });
+})();
+</script>
+
 </body>
 </html>
