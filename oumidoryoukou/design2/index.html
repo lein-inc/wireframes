@@ -3597,7 +3597,8 @@ body.is-logo-mini .site-logo{
   .fv .fv__head{justify-content:flex-start;
     padding:var(--fvtop) var(--fvpad) var(--fvbtm) var(--fvpad)}
   .fv .fv__head-title{line-height:1.02}
-  .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit;white-space:nowrap}
+  .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit;white-space:nowrap;
+    letter-spacing:-.09em}   /* 元は -.05em。ちょい詰め */
 
   /* ── FVの採用バナー：ナビの下に小さく置く ── */
   .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
@@ -3614,15 +3615,15 @@ body.is-logo-mini .site-logo{
   if (!t) return;
   var sp = matchMedia('(max-width:900px)');
   var last = 0;
-  var TOP = .09, BTM = .12;      /* 上下に空ける割合（ロゴ / SCROLL DOWN のぶん）
-                                    ⚠️BTM は SCROLL DOWN の居場所。詰めすぎると
-                                    赤帯基準で置かれる SCROLL DOWN が画面外へ出る */
+  var TOP = .09;                 /* 上に空ける割合（ロゴのぶん） */
+  var FILL = .70;                /* コピーが占める縦幅の割合（画面比）。
+                                    残り（1 - TOP - FILL）が SCROLL DOWN の居場所になる */
   function fit(){
     if (sp.matches){ root.style.removeProperty('--fvh'); return; }
     var vh = window.innerHeight;
     root.style.setProperty('--fvtop', Math.round(vh * TOP) + 'px');
-    root.style.setProperty('--fvbtm', Math.round(vh * BTM) + 'px');
-    var targetH = vh * (1 - TOP - BTM);
+    root.style.setProperty('--fvbtm', Math.round(vh * (1 - TOP - FILL)) + 'px');
+    var targetH = vh * FILL;
     var targetW = document.documentElement.clientWidth * .96;   /* 横は画面内に収める上限 */
     var size = 100;
     /* ⚠️高さだけで合わせると、背の高い画面で行が画面幅を超える。
