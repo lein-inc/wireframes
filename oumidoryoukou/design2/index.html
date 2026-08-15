@@ -1591,11 +1591,9 @@ html,body{overflow-x:clip;max-width:100%}
     <i class="fv__frame" aria-hidden="true"></i>
   </div>
   <div class="fv__head">
-    <h1 class="fv__head-title">
-      <span class="ln1"><b class="lg">いきる</b><b class="sm">を</b></span>
-      <span class="ln2"><b class="lg">はかり</b><b class="sm">、</b></span>
-      <span class="ln3"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span>
-    </h1>
+    <!-- ⚠️1行組みなので span 間に改行・字下げを入れないこと。
+         インライン要素の間の空白が半角スペースとして描画され、語間が空く。 -->
+    <h1 class="fv__head-title"><span class="ln1"><b class="lg">いきる</b><b class="sm">を</b></span><span class="ln2"><b class="lg">はかり</b><b class="sm">、</b></span><span class="ln3"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span></h1>
   </div>
   <!-- FVの採用バナー（.fv__cell--recruit）は削除。CSSは残してあるので、
        戻す場合はこの位置にマークアップを戻すだけでよい。 -->
@@ -3564,9 +3562,14 @@ body.is-logo-mini .site-logo{
   /* ⚠️幅は max-content にすること。width:100% だと scrollWidth がコンテナ幅に
      丸められ、「文字が画面より狭い」ときにJSが拡大方向へ効かなくなる。 */
   .fv .fv__head-title{display:block;width:max-content;white-space:nowrap;
-    transform:none;letter-spacing:0;line-height:.86;
-    font-size:var(--fvfit,7vw)}
-  .fv .fv__head-title > span{display:inline;transform:none;letter-spacing:-.012em;
+    /* 他の明朝見出しと同じ縦長（scaleX .8）＋文字詰め。
+       "palt" は和文の約物（、。「」）を字幅ぶん詰めるためのフォント機能。
+       横に潰すぶん、フィットJSが自動で文字を大きくして画面幅を埋める。 */
+    transform:scaleX(.8);transform-origin:left center;
+    letter-spacing:-.06em;
+    font-feature-settings:"palt" 1;font-kerning:normal;
+    line-height:.86;font-size:var(--fvfit,7vw)}
+  .fv .fv__head-title > span{display:inline;transform:none;letter-spacing:inherit;
     font-size:1em;line-height:inherit}
   .fv .fv__head-title .lg,.fv .fv__head-title .sm{font-size:1em}
   /* コピーが画面下を占有するので、SCROLL DOWN はその高さぶん上へ逃がす
