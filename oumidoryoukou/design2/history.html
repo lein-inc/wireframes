@@ -1749,7 +1749,13 @@ html,body{overflow-x:clip;max-width:100%}
 
 <section class="era" id="era">
   <div class="era__pin">
+    <!-- 動くのは写真だけ。元号・ピル・番号・定規はここで場所を固定し、中身だけ差し替える -->
     <div class="era__slides"></div>
+    <div class="era__fixed">
+      <h2 class="era__en"></h2>
+      <p class="era__pill"></p>
+      <p class="era__no"></p>
+    </div>
     <div class="era__ruler" aria-hidden="true">
       <div class="era__ticks"></div>
       <span class="era__cursor"></span>
@@ -3204,19 +3210,10 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   perspective:1500px;perspective-origin:50% 46%}
 .era__slides{position:absolute;inset:0;transform-style:preserve-3d}
 
-/* 位置・角度・不透明度は JS が毎フレーム入れる。
-   右から入って正面を通り、左へ回り込みながら抜けていく。
-   下の指定は JS が動かない時（reduced-motion 等）のフォールバック。 */
-.es{position:absolute;inset:0;opacity:0;visibility:hidden;
+/* 写真だけを載せる面。位置・角度・不透明度は JS が毎フレーム入れる */
+.esp{position:absolute;inset:0;opacity:0;visibility:hidden;
   transform-origin:center center;backface-visibility:hidden;
   will-change:transform,opacity}
-.es.is-on{opacity:1;visibility:visible}
-
-/* 特大の英字。写真の下に潜り、左右の写真に食われる見え方 */
-.es__en{position:absolute;left:50%;top:14vh;transform:translateX(-50%);z-index:1;
-  margin:0;text-align:center;white-space:nowrap;
-  font-family:var(--en);font-weight:800;line-height:.9;letter-spacing:-.03em;
-  font-size:clamp(3rem,10.5vw,9.5rem)}
 
 /* アーチ状にクリップした写真。左右とも画面の外へ食み出す */
 .es__ph{position:absolute;top:50%;z-index:2;
@@ -3227,16 +3224,26 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 .es__ph--r{right:-5vw}
 .es__ph i{display:block;width:100%;height:100%;background:#333 center/cover no-repeat}
 
-/* 元号ピル */
-.es__pill{position:absolute;left:50%;bottom:18vh;transform:translateX(-50%);z-index:3;
+/* ══ 固定テキスト層 ══
+   元号・ピル・番号は場所を動かさず、章が変わったときに中身だけ入れ替える。
+   写真と一緒に回してしまうと読みづらいので、あえて 3D の外に出している。 */
+.era__fixed{position:absolute;inset:0;z-index:5;pointer-events:none;
+  transition:opacity .18s ease}
+.era__fixed.is-swap{opacity:0}
+
+.era__en{position:absolute;left:50%;top:13vh;transform:translateX(-50%);
+  margin:0;text-align:center;white-space:nowrap;
+  font-family:var(--mincho);font-weight:600;line-height:1.02;letter-spacing:.06em;
+  font-size:clamp(2.2rem,6.4vw,5.6rem)}
+
+.era__pill{position:absolute;left:50%;bottom:18vh;transform:translateX(-50%);
   margin:0;background:#fff;color:#141414;border-radius:999px;
   padding:11px 30px;white-space:nowrap;
   font-family:var(--jp);font-weight:700;font-size:13.5px;letter-spacing:.1em}
 
-/* 通し番号＋そこから定規へ落ちる縦線 */
-.es__no{position:absolute;left:50%;bottom:11vh;transform:translateX(-50%);z-index:3;
+.era__no{position:absolute;left:50%;bottom:11vh;transform:translateX(-50%);
   margin:0;font-family:var(--en);font-weight:600;font-size:19px;letter-spacing:.14em}
-.es__no::after{content:"";position:absolute;left:50%;top:calc(100% + 8px);
+.era__no::after{content:"";position:absolute;left:50%;top:calc(100% + 8px);
   width:1px;height:5.4vh;background:rgba(255,255,255,.45)}
 
 /* 目盛り定規 */
@@ -3253,15 +3260,16 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 @media(max-width:900px){
   .era__pin{height:100svh}
-  .es__en{top:11vh;font-size:clamp(2.2rem,13vw,4.4rem)}
+  .era__en{top:10vh;font-size:clamp(1.9rem,9vw,3.4rem)}
   .es__ph{width:74vw;transform:translateY(-42%)}
   .es__ph--l{left:-16vw;top:38%}
   .es__ph--r{right:-16vw;top:63%}
-  .es__pill{bottom:16vh;padding:9px 22px;font-size:12px}
-  .es__no{bottom:10vh;font-size:16px}
+  .era__pill{bottom:16vh;padding:9px 22px;font-size:12px}
+  .era__no{bottom:10vh;font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){
-  .es{transition:none}
+  .esp{transition:none}
+  .era__fixed{transition:none}
   .era__cursor{transition:none}
 }
 
@@ -3344,7 +3352,8 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   if (!scene || !DATA.length) return;
 
   /* ── 元号ごとに章へまとめる（DATAの3列目が元号） ── */
-  var EN = {'明治・大正':'MEIJI<br>TAISHO', '昭和':'SHOWA', '平成':'HEISEI', '令和':'REIWA'};
+  /* 大見出しは漢字。元号名をそのまま出す */
+  var JP = {'明治・大正':'明治<br>大正', '昭和':'昭和', '平成':'平成', '令和':'令和'};
   var order = [], group = {};
   DATA.forEach(function(d){
     if (!group[d[2]]){ group[d[2]] = []; order.push(d[2]); }
@@ -3363,16 +3372,18 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     if (!pb) pb = rows[rows.length - 1][5];
     var no = ('0' + (i + 1)).slice(-2);
     slides.insertAdjacentHTML('beforeend',
-      '<article class="es' + (i === 0 ? ' is-on' : '') + '">' +
-        '<h2 class="es__en">' + (EN[name] || name) + '</h2>' +
+      '<article class="esp">' +
         '<div class="es__ph es__ph--l"><i class="es__img" style="background-image:url(' + pa + ')"></i></div>' +
         '<div class="es__ph es__ph--r"><i class="es__img" style="background-image:url(' + pb + ')"></i></div>' +
-        '<p class="es__pill">' + name + '　' + y0 + '–' + y1 + '</p>' +
-        '<p class="es__no">' + no + '</p>' +
       '</article>');
-    return {name:name, y0:+y0, y1:+y1};
+    return {name:name, y0:+y0, y1:+y1, jp:(JP[name] || name), no:no};
   });
   var els = [].slice.call(slides.children);
+  var fxEn   = scene.querySelector('.era__en');
+  var fxPill = scene.querySelector('.era__pill');
+  var fxNo   = scene.querySelector('.era__no');
+  var fixed  = scene.querySelector('.era__fixed');
+  var shown  = -1;
   var N = els.length;
 
   /* ── 定規：1900→2026 を等間隔の目盛りで。10年ごとを長い目盛りに ── */
@@ -3399,35 +3410,55 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   var vh = 0;
   function layout(){
     vh = window.innerHeight;
-    scene.style.height = Math.round(vh * (1 + STEP * N)) + 'px';
+    scene.style.height = Math.round(vh * (1 + STEP * (N - 1))) + 'px';
     upd();
   }
   function upd(){
     var top = scene.getBoundingClientRect().top;
-    var span = vh * STEP * N;
+    var span = vh * STEP * (N - 1);
     var p = span > 0 ? (-top) / span : 0;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
-    var i = Math.min(N - 1, Math.floor(p * N));
+    var i = Math.max(0, Math.min(N - 1, Math.round(p * (N - 1))));
 
-    /* ── 円柱に沿って右→左へ流す ──
+    /* ── 円柱に沿って右→左へ流す（動かすのは写真だけ）──
        off = 0 で正面、マイナスなら右で待機、プラスなら左へ回り込んで抜けた状態。
-       横移動・奥行き・Y軸回転を同時にかけることで、平面の切替ではなく
-       円筒の側面を回ってくるように見える。 */
-    var t = p * N;
+       ⚠️横移動が小さいと、隣り合う章の写真が画面中央で重なって二重に見える。
+       1画面ぶん（100%）動かし、かつ FADE より手前で透明にし切ること。 */
+    var FADE = .85;                       /* この距離で完全に透明。小さいほど重なりが減る */
+    /* ⚠️t は 0→N-1 で割ること。p*N にすると最後の章が中央を通り過ぎてから
+       セクションが終わるので、末尾で写真が消えた真っ黒な画面になる。 */
+    var t = p * (N - 1);
     for (var k = 0; k < N; k++){
       var off = t - k, a = Math.abs(off), el = els[k];
-      if (a > 1.25){ el.style.visibility = 'hidden'; el.style.opacity = '0'; continue; }
+      if (a > 1.05){ el.style.visibility = 'hidden'; el.style.opacity = '0'; continue; }
+      var op = 1 - a / FADE;
+      if (op <= 0){ el.style.visibility = 'hidden'; el.style.opacity = '0'; continue; }
       el.style.visibility = 'visible';
-      el.style.opacity = (1 - Math.min(a, 1)).toFixed(3);
+      el.style.opacity = op.toFixed(3);
       el.style.transform =
-        'translate3d(' + (-off * 62).toFixed(2) + '%,0,' + (-a * 340).toFixed(0) + 'px)' +
-        ' rotateY(' + (off * -38).toFixed(1) + 'deg)';
+        'translate3d(' + (-off * 100).toFixed(2) + '%,0,' + (-a * 380).toFixed(0) + 'px)' +
+        ' rotateY(' + (off * -42).toFixed(1) + 'deg)';
       el.style.zIndex = String(100 - Math.round(a * 50));
     }
-    /* カーソルは章の年代範囲を連続で辿る */
+
+    /* ── 固定テキスト：位置は動かさず、中身だけ差し替える ── */
+    if (i !== shown){
+      shown = i;
+      var ch = chapters[i];
+      fixed.classList.add('is-swap');
+      setTimeout(function(){
+        fxEn.innerHTML = ch.jp;
+        fxPill.textContent = ch.name + '　' + ch.y0 + '–' + ch.y1;
+        fxNo.textContent = ch.no;
+        fixed.classList.remove('is-swap');
+      }, 180);
+    }
+    /* カーソルは、いま正面にある章の年代範囲を連続で辿る
+       （章の中央でその章の真ん中の年、前後の境目で端の年になる） */
     var c = chapters[i];
-    var inner = p * N - i;                        /* 章内の進行度 0→1 */
-    var year = c.y0 + (c.y1 - c.y0) * inner;
+    var f = p * (N - 1) - i + .5;                 /* 章内の進行度 0→1 */
+    f = f < 0 ? 0 : f > 1 ? 1 : f;
+    var year = c.y0 + (c.y1 - c.y0) * f;
     var ratio = (year - Y0) / (Y1 - Y0);
     ratio = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio;
     cursor.style.setProperty('--cx', (ratio * ticks.offsetWidth).toFixed(1) + 'px');
