@@ -3450,9 +3450,9 @@ body.is-logo-mini .site-logo{
 
   /* 帯だけは左右の余白ナシ＝写真が端まで詰まって画面を突っ切る。
      見出し・コピー側は他セクションと同じ .gsec の padding をそのまま使う。 */
-  /* 縮小した写真どうしが離れすぎないよう、素の間隔は詰めておく。
-     見た目の間隔は JS の縮尺（中央=大／端=小）が作る。 */
-  .hist__rail{display:flex;align-items:flex-end;gap:clamp(8px,1vw,20px);
+  /* 見た目の間隔は JS の縮尺（中央=大／端=小）が作る。素の間隔は、
+     中央で拡大したときに隣のキャプションを潰さない程度に確保しておく。 */
+  .hist__rail{display:flex;align-items:flex-end;gap:clamp(16px,2.2vw,44px);
     width:max-content;padding:0;will-change:transform;
     transform:translate3d(var(--hx,0px),0,0)}
 
@@ -3503,8 +3503,9 @@ body.is-logo-mini .site-logo{
   if (!hist || !rail) return;
 
   var SWEEP = 1.5;          /* 流し切るのに使うスクロール量（画面高の倍数）＝固定される長さ */
-  var SCALE_MIN = .66;      /* 画面端での縮小率。中央が 1.0 で端に行くほど小さくなる */
-  var FALLOFF   = 1.1;      /* 距離の頭打ち。大きくすると端がさらに小さくなる */
+  var SCALE_MAX = 1.24;     /* 画面中央での拡大率 */
+  var SCALE_MIN = .5;       /* 画面端での縮小率 */
+  var FALLOFF   = 1.15;     /* 距離の頭打ち。大きくすると画面外がさらに小さくなる */
   var stage = hist.querySelector('.hist__stage');
   var items = [].slice.call(rail.children);
   var sp = matchMedia('(max-width:900px)');
@@ -3514,7 +3515,7 @@ body.is-logo-mini .site-logo{
   function layout(){
     if (sp.matches || reduce){
       hist.style.height = ''; rail.style.setProperty('--hx','0px');
-      items.forEach(function(el){ el.style.transform = ''; });
+      items.forEach(function(el){ el.style.transform = ''; el.style.zIndex = ''; });
       return;
     }
     vh = window.innerHeight;
@@ -3542,7 +3543,10 @@ body.is-logo-mini .site-logo{
     for (var i = 0; i < items.length; i++){
       var d = Math.abs(bandL + hx + cent[i] - half) / half;
       if (d > FALLOFF) d = FALLOFF;
-      items[i].style.transform = 'scale(' + (1 - (1 - SCALE_MIN) * d).toFixed(3) + ')';
+      var s = SCALE_MAX - (SCALE_MAX - SCALE_MIN) * d;
+      items[i].style.transform = 'scale(' + s.toFixed(3) + ')';
+      /* 中央を拡大すると隣と重なるので、大きいものほど手前に重ねて「前に出た」見せ方にする */
+      items[i].style.zIndex = Math.round(s * 100);
     }
     hist.classList.toggle('is-band', top < vh * 0.85);
   }
