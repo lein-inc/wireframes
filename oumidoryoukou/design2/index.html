@@ -3551,15 +3551,15 @@ body.is-logo-mini .site-logo{
 </style>
 
 <style id="nav-tight">
-/* ══ PCグローバルナビ：1列・帯の上下アキなし・項目ごとに幅を詰めて左揃え ══
+/* ══ PCグローバルナビ：1列・帯の上下アキなし・項目ごとに幅を詰めて右寄せ ══
    従来は 2カラム固定幅（128〜176px）のグリッドで、全項目が同じ幅だった。
    これを max-content の1カラムに変え、各項目が自分の文字幅まで縮むようにする。
-   左端は揃い、右端は項目ごとにバラつく（＝詰まった見え方）。
+   右端が揃い、左端は項目ごとにバラつく（＝右寄せ）。
    ⚠️.nav__cta（お問い合わせ）に grid-column:2 が別途効いているので、
    1カラム化するときは 1 に戻さないと空の2列目ができる。 */
 @media(min-width:901px){
   .nav .nav__menu{grid-template-columns:max-content;
-    justify-items:start;width:auto;max-width:none}
+    justify-items:end;width:auto;max-width:none}
   .nav .nav__cta{grid-column:1}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに */
   .nav .nav__menu .nlink,.nav .nav__cta{
@@ -3579,7 +3579,7 @@ body.is-logo-mini .site-logo{
   .fv .fv__head{justify-content:flex-start;
     padding:var(--fvtop) var(--fvpad) var(--fvbtm) var(--fvpad)}
   .fv .fv__head-title{line-height:1.02}
-  .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit}
+  .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit;white-space:nowrap}
 
   /* ── FVの採用バナー：ナビの下に小さく置く ── */
   .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
@@ -3595,6 +3595,7 @@ body.is-logo-mini .site-logo{
   var root = document.documentElement;
   if (!t) return;
   var sp = matchMedia('(max-width:900px)');
+  var last = 0;
   var TOP = .09, BTM = .12;      /* 上下に空ける割合（ロゴ / SCROLL DOWN のぶん）
                                     ⚠️BTM は SCROLL DOWN の居場所。詰めすぎると
                                     赤帯基準で置かれる SCROLL DOWN が画面外へ出る */
@@ -3603,17 +3604,26 @@ body.is-logo-mini .site-logo{
     var vh = window.innerHeight;
     root.style.setProperty('--fvtop', Math.round(vh * TOP) + 'px');
     root.style.setProperty('--fvbtm', Math.round(vh * BTM) + 'px');
-    var target = vh * (1 - TOP - BTM);
+    var targetH = vh * (1 - TOP - BTM);
+    var targetW = document.documentElement.clientWidth * .96;   /* 横は画面内に収める上限 */
     var size = 100;
-    for (var i = 0; i < 2; i++){
+    /* ⚠️高さだけで合わせると、背の高い画面で行が画面幅を超える。
+       高さ基準と幅基準の両方を出して、小さいほうを採る。
+       高さは transform の影響を受けないので offsetHeight、
+       幅は scaleX(.8) が効くので getBoundingClientRect で測る。 */
+    for (var i = 0; i < 3; i++){
       root.style.setProperty('--fvh', size + 'px');
-      /* ⚠️高さは transform の影響を受けないので offsetHeight で測ってよい
-         （幅は scaleX(.8) が効くので getBoundingClientRect が必要だった） */
-      var h = t.offsetHeight;
-      if (!h) return;
-      size = size * (target / h);
+      var h = t.offsetHeight, w = t.getBoundingClientRect().width;
+      if (!h || !w) return;
+      size = size * Math.min(targetH / h, targetW / w);
     }
-    root.style.setProperty('--fvh', size.toFixed(2) + 'px');
+    var v = +size.toFixed(2);
+    root.style.setProperty('--fvh', v + 'px');
+    /* ⚠️SCROLL DOWN の位置はコピー下端から実測して置かれる別JSが決めている。
+       こちらがコピーを拡大したあとに再計算させないと、拡大前の位置のまま
+       コピーと重なる。サイズが実際に変わった時だけ resize を投げて促す
+       （変わらなければ投げないので無限ループにならない）。 */
+    if (Math.abs(v - last) > .5){ last = v; window.dispatchEvent(new Event('resize')); }
   }
   window.addEventListener('resize', fit);
   window.addEventListener('load', fit);
