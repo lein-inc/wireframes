@@ -1729,24 +1729,20 @@ html,body{overflow-x:clip;max-width:100%}
       <h2 class="disp-jp rv rv-d1">計量ひとすじ、<br>126年。</h2>
       <a class="hist__go rv rv-d2" href="history.html">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></a>
     </div>
-    <!-- 左右を突っ切る年表バンド。スクロール固定中に右→左へ流れる。
-         ⚠️旧 .hist__stream / .hist__track は撤去済み。これが無くなったことで
-         旧「写真スタック」JSは自動的に早期returnして無効になる（消していない）。 -->
-    <div class="hist__band" aria-hidden="true">
-      <span class="hist__edge hist__edge--l">SINCE 1900</span>
-      <span class="hist__edge hist__edge--r">126 YEARS</span>
-      <div class="hist__rail">
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1900_1.jpg)"></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1946.jpg)"></span><figcaption><b>1946</b><span>車両計量機</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1959.jpg)"></span><figcaption><b>1959</b><span>工場拡張</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1961_1.jpg)"></span><figcaption><b>1961</b><span>新社屋 地鎮祭</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1974.jpg)"></span><figcaption><b>1974</b><span>自動計量への挑戦</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1980.jpg)"></span><figcaption><b>1980</b><span>創立80周年</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1993.jpg)"></span><figcaption><b>1993</b><span>制御技術の内製化</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_1999.jpg)"></span><figcaption><b>1999</b><span>選果システム展開</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_2009.jpg)"></span><figcaption><b>2009</b><span>海外拠点の拡充</span></figcaption></figure>
-        <figure class="hb"><span class="hb__ph" style="background-image:url(h_2015.jpg)"></span><figcaption><b>2015</b><span>次世代ラインへ</span></figcaption></figure>
-      </div>
+    <!-- 年表を散りばめた縦長の面。特大/大/中/小/極小の5サイズ×各2点＝10点。
+         ⚠️旧 .hist__rail は廃止。あれが無くなったことで「固定して横に流す」JSは
+         早期returnして無効になる（スクリプトは消していない）。 -->
+    <div class="hist__scatter">
+      <figure class="hb hb--xl rv" style="--x:1%;--y:0%;--r:-1.6deg"><span class="hb__ph" style="background-image:url(h_1900_1.jpg)"></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
+      <figure class="hb hb--m rv" style="--x:62%;--y:6%;--r:2.2deg"><span class="hb__ph" style="background-image:url(h_1946.jpg)"></span><figcaption><b>1946</b><span>米軍用バススケール</span></figcaption></figure>
+      <figure class="hb hb--xs rv" style="--x:89%;--y:21%;--r:-3.4deg"><span class="hb__ph" style="background-image:url(h_1959.jpg)"></span><figcaption><b>1959</b><span>工場拡張</span></figcaption></figure>
+      <figure class="hb hb--l rv" style="--x:31%;--y:23%;--r:1.4deg"><span class="hb__ph" style="background-image:url(h_1961_1.jpg)"></span><figcaption><b>1961</b><span>草津工場 完成</span></figcaption></figure>
+      <figure class="hb hb--s rv" style="--x:7%;--y:39%;--r:-2.6deg"><span class="hb__ph" style="background-image:url(h_1974.jpg)"></span><figcaption><b>1974</b><span>海外輸出を開始</span></figcaption></figure>
+      <figure class="hb hb--xl rv" style="--x:50%;--y:41%;--r:1.1deg"><span class="hb__ph" style="background-image:url(h_1980.jpg)"></span><figcaption><b>1980</b><span>創立80周年</span></figcaption></figure>
+      <figure class="hb hb--m rv" style="--x:12%;--y:59%;--r:-1.9deg"><span class="hb__ph" style="background-image:url(h_1993.jpg)"></span><figcaption><b>1993</b><span>草津工場 改築</span></figcaption></figure>
+      <figure class="hb hb--xs rv" style="--x:43%;--y:65%;--r:3.1deg"><span class="hb__ph" style="background-image:url(h_1999.jpg)"></span><figcaption><b>1999</b><span>選果システム展開</span></figcaption></figure>
+      <figure class="hb hb--l rv" style="--x:58%;--y:71%;--r:-1.2deg"><span class="hb__ph" style="background-image:url(h_2009.jpg)"></span><figcaption><b>2009</b><span>旭日双光章 受章</span></figcaption></figure>
+      <figure class="hb hb--s rv" style="--x:20%;--y:86%;--r:2.4deg"><span class="hb__ph" style="background-image:url(h_2015.jpg)"></span><figcaption><b>2015</b><span>上海 無錫工場</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -3428,70 +3424,68 @@ body.is-logo-mini .site-logo{
 </style>
 
 <style id="hist-band">
-/* ══ 126年ヒストリー：ページの左右を突っ切る年表バンド ══
-   .hist__stage が sticky で画面に固定されている間、年表が右→左へ流れる。
-   流れ終わってから採用セクションがせり上がって覆う（従来どおり）。
-   ⚠️.hist__stage の overflow:hidden が効いているので、バンドを画面幅より
-   広く（左右に -10vw）取ると両端で切れて「突っ切っている」ように見える。 */
+/* ══ 126年ヒストリー：年表を散りばめた縦長の面 ══
+   スクロール固定はナシ。縦に長い面へ 特大/大/中/小/極小 の5サイズ×各2点＝10点を
+   絶対配置で散らす。位置と傾きは各要素の --x / --y / --r で持たせている。
+   面の下に1画面ぶんの余白を確保し、そこへ採用セクションがせり上がって覆う。 */
 @media(min-width:901px){
-  /* 見出しは上寄せの1カラムに。右カラムの写真ストリームは廃止したので2カラムは不要。
-     ⚠️.hist__stage に position:relative を書いてはいけない（sticky を打ち消して
-     固定が効かなくなる）。sticky 自体が絶対配置の基準になるので指定は不要。 */
-  .gsec.hist .hist__stage{grid-template-columns:1fr;align-items:stretch}
-  .gsec.hist .hist__left{padding-top:13vh;max-width:none;position:relative;z-index:3;
-    height:100%}
-  /* ボタンは帯とぶつかるのでステージ左下へ逃がす */
-  .gsec.hist .hist__left .hist__go{position:absolute;left:0;bottom:6vh;margin-top:0}
+  /* 固定をやめたので stage は素の1カラムに戻す */
+  .gsec.hist .hist__stage{position:static;display:block;height:auto;overflow:visible}
+  .gsec.hist .hist__left{padding-top:12vh;max-width:none;position:relative;z-index:3;height:auto}
+  .gsec.hist .hist__left .hist__go{position:static;margin-top:40px}
 
-  .hist__band{position:absolute;left:-10vw;right:-10vw;top:62%;z-index:2;
-    transform:translateY(-50%) rotate(-3.4deg);pointer-events:none;
-    opacity:0;transition:opacity .6s ease}
-  .gsec.hist.is-band .hist__band{opacity:1}
+  /* 散らす面。高さを稼ぐのが狙い。
+     ⚠️面の下の1画面ぶんは採用セクションの重なりしろ。ここを .hist__scatter の
+     margin-bottom で取ると、.gsec.hist に下パディングが無いためマージンが
+     親を突き抜けて（相殺されて）高さに入らない。必ず親の padding-bottom で取ること。 */
+  .hist__scatter{position:relative;width:100%;height:225vh;
+    margin-top:clamp(40px,6vh,90px);overflow:hidden}
+  .gsec.hist{padding-bottom:100vh}
 
-  /* 帯だけは左右の余白ナシ＝写真が端まで詰まって画面を突っ切る。
-     見出し・コピー側は他セクションと同じ .gsec の padding をそのまま使う。 */
-  /* 見た目の間隔は JS の縮尺（中央=大／端=小）が作る。素の間隔は、
-     中央で拡大したときに隣のキャプションを潰さない程度に確保しておく。 */
-  .hist__rail{display:flex;align-items:flex-end;gap:clamp(16px,2.2vw,44px);
-    width:max-content;padding:0;will-change:transform;
-    transform:translate3d(var(--hx,0px),0,0)}
+  .hb{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0}
+  .hb--xl{--w:clamp(300px,32vw,580px)}
+  .hb--l {--w:clamp(230px,24vw,430px)}
+  .hb--m {--w:clamp(160px,16.5vw,290px)}
+  .hb--s {--w:clamp(112px,10.5vw,185px)}
+  .hb--xs{--w:clamp(74px,6.8vw,118px)}
 
-  /* 縮尺は JS が中央からの距離で入れる。transform は配置に影響しないので
-     写真どうしの間隔は一定のまま、見た目だけ中央が大きくなる */
-  .hb{flex:0 0 auto;width:clamp(210px,21vw,360px);margin:0;
-    transform-origin:center center;will-change:transform}
-  .hb:nth-child(even){margin-bottom:clamp(26px,3.4vw,64px)}   /* 互い違いに段差 */
-  .hb__ph{display:block;width:100%;aspect-ratio:4/3;
-    background:#ddd center/cover no-repeat}
+  /* 傾きは写真側に持たせる。figure 側の transform は出現アニメ(.rv)が使うので空けておく */
+  .hb__ph{display:block;width:100%;aspect-ratio:4/3;background:#ddd center/cover no-repeat;
+    transform:rotate(var(--r,0deg))}
+
   .hb figcaption{display:flex;align-items:baseline;gap:.7em;margin-top:12px;
     font-family:var(--en);color:var(--ink)}
-  .hb figcaption b{font-size:clamp(15px,1.35vw,22px);font-weight:700;letter-spacing:.04em}
-  .hb figcaption span{font-family:var(--jp);font-size:clamp(10px,.82vw,12.5px);
-    letter-spacing:.06em;opacity:.62;white-space:nowrap}
-
-  /* 参照サイト同様、左右の端に縦組みのラベル */
-  .hist__edge{position:absolute;top:50%;font-family:var(--en);font-weight:600;
-    font-size:11px;letter-spacing:.26em;color:rgba(0,0,0,.5);
-    writing-mode:vertical-rl;transform:translateY(-50%);z-index:4}
-  .hist__edge--l{left:calc(10vw + 14px)}
-  .hist__edge--r{right:calc(10vw + 14px)}
+  .hb figcaption b{font-weight:700;letter-spacing:.04em;font-size:clamp(13px,1.15vw,19px)}
+  .hb figcaption span{font-family:var(--jp);letter-spacing:.06em;opacity:.62;white-space:nowrap;
+    font-size:clamp(9.5px,.78vw,12px)}
+  /* サイズ階級ごとに文字も連動させる */
+  .hb--xl figcaption b{font-size:clamp(19px,1.8vw,30px)}
+  .hb--xl figcaption span{font-size:clamp(11px,.95vw,14px)}
+  .hb--l  figcaption b{font-size:clamp(16px,1.5vw,24px)}
+  .hb--xs figcaption{margin-top:7px;gap:.5em}
+  .hb--xs figcaption b{font-size:clamp(11px,.85vw,13px)}
+  .hb--xs figcaption span{font-size:clamp(8.5px,.62vw,10px)}
+  .hb--s  figcaption{margin-top:9px}
 }
 
-/* SP：固定も横流れもせず、素直な横スクロールの年表にする */
+/* SP：散らさず、1列に積んで読ませる（サイズ差だけ残す） */
 @media(max-width:900px){
-  .hist__band{position:relative;margin-top:clamp(28px,7vw,44px);opacity:1}
-  .hist__rail{display:flex;gap:14px;width:max-content;transform:none!important;
-    padding:0 var(--frame)}
-  .hist__band{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .hb{flex:0 0 auto;width:64vw;margin:0}
-  .hb__ph{display:block;width:100%;aspect-ratio:4/3;background:#ddd center/cover no-repeat}
+  .hist__scatter{position:relative;display:flex;flex-direction:column;
+    gap:clamp(28px,7vw,44px);margin-top:clamp(28px,7vw,44px);padding:0 var(--frame)}
+  .hb{position:static;width:var(--w);max-width:100%;margin:0}
+  .hb--xl{--w:100%}
+  .hb--l {--w:86%;align-self:flex-end}
+  .hb--m {--w:70%}
+  .hb--s {--w:54%;align-self:flex-end}
+  .hb--xs{--w:42%}
+  .hb__ph{display:block;width:100%;aspect-ratio:4/3;background:#ddd center/cover no-repeat;
+    transform:rotate(var(--r,0deg))}
   .hb figcaption{display:flex;align-items:baseline;gap:.6em;margin-top:8px;font-family:var(--en)}
   .hb figcaption b{font-size:15px;font-weight:700}
   .hb figcaption span{font-family:var(--jp);font-size:11px;opacity:.62}
-  .hist__edge{display:none}
 }
 @media(prefers-reduced-motion:reduce){
-  .hist__rail{transform:none!important}
+  .hb__ph{transform:none}
 }
 </style>
 <script>
