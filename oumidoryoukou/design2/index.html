@@ -3564,8 +3564,14 @@ body.is-logo-mini .site-logo{
      つまりコレ自身がグリッド項目なので、放っておくと列幅いっぱいに伸びて
      一つだけ帯が長くなる。内容幅に固定すること。 */
   .nav .nav__cta{grid-column:1;justify-self:end;width:max-content}
-  /* SCROLL DOWN の赤帯は初期状態からコンパクトに */
-  .fv .fv__scroll{width:min(11vw,150px)}
+  /* ── SCROLL DOWN と赤帯 ──
+     赤帯は企業理念セクションの帯（.gsec.phil::before）がFV下端に覗いているもの。
+     初期幅を詰め、SCROLL DOWN は帯と同じ左端・同じ幅にして文字を中央に置く。
+     ⚠️帯は left:0 起点なので、cue に --fvpad の左オフセットが残っていると
+     その分だけ中心がずれる（以前は帯125px / 文字115pxでズレていた）。 */
+  :root{--fvband:min(13vw,190px)}
+  .gsec.phil::before{width:var(--fvband)}
+  .fv .fv__scroll{left:0;width:var(--fvband)}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに。
      ⚠️「お問い合わせ」(.nav__cta) だけ字間(.14em)とフォントサイズが他と違い、
      同じ6文字でも帯が一回り長くなる。字間・サイズもここで揃えること。 */
