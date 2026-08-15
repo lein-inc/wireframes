@@ -22,7 +22,8 @@
          hb__ph  = TOPヒストリーの年表バンド（左右に食み出す＋拡大縮小する）
          es__img = ヒストリー詳細の章スライダー（左右に食み出すアーチ写真） */
       if(el.classList.contains('phero__photo') || el.classList.contains('strip__bg') || el.classList.contains('kflow__img')
-         || el.classList.contains('hb__ph') || el.classList.contains('es__img')) return;
+         || el.classList.contains('hb__ph') || el.classList.contains('hb__img')
+         || el.classList.contains('es__img')) return;
       var bg = el.style.backgroundImage;
       if(!bg || bg.indexOf('url') < 0) return;
       el._simg = 1;
