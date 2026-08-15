@@ -3236,9 +3236,11 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   font-family:var(--mincho);font-weight:600;line-height:1.02;letter-spacing:.06em;
   font-size:clamp(2.2rem,6.4vw,5.6rem)}
 
+/* 帯に文字が乗る要素は上下のアキを詰める（TOPの大見出し赤ボックスと同じ考え方）。
+   行送りを1に落としてから padding で最低限のアキを与える。 */
 .era__pill{position:absolute;left:50%;bottom:18vh;transform:translateX(-50%);
   margin:0;background:#fff;color:#141414;border-radius:999px;
-  padding:11px 30px;white-space:nowrap;
+  padding:8px 30px 9px;white-space:nowrap;line-height:1;
   font-family:var(--jp);font-weight:700;font-size:13.5px;letter-spacing:.1em}
 
 .era__no{position:absolute;left:50%;bottom:11vh;transform:translateX(-50%);

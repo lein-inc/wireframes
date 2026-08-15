@@ -3523,6 +3523,23 @@ body.is-logo-mini .site-logo{
   .hist__type-row{animation:none}
 }
 </style>
+
+<style id="band-pad">
+/* ══ 帯に文字が乗る要素の上下アキを共通で詰める ══
+   基準は大見出しの赤ボックス（.sec-jp）＝行送りを削って文字を帯に寄せる考え方。
+   ⚠️和文は em ボックスの上側が大きく空くので、padding を均等に入れると上が余る。
+   line-height を削って文字を上へ寄せ、余りは padding-bottom 側に回すこと。 */
+
+/* 企業理念のステートメント帯（1行ずつの帯） */
+.phil__st .ln{line-height:1;padding:.02em .7em .08em .55em}
+.phil__st .ln+.ln{margin-top:4px}   /* 帯が痩せたぶん、行間は margin で確保する */
+
+/* 締めコピーの帯（帯は span::before なので、詰めるのは span の行送り側） */
+.phil__close > span{line-height:1.06;padding:.02em .24em .08em .16em}
+
+/* ※納入先チップ（.clchip）は height:52px 固定のロゴ枠なので対象外。
+   パディングではなく枠のサイズで決まっているため、ここで詰めても効かない。 */
+</style>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
