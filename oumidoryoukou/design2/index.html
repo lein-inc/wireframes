@@ -3525,12 +3525,15 @@ body.is-logo-mini .site-logo{
    ⚠️和文は em ボックスの上側が大きく空くので、padding を均等に入れると上が余る。
    line-height を削って文字を上へ寄せ、余りは padding-bottom 側に回すこと。 */
 
+/* 大見出しの赤ボックス：左右も詰める（上下は #head-scale 側で指定済み） */
+.sec-jp,.news__jp{padding-left:.07em;padding-right:.1em}
+
 /* 企業理念のステートメント帯（1行ずつの帯） */
-.phil__st .ln{line-height:1;padding:.02em .7em .08em .55em}
+.phil__st .ln{line-height:1;padding:.02em .2em .08em .14em}
 .phil__st .ln+.ln{margin-top:4px}   /* 帯が痩せたぶん、行間は margin で確保する */
 
 /* 締めコピーの帯（帯は span::before なので、詰めるのは span の行送り側） */
-.phil__close > span{line-height:1.06;padding:.02em .24em .08em .16em}
+.phil__close > span{line-height:1.06;padding:.02em .1em .08em .06em}
 
 /* ※納入先チップ（.clchip）は height:52px 固定のロゴ枠なので対象外。
    パディングではなく枠のサイズで決まっているため、ここで詰めても効かない。 */
@@ -3549,7 +3552,7 @@ body.is-logo-mini .site-logo{
   .nav .nav__cta{grid-column:1}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに */
   .nav .nav__menu .nlink,.nav .nav__cta{
-    padding:1px 13px 3px;line-height:1.12;justify-content:flex-start}
+    padding:1px 7px 3px;line-height:1.12;justify-content:flex-start}
 
   /* ── FVの採用バナー：ナビの下に小さく置く ── */
   .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
