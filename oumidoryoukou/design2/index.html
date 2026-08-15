@@ -2100,8 +2100,10 @@ html,body{overflow-x:clip;max-width:100%}
     var POKE = 58;
     var bandTop = ttlBottom + GAP;
     if (fv){
+      /* コピー側は padding-bottom で帯のぶんを空けてあるので被らない。
+         帯は覗く高さ(POKE)だけで決めてよい（コピーを縮めても帯は動かない）。 */
       var fvBottom = fv.getBoundingClientRect().bottom + window.scrollY;
-      bandTop = Math.max(bandTop, fvBottom - POKE);
+      bandTop = fvBottom - POKE;
     }
     phil.style.setProperty('--band-top', Math.round(bandTop - philTop) + 'px');
     /* 900px以下：滋賀マップの縦位置。SP（700px以下）は「近江から、世界をはかる」の
@@ -3610,7 +3612,8 @@ body.is-logo-mini .site-logo{
      3行組み・左揃え・縦長(scaleX .8)・文字の強弱(.lg/.sm)はそのまま。
      行の高さの合計が画面の縦幅に収まるフォントサイズを JS が実測して入れる。
      上はロゴ、下は SCROLL DOWN に当たらないぶんだけ空ける。 */
-  .fv .fv__head{justify-content:flex-start;
+  /* コピーは下寄せ。赤帯のすぐ上に置く（左揃えはそのまま） */
+  .fv .fv__head{justify-content:flex-end;
     padding:var(--fvtop) var(--fvpad) var(--fvbtm) var(--fvpad)}
   .fv .fv__head-title{line-height:1.02}
   .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit;white-space:nowrap;
@@ -3632,13 +3635,15 @@ body.is-logo-mini .site-logo{
   var sp = matchMedia('(max-width:900px)');
   var last = 0;
   var TOP = .09;                 /* 上に空ける割合（ロゴのぶん） */
-  var FILL = .70;                /* コピーが占める縦幅の割合（画面比）。
-                                    残り（1 - TOP - FILL）が SCROLL DOWN の居場所になる */
+  var FILL = .45;                /* コピーが占める縦幅の割合（画面比） */
+  /* ⚠️赤帯がFVに覗く高さ（別JSの POKE）と揃えること。
+     コピーは帯のすぐ上に置くので、下の余白＝覗き高＋間隔。 */
+  var BAND = 58, BAND_GAP = 26;
   function fit(){
     if (sp.matches){ root.style.removeProperty('--fvh'); return; }
     var vh = window.innerHeight;
     root.style.setProperty('--fvtop', Math.round(vh * TOP) + 'px');
-    root.style.setProperty('--fvbtm', Math.round(vh * (1 - TOP - FILL)) + 'px');
+    root.style.setProperty('--fvbtm', (BAND + BAND_GAP) + 'px');
     var targetH = vh * FILL;
     var targetW = document.documentElement.clientWidth * .96;   /* 横は画面内に収める上限 */
     var size = 100;
