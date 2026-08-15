@@ -2094,7 +2094,15 @@ html,body{overflow-x:clip;max-width:100%}
   function place(){
     var ttlBottom = ttl.getBoundingClientRect().bottom + window.scrollY;
     var philTop = phil.getBoundingClientRect().top + window.scrollY;
+    /* ⚠️コピー下端からの相対だけで決めると、コピーの大きさを変えるたびに
+       赤帯がFVに覗く高さまで変わってしまう。覗く高さ(POKE)を基準にし、
+       コピーに被らない範囲でだけコピー側を優先する。 */
+    var POKE = 58;
     var bandTop = ttlBottom + GAP;
+    if (fv){
+      var fvBottom = fv.getBoundingClientRect().bottom + window.scrollY;
+      bandTop = Math.max(bandTop, fvBottom - POKE);
+    }
     phil.style.setProperty('--band-top', Math.round(bandTop - philTop) + 'px');
     /* 900px以下：滋賀マップの縦位置。SP（700px以下）は「近江から、世界をはかる」の
        上下中心、それ以外は黒帯コピーとの中間に置く */
@@ -3524,6 +3532,7 @@ body.is-logo-mini .site-logo{
   .hb figcaption span{font-family:var(--jp);font-size:11px;opacity:.62}
 }
 @media(prefers-reduced-motion:reduce){
+  .gsec.phil::before{animation:none}
   .hb__ph{transform:none}
   .hb__img{animation:none}
   .hist__type-row{animation:none}
@@ -3575,7 +3584,14 @@ body.is-logo-mini .site-logo{
   :root{--fvband:clamp(120px,12vw,170px)}
   .gsec.phil::before{width:var(--fvband)}
   .fv .fv__scroll{left:0;width:var(--fvband)}
-  .fv .fv__scroll .txt{font-size:11px;letter-spacing:.12em}
+  /* SCROLL DOWN の文字は出さない（赤帯そのものがスクロールの合図になる） */
+  .fv .fv__scroll{display:none}
+  /* 赤帯：ちょっと下にぴょこっと沈む動きを繰り返す */
+  .gsec.phil::before{animation:fvBandBob 2.2s cubic-bezier(.4,0,.3,1) infinite}
+  @keyframes fvBandBob{
+    0%,58%,100%{transform:translateY(0)}
+    72%        {transform:translateY(10px)}
+    86%        {transform:translateY(2px)}}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに。
      ⚠️「お問い合わせ」(.nav__cta) だけ字間(.14em)とフォントサイズが他と違い、
      同じ6文字でも帯が一回り長くなる。字間・サイズもここで揃えること。 */
