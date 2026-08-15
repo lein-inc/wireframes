@@ -3565,6 +3565,15 @@ body.is-logo-mini .site-logo{
   .nav .nav__menu .nlink,.nav .nav__cta{
     padding:1px 7px 3px;line-height:1.12;justify-content:flex-start}
 
+  /* ══ FVメインコピー：左に置いたまま、縦幅いっぱいまで拡大 ══
+     3行組み・左揃え・縦長(scaleX .8)・文字の強弱(.lg/.sm)はそのまま。
+     行の高さの合計が画面の縦幅に収まるフォントサイズを JS が実測して入れる。
+     上はロゴ、下は SCROLL DOWN に当たらないぶんだけ空ける。 */
+  .fv .fv__head{justify-content:flex-start;
+    padding:var(--fvtop) var(--fvpad) var(--fvbtm) var(--fvpad)}
+  .fv .fv__head-title{line-height:1.02}
+  .fv .fv__head-title > span{font-size:var(--fvh,7vw);line-height:inherit}
+
   /* ── FVの採用バナー：ナビの下に小さく置く ── */
   .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
   .fv .fv__cell--recruit .rec-logo{margin-bottom:6px}
@@ -3572,6 +3581,37 @@ body.is-logo-mini .site-logo{
   .fv .fv__cell--recruit .rec-arrow{width:24px;height:24px}
 }
 </style>
+<script>
+/* FVメインコピー：3行の高さの合計が画面の縦幅ちょうどになるサイズを実測して入れる */
+(function(){
+  var t = document.querySelector('.fv__head-title');
+  var root = document.documentElement;
+  if (!t) return;
+  var sp = matchMedia('(max-width:900px)');
+  var TOP = .09, BTM = .05;      /* 上下に空ける割合（ロゴ / SCROLL DOWN のぶん） */
+  function fit(){
+    if (sp.matches){ root.style.removeProperty('--fvh'); return; }
+    var vh = window.innerHeight;
+    root.style.setProperty('--fvtop', Math.round(vh * TOP) + 'px');
+    root.style.setProperty('--fvbtm', Math.round(vh * BTM) + 'px');
+    var target = vh * (1 - TOP - BTM);
+    var size = 100;
+    for (var i = 0; i < 2; i++){
+      root.style.setProperty('--fvh', size + 'px');
+      /* ⚠️高さは transform の影響を受けないので offsetHeight で測ってよい
+         （幅は scaleX(.8) が効くので getBoundingClientRect が必要だった） */
+      var h = t.offsetHeight;
+      if (!h) return;
+      size = size * (target / h);
+    }
+    root.style.setProperty('--fvh', size.toFixed(2) + 'px');
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+})();
+</script>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
