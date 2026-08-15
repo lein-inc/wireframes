@@ -1591,9 +1591,11 @@ html,body{overflow-x:clip;max-width:100%}
     <i class="fv__frame" aria-hidden="true"></i>
   </div>
   <div class="fv__head">
-    <!-- ⚠️1行組みなので span 間に改行・字下げを入れないこと。
-         インライン要素の間の空白が半角スペースとして描画され、語間が空く。 -->
-    <h1 class="fv__head-title"><span class="ln1"><b class="lg">いきる</b><b class="sm">を</b></span><span class="ln2"><b class="lg">はかり</b><b class="sm">、</b></span><span class="ln3"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span></h1>
+    <h1 class="fv__head-title">
+      <span class="ln1"><b class="lg">いきる</b><b class="sm">を</b></span>
+      <span class="ln2"><b class="lg">はかり</b><b class="sm">、</b></span>
+      <span class="ln3"><b class="lg">豊</b><b class="sm">かな</b><b class="lg">世界</b><b class="sm">へ</b></span>
+    </h1>
   </div>
   <!-- FVの採用バナー（.fv__cell--recruit）は削除。CSSは残してあるので、
        戻す場合はこの位置にマークアップを戻すだけでよい。 -->
@@ -2105,14 +2107,13 @@ html,body{overflow-x:clip;max-width:100%}
       phil.style.setProperty('--map-mid', Math.round(mid) + 'px');
     }
     if(cue && fv){
-      /* ⚠️FVコピーは画面下いっぱいに拡大したので、旧来の「赤帯の覗いている部分の
-         中央」に置くと SCROLL DOWN が画面外へ出る。コピーの上端を基準に置き直す。 */
       var fvRect = fv.getBoundingClientRect();
       var fvTop = fvRect.top + window.scrollY;
+      /* 赤帯はFV下端で見切れているので、その覗いている帯（bandTop 〜 FV下端）の中央へ */
+      var stripBottom = fvTop + fvRect.height;
       var cueH = cue.offsetHeight || 19;
-      var CUE_GAP = 20;   /* コピー上端との間隔 */
-      var ttlTop = ttl.getBoundingClientRect().top + window.scrollY;
-      cue.style.top = Math.round(ttlTop - cueH - CUE_GAP - fvTop) + 'px';
+      var CUE_UP = 10;  /* 中央からこのぶん上へ（＝SCROLL DOWNの上余白を詰める） */
+      cue.style.top = Math.round((bandTop + stripBottom) / 2 - cueH / 2 - CUE_UP - fvTop) + 'px';
       cue.style.bottom = 'auto';
     }
   }
@@ -3553,29 +3554,6 @@ body.is-logo-mini .site-logo{
   .nav .nav__menu .nlink,.nav .nav__cta{
     padding:1px 7px 3px;line-height:1.12;justify-content:flex-start}
 
-  /* ══ FVコピー：1行にして画面下の横幅いっぱいまで拡大 ══
-     3行組み・文字サイズの強弱（.lg/.sm）・scaleX(.8) はすべて解除し、
-     均一な1行にしてから、JSが「行幅＝画面幅」になるフォントサイズを実測して入れる。
-     clamp では画面幅ぴったりに揃わないので、実測方式にしている。 */
-  .fv .fv__head{padding-left:0;padding-right:0;padding-bottom:0;justify-content:flex-end;
-    overflow:hidden}
-  /* ⚠️幅は max-content にすること。width:100% だと scrollWidth がコンテナ幅に
-     丸められ、「文字が画面より狭い」ときにJSが拡大方向へ効かなくなる。 */
-  .fv .fv__head-title{display:block;width:max-content;white-space:nowrap;
-    /* 他の明朝見出しと同じ縦長（scaleX .8）＋文字詰め。
-       "palt" は和文の約物（、。「」）を字幅ぶん詰めるためのフォント機能。
-       横に潰すぶん、フィットJSが自動で文字を大きくして画面幅を埋める。 */
-    transform:scaleX(.8);transform-origin:left center;
-    letter-spacing:-.06em;
-    font-feature-settings:"palt" 1;font-kerning:normal;
-    line-height:.86;font-size:var(--fvfit,7vw)}
-  .fv .fv__head-title > span{display:inline;transform:none;letter-spacing:inherit;
-    font-size:1em;line-height:inherit}
-  .fv .fv__head-title .lg,.fv .fv__head-title .sm{font-size:1em}
-  /* コピーが画面下を占有するので、SCROLL DOWN はその高さぶん上へ逃がす
-     （高さ = フィット後のフォントサイズ × line-height .86） */
-  .fv .fv__scroll{bottom:calc(var(--fvfit,7vw) * .86 + 22px)}
-
   /* ── FVの採用バナー：ナビの下に小さく置く ── */
   .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
   .fv .fv__cell--recruit .rec-logo{margin-bottom:6px}
@@ -3583,34 +3561,6 @@ body.is-logo-mini .site-logo{
   .fv .fv__cell--recruit .rec-arrow{width:24px;height:24px}
 }
 </style>
-<script>
-/* FVコピー：1行の幅が画面幅ちょうどになるフォントサイズを実測して入れる */
-(function(){
-  var t = document.querySelector('.fv__head-title');
-  var root = document.documentElement;
-  if (!t) return;
-  var sp = matchMedia('(max-width:900px)');
-  function fit(){
-    if (sp.matches){ root.style.removeProperty('--fvfit'); return; }
-    /* 基準サイズで一度描いて、必要な倍率を出す（2回まわして誤差を詰める） */
-    var target = document.documentElement.clientWidth;
-    var size = 100;
-    for (var i = 0; i < 2; i++){
-      root.style.setProperty('--fvfit', size + 'px');
-      /* ⚠️scrollWidth はコンテナ幅に丸められるので使わない。
-         width:max-content の実測幅で見ること。 */
-      var w = t.getBoundingClientRect().width;
-      if (!w) return;
-      size = size * (target / w);
-    }
-    root.style.setProperty('--fvfit', size.toFixed(2) + 'px');
-  }
-  window.addEventListener('resize', fit);
-  window.addEventListener('load', fit);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-  fit();
-})();
-</script>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
