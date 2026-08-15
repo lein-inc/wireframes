@@ -3199,11 +3199,18 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
    左右にアーチ状にクリップした写真、中央に特大の英字、下に元号ピルと通し番号、
    最下部に「計量器」らしい目盛り定規。定規のカーソルが年代の位置を示す。 */
 .era{position:relative;background:#141414;color:#fff}
-.era__pin{position:sticky;top:0;height:100vh;overflow:hidden}
+/* 円柱に沿って流すので、固定面に遠近法をかける */
+.era__pin{position:sticky;top:0;height:100vh;overflow:hidden;
+  perspective:1500px;perspective-origin:50% 46%}
+.era__slides{position:absolute;inset:0;transform-style:preserve-3d}
 
+/* 位置・角度・不透明度は JS が毎フレーム入れる。
+   右から入って正面を通り、左へ回り込みながら抜けていく。
+   下の指定は JS が動かない時（reduced-motion 等）のフォールバック。 */
 .es{position:absolute;inset:0;opacity:0;visibility:hidden;
-  transition:opacity .55s ease,visibility 0s .55s}
-.es.is-on{opacity:1;visibility:visible;transition:opacity .55s ease,visibility 0s}
+  transform-origin:center center;backface-visibility:hidden;
+  will-change:transform,opacity}
+.es.is-on{opacity:1;visibility:visible}
 
 /* 特大の英字。写真の下に潜り、左右の写真に食われる見え方 */
 .es__en{position:absolute;left:50%;top:14vh;transform:translateX(-50%);z-index:1;
@@ -3389,7 +3396,7 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
   /* ── スクロール連動 ── */
   var STEP = 1.15;                      /* 1章あたりに使うスクロール量（画面高の倍数） */
-  var vh = 0, cur = -1;
+  var vh = 0;
   function layout(){
     vh = window.innerHeight;
     scene.style.height = Math.round(vh * (1 + STEP * N)) + 'px';
@@ -3401,9 +3408,21 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     var p = span > 0 ? (-top) / span : 0;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
     var i = Math.min(N - 1, Math.floor(p * N));
-    if (i !== cur){
-      cur = i;
-      els.forEach(function(el, k){ el.classList.toggle('is-on', k === i); });
+
+    /* ── 円柱に沿って右→左へ流す ──
+       off = 0 で正面、マイナスなら右で待機、プラスなら左へ回り込んで抜けた状態。
+       横移動・奥行き・Y軸回転を同時にかけることで、平面の切替ではなく
+       円筒の側面を回ってくるように見える。 */
+    var t = p * N;
+    for (var k = 0; k < N; k++){
+      var off = t - k, a = Math.abs(off), el = els[k];
+      if (a > 1.25){ el.style.visibility = 'hidden'; el.style.opacity = '0'; continue; }
+      el.style.visibility = 'visible';
+      el.style.opacity = (1 - Math.min(a, 1)).toFixed(3);
+      el.style.transform =
+        'translate3d(' + (-off * 62).toFixed(2) + '%,0,' + (-a * 340).toFixed(0) + 'px)' +
+        ' rotateY(' + (off * -38).toFixed(1) + 'deg)';
+      el.style.zIndex = String(100 - Math.round(a * 50));
     }
     /* カーソルは章の年代範囲を連続で辿る */
     var c = chapters[i];
