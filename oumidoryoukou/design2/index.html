@@ -3394,6 +3394,22 @@ body.is-logo-mini .site-logo{
 }
 </style>
 
+<style id="head-scale">
+/* ══ 各セクションの見出しペア（赤ボックスの大見出し＋2行コピー）を一段小さく ══
+   製品・技術／納入実績／126年ヒストリー／採用情報 の4本で共通。
+   ⚠️2つのサイズは連動させること。左右に並ぶので高さが揃っている必要がある：
+     赤ボックス高 = fs1 ×(line-height 1.15 + 上下padding .05em) = fs1 × 1.20
+     コピー高     = fs2 ×(line-height 1.3 × 2行 + padding-bottom .16em) + 赤罫線3px
+   ここが等しくなる比率（fs1 ≒ fs2 × 2.3）で vw 係数を置いている。
+   片方の数値だけ触ると高さがずれるので、必ず両方を同じ比で動かすこと。 */
+@media(min-width:901px){
+  .sec-jp,.news__jp{font-size:clamp(3.6rem,7.3vw,6.48rem)}
+  /* 赤ボックスは文字の上下のアキだけ詰める（左右のアキは従来どおり） */
+  .sec-jp,.news__jp{padding-top:.01em;padding-bottom:.04em}
+  .svc .disp-jp,.stats__top .disp-jp,.recjoin .disp-jp,.hist .disp-jp{
+    font-size:clamp(1.8rem,3.1vw,2.75rem)}
+}
+</style>
 <style id="arrow-loop">
 /* ══ 矢印スワップ：ホバー中はエンドレス、外れたら現在の一周を終えて止まる ══
    ⚠️:hover に animation を直付けすると、マウスが離れた瞬間に animation ごと
