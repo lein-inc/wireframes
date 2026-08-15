@@ -3366,5 +3366,111 @@ body.is-logo-mini .site-logo{
 })();
 </script>
 
+<style id="recjoin-white">
+/* ══ 採用セクション：赤背景 → 白背景 ══ */
+/* ⚠️高さの下限は必須。.recjoin は margin-top:-100vh でヒストリーに重なるが、
+   画面が高いと採用セクションのほうが 100vh より短くなり、黒幕のかかった
+   ヒストリーの裾が下に食み出して灰色の帯として見えてしまう（実測：画面高
+   1213px で146px露出）。重なりぶんの高さを最低限確保して隙間を潰す。 */
+.gsec.recjoin{
+  background-color:#fff;
+  background-image:none;
+  color:var(--ink);
+  min-height:calc(100vh + 1px);
+}
+.recjoin .sec-ttl,.recjoin .disp-jp{color:var(--ink)}
+.recjoin__lead{color:rgba(0,0,0,.7)}
+.recjoin .disp-jp{border-bottom-color:var(--red)}
+/* 見出しラベルは反転をやめ、他セクションと同じ赤地・白抜きに戻す */
+.recjoin .sec-jp{color:#fff}
+.recjoin .sec-jp::before{background:var(--red)}
+/* 新卒カードは白のままだと白背景に埋もれるので赤に戻す（中途は黒のまま） */
+.rj2--new{background:var(--red);color:#fff}
+.rj2--new .rj2__en,.rj2--new .rj2__ttl,.rj2--new .rj2__go{color:#fff}
+.rj2--new .rj2__desc{color:rgba(255,255,255,.9)}
+@media(max-width:900px){
+  /* SPは重なり演出そのものが無効（margin-top:0）なので高さの下限も不要 */
+  .gsec.recjoin{min-height:0}
+}
+</style>
+
+<style id="arrow-loop">
+/* ══ 矢印スワップ：ホバー中はエンドレス、外れたら現在の一周を終えて止まる ══
+   ⚠️:hover に animation を直付けすると、マウスが離れた瞬間に animation ごと
+   外れて矢印が途中でパッと戻る。そこで発火を .arr-on クラスに一本化し、
+   mouseleave では「次の animationiteration まで待ってから」クラスを外す。 */
+
+/* ① ホバー直結の発火を無効化（transform:none 等の他の指定はそのまま活かす） */
+.btn:hover::after,.hist__go:hover::after,.stats__cta:hover::after,.news__all:hover::after,
+.pf-info__btn:hover::after,.foot__contact .cbtn:hover::after,.strip__contact .cbtn:hover::after,
+.foot__recruit .go:hover::after,
+.stats__band:hover .stats__cta::after,.foot__recruit:hover .go::after,
+a.foot__contact:hover .cbtn::after,
+.svc__arrow:hover::after,
+.fv .fv__cell--recruit:hover .rec-arrow,
+.drawer__rec:hover .ar,
+.phil .phil__cta .btn:hover>span{animation:none}
+
+/* ② .arr-on の間だけ無限ループ */
+.btn.arr-on::after,.hist__go.arr-on::after,.stats__cta.arr-on::after,.news__all.arr-on::after,
+.pf-info__btn.arr-on::after,.strip__contact .cbtn.arr-on::after,
+.stats__band.arr-on .stats__cta::after,
+.foot__recruit.arr-on .go::after,
+a.foot__contact.arr-on .cbtn::after,
+.svc__arrow.arr-on::after,
+.fv .fv__cell--recruit.arr-on .rec-arrow,
+.drawer__rec.arr-on .ar,
+.phil .phil__cta .btn.arr-on>span{
+  animation:arrowSwap .42s cubic-bezier(.4,0,.2,1) infinite}
+
+@media(prefers-reduced-motion:reduce){
+  .btn.arr-on::after,.hist__go.arr-on::after,.stats__cta.arr-on::after,.news__all.arr-on::after,
+  .pf-info__btn.arr-on::after,.strip__contact .cbtn.arr-on::after,
+  .stats__band.arr-on .stats__cta::after,.foot__recruit.arr-on .go::after,
+  a.foot__contact.arr-on .cbtn::after,.svc__arrow.arr-on::after,
+  .fv .fv__cell--recruit.arr-on .rec-arrow,.drawer__rec.arr-on .ar,
+  .phil .phil__cta .btn.arr-on>span{animation:none}
+}
+</style>
+<script>
+/* 矢印：ホバー中はループ、離れたら「回っている一周の終わり」で停止 */
+(function(){
+  var HOSTS = '.btn,.hist__go,.stats__cta,.news__all,.pf-info__btn,.strip__contact .cbtn,'
+            + '.svc__arrow,.stats__band,.foot__recruit,a.foot__contact,'
+            + '.fv__cell--recruit,.drawer__rec';
+  var CYCLE = 420;                       /* @keyframes arrowSwap の再生時間(ms) */
+
+  document.querySelectorAll(HOSTS).forEach(function(el){
+    /* 入れ子（.stats__band の中の .stats__cta 等）は外側だけを担当させる */
+    if (el.parentElement && el.parentElement.closest(HOSTS)) return;
+
+    var pending = false, fallback = null;
+    function stop(){
+      pending = false;
+      if (fallback){ clearTimeout(fallback); fallback = null; }
+      el.classList.remove('arr-on');
+    }
+    el.addEventListener('mouseenter', function(){
+      pending = false;
+      if (fallback){ clearTimeout(fallback); fallback = null; }
+      el.classList.add('arr-on');
+    });
+    el.addEventListener('mouseleave', function(){
+      if (!el.classList.contains('arr-on')) return;
+      pending = true;
+      /* animationiteration が来ない環境（アニメ無効等）の保険 */
+      fallback = setTimeout(stop, CYCLE + 120);
+    });
+    /* 疑似要素のアニメーションイベントも、生成元のこの要素に上がってくる */
+    el.addEventListener('animationiteration', function(e){
+      if (pending && e.animationName === 'arrowSwap') stop();
+    });
+    el.addEventListener('animationend', function(e){
+      if (pending && e.animationName === 'arrowSwap') stop();
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
