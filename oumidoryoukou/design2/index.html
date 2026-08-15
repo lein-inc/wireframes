@@ -1732,6 +1732,12 @@ html,body{overflow-x:clip;max-width:100%}
     <!-- 年表を散りばめた縦長の面。特大/大/中/小/極小の5サイズ×各2点＝10点。
          ⚠️旧 .hist__rail は廃止。あれが無くなったことで「固定して横に流す」JSは
          早期returnして無効になる（スクリプトは消していない）。 -->
+    <!-- 背景の大型タイポ。太ゴシックの塗りと線だけのアウトラインを重ね、
+         画面中央で右→左へ流す（frontier-gr 参考）。写真より奥のレイヤー。 -->
+    <div class="hist__type" aria-hidden="true">
+      <div class="hist__type-row hist__type-row--solid"><span>MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;</span></div>
+      <div class="hist__type-row hist__type-row--line"><span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span></div>
+    </div>
     <div class="hist__scatter">
       <figure class="hb hb--xl rv" style="--x:1%;--y:0%;--r:-1.6deg"><span class="hb__ph" style="background-image:url(h_1900_1.jpg)"></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
       <figure class="hb hb--m rv" style="--x:62%;--y:6%;--r:2.2deg"><span class="hb__ph" style="background-image:url(h_1946.jpg)"></span><figcaption><b>1946</b><span>米軍用バススケール</span></figcaption></figure>
@@ -2714,8 +2720,10 @@ body.menu-open .nav__mini{opacity:0;visibility:hidden;pointer-events:none}
   .pf-head{top:clamp(92px,11.5vh,148px)}
 }
 
-/* ══ 【テスト】FV背景写真をモノクロに（戻す場合はこのブロックを削除） ══ */
-.fv__slides{filter:grayscale(1) brightness(.62) contrast(1.05)}
+/* ══ FV背景写真：最初はカラー。スクロールしてブラーがかかる瞬間に白黒へ ══
+   .is-blur は想いブロックに差し掛かるとJSが付ける（ブラー自体は子の i に掛かる）。
+   filter には .7s のトランジションが効いているので、色が抜けるのもブラーと同時に進む。 */
+.fv__slides{filter:brightness(.62) contrast(1.02) saturate(1.02)}
 .fv__slides.is-blur{filter:grayscale(1) brightness(.56) contrast(1.05)}
 
 /* ══ FV：白フレームは初期状態から表示／レイヤーは最前面（固定解除の挙動は従来どおり） ══ */
@@ -3438,9 +3446,24 @@ body.is-logo-mini .site-logo{
      ⚠️面の下の1画面ぶんは採用セクションの重なりしろ。ここを .hist__scatter の
      margin-bottom で取ると、.gsec.hist に下パディングが無いためマージンが
      親を突き抜けて（相殺されて）高さに入らない。必ず親の padding-bottom で取ること。 */
-  .hist__scatter{position:relative;width:100%;height:225vh;
-    margin-top:clamp(40px,6vh,90px);overflow:hidden}
+  .hist__scatter{position:relative;width:100%;height:135vh;
+    margin-top:clamp(28px,4vh,64px);overflow:hidden}
   .gsec.hist{padding-bottom:100vh}
+
+  /* ── 背景タイポ：画面中央に貼り付いたまま右→左へ流れる ──
+     ⚠️高さを 0 にして overflow:hidden を掛けると、中の行ごと切り落とされて何も出ない。
+     実寸の高さを持たせ、同じ量の負マージンでレイアウト上の場所だけ相殺すること。
+     overflow:hidden 自体は、画面幅より長い行が横スクロールを起こさないために必須。 */
+  .hist__type{position:sticky;top:33vh;z-index:0;height:34vh;margin-bottom:-34vh;
+    pointer-events:none;overflow:hidden}
+  .hist__type-row{position:absolute;left:0;white-space:nowrap;
+    font-family:var(--en);line-height:.86;letter-spacing:-.02em;
+    font-size:clamp(5rem,15vw,15rem);
+    transform:translate3d(var(--tx,0px),0,0);will-change:transform}
+  .hist__type-row--solid{top:0;font-weight:800;color:rgba(0,0,0,.055)}
+  /* 線だけのゴシック。塗りを抜いて縁取りだけ残す */
+  .hist__type-row--line{top:.82em;font-weight:800;color:transparent;
+    -webkit-text-stroke:1.4px rgba(0,0,0,.10)}
 
   .hb{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0}
   .hb--xl{--w:clamp(300px,32vw,580px)}
@@ -3470,6 +3493,7 @@ body.is-logo-mini .site-logo{
 
 /* SP：散らさず、1列に積んで読ませる（サイズ差だけ残す） */
 @media(max-width:900px){
+  .hist__type{display:none}
   .hist__scatter{position:relative;display:flex;flex-direction:column;
     gap:clamp(28px,7vw,44px);margin-top:clamp(28px,7vw,44px);padding:0 var(--frame)}
   .hb{position:static;width:var(--w);max-width:100%;margin:0}
@@ -3486,8 +3510,41 @@ body.is-logo-mini .site-logo{
 }
 @media(prefers-reduced-motion:reduce){
   .hb__ph{transform:none}
+  .hist__type-row{transform:none!important}
 }
 </style>
+<script>
+/* ヒストリー背景タイポ：セクションを通過する間、画面中央で右→左へ流す */
+(function(){
+  var hist = document.querySelector('.gsec.hist');
+  var wrap = hist && hist.querySelector('.hist__type');
+  if (!wrap) return;
+  var rows = [].slice.call(wrap.querySelectorAll('.hist__type-row'));
+  var sp = matchMedia('(max-width:900px)');
+  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  /* 行ごとに流す量を変えて、奥行きのある動きにする */
+  var SPEED = [1, .62];
+
+  function upd(){
+    if (sp.matches || reduce) return;
+    var r = hist.getBoundingClientRect();
+    var span = r.height + window.innerHeight;
+    /* セクションが画面下から入って上へ抜けるまでを 0→1 に */
+    var p = span > 0 ? (window.innerHeight - r.top) / span : 0;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    for (var i = 0; i < rows.length; i++){
+      var w = rows[i].scrollWidth;
+      /* 右端の外から左端の外へ。行の幅ぶん動かすので途切れない */
+      var travel = w - window.innerWidth;
+      rows[i].style.setProperty('--tx', (-(p * travel * SPEED[i])).toFixed(1) + 'px');
+    }
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  window.addEventListener('load', upd);
+  upd();
+})();
+</script>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
