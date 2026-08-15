@@ -3540,6 +3540,26 @@ body.is-logo-mini .site-logo{
 /* ※納入先チップ（.clchip）は height:52px 固定のロゴ枠なので対象外。
    パディングではなく枠のサイズで決まっているため、ここで詰めても効かない。 */
 </style>
+
+<style id="nav-tight">
+/* ══ PCグローバルナビ：帯の上下アキをなくし、項目ごとに幅を詰めて左揃え ══
+   従来は 2カラム固定幅（128〜176px）のグリッドで、全項目が同じ幅だった。
+   これを max-content の2カラムに変え、各項目が自分の文字幅まで縮むようにする。
+   左端は揃い、右端は項目ごとにバラつく（＝詰まった見え方）。 */
+@media(min-width:901px){
+  .nav .nav__menu{grid-template-columns:max-content max-content;
+    justify-items:start;width:auto;max-width:none}
+  /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに */
+  .nav .nav__menu .nlink,.nav .nav__cta{
+    padding:1px 13px 3px;line-height:1.12;justify-content:flex-start}
+
+  /* ── FVの採用バナー：ナビの下に小さく置く ── */
+  .fv .fv__cell--recruit{width:min(258px,60vw);max-width:min(258px,60vw)}
+  .fv .fv__cell--recruit .rec-logo{margin-bottom:6px}
+  .fv .fv__cell--recruit h3{padding:9px 10px 11px 16px;font-size:12.5px;margin-top:8px}
+  .fv .fv__cell--recruit .rec-arrow{width:24px;height:24px}
+}
+</style>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
