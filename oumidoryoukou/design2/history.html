@@ -2338,7 +2338,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=5"></script>
+<script src="_simg.js?v=6"></script>
 
 <style id="rule-marks-css">
 /* 下層ページのセクション見出し（赤帯）はTOPより小さめに */
@@ -3358,8 +3358,8 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     slides.insertAdjacentHTML('beforeend',
       '<article class="es' + (i === 0 ? ' is-on' : '') + '">' +
         '<h2 class="es__en">' + (EN[name] || name) + '</h2>' +
-        '<div class="es__ph es__ph--l"><i style="background-image:url(' + pa + ')"></i></div>' +
-        '<div class="es__ph es__ph--r"><i style="background-image:url(' + pb + ')"></i></div>' +
+        '<div class="es__ph es__ph--l"><i class="es__img" style="background-image:url(' + pa + ')"></i></div>' +
+        '<div class="es__ph es__ph--r"><i class="es__img" style="background-image:url(' + pb + ')"></i></div>' +
         '<p class="es__pill">' + name + '　' + y0 + '–' + y1 + '</p>' +
         '<p class="es__no">' + no + '</p>' +
       '</article>');
