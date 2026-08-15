@@ -3429,6 +3429,9 @@ body.is-logo-mini .site-logo{
    ⚠️.hist__stage の overflow:hidden が効いているので、バンドを画面幅より
    広く（左右に -10vw）取ると両端で切れて「突っ切っている」ように見える。 */
 @media(min-width:901px){
+  /* ヒストリーは左右の余白（.gsec の padding:var(--frame)）をなくして全面ベタ */
+  .gsec.hist{padding-left:0;padding-right:0}
+
   /* 見出しは上寄せの1カラムに。右カラムの写真ストリームは廃止したので2カラムは不要。
      ⚠️.hist__stage に position:relative を書いてはいけない（sticky を打ち消して
      固定が効かなくなる）。sticky 自体が絶対配置の基準になるので指定は不要。 */
