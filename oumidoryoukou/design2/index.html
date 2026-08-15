@@ -3546,7 +3546,7 @@ a.foot__contact.arr-on .cbtn::after,
 .fv .fv__cell--recruit.arr-on .rec-arrow,
 .drawer__rec.arr-on .ar,
 .phil .phil__cta .btn.arr-on>span{
-  animation:arrowSwap .42s cubic-bezier(.4,0,.2,1) infinite}
+  animation:arrowSwap .525s cubic-bezier(.4,0,.2,1) infinite}   /* 旧.42s の0.8倍速 */
 
 @media(prefers-reduced-motion:reduce){
   .btn.arr-on::after,.hist__go.arr-on::after,.stats__cta.arr-on::after,.news__all.arr-on::after,
@@ -3563,7 +3563,7 @@ a.foot__contact.arr-on .cbtn::after,
   var HOSTS = '.btn,.hist__go,.stats__cta,.news__all,.pf-info__btn,.strip__contact .cbtn,'
             + '.svc__arrow,.stats__band,.foot__recruit,a.foot__contact,'
             + '.fv__cell--recruit,.drawer__rec';
-  var CYCLE = 420;                       /* @keyframes arrowSwap の再生時間(ms) */
+  var CYCLE = 525;                       /* 上のCSSの再生時間(ms)と必ず揃えること */
 
   document.querySelectorAll(HOSTS).forEach(function(el){
     /* 入れ子（.stats__band の中の .stats__cta 等）は外側だけを担当させる */
