@@ -3409,14 +3409,19 @@ body.is-logo-mini .site-logo{
 /* ══ 各セクションの見出しペア（赤ボックスの大見出し＋2行コピー）を一段小さく ══
    製品・技術／納入実績／126年ヒストリー／採用情報 の4本で共通。
    ⚠️2つのサイズは連動させること。左右に並ぶので高さが揃っている必要がある：
-     赤ボックス高 = fs1 ×(line-height 1.15 + 上下padding .05em) = fs1 × 1.20
+     赤ボックス高 = fs1 ×(line-height .95 + padding-bottom .11em) = fs1 × 1.06
      コピー高     = fs2 ×(line-height 1.3 × 2行 + padding-bottom .16em) + 赤罫線3px
-   ここが等しくなる比率（fs1 ≒ fs2 × 2.3）で vw 係数を置いている。
+   ここが等しくなる比率（fs1 ≒ fs2 × 2.6）で vw 係数を置いている。
    片方の数値だけ触ると高さがずれるので、必ず両方を同じ比で動かすこと。 */
 @media(min-width:901px){
-  .sec-jp,.news__jp{font-size:clamp(3.6rem,7.3vw,6.48rem)}
-  /* 赤ボックスは文字の上下のアキだけ詰める（左右のアキは従来どおり） */
-  .sec-jp,.news__jp{padding-top:.01em;padding-bottom:.04em}
+  .sec-jp,.news__jp{font-size:clamp(3.98rem,8.25vw,7.34rem)}
+  /* 赤ボックスは文字の上下のアキを詰める（左右のアキは従来どおり）。
+     ⚠️明朝は em ボックスの上側が大きく空くので、padding だけ削っても上が余る
+     （実測: 上13.9px / 下7.5px）。line-height を 0.95 まで削って文字を上に寄せ、
+     余った分を padding-bottom へ回すことで上下のアキを均している。
+     ボックス高 = フォントサイズ ×(0.95 + 0 + 0.11) = ×1.06。
+     この 1.06 は下の「高さを揃える」計算に直結するので、触ったら font-size も再計算すること。 */
+  .sec-jp,.news__jp{line-height:.95;padding-top:0;padding-bottom:.11em}
   .svc .disp-jp,.stats__top .disp-jp,.recjoin .disp-jp,.hist .disp-jp{
     font-size:clamp(1.8rem,3.1vw,2.75rem)}
 }
