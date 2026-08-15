@@ -1735,8 +1735,12 @@ html,body{overflow-x:clip;max-width:100%}
     <!-- 背景の大型タイポ。太ゴシックの塗りと線だけのアウトラインを重ね、
          画面中央で右→左へ流す（frontier-gr 参考）。写真より奥のレイヤー。 -->
     <div class="hist__type" aria-hidden="true">
-      <div class="hist__type-row hist__type-row--solid"><span>MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;</span></div>
-      <div class="hist__type-row hist__type-row--line"><span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span></div>
+      <div class="hist__type-row hist__type-row--solid">
+        <span>MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;</span><span>MEASURING LIFE&nbsp;&nbsp;MEASURING LIFE&nbsp;&nbsp;</span>
+      </div>
+      <div class="hist__type-row hist__type-row--line">
+        <span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span><span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span>
+      </div>
     </div>
     <div class="hist__scatter">
       <figure class="hb hb--xl rv" style="--x:1%;--y:0%;--r:-1.6deg"><span class="hb__ph" style="background-image:url(h_1900_1.jpg)"></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
@@ -3456,14 +3460,20 @@ body.is-logo-mini .site-logo{
      overflow:hidden 自体は、画面幅より長い行が横スクロールを起こさないために必須。 */
   .hist__type{position:sticky;top:33vh;z-index:0;height:34vh;margin-bottom:-34vh;
     pointer-events:none;overflow:hidden}
-  .hist__type-row{position:absolute;left:0;white-space:nowrap;
+  /* 同じ内容を2つ並べて -50% まで動かすと、途切れずに繋がって見える。
+     スクロール量とは無関係に、常に右→左へ自動で流れる。 */
+  .hist__type-row{position:absolute;left:0;display:flex;width:max-content;
+    white-space:nowrap;
     font-family:var(--en);line-height:.86;letter-spacing:-.02em;
     font-size:clamp(5rem,15vw,15rem);
-    transform:translate3d(var(--tx,0px),0,0);will-change:transform}
-  .hist__type-row--solid{top:0;font-weight:800;color:rgba(0,0,0,.055)}
+    will-change:transform;
+    animation:histMarquee var(--dur,44s) linear infinite}
+  @keyframes histMarquee{from{transform:translate3d(0,0,0)}
+                         to{transform:translate3d(-50%,0,0)}}
+  .hist__type-row--solid{top:0;font-weight:800;color:rgba(0,0,0,.055);--dur:44s}
   /* 線だけのゴシック。塗りを抜いて縁取りだけ残す */
   .hist__type-row--line{top:.82em;font-weight:800;color:transparent;
-    -webkit-text-stroke:1.4px rgba(0,0,0,.10)}
+    -webkit-text-stroke:1.4px rgba(0,0,0,.10);--dur:68s}
 
   .hb{position:absolute;left:var(--x);top:var(--y);width:var(--w);margin:0}
   .hb--xl{--w:clamp(300px,32vw,580px)}
@@ -3510,41 +3520,9 @@ body.is-logo-mini .site-logo{
 }
 @media(prefers-reduced-motion:reduce){
   .hb__ph{transform:none}
-  .hist__type-row{transform:none!important}
+  .hist__type-row{animation:none}
 }
 </style>
-<script>
-/* ヒストリー背景タイポ：セクションを通過する間、画面中央で右→左へ流す */
-(function(){
-  var hist = document.querySelector('.gsec.hist');
-  var wrap = hist && hist.querySelector('.hist__type');
-  if (!wrap) return;
-  var rows = [].slice.call(wrap.querySelectorAll('.hist__type-row'));
-  var sp = matchMedia('(max-width:900px)');
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  /* 行ごとに流す量を変えて、奥行きのある動きにする */
-  var SPEED = [1, .62];
-
-  function upd(){
-    if (sp.matches || reduce) return;
-    var r = hist.getBoundingClientRect();
-    var span = r.height + window.innerHeight;
-    /* セクションが画面下から入って上へ抜けるまでを 0→1 に */
-    var p = span > 0 ? (window.innerHeight - r.top) / span : 0;
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    for (var i = 0; i < rows.length; i++){
-      var w = rows[i].scrollWidth;
-      /* 右端の外から左端の外へ。行の幅ぶん動かすので途切れない */
-      var travel = w - window.innerWidth;
-      rows[i].style.setProperty('--tx', (-(p * travel * SPEED[i])).toFixed(1) + 'px');
-    }
-  }
-  window.addEventListener('scroll', upd, {passive:true});
-  window.addEventListener('resize', upd);
-  window.addEventListener('load', upd);
-  upd();
-})();
-</script>
 <script>
 /* ヒストリー年表バンド：固定中のスクロール量を 0→1 にして rail を右→左へ流す */
 (function(){
