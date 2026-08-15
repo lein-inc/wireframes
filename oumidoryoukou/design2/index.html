@@ -3560,10 +3560,18 @@ body.is-logo-mini .site-logo{
 @media(min-width:901px){
   .nav .nav__menu{grid-template-columns:max-content;
     justify-items:end;width:auto;max-width:none}
-  .nav .nav__cta{grid-column:1}
-  /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに */
+  /* ⚠️「お問い合わせ」だけ .nav__menu の直下（他は .nitem に包まれている）。
+     つまりコレ自身がグリッド項目なので、放っておくと列幅いっぱいに伸びて
+     一つだけ帯が長くなる。内容幅に固定すること。 */
+  .nav .nav__cta{grid-column:1;justify-self:end;width:max-content}
+  /* SCROLL DOWN の赤帯は初期状態からコンパクトに */
+  .fv .fv__scroll{width:min(11vw,150px)}
+  /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに。
+     ⚠️「お問い合わせ」(.nav__cta) だけ字間(.14em)とフォントサイズが他と違い、
+     同じ6文字でも帯が一回り長くなる。字間・サイズもここで揃えること。 */
   .nav .nav__menu .nlink,.nav .nav__cta{
-    padding:1px 7px 3px;line-height:1.12;justify-content:flex-start}
+    padding:1px 7px 3px;line-height:1.12;justify-content:flex-start;
+    font-size:14px;letter-spacing:.02em}
 
   /* ロゴを0.7倍に。
      ⚠️.logo-name/.logo-anv の height を書き換えても後段の別ルールに負ける。
