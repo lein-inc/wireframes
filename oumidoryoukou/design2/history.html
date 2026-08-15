@@ -1732,24 +1732,37 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
   <div class="phero__intro">
     <h2 class="phero__catch rv">1900年から、<br>「はかる」ひとすじに。</h2>
-    <p class="phero__lead rv rv-d1">明治33年、大津の地に生まれた計量器メーカー。時代とともに移りゆく景色を、奥から手前へ、ひとつずつ辿ってください。</p>
+    <p class="phero__lead rv rv-d1">明治33年、大津の地に生まれた計量器メーカー。明治・大正から令和まで、時代ごとの景色をスクロールで辿り、そのあとに126年の記録を年表でご覧いただけます。</p>
   </div>
 </section>
 
-<section class="hc-scene" id="hc">
-  <div class="hc-pin">
-    <div class="hc-bg"></div>
-    <div class="hc-lines" aria-hidden="true"></div>
-    <div class="hc-photos"></div>
-    <i class="hc-mark hc-mark--tl" aria-hidden="true"></i>
-    <i class="hc-mark hc-mark--tr" aria-hidden="true"></i>
-    <i class="hc-mark hc-mark--bl" aria-hidden="true"></i>
-    <i class="hc-mark hc-mark--br" aria-hidden="true"></i>
-    <div class="hc-year is-on"><span class="hc-year__t">1900</span></div>
-    <div class="hc-stage"></div>
-    <div class="hc-progress"><span class="hc-progress__fill"></span></div>
-    <div class="hc-scroll">Scroll — 1900 → 2026</div>
+<!-- ============ 章スライダー（eightdesign 参考）============
+     ⚠️旧 .hc-scene（3D年表）は要素ごと撤去。旧JSは #hc を取得できず
+     早期returnするだけなので、スクリプト本体は消していない。 -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <clipPath id="arcClip" clipPathUnits="objectBoundingBox">
+      <path d="M0,.055 Q.5,-.025 1,.055 L1,.945 Q.5,1.025 0,.945 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<section class="era" id="era">
+  <div class="era__pin">
+    <div class="era__slides"></div>
+    <div class="era__ruler" aria-hidden="true">
+      <div class="era__ticks"></div>
+      <span class="era__cursor"></span>
+    </div>
   </div>
+</section>
+
+<section class="chrono" id="chrono">
+  <div class="chrono__head">
+    <h2 class="sec-jp rv">できごとの記録</h2>
+    <p class="sec-ttl rv">Chronology</p>
+  </div>
+  <div class="chrono__list"></div>
 </section>
 
 <section class="voices">
@@ -3177,6 +3190,234 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   window.addEventListener('resize', u);
   window.addEventListener('load', u);
   u();
+})();
+</script>
+
+<style id="era-css">
+/* ══ 126年ヒストリー：章スライダー（eightdesign 参考）══
+   暗い画面を固定し、スクロールで章（元号）を送る。
+   左右にアーチ状にクリップした写真、中央に特大の英字、下に元号ピルと通し番号、
+   最下部に「計量器」らしい目盛り定規。定規のカーソルが年代の位置を示す。 */
+.era{position:relative;background:#141414;color:#fff}
+.era__pin{position:sticky;top:0;height:100vh;overflow:hidden}
+
+.es{position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity .55s ease,visibility 0s .55s}
+.es.is-on{opacity:1;visibility:visible;transition:opacity .55s ease,visibility 0s}
+
+/* 特大の英字。写真の下に潜り、左右の写真に食われる見え方 */
+.es__en{position:absolute;left:50%;top:14vh;transform:translateX(-50%);z-index:1;
+  margin:0;text-align:center;white-space:nowrap;
+  font-family:var(--en);font-weight:800;line-height:.9;letter-spacing:-.03em;
+  font-size:clamp(3rem,10.5vw,9.5rem)}
+
+/* アーチ状にクリップした写真。左右とも画面の外へ食み出す */
+.es__ph{position:absolute;top:50%;z-index:2;
+  width:min(42vw,620px);aspect-ratio:4/3;
+  transform:translateY(-38%);
+  -webkit-clip-path:url(#arcClip);clip-path:url(#arcClip)}
+.es__ph--l{left:-5vw}
+.es__ph--r{right:-5vw}
+.es__ph i{display:block;width:100%;height:100%;background:#333 center/cover no-repeat}
+
+/* 元号ピル */
+.es__pill{position:absolute;left:50%;bottom:18vh;transform:translateX(-50%);z-index:3;
+  margin:0;background:#fff;color:#141414;border-radius:999px;
+  padding:11px 30px;white-space:nowrap;
+  font-family:var(--jp);font-weight:700;font-size:13.5px;letter-spacing:.1em}
+
+/* 通し番号＋そこから定規へ落ちる縦線 */
+.es__no{position:absolute;left:50%;bottom:11vh;transform:translateX(-50%);z-index:3;
+  margin:0;font-family:var(--en);font-weight:600;font-size:19px;letter-spacing:.14em}
+.es__no::after{content:"";position:absolute;left:50%;top:calc(100% + 8px);
+  width:1px;height:5.4vh;background:rgba(255,255,255,.45)}
+
+/* 目盛り定規 */
+/* 高さはカーソル(30px)＋年号ラベルが収まる寸法にすること。足りないと年号が見切れる */
+.era__ruler{position:absolute;left:0;right:0;bottom:0;height:62px;z-index:4}
+.era__ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:flex-start}
+.era__ticks i{width:1px;height:9px;background:rgba(255,255,255,.3)}
+.era__ticks i.is-major{height:19px;background:rgba(255,255,255,.62)}
+.era__cursor{position:absolute;top:0;left:0;width:2px;height:30px;background:#fff;
+  transform:translateX(var(--cx,0px));transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.era__cursor::after{content:attr(data-y);position:absolute;left:50%;top:calc(100% + 6px);
+  transform:translateX(-50%);font-family:var(--en);font-size:11px;letter-spacing:.12em;
+  color:rgba(255,255,255,.8)}
+
+@media(max-width:900px){
+  .era__pin{height:100svh}
+  .es__en{top:11vh;font-size:clamp(2.2rem,13vw,4.4rem)}
+  .es__ph{width:74vw;transform:translateY(-42%)}
+  .es__ph--l{left:-16vw;top:38%}
+  .es__ph--r{right:-16vw;top:63%}
+  .es__pill{bottom:16vh;padding:9px 22px;font-size:12px}
+  .es__no{bottom:10vh;font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .es{transition:none}
+  .era__cursor{transition:none}
+}
+
+/* ══ 全年表（章スライダーの下に続く読み物）══ */
+.chrono{background:#fff;color:var(--ink);padding:clamp(80px,9vw,140px) var(--frame)}
+.chrono__head{margin-bottom:clamp(36px,4vw,64px)}
+.chrono__list{border-top:.5px solid rgba(0,0,0,.18)}
+.chrono__row{display:grid;grid-template-columns:minmax(0,.26fr) minmax(0,.74fr);
+  gap:clamp(16px,3vw,5vw);padding:clamp(20px,2.2vw,30px) 0;
+  border-bottom:.5px solid rgba(0,0,0,.18)}
+.chrono__y{font-family:var(--en);font-weight:700;font-size:clamp(17px,1.5vw,23px);
+  letter-spacing:.03em;line-height:1.3}
+.chrono__y small{display:block;margin-top:5px;font-family:var(--jp);font-weight:400;
+  font-size:11.5px;letter-spacing:.06em;opacity:.55}
+.chrono__t{font-family:var(--jp);font-weight:700;font-size:clamp(14.5px,1.15vw,17px);
+  line-height:1.7;margin:0}
+.chrono__d{font-size:13.5px;line-height:2;color:rgba(0,0,0,.7);margin:8px 0 0}
+@media(max-width:900px){
+  .chrono__row{grid-template-columns:1fr;gap:6px}
+}
+</style>
+<script>
+/* 章スライダー：固定中のスクロールで元号を送り、定規のカーソルを動かす */
+(function(){
+  var DATA=[
+    ["1900","明治33年3月","明治・大正","近江度量衡株式会社 創立","衡器販売と製作免許の申請をもって大津市港町第44番屋敷に設立。資本金2万円・発起人27人。初代社長 池田仙右衛門。","h_1900_1.jpg"],
+    ["1904","明治37年3月","明治・大正","衡器製作免許を取得","免許第619号。会社記号を登録し、計量器メーカーとしての基盤を確立。","h_1900_2.jpg"],
+    ["1905","明治38年1月","明治・大正","工場仮移転","大津市元会所町15番地へ工場を仮移転。","h_1900_2.jpg"],
+    ["1906","明治39年10月","明治・大正","工場・本社を移転","2代社長 西村市良右衛門（初代）が就任。工場・本社を大津市鍛冶屋町24番地へ移転。","h_of_otsu.jpg"],
+    ["1915","大正4年4月","明治・大正","3代社長 千田伊兵衛（初代）","大正期の事業を担う新体制へ。","hist.jpg"],
+    ["1925","大正14年12月","明治・大正","4代社長 西村市良右衛門（2代）","西村英男が4代社長に就任。","hist.jpg"],
+    ["1938","昭和13年4月","昭和","5代社長 千田伊兵衛（2代）","千田淳三が5代社長に就任。","hist.jpg"],
+    ["1943","昭和18年10月","昭和","本社建物を再建","前年の火災により焼失した本社建物を再建。","hist.jpg"],
+    ["1944","昭和19年2月","昭和","戦時特需生産","軍事用計量はかり他を製造（海軍、陸軍用）。","hist2.jpg"],
+    ["1945","昭和20年8月","昭和","終戦 ― 企業整備令発令","戦後の再出発へ。","hist2.jpg"],
+    ["1946","昭和21年3月","昭和","米軍用バススケール契約 10,000台","大型契約に対応するため野洲工場を拡充。戦後復興を支える。","h_1946.jpg"],
+    ["1951","昭和26年6月","昭和","新計量法 制定","旧・度量衡法が廃止され新計量法制定。のち1959年にメートル法が完全実施。","h_1946.jpg"],
+    ["1959","昭和34年4月","昭和","営業車やトラックを自社所有","機動力を高め、サービス体制を強化。","h_1959.jpg"],
+    ["1961","昭和36年1月","昭和","草津工場 完成","草津市東矢倉3丁目11番7号。以降、草津を製造の中核に。","h_1961_1.jpg"],
+    ["1961","昭和36年12月","昭和","6代社長 服部喜久二郎","高度成長期の発展を牽引。","h_1961_2.jpg"],
+    ["1973","昭和48年2月","昭和","鉄鋼施設事業部 開設","工業分野へ本格進出。","h_1961_3.jpg"],
+    ["1973","昭和48年10月","昭和","大阪衡器と吸収合併","大阪営業所及び大阪工場を開設。","h_1961_3.jpg"],
+    ["1974","昭和49年4月","昭和","海外への計量器輸出を開始","ポーランド、ソ連、インドネシア、韓国、台湾、アメリカなどへ輸出。","h_1974.jpg"],
+    ["1975","昭和50年4月","昭和","東京営業所 開設","東京都新宿区に開設し、東日本の営業を強化。","h_of_tokyo.jpg"],
+    ["1976","昭和51年1月","昭和","電装システムの拡充","社内のコンピュータ、ハードウェア、ソフトウェアを整備。","h_of_tokyo.jpg"],
+    ["1980","昭和55年3月","昭和","草津工場 増設","創立80周年記念。","h_1980.jpg"],
+    ["1981","昭和56年7月","昭和","札幌営業所 開設","札幌市北区北七条西に開設。","h_of_sapporo.jpg"],
+    ["1982","昭和57年6月","昭和","本社社屋の改築","社員の教育研修体制強化。帯広駐在所開設（帯広市西18条南）。","h_1978.jpg"],
+    ["1986","昭和61年7月","昭和","大阪営業所用ビル購入","大阪市中央区本町。","h_of_osaka.jpg"],
+    ["1987","昭和62年9月","昭和","7代社長 平野將","新体制で次代へ。","h_of_osaka.jpg"],
+    ["1988","昭和63年1月","昭和","仙台出張所 開設","仙台市青葉区に開設。","h_of_sapporo.jpg"],
+    ["1991","平成3年1月","平成","久留米出張所 開設","久留米市長門石に開設。","h_1980.jpg"],
+    ["1992","平成4年10月","平成","韓国近江度量衡株式会社 設立","新潟出張所開設（新潟市堀之内南）。韓国京畿道富川市に現地法人設立。","h_1980.jpg"],
+    ["1993","平成5年1月","平成","草津工場を4階建工場として改築竣工","近代的な工場へ。技術革新体制を強化。","h_1993.jpg"],
+    ["1996","平成8年9月","平成","マレーシア事務所 開設","クアラルンプールに開設。","h_1993.jpg"],
+    ["1999","平成11年8月","平成","日本農業施設学会 技術賞受賞","内外部品位判定選果システムが評価される。","h_1999.jpg"],
+    ["2000","平成12年1月","平成","ISO9001取得 ― 創業100周年","認証登録JQA-QM4385号。創業100周年記念事業を実施。","h_1999.jpg"],
+    ["2001","平成13年4月","平成","農業機械学会 功績賞受賞","計量・選果技術の功績が認められる。","h_1999.jpg"],
+    ["2003","平成15年2月","平成","近江度量衡 設備（上海）有限公司 設立","中国市場へ本格展開。","h_1999.jpg"],
+    ["2006","平成18年9月","平成","資本金を1億5千万円に増資","経営基盤を強化。","h_1999.jpg"],
+    ["2007","平成19年7月","平成","韓国へ大型選別設備輸出","海外大型案件の実績を重ねる。","h_2007.jpg"],
+    ["2008","平成20年9月","平成","タイ近江度量衡 設立","アジア3拠点体制へ。","h_2007.jpg"],
+    ["2009","平成21年11月","平成","平野將社長 旭日双光章受章","長年の産業振興への貢献が認められる。","h_2009.jpg"],
+    ["2012","平成24年6月","平成","8代社長 田中秀康","会長 平野將。新体制へ。","h_2009.jpg"],
+    ["2013","平成25年10月","平成","本社工場 増設完成","生産能力を拡大。","h_2013.jpg"],
+    ["2013","平成25年12月","平成","九州営業所 開設","熊本県熊本市に開設。","h_2013.jpg"],
+    ["2014","平成26年9月","平成","資本金を2億円に増資","さらなる成長へ。","h_2013.jpg"],
+    ["2015","平成27年5月","平成","上海有限公司 無錫工場 設立","中国での生産体制を拡充。","h_2015.jpg"],
+    ["2017","平成29年12月","平成","地域未来牽引企業に選定","経済産業省による選定。","h_2015.jpg"],
+    ["2018","平成30年1月","平成","優良100年企業表彰を受賞","第3回100年企業顕彰。","h_2015.jpg"],
+    ["2019","令和元年5月","令和","滋賀県ワーク・ライフ・バランス推進企業登録","働きやすい職場づくりへ。","h_2015.jpg"],
+    ["2019","令和元年12月","令和","仙台出張所 移転","宮城県名取市へ移転。","h_2015.jpg"],
+    ["2024","令和6年10月","令和","関西農業食料工学会 技術開発賞受賞","ボックスフィリング定量箱詰めシステムで受賞。","h_furano.jpg"],
+    ["2025","令和7年3月","令和","創立125周年","1900年の創業から四半世紀を4たび重ねて。","h_furano.jpg"],
+    ["2025","令和7年9月","令和","9代社長 小谷俊彦","次の100年に向けた新体制へ。","h_furano.jpg"],
+    ["2026","令和8年","令和","創立126周年 ― Webサイトをリニューアル","新ブランド「いきる」をはかり、豊かな世界へ。のもと次の100年へ。","h_furano.jpg"]
+  ];
+  var scene = document.getElementById('era');
+  var chrono = document.getElementById('chrono');
+  if (!scene || !DATA.length) return;
+
+  /* ── 元号ごとに章へまとめる（DATAの3列目が元号） ── */
+  var EN = {'明治・大正':'MEIJI<br>TAISHO', '昭和':'SHOWA', '平成':'HEISEI', '令和':'REIWA'};
+  var order = [], group = {};
+  DATA.forEach(function(d){
+    if (!group[d[2]]){ group[d[2]] = []; order.push(d[2]); }
+    group[d[2]].push(d);
+  });
+
+  var slides = scene.querySelector('.era__slides');
+  var chapters = order.map(function(name, i){
+    var rows = group[name];
+    var y0 = rows[0][0], y1 = rows[rows.length - 1][0];
+    /* 写真は章の前半・後半から1枚ずつ。同じ画像に当たったらずらして別絵を拾う */
+    var pa = rows[Math.floor(rows.length * .12)][5], pb = '';
+    for (var k = rows.length - 1; k >= 0; k--){
+      if (rows[k][5] !== pa){ pb = rows[k][5]; break; }
+    }
+    if (!pb) pb = rows[rows.length - 1][5];
+    var no = ('0' + (i + 1)).slice(-2);
+    slides.insertAdjacentHTML('beforeend',
+      '<article class="es' + (i === 0 ? ' is-on' : '') + '">' +
+        '<h2 class="es__en">' + (EN[name] || name) + '</h2>' +
+        '<div class="es__ph es__ph--l"><i style="background-image:url(' + pa + ')"></i></div>' +
+        '<div class="es__ph es__ph--r"><i style="background-image:url(' + pb + ')"></i></div>' +
+        '<p class="es__pill">' + name + '　' + y0 + '–' + y1 + '</p>' +
+        '<p class="es__no">' + no + '</p>' +
+      '</article>');
+    return {name:name, y0:+y0, y1:+y1};
+  });
+  var els = [].slice.call(slides.children);
+  var N = els.length;
+
+  /* ── 定規：1900→2026 を等間隔の目盛りで。10年ごとを長い目盛りに ── */
+  var Y0 = 1900, Y1 = 2026, ticks = scene.querySelector('.era__ticks'), tk = '';
+  for (var y = Y0; y <= Y1; y += 2){
+    tk += '<i class="' + (y % 10 === 0 ? 'is-major' : '') + '"></i>';
+  }
+  ticks.innerHTML = tk;
+  var cursor = scene.querySelector('.era__cursor');
+
+  /* ── 全年表を書き出す ── */
+  if (chrono){
+    var rowsHtml = DATA.map(function(d){
+      return '<div class="chrono__row rv">' +
+        '<div class="chrono__y">' + d[0] + '<small>' + d[1] + '</small></div>' +
+        '<div><p class="chrono__t">' + d[3] + '</p><p class="chrono__d">' + d[4] + '</p></div>' +
+      '</div>';
+    }).join('');
+    chrono.querySelector('.chrono__list').innerHTML = rowsHtml;
+  }
+
+  /* ── スクロール連動 ── */
+  var STEP = 1.15;                      /* 1章あたりに使うスクロール量（画面高の倍数） */
+  var vh = 0, cur = -1;
+  function layout(){
+    vh = window.innerHeight;
+    scene.style.height = Math.round(vh * (1 + STEP * N)) + 'px';
+    upd();
+  }
+  function upd(){
+    var top = scene.getBoundingClientRect().top;
+    var span = vh * STEP * N;
+    var p = span > 0 ? (-top) / span : 0;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    var i = Math.min(N - 1, Math.floor(p * N));
+    if (i !== cur){
+      cur = i;
+      els.forEach(function(el, k){ el.classList.toggle('is-on', k === i); });
+    }
+    /* カーソルは章の年代範囲を連続で辿る */
+    var c = chapters[i];
+    var inner = p * N - i;                        /* 章内の進行度 0→1 */
+    var year = c.y0 + (c.y1 - c.y0) * inner;
+    var ratio = (year - Y0) / (Y1 - Y0);
+    ratio = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio;
+    cursor.style.setProperty('--cx', (ratio * ticks.offsetWidth).toFixed(1) + 'px');
+    cursor.setAttribute('data-y', Math.round(year));
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', layout);
+  window.addEventListener('load', layout);
+  layout();
 })();
 </script>
 </body>
