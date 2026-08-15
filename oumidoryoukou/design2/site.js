@@ -4,7 +4,7 @@
   var A = window.OMI_ACTIVE || "";
   var HEADER = `
   <header class="nav" id="nav">
-    <a class="nav__logo" href="index_2.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
+    <a class="nav__logo" href="index.html"><img src="logo_r.png" alt="近江度量衡株式会社"></a>
     <nav class="nav__menu">
       <div class="nitem" data-k="products">
         <a class="nlink" href="products.html">製品・技術</a>
@@ -109,7 +109,7 @@
       </div>
       <nav class="foot__nav">
         <div>
-          <a href="index_2.html">トップページ</a>
+          <a href="index.html">トップページ</a>
           <a href="products.html">製品・技術</a>
           <a class="sub" href="product-agri.html">農産物用計量システム</a>
           <a class="sub" href="products-grain.html">穀類用計量システム</a>
