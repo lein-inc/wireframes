@@ -3267,5 +3267,40 @@ body.is-logo-mini .site-logo{
 })();
 </script>
 
+<style id="hist-veil">
+/* ══ 採用セクションのせり上がりに合わせて、下に残るヒストリーへ薄い黒幕をかける ══
+   .recjoin は margin-top:-100vh で、sticky で固定中の .hist__stage の上にせり上がる。
+   その1画面ぶんの重なりの進行度を JS が --veil（0→1）で流し込む。
+   濃さを変えたいときは --veil-max だけ触ればよい。SP（900px以下）は重なり自体が
+   無効なので幕も出さない。 */
+.hist__stage{--veil-max:.45}
+.hist__stage::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:#000;opacity:calc(var(--veil,0) * var(--veil-max));
+  transition:opacity .3s ease-out}
+@media(max-width:900px){
+  .hist__stage::after{content:none}
+}
+</style>
+<script>
+/* ヒストリーの黒幕：採用セクションの上端が画面下端→画面上端へ動く間を 0→1 に写す */
+(function(){
+  var stage = document.querySelector('.hist__stage');
+  var rec   = document.querySelector('.recjoin');
+  if (!stage || !rec) return;
+  var sp = matchMedia('(max-width:900px)');
+  function upd(){
+    if (sp.matches){ stage.style.setProperty('--veil', 0); return; }
+    var vh = window.innerHeight;
+    var p  = (vh - rec.getBoundingClientRect().top) / vh;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    p = p * p * (3 - 2 * p);            /* smoothstep でふわっと立ち上げる */
+    stage.style.setProperty('--veil', p.toFixed(3));
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+</script>
+
 </body>
 </html>
