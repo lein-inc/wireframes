@@ -3542,13 +3542,16 @@ body.is-logo-mini .site-logo{
 </style>
 
 <style id="nav-tight">
-/* ══ PCグローバルナビ：帯の上下アキをなくし、項目ごとに幅を詰めて左揃え ══
+/* ══ PCグローバルナビ：1列・帯の上下アキなし・項目ごとに幅を詰めて左揃え ══
    従来は 2カラム固定幅（128〜176px）のグリッドで、全項目が同じ幅だった。
-   これを max-content の2カラムに変え、各項目が自分の文字幅まで縮むようにする。
-   左端は揃い、右端は項目ごとにバラつく（＝詰まった見え方）。 */
+   これを max-content の1カラムに変え、各項目が自分の文字幅まで縮むようにする。
+   左端は揃い、右端は項目ごとにバラつく（＝詰まった見え方）。
+   ⚠️.nav__cta（お問い合わせ）に grid-column:2 が別途効いているので、
+   1カラム化するときは 1 に戻さないと空の2列目ができる。 */
 @media(min-width:901px){
-  .nav .nav__menu{grid-template-columns:max-content max-content;
+  .nav .nav__menu{grid-template-columns:max-content;
     justify-items:start;width:auto;max-width:none}
+  .nav .nav__cta{grid-column:1}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに */
   .nav .nav__menu .nlink,.nav .nav__cta{
     padding:1px 13px 3px;line-height:1.12;justify-content:flex-start}
