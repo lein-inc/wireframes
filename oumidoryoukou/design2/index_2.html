@@ -3273,28 +3273,31 @@ body.is-logo-mini .site-logo{
    その1画面ぶんの重なりの進行度を JS が --veil（0→1）で流し込む。
    濃さを変えたいときは --veil-max だけ触ればよい。SP（900px以下）は重なり自体が
    無効なので幕も出さない。 */
-.hist__stage{--veil-max:.45}
-.hist__stage::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+/* ⚠️幕は .hist__stage ではなく .gsec.hist 側に置くこと。
+   .hist__stage は overflow:hidden なので、そこに置くと .gsec の左右余白
+   （padding:var(--frame)）が幕から取り残されて明るいままになる。 */
+.gsec.hist{--veil-max:.45}
+.gsec.hist::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
   background:#000;opacity:calc(var(--veil,0) * var(--veil-max));
   transition:opacity .3s ease-out}
 @media(max-width:900px){
-  .hist__stage::after{content:none}
+  .gsec.hist::after{content:none}
 }
 </style>
 <script>
 /* ヒストリーの黒幕：採用セクションの上端が画面下端→画面上端へ動く間を 0→1 に写す */
 (function(){
-  var stage = document.querySelector('.hist__stage');
-  var rec   = document.querySelector('.recjoin');
-  if (!stage || !rec) return;
+  var hist = document.querySelector('.gsec.hist');
+  var rec  = document.querySelector('.recjoin');
+  if (!hist || !rec) return;
   var sp = matchMedia('(max-width:900px)');
   function upd(){
-    if (sp.matches){ stage.style.setProperty('--veil', 0); return; }
+    if (sp.matches){ hist.style.setProperty('--veil', 0); return; }
     var vh = window.innerHeight;
     var p  = (vh - rec.getBoundingClientRect().top) / vh;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
     p = p * p * (3 - 2 * p);            /* smoothstep でふわっと立ち上げる */
-    stage.style.setProperty('--veil', p.toFixed(3));
+    hist.style.setProperty('--veil', p.toFixed(3));
   }
   window.addEventListener('scroll', upd, {passive:true});
   window.addEventListener('resize', upd);
