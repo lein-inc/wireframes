@@ -2723,8 +2723,8 @@ body.menu-open .nav__mini{opacity:0;visibility:hidden;pointer-events:none}
 /* ══ FV背景写真：最初はカラー。スクロールしてブラーがかかる瞬間に白黒へ ══
    .is-blur は想いブロックに差し掛かるとJSが付ける（ブラー自体は子の i に掛かる）。
    filter には .7s のトランジションが効いているので、色が抜けるのもブラーと同時に進む。 */
-.fv__slides{filter:brightness(.62) contrast(1.02) saturate(1.02)}
-.fv__slides.is-blur{filter:grayscale(1) brightness(.56) contrast(1.05)}
+.fv__slides{filter:brightness(.5) contrast(1.04) saturate(1.02)}
+.fv__slides.is-blur{filter:grayscale(1) brightness(.44) contrast(1.06)}
 
 /* ══ FV：白フレームは初期状態から表示／レイヤーは最前面（固定解除の挙動は従来どおり） ══ */
 .fv__slides{top:var(--fvgap);left:var(--fvgap);
