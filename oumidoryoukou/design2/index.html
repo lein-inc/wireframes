@@ -3450,11 +3450,16 @@ body.is-logo-mini .site-logo{
 
   /* 帯だけは左右の余白ナシ＝写真が端まで詰まって画面を突っ切る。
      見出し・コピー側は他セクションと同じ .gsec の padding をそのまま使う。 */
-  .hist__rail{display:flex;align-items:flex-end;gap:clamp(18px,2vw,38px);
+  /* 縮小した写真どうしが離れすぎないよう、素の間隔は詰めておく。
+     見た目の間隔は JS の縮尺（中央=大／端=小）が作る。 */
+  .hist__rail{display:flex;align-items:flex-end;gap:clamp(8px,1vw,20px);
     width:max-content;padding:0;will-change:transform;
     transform:translate3d(var(--hx,0px),0,0)}
 
-  .hb{flex:0 0 auto;width:clamp(210px,21vw,360px);margin:0}
+  /* 縮尺は JS が中央からの距離で入れる。transform は配置に影響しないので
+     写真どうしの間隔は一定のまま、見た目だけ中央が大きくなる */
+  .hb{flex:0 0 auto;width:clamp(210px,21vw,360px);margin:0;
+    transform-origin:center center;will-change:transform}
   .hb:nth-child(even){margin-bottom:clamp(26px,3.4vw,64px)}   /* 互い違いに段差 */
   .hb__ph{display:block;width:100%;aspect-ratio:4/3;
     background:#ddd center/cover no-repeat}
@@ -3497,18 +3502,31 @@ body.is-logo-mini .site-logo{
   var rail = band && band.querySelector('.hist__rail');
   if (!hist || !rail) return;
 
-  var SWEEP = 2.2;          /* 流し切るのに使うスクロール量（画面高の倍数） */
+  var SWEEP = 1.5;          /* 流し切るのに使うスクロール量（画面高の倍数）＝固定される長さ */
+  var SCALE_MIN = .66;      /* 画面端での縮小率。中央が 1.0 で端に行くほど小さくなる */
+  var FALLOFF   = 1.1;      /* 距離の頭打ち。大きくすると端がさらに小さくなる */
+  var stage = hist.querySelector('.hist__stage');
+  var items = [].slice.call(rail.children);
   var sp = matchMedia('(max-width:900px)');
   var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var vh = 0, travel = 0;
+  var vh = 0, travel = 0, bandL = 0, cent = [];
 
   function layout(){
-    if (sp.matches || reduce){ hist.style.height = ''; rail.style.setProperty('--hx','0px'); return; }
+    if (sp.matches || reduce){
+      hist.style.height = ''; rail.style.setProperty('--hx','0px');
+      items.forEach(function(el){ el.style.transform = ''; });
+      return;
+    }
     vh = window.innerHeight;
     /* 固定される長さ = 高さ - 1画面。うち最後の1画面は採用セクションが覆う。
        つまり流しに使えるのは（高さ - 2画面）＝ SWEEP 画面ぶん。 */
     hist.style.height = Math.round(vh * (SWEEP + 2)) + 'px';
     travel = Math.max(0, rail.scrollWidth - band.offsetWidth);
+    /* ⚠️帯は回転しているので getBoundingClientRect().left は使えない（回転後の外接矩形になる）。
+       ステージの左端＋帯の offsetLeft でレイアウト上の左端を出す。 */
+    bandL = stage.getBoundingClientRect().left + band.offsetLeft;
+    /* 各写真の中心X（帯の左端から測った値）。transform は配置に影響しないので使い回せる */
+    cent = items.map(function(el){ return el.offsetLeft + el.offsetWidth / 2; });
     upd();
   }
   function upd(){
@@ -3517,7 +3535,15 @@ body.is-logo-mini .site-logo{
     var span = vh * SWEEP;                       /* 流しに使うスクロール量 */
     var p = span > 0 ? (-top) / span : 0;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
-    rail.style.setProperty('--hx', (-(p * travel)).toFixed(1) + 'px');
+    var hx = -(p * travel);
+    rail.style.setProperty('--hx', hx.toFixed(1) + 'px');
+    /* 画面中央からの距離で縮尺を決める（中央=1.0 → 端=SCALE_MIN） */
+    var half = window.innerWidth / 2;
+    for (var i = 0; i < items.length; i++){
+      var d = Math.abs(bandL + hx + cent[i] - half) / half;
+      if (d > FALLOFF) d = FALLOFF;
+      items[i].style.transform = 'scale(' + (1 - (1 - SCALE_MIN) * d).toFixed(3) + ')';
+    }
     hist.classList.toggle('is-band', top < vh * 0.85);
   }
   window.addEventListener('scroll', upd, {passive:true});
