@@ -5028,11 +5028,12 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 .phil__map .mapsvg .mp-line{stroke-width:.67}
 </style>
 
-<!-- ══ 近江地図：草津の塗りは赤 ══ -->
+<!-- ══ 近江地図：草津の塗りは白・60%透過 ══ -->
 <style id="map-fill-red">
-/* ⚠️前段の #map-white で .mp-fill{fill:#fff} にしてある（地図全体を白にしたときの指定）。
-   県境の線は白のまま、草津の面だけ赤に戻す。 */
-.phil__map .mapsvg .mp-fill{fill:var(--red)}
+/* ⚠️薄さは opacity ではなく fill-opacity で付けること。
+   .mp-fill の opacity は「線を引き終わってから塗りが乗る」出現アニメに使われていて、
+   そこを上書きすると塗りの出るタイミングが壊れる。 */
+.phil__map .mapsvg .mp-fill{fill:#fff;fill-opacity:.6}
 </style>
 </body>
 </html>
