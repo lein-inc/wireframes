@@ -5260,5 +5260,21 @@ html{visibility:visible}
   :root{--secgap:clamp(52px,11vw,88px)}
 }
 </style>
+
+<!-- ══ 900px以下：ヒストリーの写真をPCの半分に ══ -->
+<style id="sp-hist-half">
+/* SPは1列に積む作りなので、10点そのままだと縦に長くなりすぎる。5点に間引く。
+   残すのは 1900 / 1959 / 1974 / 1999 / 2015（年代がまんべんなく散り、
+   大・中・小のサイズ差も残る組み合わせ）。
+   ⚠️並び順は DOM の順。写真を足し引きしたら nth-child の番号を振り直すこと。 */
+@media(max-width:900px){
+  .hist__scatter .hb:nth-child(2),   /* 1946 */
+  .hist__scatter .hb:nth-child(4),   /* 1961 */
+  .hist__scatter .hb:nth-child(6),   /* 1980 */
+  .hist__scatter .hb:nth-child(7),   /* 1993 */
+  .hist__scatter .hb:nth-child(9){   /* 2009 */
+    display:none}
+}
+</style>
 </body>
 </html>
