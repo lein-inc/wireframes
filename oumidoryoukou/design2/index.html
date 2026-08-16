@@ -2744,8 +2744,8 @@ a.foot__contact:hover .cbtn::after{animation:arrowSwap .42s cubic-bezier(.4,0,.2
   /* 「近江度量衡について」バナーが画面外へ突き抜けないよう横幅100%を維持 */
   .phil__box{width:auto;max-width:100%}
   .phil__cta{width:calc(100% + var(--frame));margin-left:calc(var(--frame) * -1);max-width:none}
-  /* 赤帯の左をさらに5px空ける */
-  .gsec.phil::before{left:calc(var(--fvpad) + 5px)}
+  /* ⚠️以前ここで赤帯の左を +5px していたが、罫線・見出し・コピーはどれも --fvpad 起点。
+     帯だけ5px内側に入って揃わなくなるので撤去した。 */
 }
 
 /* ══ 600px以下：メニューは1画面に収める／展開中は左上ロゴを隠す ══ */
@@ -5249,6 +5249,15 @@ html{visibility:visible}
     -webkit-clip-path:inset(0);clip-path:inset(0);pointer-events:auto}
   body.is-logo-fix .nav .nav__mini .mini__in{transform:none;transition-delay:.32s}
   .nav .nav__mini.is-settled .mini__in{transform:none;transition-delay:0s}
+}
+</style>
+
+<!-- ══ 900px以下：区切り線まわりのアキを広げる ══ -->
+<style id="sp-secgap">
+/* SPは1画面が狭いぶんセクションの切れ目が窮屈に見えるので、PCより比率を上げる。
+   4本の区切り線すべてに効く（上下同値）。 */
+@media(max-width:900px){
+  :root{--secgap:clamp(52px,11vw,88px)}
 }
 </style>
 </body>
