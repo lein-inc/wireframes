@@ -1659,7 +1659,8 @@ html,body{overflow-x:clip;max-width:100%}
       <div class="era__ticks"></div>
       <span class="era__cursor"></span>
     </div>
-    <div class="hc-scroll">Scroll — 1900 → 2026</div>
+    <!-- 「Scroll — 1900 → 2026」は削除。年代は目盛りの中央に出す -->
+    <p class="hc-now" aria-hidden="true"><span></span></p>
   </div>
 </section>
 
@@ -3251,7 +3252,8 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   var scene=document.getElementById('hc'); if(!scene) return;
   var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
       ruler=scene.querySelector('.era__ruler'),
-      yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'), scroll=scene.querySelector('.hc-scroll');
+      yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'),
+      nowT=scene.querySelector('.hc-now span'), scroll=scene.querySelector('.hc-scroll');
   var N=DATA.length;
   DATA.forEach(function(d,i){
     stage.insertAdjacentHTML('beforeend',
@@ -3310,12 +3312,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
       else pics[active].classList.add('is-on');
     }
     setRuler(+DATA[active][0]);
-    /* 年代帯：文字が下へスッと消え→入替→下からスッと出現（帯は常設） */
-    if(yearEl && yearT.textContent!==DATA[active][0]){
+    /* 左上の枠は「年号（元号）」。文字が下へスッと消え→入替→下からスッと出現（枠は常設） */
+    if(yearEl && yearT.textContent!==DATA[active][2]){
       yearEl.classList.remove('is-on');
       clearTimeout(yearEl._t);
-      yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][0]; yearEl.classList.add('is-on'); }, 200);
+      yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][2]; yearEl.classList.add('is-on'); }, 200);
     }
+    /* 目盛りの中央には「年代（西暦）」 */
+    if(nowT && nowT.textContent!==DATA[active][0]) nowT.textContent=DATA[active][0];
   }
   /* どれだけ一気にスクロールしても、表示は1枚ずつの順送りで追いつく（乱れ防止）。
      4枚以上先へ飛んだ時は目的の2枚手前へスナップしてから順送り＝実質3枚程度で静止 */
@@ -3335,13 +3339,16 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     var raw=p*(N-1);
     var nt=Math.abs(raw-target)>=0.6?Math.round(raw):target;
     nt=nt<0?0:(nt>N-1?N-1:nt);
-    if(scroll) scroll.style.opacity=String(cl(1-p*6));
+    /* スライドが画面を占めている間だけ body.is-hc（ロゴを消す／メニューをバーガーに／背景を黒く） */
+    document.body.classList.toggle('is-hc', r.top<=1 && r.bottom>=vh-1);
     if(nt!==target){ target=nt; step(); }
     ticking=false;
   }
   // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
   place(0); last=0; target=0; swap(0);
   clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
+  if(yearT) yearT.textContent=DATA[0][2];
+  if(nowT)  nowT.textContent=DATA[0][0];
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
@@ -3369,7 +3376,8 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
         textTimer=setTimeout(function(){ panels[last].classList.add('is-text'); }, 250);
       }
       /* 4) 年代帯の整合 */
-      if(yearT && yearT.textContent!==DATA[last][0]){ yearT.textContent=DATA[last][0]; yearEl.classList.add('is-on'); }
+      if(yearT && yearT.textContent!==DATA[last][2]){ yearT.textContent=DATA[last][2]; yearEl.classList.add('is-on'); }
+      if(nowT && nowT.textContent!==DATA[last][0]) nowT.textContent=DATA[last][0];
     },170);
   },{passive:true});
   /* 指定項目の定位置へスクロールジャンプ */
@@ -3413,6 +3421,54 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   .site-logo{gap:clamp(10px,2.1vw,18px)}
   .site-logo .logo-name{height:clamp(21px,5.05vw,36px)}
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
+}
+</style>
+
+<!-- ══ ヒストリー詳細：スライド中は黒背景・ロゴ非表示・バーガー化／目盛りは画面下 ══ -->
+<style id="hc-dark">
+/* body.is-hc ＝ スライドが画面いっぱいを占めている状態（JSが付け外し） */
+.hc-scene{background:#0a0b0a;color:#fff}
+/* 方眼は黒地用に反転（元は rgba(0,0,0,.12)） */
+.hc-lines{opacity:.6;
+  background-image:
+    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px)}
+
+/* ① 左上ロゴを隠す */
+body.is-hc .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .3s ease,visibility 0s .3s}
+.site-logo{transition:opacity .3s ease,visibility 0s}
+
+/* ② メニューをハンバーガーに差し替え
+   ⚠️PC幅ではバーガーが display:none にされているので、ここで出し直す。
+     .nav 自体は pointer-events:none のことがあるのでボタン側で戻す。 */
+/* ⚠️前段に .nav .nav__menu の表示指定が複数あり、素直に書くと負ける。
+   ここは確実に隠したいので !important で押さえる。 */
+body.is-hc .nav .nav__menu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+body.is-hc .nav .nav__cta{opacity:0!important;visibility:hidden!important}
+body.is-hc .nav .burger{display:flex!important;opacity:1;visibility:visible;pointer-events:auto}
+body.is-hc .nav{pointer-events:none}
+
+/* ③ 左上の枠は「年号」。ひと回りコンパクトに */
+.hc-year{left:var(--fvpad,var(--frame));top:var(--fvpad,var(--frame));
+  padding:9px 18px 11px}
+.hc-year__t{font-size:clamp(20px,2vw,30px);letter-spacing:.06em}
+
+/* ④ 目盛りはブラウザ下端にツラ付け。中央に年代（西暦） */
+.hc-pin .era__ruler{bottom:0;z-index:6;height:56px}
+/* カーソル脇の年号ラベルは出さない（中央表示に一本化） */
+.hc-pin .era__cursor::after{content:none}
+.hc-now{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);z-index:6;
+  margin:0;pointer-events:none;
+  font-family:var(--en);font-weight:600;letter-spacing:.14em;
+  font-size:clamp(22px,2.4vw,36px);line-height:1;color:#fff}
+@media(max-width:700px){
+  .hc-year{padding:7px 13px 9px}
+  .hc-year__t{font-size:clamp(17px,4.6vw,24px)}
+  .hc-now{bottom:60px;font-size:clamp(18px,5.2vw,28px)}
 }
 </style>
 </body>
