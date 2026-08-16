@@ -2685,5 +2685,30 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 })();
 </script>
 <script src="_pt.js?v=3"></script>
+
+<!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
+<style id="page-logo">
+/* ⚠️下層は2段組み(flex-direction:column)＋900px以下で position:absolute になっていた。
+   TOPに合わせて1列・追従（fixed）に統一する。色は白反転せず素の赤のまま。
+   サイズはTOPと同じ刻み（社名:周年 = 1.5:1、幅なりに縮む）。 */
+.site-logo{position:fixed;flex-direction:row;align-items:center;
+  background:transparent;padding:0;
+  left:var(--fvpad,var(--frame));top:var(--fvpad,var(--frame));
+  transform:none;transform-origin:top left;z-index:61}
+.site-logo img{background:transparent;padding:0;filter:none}
+.site-logo{gap:clamp(11px,1.37vw,20px)}
+.site-logo .logo-name{height:clamp(24px,2.43vw,38px)}
+.site-logo .logo-anv{height:clamp(16px,1.62vw,25.3px)}
+@media(max-width:900px){
+  .site-logo{gap:clamp(7px,1.5vw,13px)}
+  .site-logo .logo-name{height:clamp(15px,3.6vw,26px)}
+  .site-logo .logo-anv{height:clamp(10px,2.4vw,17.3px)}
+}
+@media(max-width:650px){
+  .site-logo{gap:clamp(10px,2.1vw,18px)}
+  .site-logo .logo-name{height:clamp(21px,5.05vw,36px)}
+  .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
+}
+</style>
 </body>
 </html>
