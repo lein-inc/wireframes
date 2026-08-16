@@ -4182,7 +4182,10 @@ body.is-map-small .fv .phil__map .mapwrap{--mx:12%;--ms:1;--mfy:calc(var(--kz-up
     });
   }
 
-  function hijack(){ return pc.matches && !reduce.matches; }
+  /* ⚠️以前はPC幅だけに限定していたが、SPでも同じ体験にする。
+     指の操作を奪う（preventDefault）ので、下の touchmove の判定は
+     「最上部で下向きに一定量動かした時だけ」に絞ってある。 */
+  function hijack(){ return !reduce.matches; }
 
   window.addEventListener('wheel', function(e){
     if(!hijack()) return;
@@ -4190,6 +4193,21 @@ body.is-map-small .fv .phil__map .mapwrap{--mx:12%;--ms:1;--mfy:calc(var(--kz-up
     var y = window.scrollY;
     if(e.deltaY > 0 && y <= TOP_MAX){ e.preventDefault(); down(); }
     else if(e.deltaY < 0 && y > TOP_MAX && y <= target() + 40){ e.preventDefault(); up(); }
+  }, {passive:false});
+
+  /* タッチ：指を動かした向きと量で判定する（wheel と同じ条件） */
+  var ty0 = null;
+  window.addEventListener('touchstart', function(e){
+    ty0 = e.touches.length ? e.touches[0].clientY : null;
+  }, {passive:true});
+  window.addEventListener('touchmove', function(e){
+    if(!hijack() || ty0 === null || !e.touches.length) return;
+    if(busy || performance.now() < until){ e.preventDefault(); return; }
+    var dy = ty0 - e.touches[0].clientY;      /* 正＝下方向へスクロール */
+    if(Math.abs(dy) < 10) return;             /* 誤爆防止のしきい値 */
+    var y = window.scrollY;
+    if(dy > 0 && y <= TOP_MAX){ e.preventDefault(); down(); }
+    else if(dy < 0 && y > TOP_MAX && y <= target() + 40){ e.preventDefault(); up(); }
   }, {passive:false});
 
   window.addEventListener('keydown', function(e){
@@ -4927,6 +4945,10 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 
 <!-- ══ FVの地図：初期は世界地図／スクロール後は滋賀 ══ -->
 <style id="map-world">
+/* ⚠️--kz-up（草津を画面中央に置くためのずらし係数）はメディアクエリの外に置くこと。
+   min-width:901px の中に入れていたため 900px以下では未定義になり、calc() ごと無効化されて
+   草津が中央から100pxほど下にずれていた。 */
+:root{--kz-up:-24.86vh}
 /* ⚠️2枚は縦横比がまるで違う（世界 4171:2167 の横長／滋賀 448:720 の縦長）ので、
    同じ箱に入れずに世界地図だけ absolute で別に置いている。
    .phil__map は position:fixed なので、absolute の基準はそのまま .phil__map。 */
@@ -4997,7 +5019,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
      倍率に連動させてあるので、小さい状態から拡大する間もずっと草津が中央に留まる。
      ⚠️--kz-up の値は実測で追い込むこと（草津の位置は絵まかせなので計算だけでは出ない）。
      いまの値で 1440px・1920px とも草津の中心が画面中央と一致することを確認済み。 */
-  :root{--kz-up:-24.86vh}
+
   /* 出現は「線を引く」演出にまかせるので、大きさは最初から最終サイズ（--ms:1）。
      ⚠️ここでのトランジションは“戻るとき”用。スクロールでFVへ戻ったら
        すっと速くフェードアウトさせる。 */
@@ -5111,6 +5133,31 @@ html{visibility:visible}
 
   /* ── 世界地図：ひと回り大きく ── */
   :root{--worldH:clamp(240px,60vw,520px)}
+}
+</style>
+
+<!-- ══ 900px以下：FVの入れ替え演出をPCと同じに ══ -->
+<style id="sp-fv-swap">
+@media(max-width:900px){
+  /* ① メインコピー：スクロールで消える（PCと同じ） */
+  .fv .fv__head{transition:opacity .45s ease,transform .45s cubic-bezier(.4,0,.2,1)}
+  body.is-copy-out .fv .fv__head{opacity:0;transform:translateY(-24px)}
+
+  /* ② 近江地図：初期は伏せ、スクロール後に線を引いて出す（PCと同じ切り替え）
+     ⚠️これらは #map-world の中で min-width:901px に閉じ込められていて、
+       この幅では一切効いていなかった。 */
+  .fv .phil__map .mapwrap{opacity:0;--mx:22%;--mfy:calc(var(--kz-up) * var(--ms));
+    transform-origin:center center;transition:opacity .25s ease}
+  body.is-map-small .fv .phil__map .mapwrap{opacity:1;transition:opacity .01s linear .6s}
+
+  /* ⚠️--kz-up（草津を画面中央に置くずらし）は地図の高さ 138vh を前提にした係数。
+     この幅でも同じ高さを使い、大きさは --ms で調整する。 */
+  .fv .phil__map .mapwrap{height:138vh}
+  /* ⚠️--mx / --ms は、メディアクエリ外の
+     body.is-map-small .fv .phil__map .mapwrap{--mx:12%;--ms:1}（詳細度0,5,0）に負ける。
+     この幅ぶんも同じ詳細度で書き直すこと。 */
+  .fv .phil__map .mapwrap,
+  body.is-map-small .fv .phil__map .mapwrap{--ms:.52;--mx:28%}
 }
 </style>
 </body>
