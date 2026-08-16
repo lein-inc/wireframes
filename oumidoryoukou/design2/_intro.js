@@ -48,9 +48,10 @@
   var css =
     /* ① 大見出し */
     clipHide(HEAD) + clipShow(HEAD, 850, T.head) +
-    /* ② メニュー：上から下へ */
-    'html.intro .nav{opacity:0;transform:translateY(-18px)}' +
-    'html.intro-run .nav{opacity:1;transform:none;' +
+    /* ② メニュー＋左上ロゴ：上から下へ（同じタイミング・同じ動き）
+       ⚠️ロゴ(.site-logo)はヘッダーの外に置かれた別要素なので、.nav だけ指定しても付いてこない。 */
+    'html.intro .nav,html.intro .site-logo{opacity:0;transform:translateY(-18px)}' +
+    'html.intro-run .nav,html.intro-run .site-logo{opacity:1;transform:none;' +
       'transition:opacity 600ms ease ' + T.nav + 'ms,transform 600ms cubic-bezier(.2,.7,.2,1) ' + T.nav + 'ms}' +
     /* ③ 罫線 */
     'html.intro .phero__bar{border-bottom-color:transparent;' +
