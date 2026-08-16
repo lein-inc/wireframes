@@ -1622,103 +1622,6 @@ html,body{overflow-x:clip;max-width:100%}
 }
 </style>
 
-<style id="phist-css">
-/* ===== 126年ヒストリー：奥から手前へ迫る透視スクロール（TOPトーン） ===== */
-.hc-scene{position:relative;background:var(--paper);color:var(--ink)}
-.hc-pin{position:sticky;top:0;height:100vh;overflow:hidden;perspective:1200px;perspective-origin:62% 44%}
-.hc-bg{display:none}
-/* 0.5px方眼（TOPの罫線モチーフ・白は極薄） */
-.hc-lines{position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background-image:
-    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px);
-  background-size:1px 100%;background-repeat:no-repeat;
-  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
-.hc-photos{position:absolute;top:5vh;left:5vw;right:5vw;bottom:130px;overflow:hidden;pointer-events:none;z-index:1}
-/* 四隅の十字マーカー（TOP製品スライド踏襲・黒線・常時最大サイズ） */
-.hc-mark{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:4}
-.hc-mark::before{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;background:#000}
-.hc-mark::after{content:"";position:absolute;top:0;left:50%;height:100%;width:1.5px;margin-left:-0.75px;background:#000}
-.hc-mark--tl{left:5vw;top:5vh}
-.hc-mark--tr{left:calc(100% - 5vw);top:5vh}
-.hc-mark--bl{left:5vw;top:calc(100% - 130px)}
-.hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 130px)}
-/* 写真切替：右から左へスッと素早いスライド（旧写真はその場に残して被せる） */
-.hc-photo{position:absolute;inset:0;transform:translateX(101%);transition:none;z-index:1;
-  background-size:cover;background-position:center;filter:saturate(.95)}
-.hc-photo.was-on{transform:translateX(0);z-index:2}
-.hc-photo.is-on{transform:translateX(0);transition:transform .45s cubic-bezier(.72,0,.18,1);z-index:3}
-.hc-stage{position:absolute;inset:0;transform-style:preserve-3d;z-index:3}
-/* カード＝ブラー＋黒透過の座布団（赤枠なし） */
-.hc-panel{position:absolute;left:50%;top:50%;width:min(860px,92vw);transform:translate(-50%,-50%);opacity:0;
-  will-change:transform,opacity;text-align:center;padding:54px 58px 58px;
-  border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.68)}
-.hc-panel.is-active{background:rgba(10,12,11,.76)}
-/* 段階送り：activeが変わった時だけ手前へ抜け／奥から中央へ、をアニメ（初期配置後に有効化）*/
-.hc-scene.hc-anim .hc-panel{transition:transform .85s cubic-bezier(.22,1,.36,1),opacity .7s ease}
-/* テキストは中央カードのみ：移動前に素早く消え、定着後に素早く出る */
-.hc-panel__era,.hc-panel__year{display:none}
-.hc-panel__title,.hc-panel__desc{opacity:0;transition:opacity .18s ease}
-.hc-panel.is-text .hc-panel__title,.hc-panel.is-text .hc-panel__desc{opacity:1}
-.hc-panel__era{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--red)}
-.hc-panel__era::before{content:"( "}.hc-panel__era::after{content:" )"}
-.hc-panel__year{font-family:var(--en);font-weight:600;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:.02em;margin-top:16px;color:#fff}
-.hc-panel__year small{display:inline-block;font-family:var(--jp);font-weight:500;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.55);margin-left:14px;vertical-align:middle}
-.hc-panel__title{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(28px,3.8vw,52px);margin-top:0;line-height:1.45;letter-spacing:-.05em;color:#fff;transform:scaleX(.8);transform-origin:center}
-.hc-panel__desc{font-family:var(--jp);font-weight:500;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin:22px auto 0;max-width:640px}
-/* 左上：白帯＋赤文字の年代表示（帯は常設、文字だけ下からスッと入れ替わる） */
-.hc-year{position:absolute;left:5vw;top:calc(5vh + 40px);z-index:6;pointer-events:none;background:#fff;padding:16px 30px 18px;overflow:hidden}
-.hc-year__t{display:block;font-family:var(--en);font-weight:600;font-size:clamp(36px,3.8vw,58px);line-height:1;color:var(--red);letter-spacing:.02em;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-.hc-year.is-on .hc-year__t{transform:none}
-.hc-progress{position:absolute;left:5vw;right:5vw;bottom:64px;height:1px;background:rgba(0,0,0,.18);z-index:6}
-.hc-progress__fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--red)}
-.hc-tick{position:absolute;top:-3px;width:1px;height:7px;background:rgba(0,0,0,.3);transform:translateX(-.5px);cursor:pointer}
-.hc-tick::after{content:"";position:absolute;top:-14px;bottom:-26px;left:-16px;right:-16px}
-.hc-tick.--era{top:-5px;height:11px;background:rgba(0,0,0,.5)}
-.hc-tick b{position:absolute;top:11px;left:50%;transform:translateX(-50%);font:500 9px/1 var(--en);letter-spacing:.1em;color:rgba(0,0,0,.4);white-space:nowrap}
-.hc-tick.--era b{color:rgba(0,0,0,.62)}
-.hc-tick.is-on{background:var(--red);top:-6px;height:13px}
-.hc-tick.is-on b{color:#000;font-weight:700;top:13px}
-.hc-scroll{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.45)}
-@media(max-width:640px){
-  .hc-hud{left:24px;top:80px}
-  .hc-progress{left:24px;right:24px;bottom:52px}
-  .hc-tick b{display:none}.hc-tick.is-on b,.hc-tick.--era b{display:block}
-  .hc-panel{width:86vw;min-height:60vh;padding:40px 24px;display:flex;flex-direction:column;justify-content:center}
-}
-.hc--static .hc-pin{position:static;height:auto;overflow:visible;perspective:none;padding:60px 0}
-.hc--static .hc-stage{position:static;transform:none}
-.hc--static .hc-bg,.hc--static .hc-lines,.hc--static .hc-photos,.hc--static .hc-progress,.hc--static .hc-progress__pad,.hc--static .hc-scroll,.hc--static .hc-hud{display:none}
-.hc--static .hc-panel{position:relative;left:auto;top:auto;transform:none!important;opacity:1!important;width:min(680px,90vw);margin:0 auto 18px}
-/* 証言（写真とセット） */
-.quote-card{display:grid;grid-template-columns:0.82fr 1fr;border:0.5px solid var(--line);background:#fff;overflow:hidden}
-.quote-card__ph{background:center/cover no-repeat;min-height:230px;filter:grayscale(.15)}
-.quote-card__body{padding:38px 36px;display:flex;flex-direction:column;justify-content:center}
-.quote-card p.q{font-family:var(--mincho);font-weight:500;font-size:17px;line-height:1.9;letter-spacing:.02em}
-.quote-card p.by{font-size:12px;color:rgba(0,0,0,.5);margin-top:16px}
-@media(max-width:680px){.quote-card{grid-template-columns:1fr}.quote-card__ph{min-height:180px}}
-.hc-scene{margin-top:0}
-/* ── 証言（白基調） ── */
-.voices{background:var(--paper);padding:150px 5vw 170px}
-.voices .sec-jp{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:-.05em;transform:scaleX(.8);transform-origin:left center;line-height:1.15;display:block;margin:0}
-.voices .sec-ttl{font-family:var(--en);font-weight:500;font-size:clamp(9px,.72vw,11px);line-height:1;letter-spacing:.24em;text-transform:uppercase;opacity:.55;margin-top:14px;display:block}
-.voices .sec-ttl::before{content:"( "}
-.voices .sec-ttl::after{content:" )"}
-.voices__grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:64px}
-.quote-card{display:grid;grid-template-columns:.82fr 1fr;border:0.5px solid var(--line);background:#fff;overflow:hidden}
-.quote-card__ph{background:center/cover no-repeat;min-height:230px;filter:grayscale(.15)}
-.quote-card__body{padding:38px 36px;display:flex;flex-direction:column;justify-content:center}
-.quote-card p.q{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:500;font-size:17px;line-height:1.9;letter-spacing:.02em}
-.quote-card p.by{font-size:12px;color:rgba(0,0,0,.5);margin-top:16px}
-@media(max-width:900px){
-  .voices{padding:90px 5vw 100px}
-  .voices__grid{grid-template-columns:1fr;gap:20px;margin-top:40px}
-}
-@media(max-width:680px){.quote-card{grid-template-columns:1fr}.quote-card__ph{min-height:180px}}
-</style>
 
 <main class="pmain">
 <section class="phero">
@@ -1744,19 +1647,23 @@ html,body{overflow-x:clip;max-width:100%}
   </defs>
 </svg>
 
-<section class="era" id="era">
-  <div class="era__pin">
-    <!-- 動くのは写真だけ。元号・ピル・番号・定規はここで場所を固定し、中身だけ差し替える -->
-    <div class="era__slides"></div>
-    <div class="era__fixed">
-      <h2 class="era__en"></h2>
-      <p class="era__pill"></p>
-      <p class="era__no"></p>
-    </div>
+<section class="hc-scene" id="hc">
+  <div class="hc-pin">
+    <div class="hc-bg"></div>
+    <div class="hc-lines" aria-hidden="true"></div>
+    <div class="hc-photos"></div>
+    <i class="hc-mark hc-mark--tl" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--tr" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--bl" aria-hidden="true"></i>
+    <i class="hc-mark hc-mark--br" aria-hidden="true"></i>
+    <div class="hc-year is-on"><span class="hc-year__t">1900</span></div>
+    <div class="hc-stage"></div>
+    <!-- 目盛りは現行デザインの era__ruler を流用 -->
     <div class="era__ruler" aria-hidden="true">
       <div class="era__ticks"></div>
       <span class="era__cursor"></span>
     </div>
+    <div class="hc-scroll">Scroll — 1900 → 2026</div>
   </div>
 </section>
 
@@ -2569,305 +2476,9 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script>
-(function(){
-  var DATA=[
-    ["1900","明治33年3月","明治・大正","近江度量衡株式会社 創立","衡器販売と製作免許の申請をもって大津市港町第44番屋敷に設立。資本金2万円・発起人27人。初代社長 池田仙右衛門。","h_1900_1.jpg"],
-    ["1904","明治37年3月","明治・大正","衡器製作免許を取得","免許第619号。会社記号を登録し、計量器メーカーとしての基盤を確立。","h_1900_2.jpg"],
-    ["1905","明治38年1月","明治・大正","工場仮移転","大津市元会所町15番地へ工場を仮移転。","h_1900_2.jpg"],
-    ["1906","明治39年10月","明治・大正","工場・本社を移転","2代社長 西村市良右衛門（初代）が就任。工場・本社を大津市鍛冶屋町24番地へ移転。","h_of_otsu.jpg"],
-    ["1915","大正4年4月","明治・大正","3代社長 千田伊兵衛（初代）","大正期の事業を担う新体制へ。","hist.jpg"],
-    ["1925","大正14年12月","明治・大正","4代社長 西村市良右衛門（2代）","西村英男が4代社長に就任。","hist.jpg"],
-    ["1938","昭和13年4月","昭和","5代社長 千田伊兵衛（2代）","千田淳三が5代社長に就任。","hist.jpg"],
-    ["1943","昭和18年10月","昭和","本社建物を再建","前年の火災により焼失した本社建物を再建。","hist.jpg"],
-    ["1944","昭和19年2月","昭和","戦時特需生産","軍事用計量はかり他を製造（海軍、陸軍用）。","hist2.jpg"],
-    ["1945","昭和20年8月","昭和","終戦 ― 企業整備令発令","戦後の再出発へ。","hist2.jpg"],
-    ["1946","昭和21年3月","昭和","米軍用バススケール契約 10,000台","大型契約に対応するため野洲工場を拡充。戦後復興を支える。","h_1946.jpg"],
-    ["1951","昭和26年6月","昭和","新計量法 制定","旧・度量衡法が廃止され新計量法制定。のち1959年にメートル法が完全実施。","h_1946.jpg"],
-    ["1959","昭和34年4月","昭和","営業車やトラックを自社所有","機動力を高め、サービス体制を強化。","h_1959.jpg"],
-    ["1961","昭和36年1月","昭和","草津工場 完成","草津市東矢倉3丁目11番7号。以降、草津を製造の中核に。","h_1961_1.jpg"],
-    ["1961","昭和36年12月","昭和","6代社長 服部喜久二郎","高度成長期の発展を牽引。","h_1961_2.jpg"],
-    ["1973","昭和48年2月","昭和","鉄鋼施設事業部 開設","工業分野へ本格進出。","h_1961_3.jpg"],
-    ["1973","昭和48年10月","昭和","大阪衡器と吸収合併","大阪営業所及び大阪工場を開設。","h_1961_3.jpg"],
-    ["1974","昭和49年4月","昭和","海外への計量器輸出を開始","ポーランド、ソ連、インドネシア、韓国、台湾、アメリカなどへ輸出。","h_1974.jpg"],
-    ["1975","昭和50年4月","昭和","東京営業所 開設","東京都新宿区に開設し、東日本の営業を強化。","h_of_tokyo.jpg"],
-    ["1976","昭和51年1月","昭和","電装システムの拡充","社内のコンピュータ、ハードウェア、ソフトウェアを整備。","h_of_tokyo.jpg"],
-    ["1980","昭和55年3月","昭和","草津工場 増設","創立80周年記念。","h_1980.jpg"],
-    ["1981","昭和56年7月","昭和","札幌営業所 開設","札幌市北区北七条西に開設。","h_of_sapporo.jpg"],
-    ["1982","昭和57年6月","昭和","本社社屋の改築","社員の教育研修体制強化。帯広駐在所開設（帯広市西18条南）。","h_1978.jpg"],
-    ["1986","昭和61年7月","昭和","大阪営業所用ビル購入","大阪市中央区本町。","h_of_osaka.jpg"],
-    ["1987","昭和62年9月","昭和","7代社長 平野將","新体制で次代へ。","h_of_osaka.jpg"],
-    ["1988","昭和63年1月","昭和","仙台出張所 開設","仙台市青葉区に開設。","h_of_sapporo.jpg"],
-    ["1991","平成3年1月","平成","久留米出張所 開設","久留米市長門石に開設。","h_1980.jpg"],
-    ["1992","平成4年10月","平成","韓国近江度量衡株式会社 設立","新潟出張所開設（新潟市堀之内南）。韓国京畿道富川市に現地法人設立。","h_1980.jpg"],
-    ["1993","平成5年1月","平成","草津工場を4階建工場として改築竣工","近代的な工場へ。技術革新体制を強化。","h_1993.jpg"],
-    ["1996","平成8年9月","平成","マレーシア事務所 開設","クアラルンプールに開設。","h_1993.jpg"],
-    ["1999","平成11年8月","平成","日本農業施設学会 技術賞受賞","内外部品位判定選果システムが評価される。","h_1999.jpg"],
-    ["2000","平成12年1月","平成","ISO9001取得 ― 創業100周年","認証登録JQA-QM4385号。創業100周年記念事業を実施。","h_1999.jpg"],
-    ["2001","平成13年4月","平成","農業機械学会 功績賞受賞","計量・選果技術の功績が認められる。","h_1999.jpg"],
-    ["2003","平成15年2月","平成","近江度量衡 設備（上海）有限公司 設立","中国市場へ本格展開。","h_1999.jpg"],
-    ["2006","平成18年9月","平成","資本金を1億5千万円に増資","経営基盤を強化。","h_1999.jpg"],
-    ["2007","平成19年7月","平成","韓国へ大型選別設備輸出","海外大型案件の実績を重ねる。","h_2007.jpg"],
-    ["2008","平成20年9月","平成","タイ近江度量衡 設立","アジア3拠点体制へ。","h_2007.jpg"],
-    ["2009","平成21年11月","平成","平野將社長 旭日双光章受章","長年の産業振興への貢献が認められる。","h_2009.jpg"],
-    ["2012","平成24年6月","平成","8代社長 田中秀康","会長 平野將。新体制へ。","h_2009.jpg"],
-    ["2013","平成25年10月","平成","本社工場 増設完成","生産能力を拡大。","h_2013.jpg"],
-    ["2013","平成25年12月","平成","九州営業所 開設","熊本県熊本市に開設。","h_2013.jpg"],
-    ["2014","平成26年9月","平成","資本金を2億円に増資","さらなる成長へ。","h_2013.jpg"],
-    ["2015","平成27年5月","平成","上海有限公司 無錫工場 設立","中国での生産体制を拡充。","h_2015.jpg"],
-    ["2017","平成29年12月","平成","地域未来牽引企業に選定","経済産業省による選定。","h_2015.jpg"],
-    ["2018","平成30年1月","平成","優良100年企業表彰を受賞","第3回100年企業顕彰。","h_2015.jpg"],
-    ["2019","令和元年5月","令和","滋賀県ワーク・ライフ・バランス推進企業登録","働きやすい職場づくりへ。","h_2015.jpg"],
-    ["2019","令和元年12月","令和","仙台出張所 移転","宮城県名取市へ移転。","h_2015.jpg"],
-    ["2024","令和6年10月","令和","関西農業食料工学会 技術開発賞受賞","ボックスフィリング定量箱詰めシステムで受賞。","h_furano.jpg"],
-    ["2025","令和7年3月","令和","創立125周年","1900年の創業から四半世紀を4たび重ねて。","h_furano.jpg"],
-    ["2025","令和7年9月","令和","9代社長 小谷俊彦","次の100年に向けた新体制へ。","h_furano.jpg"],
-    ["2026","令和8年","令和","創立126周年 ― Webサイトをリニューアル","新ブランド「いきる」をはかり、豊かな世界へ。のもと次の100年へ。","h_furano.jpg"]
-  ];
-  var MAJOR={"1900":1,"1906":1,"1915":1,"1938":1,"1944":1,"1951":1,"1961":1,"1973":1,"1980":1,"1986":1,"1991":1,"1993":1,"2000":1,"2008":1,"2013":1,"2018":1,"2024":1,"2026":1};
-  var scene=document.getElementById('hc'); if(!scene) return;
-  var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
-      prog=scene.querySelector('.hc-progress'), fill=scene.querySelector('.hc-progress__fill'),
-      yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'), scroll=scene.querySelector('.hc-scroll');
-  var N=DATA.length, prevEra=null, seenYear={}, tk='', tickIdx=[];
-  DATA.forEach(function(d,i){
-    stage.insertAdjacentHTML('beforeend',
-      '<article class="hc-panel" data-era="'+d[2]+'">'+
-      '<p class="hc-panel__title">'+d[3]+'</p>'+
-      '<p class="hc-panel__desc">'+d[4]+'</p></article>');
-    photos.insertAdjacentHTML('beforeend','<div class="hc-photo" style="background-image:url('+d[5]+')"></div>');
-    /* 年号帯tickは主要年のみ（セクション区切り程度） */
-    var era=(d[2]!==prevEra);
-    if(MAJOR[d[0]] && !seenYear[d[0]]){
-      var pos=(N>1?(i/(N-1))*100:0);
-      tk+='<span class="hc-tick'+(era?' --era':'')+'" style="left:'+pos.toFixed(2)+'%" data-i="'+i+'"><b>'+d[0]+'</b></span>';
-      tickIdx.push(i);
-      seenYear[d[0]]=1;
-    }
-    prevEra=d[2];
-  });
-  prog.insertAdjacentHTML('beforeend',tk);
-  scene.style.height='calc(58vh * '+N+' + 70vh)';
-  var panels=[].slice.call(stage.children), pics=[].slice.call(photos.children), ticks=[].slice.call(prog.querySelectorAll('.hc-tick'));
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ scene.classList.add('hc--static'); return; }
-  var STEP=900,last=-1,ticking=false;
-  function cl(v,a,b){a=(a==null?0:a);b=(b==null?1:b);return v<a?a:(v>b?b:v);}
-  // active を基準に、各ボックスを離散位置へ（中央=固定／手前=抜けて消える／奥=待機）
-  var textTimer=null;
-  function place(active){
-    for(var i=0;i<N;i++){
-      var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP,
-          op=(d===0?1:(d===1?0.32:(d===-1?0.3:0)));   /* 奥の次カード=小さく薄見え／手前の直前カード=大きく見切れ */
-      if(d===-1){ x=-700; y=130; z=1050; }            /* 手前カード：カメラ近くで大きく端に見切れる */
-      el.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px) translateZ('+z+'px)';
-      el.style.opacity=String(op);
-      el.style.zIndex=String(3000-Math.abs(d)*12);
-      var act=(i===active); if(act!==el._act){ el.classList.toggle('is-active',act); el._act=act; }
-    }
-    /* テキスト：即フェードアウト→カード定着後（送りアニメ後）にフェードイン */
-    for(var j=0;j<N;j++) panels[j].classList.remove('is-text');
-    clearTimeout(textTimer);
-    textTimer=setTimeout(function(){ if(panels[active]) panels[active].classList.add('is-text'); }, 720);
-  }
-  function swap(active){
-    var same = pics[active] && pics[last] && pics[active].style.backgroundImage === pics[last].style.backgroundImage;
-    var prevWas = photos.querySelector('.hc-photo.was-on');
-    if(prevWas) prevWas.classList.remove('was-on');
-    if(pics[last]){
-      pics[last].classList.remove('is-on');
-      if(!same) pics[last].classList.add('was-on');
-    }
-    if(pics[active]){
-      if(same){ pics[active].style.transition='none'; pics[active].classList.add('is-on');
-        requestAnimationFrame(function(){ pics[active].style.transition=''; }); }
-      else pics[active].classList.add('is-on');
-    }
-    var ti=-1; for(var k=0;k<ticks.length;k++){ if(+ticks[k].getAttribute('data-i')<=active) ti=k; }
-    ticks.forEach(function(t,k){ t.classList.toggle('is-on', k===ti); });
-    /* 年代帯：文字が下へスッと消え→入替→下からスッと出現（帯は常設） */
-    if(yearEl && yearT.textContent!==DATA[active][0]){
-      yearEl.classList.remove('is-on');
-      clearTimeout(yearEl._t);
-      yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][0]; yearEl.classList.add('is-on'); }, 200);
-    }
-  }
-  /* どれだけ一気にスクロールしても、表示は1枚ずつの順送りで追いつく（乱れ防止）。
-     4枚以上先へ飛んだ時は目的の2枚手前へスナップしてから順送り＝実質3枚程度で静止 */
-  var target=0, stepping=false;
-  /* 表示状態を強制的に整合させる（高速スクロール・逆走で写真やテキストが消える対策） */
-  function sync(){
-    if(last<0 || last>=N) return;
-    pics.forEach(function(p,i){
-      p.classList.remove('was-on');
-      if(i!==last) p.classList.remove('is-on');
-    });
-    if(pics[last] && !pics[last].classList.contains('is-on')){
-      pics[last].style.transition='none';
-      pics[last].classList.add('is-on');
-      requestAnimationFrame(function(){ pics[last].style.transition=''; });
-    }
-    if(panels[last] && !panels[last].classList.contains('is-text')){
-      clearTimeout(textTimer);
-      panels[last].classList.add('is-text');
-    }
-    if(yearT && yearT.textContent!==DATA[last][0]){
-      yearT.textContent=DATA[last][0];
-      if(yearEl) yearEl.classList.add('is-on');
-    }
-  }
-  function step(){
-    if(stepping || last===target) return;
-    stepping=true;
-    var d=target-last, next;
-    if(Math.abs(d)>3){ next=target-(d>0?2:-2); }
-    else{ next=last+(d>0?1:-1); }
-    place(next); swap(next); last=next;
-    setTimeout(function(){ stepping=false; if(last===target){ sync(); } step(); },150);
-  }
-  var jumpUntil=0;
-  function upd(){
-    if(Date.now()<jumpUntil) return;      /* ジャンプ中はスクロール由来の更新を止める */
-    var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
-    var p= max>0 ? cl(-r.top,0,max)/max : 0;
-    var raw=p*(N-1);
-    var nt=Math.abs(raw-target)>=0.6?Math.round(raw):target;
-    nt=nt<0?0:(nt>N-1?N-1:nt);
-    if(fill) fill.style.width=(p*100)+'%';
-    if(scroll) scroll.style.opacity=String(cl(1-p*6));
-    if(nt!==target){ target=nt; step(); }
-    ticking=false;
-  }
-  // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
-  place(0); last=0; target=0; swap(0);
-  clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
-  setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
-  window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
-  window.addEventListener('resize',upd); upd();
-  /* ── 高速スクロール時の取りこぼし保険：静止したら表示状態を強制整合 ── */
-  var settleTimer=null;
-  window.addEventListener('scroll',function(){
-    clearTimeout(settleTimer);
-    settleTimer=setTimeout(function(){
-      /* 1) rv出現の取りこぼし救済（高速通過でIntersectionObserver未発火 → ヘッダー等が透明のまま） */
-      document.querySelectorAll('.rv:not(.is-in)').forEach(function(el){
-        var r=el.getBoundingClientRect();
-        if(r.top < window.innerHeight * 0.96) el.classList.add('is-in');
-      });
-      if(last<0) return;
-      if(stepping || last!==target){ step(); clearTimeout(settleTimer); settleTimer=setTimeout(function(){ sync(); },200); return; }
-      /* 2) 背景写真の整合：表示すべき1枚を確定し、迷子のis-on/was-onを掃除 */
-      pics.forEach(function(p,i){ p.classList.remove('was-on'); if(i!==last) p.classList.remove('is-on'); });
-      if(pics[last] && !pics[last].classList.contains('is-on')){
-        pics[last].style.transition='none';
-        pics[last].classList.add('is-on');
-        requestAnimationFrame(function(){ pics[last].style.transition=''; });
-      }
-      /* 3) 中央カードのテキストが出ていなければ出す */
-      if(panels[last] && !panels[last].classList.contains('is-text')){
-        clearTimeout(textTimer);
-        textTimer=setTimeout(function(){ panels[last].classList.add('is-text'); }, 250);
-      }
-      /* 4) 年代帯の整合 */
-      if(yearT && yearT.textContent!==DATA[last][0]){ yearT.textContent=DATA[last][0]; yearEl.classList.add('is-on'); }
-    },170);
-  },{passive:true});
-  /* 大きく飛ぶ時は赤幕で覆ってから一気に移動（途中経過を見せない） */
-  var veil=document.createElement('i');
-  veil.className='hc-veil'; veil.setAttribute('aria-hidden','true');
-  (scene.querySelector('.hc-pin')||scene).appendChild(veil);
-  function jumpTo(t){
-    t=Math.max(0,Math.min(N-1,t));
-    if(t===last) return;
-    if(Math.abs(t-last)<=1){ goTo(t); return; }     /* 隣なら通常送り */
-    veil.classList.add('is-on');
-    jumpUntil=Date.now()+1200;
-    if(fill){ fill.classList.add('is-jump'); fill.style.width=(N>1?(t/(N-1))*100:0)+'%'; }
-    var vh=window.innerHeight, max=scene.offsetHeight-vh;
-    var top=scene.getBoundingClientRect().top+window.scrollY+(max>0?(t/(N-1))*max:0);
-    setTimeout(function(){
-      window.scrollTo({top:Math.round(top),behavior:'auto'});
-      stepping=false; target=t; last=t;
-      place(t); swap(t); sync();
-      if(fill){                                   /* シークバーの赤線も該当位置へ伸縮 */
-        fill.classList.add('is-jump');
-        fill.style.width=(N>1?(t/(N-1))*100:0)+'%';
-        setTimeout(function(){ fill.classList.remove('is-jump'); },600);
-      }
-      setTimeout(function(){
-        veil.classList.remove('is-on');
-        jumpUntil=0;                       /* 位置と表示が確定してから追従を再開 */
-      },260);
-    },200);
-  }
-  /* 指定項目の定位置へスクロールジャンプ */
-  function goTo(t){
-    t=Math.max(0, Math.min(N-1, t));
-    if(t===last) return;
-    var vh=window.innerHeight, max=scene.offsetHeight-vh;
-    var top=scene.getBoundingClientRect().top + window.scrollY + (max>0?(t/(N-1))*max:0);
-    window.scrollTo({top:Math.round(top), behavior:'smooth'});
-    /* スクロールが動かない位置（端など）でも確実に1枚進めるため、インデックスも直接更新 */
-    target=t; step();
-  }
-  /* クリック送り：画面左半分=前へ戻る／右半分=次へ進む */
-  var pin=scene.querySelector('.hc-pin');
-  if(pin){
-    pin.style.cursor='pointer';
-    pin.addEventListener('click',function(e){
-      jumpTo(last + ((e.clientX < window.innerWidth/2) ? -1 : 1));
-    });
-  }
-  /* シークバー：年号クリックでその年代の頭へジャンプ */
-  if(prog){
-    prog.style.cursor='pointer';
-    prog.addEventListener('click',function(e){
-      e.stopPropagation();
-      var t=e.target.closest('.hc-tick'), target;
-      if(t){ target=+t.getAttribute('data-i'); }
-      else{
-        var r=prog.getBoundingClientRect(), p=(e.clientX-r.left)/r.width;
-        target=Math.round(Math.max(0,Math.min(1,p))*(N-1));
-      }
-      jumpTo(target);
-    });
-  }
-
-  /* ── ホイール／タッチ：思いっきりスクロールしても1回につき1枚だけ進む ── */
-  (function(){
-    var LOCK=560, locked=false, tid=null;
-    function pinned(){
-      var r=scene.getBoundingClientRect();
-      return r.top<=1 && r.bottom>=window.innerHeight-1;
-    }
-    function stepBy(dir, ev){
-      if(!pinned()) return;                 /* シーン外は通常スクロール */
-      var next=last+dir;
-      if(next<0 || next>N-1) return;        /* 端は通常スクロールで抜ける */
-      if(ev.cancelable) ev.preventDefault();
-      if(locked) return;
-      locked=true; goTo(next);
-      clearTimeout(tid); tid=setTimeout(function(){ locked=false; }, LOCK);
-    }
-    window.addEventListener('wheel',function(e){
-      if(Math.abs(e.deltaY)<2) return;
-      stepBy(e.deltaY>0?1:-1, e);
-    },{passive:false});
-    var ty=null;
-    window.addEventListener('touchstart',function(e){ ty=e.touches[0].clientY; },{passive:true});
-    window.addEventListener('touchmove',function(e){
-      if(ty==null) return;
-      var dy=ty-e.touches[0].clientY;
-      if(Math.abs(dy)<24){ if(pinned() && e.cancelable) e.preventDefault(); return; }
-      stepBy(dy>0?1:-1, e); ty=e.touches[0].clientY;
-    },{passive:false});
-    window.addEventListener('touchend',function(){ ty=null; },{passive:true});
-    window.addEventListener('keydown',function(e){
-      if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ') stepBy(1,e);
-      else if(e.key==='ArrowUp'||e.key==='PageUp') stepBy(-1,e);
-    });
-  })();
-})();
-</script>
+<!-- ⚠️旧「透視スクロール」のJS（進行バー版）はここにあったが、
+     目盛りを現行デザインに差し替えた版を後方に置いたので削除。
+     両方あると .hc-stage にカードが2回積まれ、消えた .hc-progress を触って例外になる。 -->
 <style id="hc-mark-css">
 /* 年代ジャンプ中の赤幕（切り替えの乱れを見せない） */
 .hc-veil{position:absolute;top:5vh;left:5vw;right:5vw;bottom:130px;   /* 写真枠と同じ範囲 */
@@ -3348,7 +2959,10 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   ];
   var scene = document.getElementById('era');
   var chrono = document.getElementById('chrono');
-  if (!scene || !DATA.length) return;
+  /* ⚠️#era はスライダー差し替えで無くなったが、この下にある年表リスト(.chrono)の
+     生成はここが担っている。scene が無いだけで return すると年表が空になるので、
+     チェックは DATA だけにして、scene を使う処理の直前で改めて抜ける。 */
+  if (!DATA.length) return;
 
   /* ── 元号ごとに章へまとめる（DATAの3列目が元号） ── */
   /* 大見出しは漢字。元号名をそのまま出す */
@@ -3358,6 +2972,21 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     if (!group[d[2]]){ group[d[2]] = []; order.push(d[2]); }
     group[d[2]].push(d);
   });
+
+  /* ── 全年表を書き出す ── */
+  if (chrono){
+    var rowsHtml = DATA.map(function(d){
+      return '<div class="chrono__row rv">' +
+        '<div class="chrono__y">' + d[0] + '<small>' + d[1] + '</small></div>' +
+        '<div><p class="chrono__t">' + d[3] + '</p><p class="chrono__d">' + d[4] + '</p></div>' +
+      '</div>';
+    }).join('');
+    chrono.querySelector('.chrono__list').innerHTML = rowsHtml;
+  }
+
+  /* ⚠️ここから下はスライダー本体。#era はデザイン差し替えで無くなったので、
+     scene が無ければここで抜ける（年表リストは上で作り終えている）。 */
+  if (!scene) return;
 
   var slides = scene.querySelector('.era__slides');
   var chapters = order.map(function(name, i){
@@ -3393,16 +3022,6 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   ticks.innerHTML = tk;
   var cursor = scene.querySelector('.era__cursor');
 
-  /* ── 全年表を書き出す ── */
-  if (chrono){
-    var rowsHtml = DATA.map(function(d){
-      return '<div class="chrono__row rv">' +
-        '<div class="chrono__y">' + d[0] + '<small>' + d[1] + '</small></div>' +
-        '<div><p class="chrono__t">' + d[3] + '</p><p class="chrono__d">' + d[4] + '</p></div>' +
-      '</div>';
-    }).join('');
-    chrono.querySelector('.chrono__list').innerHTML = rowsHtml;
-  }
 
   /* ── スクロール連動 ── */
   var STEP = 1.15;                      /* 1章あたりに使うスクロール量（画面高の倍数） */
@@ -3469,6 +3088,306 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   layout();
 })();
 </script>
-<script src="_pt.js?v=2"></script>
+<script src="_pt.js?v=3"></script>
+<style id="phist-css">
+/* ══ 126年ヒストリー：旧デザインの透視スクロール（design/history.html から移植） ══
+   ⚠️進行バー(.hc-progress/.hc-tick)は移植していない。目盛りは現行の .era__ruler を使う。
+   ⚠️このページには .era 系のCSS/JSも残っているが、#era 要素が無くなったので
+     スライダー側のJSは早期returnして無効になる（年表リストの生成だけ生きている）。 */
+
+/* ===== 126年ヒストリー：奥から手前へ迫る透視スクロール（TOPトーン） ===== */
+.hc-scene{position:relative;background:var(--paper);color:var(--ink)}
+.hc-pin{position:sticky;top:0;height:100vh;overflow:hidden;perspective:1200px;perspective-origin:62% 44%}
+.hc-bg{display:none}
+/* 0.5px方眼（TOPの罫線モチーフ・白は極薄） */
+.hc-lines{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(to right,rgba(0,0,0,.12) 0 1px,transparent 1px 6px);
+  background-size:1px 100%;background-repeat:no-repeat;
+  background-position:calc(100%*1/6) 0,calc(100%*2/6) 0,calc(100%*3/6) 0,calc(100%*4/6) 0,calc(100%*5/6) 0}
+.hc-photos{position:absolute;top:5vh;left:5vw;right:5vw;bottom:130px;overflow:hidden;pointer-events:none;z-index:1}
+/* 四隅の十字マーカー（TOP製品スライド踏襲・黒線・常時最大サイズ） */
+.hc-mark{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;z-index:4}
+.hc-mark::before{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;background:#000}
+.hc-mark::after{content:"";position:absolute;top:0;left:50%;height:100%;width:1.5px;margin-left:-0.75px;background:#000}
+.hc-mark--tl{left:5vw;top:5vh}
+.hc-mark--tr{left:calc(100% - 5vw);top:5vh}
+.hc-mark--bl{left:5vw;top:calc(100% - 130px)}
+.hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 130px)}
+/* 写真切替：右から左へスッと素早いスライド（旧写真はその場に残して被せる） */
+.hc-photo{position:absolute;inset:0;transform:translateX(101%);transition:none;z-index:1;
+  background-size:cover;background-position:center;filter:saturate(.95)}
+.hc-photo.was-on{transform:translateX(0);z-index:2}
+.hc-photo.is-on{transform:translateX(0);transition:transform .45s cubic-bezier(.72,0,.18,1);z-index:3}
+.hc-stage{position:absolute;inset:0;transform-style:preserve-3d;z-index:3}
+/* カード＝ブラー＋黒透過の座布団（赤枠なし） */
+.hc-panel{position:absolute;left:50%;top:50%;width:min(860px,92vw);transform:translate(-50%,-50%);opacity:0;
+  will-change:transform,opacity;text-align:center;padding:54px 58px 58px;
+  border:0.5px solid rgba(255,255,255,.14);background:rgba(10,12,11,.68)}
+.hc-panel.is-active{background:rgba(10,12,11,.76)}
+/* 段階送り：activeが変わった時だけ手前へ抜け／奥から中央へ、をアニメ（初期配置後に有効化）*/
+.hc-scene.hc-anim .hc-panel{transition:transform .85s cubic-bezier(.22,1,.36,1),opacity .7s ease}
+/* テキストは中央カードのみ：移動前に素早く消え、定着後に素早く出る */
+.hc-panel__era,.hc-panel__year{display:none}
+.hc-panel__title,.hc-panel__desc{opacity:0;transition:opacity .18s ease}
+.hc-panel.is-text .hc-panel__title,.hc-panel.is-text .hc-panel__desc{opacity:1}
+.hc-panel__era{font-family:var(--en);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--red)}
+.hc-panel__era::before{content:"( "}.hc-panel__era::after{content:" )"}
+.hc-panel__year{font-family:var(--en);font-weight:600;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:.02em;margin-top:16px;color:#fff}
+.hc-panel__year small{display:inline-block;font-family:var(--jp);font-weight:500;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.55);margin-left:14px;vertical-align:middle}
+.hc-panel__title{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(28px,3.8vw,52px);margin-top:0;line-height:1.45;letter-spacing:-.05em;color:#fff;transform:scaleX(.8);transform-origin:center}
+.hc-panel__desc{font-family:var(--jp);font-weight:500;font-size:14px;line-height:2.1;color:rgba(255,255,255,.8);margin:22px auto 0;max-width:640px}
+/* 左上：白帯＋赤文字の年代表示（帯は常設、文字だけ下からスッと入れ替わる） */
+.hc-year{position:absolute;left:5vw;top:calc(5vh + 40px);z-index:6;pointer-events:none;background:#fff;padding:16px 30px 18px;overflow:hidden}
+.hc-year__t{display:block;font-family:var(--en);font-weight:600;font-size:clamp(36px,3.8vw,58px);line-height:1;color:var(--red);letter-spacing:.02em;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.hc-year.is-on .hc-year__t{transform:none}
+.hc-scroll{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:6;font-family:var(--en);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(0,0,0,.45)}
+@media(max-width:640px){
+  .hc-hud{left:24px;top:80px}
+  .hc-progress{left:24px;right:24px;bottom:52px}
+  .hc-tick b{display:none}.hc-tick.is-on b,.hc-tick.--era b{display:block}
+  .hc-panel{width:86vw;min-height:60vh;padding:40px 24px;display:flex;flex-direction:column;justify-content:center}
+}
+.hc--static .hc-pin{position:static;height:auto;overflow:visible;perspective:none;padding:60px 0}
+.hc--static .hc-stage{position:static;transform:none}
+.hc--static .hc-bg,.hc--static .hc-lines,.hc--static .hc-photos,.hc--static .hc-progress,.hc--static .hc-progress__pad,.hc--static .hc-scroll,.hc--static .hc-hud{display:none}
+.hc--static .hc-panel{position:relative;left:auto;top:auto;transform:none!important;opacity:1!important;width:min(680px,90vw);margin:0 auto 18px}
+/* 証言（写真とセット） */
+.quote-card{display:grid;grid-template-columns:0.82fr 1fr;border:0.5px solid var(--line);background:#fff;overflow:hidden}
+.quote-card__ph{background:center/cover no-repeat;min-height:230px;filter:grayscale(.15)}
+.quote-card__body{padding:38px 36px;display:flex;flex-direction:column;justify-content:center}
+.quote-card p.q{font-family:var(--mincho);font-weight:500;font-size:17px;line-height:1.9;letter-spacing:.02em}
+.quote-card p.by{font-size:12px;color:rgba(0,0,0,.5);margin-top:16px}
+@media(max-width:680px){.quote-card{grid-template-columns:1fr}.quote-card__ph{min-height:180px}}
+.hc-scene{margin-top:0}
+/* ── 証言（白基調） ── */
+.voices{background:var(--paper);padding:150px 5vw 170px}
+.voices .sec-jp{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:-.05em;transform:scaleX(.8);transform-origin:left center;line-height:1.15;display:block;margin:0}
+.voices .sec-ttl{font-family:var(--en);font-weight:500;font-size:clamp(9px,.72vw,11px);line-height:1;letter-spacing:.24em;text-transform:uppercase;opacity:.55;margin-top:14px;display:block}
+.voices .sec-ttl::before{content:"( "}
+.voices .sec-ttl::after{content:" )"}
+.voices__grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:64px}
+.quote-card{display:grid;grid-template-columns:.82fr 1fr;border:0.5px solid var(--line);background:#fff;overflow:hidden}
+.quote-card__ph{background:center/cover no-repeat;min-height:230px;filter:grayscale(.15)}
+.quote-card__body{padding:38px 36px;display:flex;flex-direction:column;justify-content:center}
+.quote-card p.q{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:500;font-size:17px;line-height:1.9;letter-spacing:.02em}
+.quote-card p.by{font-size:12px;color:rgba(0,0,0,.5);margin-top:16px}
+@media(max-width:900px){
+  .voices{padding:90px 5vw 100px}
+  .voices__grid{grid-template-columns:1fr;gap:20px;margin-top:40px}
+}
+@media(max-width:680px){.quote-card{grid-template-columns:1fr}.quote-card__ph{min-height:180px}}
+
+/* ── 目盛り（現行デザインを流用） ── */
+.era__ruler{position:absolute;left:0;right:0;bottom:0;height:62px;z-index:4}
+.era__ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:flex-start}
+.era__ticks i{width:1px;height:9px;background:rgba(255,255,255,.3)}
+.era__ticks i.is-major{height:19px;background:rgba(255,255,255,.62)}
+.era__cursor{position:absolute;top:0;left:0;width:2px;height:30px;background:#fff;
+.era__cursor::after{content:attr(data-y);position:absolute;left:50%;top:calc(100% + 6px);
+.hc-pin .era__ruler{bottom:26px;z-index:6}
+</style>
+<script>
+(function(){
+  var DATA=[
+    ["1900","明治33年3月","明治・大正","近江度量衡株式会社 創立","衡器販売と製作免許の申請をもって大津市港町第44番屋敷に設立。資本金2万円・発起人27人。初代社長 池田仙右衛門。","h_1900_1.jpg"],
+    ["1904","明治37年3月","明治・大正","衡器製作免許を取得","免許第619号。会社記号を登録し、計量器メーカーとしての基盤を確立。","h_1900_2.jpg"],
+    ["1905","明治38年1月","明治・大正","工場仮移転","大津市元会所町15番地へ工場を仮移転。","h_1900_2.jpg"],
+    ["1906","明治39年10月","明治・大正","工場・本社を移転","2代社長 西村市良右衛門（初代）が就任。工場・本社を大津市鍛冶屋町24番地へ移転。","h_of_otsu.jpg"],
+    ["1915","大正4年4月","明治・大正","3代社長 千田伊兵衛（初代）","大正期の事業を担う新体制へ。","hist.jpg"],
+    ["1925","大正14年12月","明治・大正","4代社長 西村市良右衛門（2代）","西村英男が4代社長に就任。","hist.jpg"],
+    ["1938","昭和13年4月","昭和","5代社長 千田伊兵衛（2代）","千田淳三が5代社長に就任。","hist.jpg"],
+    ["1943","昭和18年10月","昭和","本社建物を再建","前年の火災により焼失した本社建物を再建。","hist.jpg"],
+    ["1944","昭和19年2月","昭和","戦時特需生産","軍事用計量はかり他を製造（海軍、陸軍用）。","hist2.jpg"],
+    ["1945","昭和20年8月","昭和","終戦 ― 企業整備令発令","戦後の再出発へ。","hist2.jpg"],
+    ["1946","昭和21年3月","昭和","米軍用バススケール契約 10,000台","大型契約に対応するため野洲工場を拡充。戦後復興を支える。","h_1946.jpg"],
+    ["1951","昭和26年6月","昭和","新計量法 制定","旧・度量衡法が廃止され新計量法制定。のち1959年にメートル法が完全実施。","h_1946.jpg"],
+    ["1959","昭和34年4月","昭和","営業車やトラックを自社所有","機動力を高め、サービス体制を強化。","h_1959.jpg"],
+    ["1961","昭和36年1月","昭和","草津工場 完成","草津市東矢倉3丁目11番7号。以降、草津を製造の中核に。","h_1961_1.jpg"],
+    ["1961","昭和36年12月","昭和","6代社長 服部喜久二郎","高度成長期の発展を牽引。","h_1961_2.jpg"],
+    ["1973","昭和48年2月","昭和","鉄鋼施設事業部 開設","工業分野へ本格進出。","h_1961_3.jpg"],
+    ["1973","昭和48年10月","昭和","大阪衡器と吸収合併","大阪営業所及び大阪工場を開設。","h_1961_3.jpg"],
+    ["1974","昭和49年4月","昭和","海外への計量器輸出を開始","ポーランド、ソ連、インドネシア、韓国、台湾、アメリカなどへ輸出。","h_1974.jpg"],
+    ["1975","昭和50年4月","昭和","東京営業所 開設","東京都新宿区に開設し、東日本の営業を強化。","h_of_tokyo.jpg"],
+    ["1976","昭和51年1月","昭和","電装システムの拡充","社内のコンピュータ、ハードウェア、ソフトウェアを整備。","h_of_tokyo.jpg"],
+    ["1980","昭和55年3月","昭和","草津工場 増設","創立80周年記念。","h_1980.jpg"],
+    ["1981","昭和56年7月","昭和","札幌営業所 開設","札幌市北区北七条西に開設。","h_of_sapporo.jpg"],
+    ["1982","昭和57年6月","昭和","本社社屋の改築","社員の教育研修体制強化。帯広駐在所開設（帯広市西18条南）。","h_1978.jpg"],
+    ["1986","昭和61年7月","昭和","大阪営業所用ビル購入","大阪市中央区本町。","h_of_osaka.jpg"],
+    ["1987","昭和62年9月","昭和","7代社長 平野將","新体制で次代へ。","h_of_osaka.jpg"],
+    ["1988","昭和63年1月","昭和","仙台出張所 開設","仙台市青葉区に開設。","h_of_sapporo.jpg"],
+    ["1991","平成3年1月","平成","久留米出張所 開設","久留米市長門石に開設。","h_1980.jpg"],
+    ["1992","平成4年10月","平成","韓国近江度量衡株式会社 設立","新潟出張所開設（新潟市堀之内南）。韓国京畿道富川市に現地法人設立。","h_1980.jpg"],
+    ["1993","平成5年1月","平成","草津工場を4階建工場として改築竣工","近代的な工場へ。技術革新体制を強化。","h_1993.jpg"],
+    ["1996","平成8年9月","平成","マレーシア事務所 開設","クアラルンプールに開設。","h_1993.jpg"],
+    ["1999","平成11年8月","平成","日本農業施設学会 技術賞受賞","内外部品位判定選果システムが評価される。","h_1999.jpg"],
+    ["2000","平成12年1月","平成","ISO9001取得 ― 創業100周年","認証登録JQA-QM4385号。創業100周年記念事業を実施。","h_1999.jpg"],
+    ["2001","平成13年4月","平成","農業機械学会 功績賞受賞","計量・選果技術の功績が認められる。","h_1999.jpg"],
+    ["2003","平成15年2月","平成","近江度量衡 設備（上海）有限公司 設立","中国市場へ本格展開。","h_1999.jpg"],
+    ["2006","平成18年9月","平成","資本金を1億5千万円に増資","経営基盤を強化。","h_1999.jpg"],
+    ["2007","平成19年7月","平成","韓国へ大型選別設備輸出","海外大型案件の実績を重ねる。","h_2007.jpg"],
+    ["2008","平成20年9月","平成","タイ近江度量衡 設立","アジア3拠点体制へ。","h_2007.jpg"],
+    ["2009","平成21年11月","平成","平野將社長 旭日双光章受章","長年の産業振興への貢献が認められる。","h_2009.jpg"],
+    ["2012","平成24年6月","平成","8代社長 田中秀康","会長 平野將。新体制へ。","h_2009.jpg"],
+    ["2013","平成25年10月","平成","本社工場 増設完成","生産能力を拡大。","h_2013.jpg"],
+    ["2013","平成25年12月","平成","九州営業所 開設","熊本県熊本市に開設。","h_2013.jpg"],
+    ["2014","平成26年9月","平成","資本金を2億円に増資","さらなる成長へ。","h_2013.jpg"],
+    ["2015","平成27年5月","平成","上海有限公司 無錫工場 設立","中国での生産体制を拡充。","h_2015.jpg"],
+    ["2017","平成29年12月","平成","地域未来牽引企業に選定","経済産業省による選定。","h_2015.jpg"],
+    ["2018","平成30年1月","平成","優良100年企業表彰を受賞","第3回100年企業顕彰。","h_2015.jpg"],
+    ["2019","令和元年5月","令和","滋賀県ワーク・ライフ・バランス推進企業登録","働きやすい職場づくりへ。","h_2015.jpg"],
+    ["2019","令和元年12月","令和","仙台出張所 移転","宮城県名取市へ移転。","h_2015.jpg"],
+    ["2024","令和6年10月","令和","関西農業食料工学会 技術開発賞受賞","ボックスフィリング定量箱詰めシステムで受賞。","h_furano.jpg"],
+    ["2025","令和7年3月","令和","創立125周年","1900年の創業から四半世紀を4たび重ねて。","h_furano.jpg"],
+    ["2025","令和7年9月","令和","9代社長 小谷俊彦","次の100年に向けた新体制へ。","h_furano.jpg"],
+    ["2026","令和8年","令和","創立126周年 ― Webサイトをリニューアル","新ブランド「いきる」をはかり、豊かな世界へ。のもと次の100年へ。","h_furano.jpg"]
+  ];
+  var MAJOR={"1900":1,"1906":1,"1915":1,"1938":1,"1944":1,"1951":1,"1961":1,"1973":1,"1980":1,"1986":1,"1991":1,"1993":1,"2000":1,"2008":1,"2013":1,"2018":1,"2024":1,"2026":1};
+  var scene=document.getElementById('hc'); if(!scene) return;
+  var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
+      ruler=scene.querySelector('.era__ruler'),
+      yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'), scroll=scene.querySelector('.hc-scroll');
+  var N=DATA.length;
+  DATA.forEach(function(d,i){
+    stage.insertAdjacentHTML('beforeend',
+      '<article class="hc-panel" data-era="'+d[2]+'">'+
+      '<p class="hc-panel__title">'+d[3]+'</p>'+
+      '<p class="hc-panel__desc">'+d[4]+'</p></article>');
+    photos.insertAdjacentHTML('beforeend','<div class="hc-photo" style="background-image:url('+d[5]+')"></div>');
+  });
+  /* ── 目盛り：1900→2026 を2年ごと、10年ごとを長い目盛りに（現行デザイン） ── */
+  var Y0=1900, Y1=2026;
+  var ticksBox=ruler&&ruler.querySelector('.era__ticks'), cursor=ruler&&ruler.querySelector('.era__cursor');
+  if(ticksBox){
+    var tk2='';
+    for(var y=Y0;y<=Y1;y+=2) tk2+='<i class="'+(y%10===0?'is-major':'')+'"></i>';
+    ticksBox.innerHTML=tk2;
+  }
+  function setRuler(year){
+    if(!cursor||!ticksBox) return;
+    var ratio=(year-Y0)/(Y1-Y0); ratio=ratio<0?0:(ratio>1?1:ratio);
+    cursor.style.setProperty('--cx',(ratio*ticksBox.offsetWidth).toFixed(1)+'px');
+    cursor.setAttribute('data-y',Math.round(year));
+  }
+  scene.style.height='calc(58vh * '+N+' + 70vh)';
+  var panels=[].slice.call(stage.children), pics=[].slice.call(photos.children);
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ scene.classList.add('hc--static'); return; }
+  var STEP=900,last=-1,ticking=false;
+  function cl(v,a,b){a=(a==null?0:a);b=(b==null?1:b);return v<a?a:(v>b?b:v);}
+  // active を基準に、各ボックスを離散位置へ（中央=固定／手前=抜けて消える／奥=待機）
+  var textTimer=null;
+  function place(active){
+    for(var i=0;i<N;i++){
+      var el=panels[i], d=i-active, x=d*480, y=-d*90, z=-d*STEP,
+          op=(d===0?1:(d===1?0.32:(d===-1?0.3:0)));   /* 奥の次カード=小さく薄見え／手前の直前カード=大きく見切れ */
+      if(d===-1){ x=-700; y=130; z=1050; }            /* 手前カード：カメラ近くで大きく端に見切れる */
+      el.style.transform='translate(-50%,-50%) translate('+x+'px,'+y+'px) translateZ('+z+'px)';
+      el.style.opacity=String(op);
+      el.style.zIndex=String(3000-Math.abs(d)*12);
+      var act=(i===active); if(act!==el._act){ el.classList.toggle('is-active',act); el._act=act; }
+    }
+    /* テキスト：即フェードアウト→カード定着後（送りアニメ後）にフェードイン */
+    for(var j=0;j<N;j++) panels[j].classList.remove('is-text');
+    clearTimeout(textTimer);
+    textTimer=setTimeout(function(){ if(panels[active]) panels[active].classList.add('is-text'); }, 720);
+  }
+  function swap(active){
+    var same = pics[active] && pics[last] && pics[active].style.backgroundImage === pics[last].style.backgroundImage;
+    var prevWas = photos.querySelector('.hc-photo.was-on');
+    if(prevWas) prevWas.classList.remove('was-on');
+    if(pics[last]){
+      pics[last].classList.remove('is-on');
+      if(!same) pics[last].classList.add('was-on');
+    }
+    if(pics[active]){
+      if(same){ pics[active].style.transition='none'; pics[active].classList.add('is-on');
+        requestAnimationFrame(function(){ pics[active].style.transition=''; }); }
+      else pics[active].classList.add('is-on');
+    }
+    setRuler(+DATA[active][0]);
+    /* 年代帯：文字が下へスッと消え→入替→下からスッと出現（帯は常設） */
+    if(yearEl && yearT.textContent!==DATA[active][0]){
+      yearEl.classList.remove('is-on');
+      clearTimeout(yearEl._t);
+      yearEl._t=setTimeout(function(){ yearT.textContent=DATA[active][0]; yearEl.classList.add('is-on'); }, 200);
+    }
+  }
+  /* どれだけ一気にスクロールしても、表示は1枚ずつの順送りで追いつく（乱れ防止）。
+     4枚以上先へ飛んだ時は目的の2枚手前へスナップしてから順送り＝実質3枚程度で静止 */
+  var target=0, stepping=false;
+  function step(){
+    if(stepping || last===target) return;
+    stepping=true;
+    var d=target-last, next;
+    if(Math.abs(d)>3){ next=target-(d>0?2:-2); }
+    else{ next=last+(d>0?1:-1); }
+    place(next); swap(next); last=next;
+    setTimeout(function(){ stepping=false; step(); },150);
+  }
+  function upd(){
+    var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
+    var p= max>0 ? cl(-r.top,0,max)/max : 0;
+    var raw=p*(N-1);
+    var nt=Math.abs(raw-target)>=0.6?Math.round(raw):target;
+    nt=nt<0?0:(nt>N-1?N-1:nt);
+    if(scroll) scroll.style.opacity=String(cl(1-p*6));
+    if(nt!==target){ target=nt; step(); }
+    ticking=false;
+  }
+  // 初期配置（トランジションなし）→ 60ms後にアニメ有効化して以降のactive変化を送り演出に
+  place(0); last=0; target=0; swap(0);
+  clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
+  setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
+  window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
+  window.addEventListener('resize',upd); upd();
+  /* ── 高速スクロール時の取りこぼし保険：静止したら表示状態を強制整合 ── */
+  var settleTimer=null;
+  window.addEventListener('scroll',function(){
+    clearTimeout(settleTimer);
+    settleTimer=setTimeout(function(){
+      /* 1) rv出現の取りこぼし救済（高速通過でIntersectionObserver未発火 → ヘッダー等が透明のまま） */
+      document.querySelectorAll('.rv:not(.is-in)').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top < window.innerHeight * 0.96) el.classList.add('is-in');
+      });
+      if(last<0 || stepping || last!==target) return;
+      /* 2) 背景写真の整合：表示すべき1枚を確定し、迷子のis-on/was-onを掃除 */
+      pics.forEach(function(p,i){ p.classList.remove('was-on'); if(i!==last) p.classList.remove('is-on'); });
+      if(pics[last] && !pics[last].classList.contains('is-on')){
+        pics[last].style.transition='none';
+        pics[last].classList.add('is-on');
+        requestAnimationFrame(function(){ pics[last].style.transition=''; });
+      }
+      /* 3) 中央カードのテキストが出ていなければ出す */
+      if(panels[last] && !panels[last].classList.contains('is-text')){
+        clearTimeout(textTimer);
+        textTimer=setTimeout(function(){ panels[last].classList.add('is-text'); }, 250);
+      }
+      /* 4) 年代帯の整合 */
+      if(yearT && yearT.textContent!==DATA[last][0]){ yearT.textContent=DATA[last][0]; yearEl.classList.add('is-on'); }
+    },170);
+  },{passive:true});
+  /* 指定項目の定位置へスクロールジャンプ */
+  function goTo(target){
+    target=Math.max(0, Math.min(N-1, target));
+    if(target===last) return;
+    var vh=window.innerHeight, max=scene.offsetHeight-vh;
+    var top=scene.getBoundingClientRect().top + window.scrollY + (target/(N-1))*max;
+    window.scrollTo({top:Math.round(top), behavior:'smooth'});
+  }
+  /* クリック送り：画面左半分=前へ戻る／右半分=次へ進む */
+  var pin=scene.querySelector('.hc-pin');
+  if(pin){
+    pin.style.cursor='pointer';
+    pin.addEventListener('click',function(e){
+      goTo(last + ((e.clientX < window.innerWidth/2) ? -1 : 1));
+    });
+  }
+})();
+</script>
 </body>
 </html>

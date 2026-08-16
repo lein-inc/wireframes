@@ -5,14 +5,21 @@
 (function () {
   if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
-  var RED = '#cc0700', COLS = 6, ROWS = 6;   /* サイトの赤（--red）に合わせる */
+  var RED = '#cc0700', COLS = 6;   /* サイトの赤（--red）に合わせる */
+  /* ⚠️行数は固定しない。マスを正方形にしたいので、1マス = 画面幅/COLS を基準に
+     画面の高さが何マスぶんかを毎回数える（6×6固定だと画面の縦横比ぶん長方形になる）。 */
+  function rows(){
+    var cell = window.innerWidth / COLS;
+    return Math.max(1, Math.ceil(window.innerHeight / cell));
+  }
   var IN_DUR = 320, IN_SPREAD = 560;   /* 消えるアニメの長さ / ランダム遅延の幅 */
   var OUT_DUR = 240, OUT_SPREAD = 380;
 
   var style = document.createElement('style');
   style.textContent =
-    '.pt-grid{position:fixed;inset:0;z-index:995;display:grid;' +
-    'grid-template-columns:repeat(' + COLS + ',1fr);grid-template-rows:repeat(' + ROWS + ',1fr);pointer-events:none;}' +
+    '.pt-grid{position:fixed;inset:0;z-index:995;display:grid;overflow:hidden;' +
+    'grid-template-columns:repeat(' + COLS + ',1fr);' +
+    'grid-auto-rows:calc(100vw / ' + COLS + ');pointer-events:none;}' +
     '.pt-grid i{display:block;background:' + RED + ';will-change:opacity;margin:-0.5px;}' +
     'html.pt-init body{visibility:hidden;}' +
     'html.pt-veil .burger,html.pt-veil .drawer{visibility:hidden!important;}';
@@ -24,7 +31,8 @@
     var g = document.createElement('div');
     g.className = 'pt-grid';
     var cells = [];
-    for (var k = 0; k < COLS * ROWS; k++) {
+    var n = COLS * rows();
+    for (var k = 0; k < n; k++) {
       var i = document.createElement('i');
       i.style.opacity = initialOpacity;
       g.appendChild(i);
