@@ -5048,5 +5048,54 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 <style id="uncloak">/* 上の #cloak を解除。必ず最後のスタイルより後ろに置くこと */
 html{visibility:visible}
 </style>
+
+<!-- ══ 900px以下：ロゴをPCと同じ形に／世界地図も表示 ══ -->
+<style id="sp-logo-world">
+@media(max-width:900px){
+  /* ── ロゴ：座布団なし・1列・白ロゴ（PCと同じ） ──
+     ⚠️前段のSP用指定が「2段組み＋imgに白背景＋padding」になっている。
+       背景だけ消すと段組みとpaddingが残るので、まとめて上書きすること。 */
+  .site-logo{position:absolute;flex-direction:row;align-items:center;
+    gap:clamp(8px,2vw,12px);
+    background:transparent;padding:0;
+    left:var(--fvpad);top:var(--fvpad);
+    transform:none;transform-origin:top left}
+  body.is-rec-compact .site-logo{transform:none}
+  .site-logo img{background:transparent;padding:0;
+    filter:brightness(0) invert(1);transition:filter .25s ease}
+  body.is-logo-dark .site-logo img{filter:none}
+  .site-logo .logo-name{height:clamp(18px,4.4vw,26px)}
+  .site-logo .logo-anv{height:clamp(13px,3.1vw,19px)}
+
+  /* ── 世界地図：900px以下でも出す ──
+     ⚠️変数・キーフレームは min-width:901px の中で定義されていて、
+       ここでは参照できない。この幅ぶんを改めて宣言している。 */
+  :root{--worldH:clamp(180px,42vw,380px);--world-jp:.40;--world-at:.74;
+        --world-squeeze:.84;
+        --tileW:calc(var(--worldH) * 1.925 * var(--world-squeeze));
+        --world-dur:110s}
+  .fv .mapworld{position:fixed;left:0;top:50%;z-index:1;
+    display:block;width:100vw;height:var(--worldH);overflow:hidden;
+    transform:translateY(-50%) scale(var(--world-sc,1));
+    transform-origin:center center;
+    opacity:var(--world-op,.45);transition:none;pointer-events:none}
+  .fv .mapworld::before{content:"";position:absolute;top:0;left:0;height:100%;
+    width:calc(100vw + var(--tileW));
+    background-image:url(world.svg);
+    background-repeat:repeat-x;
+    background-size:var(--tileW) 100%;
+    background-position:calc(100vw * var(--world-at) - var(--tileW) * var(--world-jp)) center;
+    animation:worldPanSP var(--world-dur) linear infinite}
+  @keyframes worldPanSP{
+    from{transform:translateX(0)}
+    to  {transform:translateX(calc(var(--tileW) * -1))}}
+  body.is-ready .fv .mapworld{
+    transition:opacity .55s ease,transform .75s cubic-bezier(.3,0,.2,1)}
+  body.is-map-small .fv .mapworld{--world-sc:1.35;opacity:0}
+  @media(prefers-reduced-motion:reduce){
+    .fv .mapworld::before{animation:none}
+  }
+}
+</style>
 </body>
 </html>
