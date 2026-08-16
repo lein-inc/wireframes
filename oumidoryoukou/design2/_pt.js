@@ -5,7 +5,7 @@
 (function () {
   if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
-  var RED = '#ff0000', COLS = 6, ROWS = 6;
+  var RED = '#cc0700', COLS = 6, ROWS = 6;   /* サイトの赤（--red）に合わせる */
   var IN_DUR = 320, IN_SPREAD = 560;   /* 消えるアニメの長さ / ランダム遅延の幅 */
   var OUT_DUR = 240, OUT_SPREAD = 380;
 

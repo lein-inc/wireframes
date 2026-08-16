@@ -73,16 +73,27 @@
   (document.head || root).appendChild(st);
   root.classList.add('intro');
 
+  /* ⚠️ページ遷移演出(_pt.js)が入っている場合、赤いタイルが剥がれきるまで
+     画面は隠れている。そこで演出を始めてしまうと、見えないところで
+     ①〜③あたりまで進んでしまう。タイルが消えきるのを待ってから始める。
+     待ち時間は _pt.js の IN_DUR(320)+IN_SPREAD(560)+120 に少し足したもの。 */
+  var PT_WAIT = 1050;
+  function hasPT(){
+    return !!(document.querySelector('.pt-grid') || root.classList.contains('pt-init'));
+  }
   function run() {
-    requestAnimationFrame(function () {
+    var wait = hasPT() ? PT_WAIT : 0;
+    setTimeout(function () {
       requestAnimationFrame(function () {
-        root.classList.add('intro-run');
-        setTimeout(function () {
-          root.classList.remove('intro', 'intro-run');
-          if (st.parentNode) st.parentNode.removeChild(st);
-        }, T.end);
+        requestAnimationFrame(function () {
+          root.classList.add('intro-run');
+          setTimeout(function () {
+            root.classList.remove('intro', 'intro-run');
+            if (st.parentNode) st.parentNode.removeChild(st);
+          }, T.end);
+        });
       });
-    });
+    }, wait);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', run);
