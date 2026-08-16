@@ -4519,12 +4519,17 @@ body.is-ready .gsec.phil::before{transition:width .8s cubic-bezier(.2,.7,.2,1)}
 /* 製品・技術セクションに差しかかったら白帯ロゴを出す（上に戻すと引っ込む） */
 (function(){
   var prod = document.getElementById('products');
+  var phil2 = document.getElementById('philosophy');
   var mini = document.querySelector('.nav__mini');
+  var spw  = matchMedia('(max-width:900px)');
   if(!prod || !mini) return;
+  /* ⚠️SPはFVから企業理念まで一気に送るので、製品・技術を基準にすると
+     そこまでロゴが無いまま長い区間ができる。SPだけ企業理念で出す。 */
+  function anchor(){ return (spw.matches && phil2) ? phil2 : prod; }
   var AT = .12;  /* 画面高の何割まで上がってきたら出すか。小さいほど遅く出る */
   var showT = null, hideT = null, shown = false;
   function u(){
-    var on = prod.getBoundingClientRect().top <= window.innerHeight * AT;
+    var on = anchor().getBoundingClientRect().top <= window.innerHeight * AT;
     if(on === shown) return;
     shown = on;
     document.body.classList.toggle('is-logo-fix', on);
@@ -5214,6 +5219,36 @@ html{visibility:visible}
 @media(max-width:700px){
   .fv .phil__map .mapwrap,
   body.is-map-small .fv .phil__map .mapwrap{--ms:.40;--mx:29%}
+}
+</style>
+
+<!-- ══ 900px以下：白帯ロゴを企業理念で出す ══ -->
+<style id="sp-mini-logo">
+/* PC側の指定は #logo-swap の min-width:901px に閉じ込められているので、
+   この幅ぶんを同じ内容で用意する（サイズだけSP向け）。 */
+@media(max-width:900px){
+  .nav .nav__mini{display:block!important;
+    position:fixed;left:var(--fvpad);top:var(--fvpad);z-index:61;
+    height:auto;overflow:hidden;
+    padding:clamp(7px,1.6vw,11px) clamp(10px,2.4vw,16px);
+    opacity:1;visibility:visible;
+    background:#fff;box-shadow:none;border:0;
+    -webkit-clip-path:inset(0 100% 0 0);clip-path:inset(0 100% 0 0);
+    transition:clip-path .5s cubic-bezier(.35,0,.15,1);
+    pointer-events:none}
+  .nav .nav__mini .mini__mask{display:block;position:relative;overflow:hidden}
+  .nav .nav__mini .mini__in{display:flex;align-items:center;
+    gap:clamp(8px,2vw,14px);
+    transform:translateY(118%);
+    transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .nav .nav__mini img{display:block;width:auto;filter:none}
+  /* ロゴ本体と同じ 1.5:1 のバランス */
+  .nav .nav__mini .logo-name{height:clamp(16px,3.8vw,26px)}
+  .nav .nav__mini .logo-anv{height:clamp(10.7px,2.53vw,17.3px)}
+  body.is-logo-fix .nav .nav__mini{
+    -webkit-clip-path:inset(0);clip-path:inset(0);pointer-events:auto}
+  body.is-logo-fix .nav .nav__mini .mini__in{transform:none;transition-delay:.32s}
+  .nav .nav__mini.is-settled .mini__in{transform:none;transition-delay:0s}
 }
 </style>
 </body>
