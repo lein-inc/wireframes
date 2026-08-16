@@ -3750,9 +3750,16 @@ body.is-logo-mini .site-logo{
   var BAND = 74, BAND_GAP = 26;
   function fit(){
     if (sp.matches){
-      root.style.removeProperty('--fvh');
-      root.style.removeProperty('--fvband');   /* SP は CSS の 34vw に戻す */
+      root.style.removeProperty('--fvh');      /* 文字サイズはCSS（clamp）任せ */
       root.style.removeProperty('--msc');      /* マップの縮小も SP 用CSSに任せる */
+      /* ⚠️SPでもコピー幅は測って帯に渡す。ここで --fvband を消すと、
+         900px以下だけ帯がコピー幅と揃わなくなる（旧34vw固定に戻ってしまう）。 */
+      var spw = 0;
+      for (var q = 0; q < t.children.length; q++){
+        var qw = t.children[q].getBoundingClientRect().width;
+        if (qw > spw) spw = qw;
+      }
+      if (spw > 0) root.style.setProperty('--fvband', Math.round(spw) + 'px');
       return;
     }
     var vh = window.innerHeight;
@@ -5158,6 +5165,31 @@ html{visibility:visible}
      この幅ぶんも同じ詳細度で書き直すこと。 */
   .fv .phil__map .mapwrap,
   body.is-map-small .fv .phil__map .mapwrap{--ms:.52;--mx:28%}
+}
+</style>
+
+<!-- ══ 900px以下：赤帯をコピー幅に／SCROLL DOWNは左から／ロゴの比率をPCと同じに ══ -->
+<style id="sp-band-logo">
+@media(max-width:900px){
+  /* ── 赤帯：初期幅＝コピーの最長行（PCと同じ考え方） ── */
+  :root{--fvcue:clamp(120px,17vw,150px)}
+  /* ⚠️文字を小さくしておかないと枠(--fvcue)からはみ出し、overflow:hidden で
+     頭の「S」が切れる（PC側と同じ 11px / .12em に揃える）。 */
+  .fv .fv__scroll .txt{font-size:11px;letter-spacing:.12em}
+  .gsec.phil::before{width:var(--fvband,34vw)}
+  /* ⚠️SCROLL DOWN は帯と同じ幅にしない。帯がコピー幅まで広がるので、
+     同じ幅にすると文字が画面のまん中あたりまで流れていく。左端に固定幅で置く。 */
+  .fv .fv__scroll{left:var(--fvpad);width:var(--fvcue)}
+
+  /* ── ロゴ：900px以上と同じバランス（社名:周年 ＝ 1.5:1）で、幅なりに縮む ──
+     ⚠️前段のSP用指定 .site-logo .logo-anv{padding:8.5px 10px} は詳細度(0,2,0)。
+       .site-logo img{padding:0}（0,1,1）では勝てず、周年ロゴの左に余白が残る。
+       同じ詳細度で名指しして潰すこと。 */
+  .site-logo .logo-name,
+  .site-logo .logo-anv{background:transparent;padding:0;box-sizing:content-box}
+  .site-logo{gap:clamp(7px,1.5vw,13px)}
+  .site-logo .logo-name{height:clamp(15px,3.6vw,26px)}
+  .site-logo .logo-anv{height:clamp(10px,2.4vw,17.3px)}
 }
 </style>
 </body>
