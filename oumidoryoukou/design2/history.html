@@ -1661,16 +1661,12 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
     <!-- 「Scroll — 1900 → 2026」は削除。年代は目盛りの中央に出す -->
     <p class="hc-now" aria-hidden="true"><span></span></p>
+    <button class="hc-menu" type="button">MENU</button>
+    <button class="hc-exit" type="button">終わる</button>
   </div>
 </section>
 
-<section class="chrono" id="chrono">
-  <div class="chrono__head">
-    <h2 class="sec-jp rv">できごとの記録</h2>
-    <p class="sec-ttl rv">Chronology</p>
-  </div>
-  <div class="chrono__list"></div>
-</section>
+<!-- 「できごとの記録」セクションは削除（年表生成JSは chrono が無ければ何もしない） -->
 
 <section class="voices">
   <h2 class="sec-jp rv">受け継がれることば。</h2>
@@ -3471,5 +3467,99 @@ body.is-hc .nav{pointer-events:none}
   .hc-now{bottom:60px;font-size:clamp(18px,5.2vw,28px)}
 }
 </style>
+
+<!-- ══ ヒストリー詳細：白→黒／写真がぐっと広がる／MENU・終わるボタン ══ -->
+<style id="hc-open">
+/* 初期は白地。スライドが画面を占めた時点(body.is-hc)で黒へ切り替わる */
+.hc-scene{background:#fff;transition:background-color .7s ease}
+body.is-hc .hc-scene{background:#0a0b0a}
+/* 方眼は黒地でだけ見せる */
+.hc-lines{opacity:0;transition:opacity .7s ease}
+body.is-hc .hc-lines{opacity:.6}
+
+/* ① 写真：小さく置いてから、ぐっと広がって定着（TOPの製品スライドと同じ考え方）
+   ⚠️.hc-photos は inset で位置を決めているので、幅ではなく top/left/right/bottom を動かす。 */
+.hc-photos{top:18vh;left:26vw;right:26vw;bottom:26vh;
+  transition:top .9s cubic-bezier(.4,0,.2,1),left .9s cubic-bezier(.4,0,.2,1),
+             right .9s cubic-bezier(.4,0,.2,1),bottom .9s cubic-bezier(.4,0,.2,1)}
+body.is-hc .hc-photos{top:5vh;left:5vw;right:5vw;bottom:110px}
+
+/* ② 右上：四角の中央に MENU の文字だけ */
+.hc-menu{position:absolute;right:var(--fvpad,var(--frame));top:var(--fvpad,var(--frame));z-index:8;
+  display:flex;align-items:center;justify-content:center;
+  width:clamp(76px,7vw,104px);height:clamp(76px,7vw,104px);
+  border:0;background:var(--red);color:#fff;cursor:pointer;
+  font-family:var(--en);font-weight:600;font-size:clamp(11px,1vw,13px);letter-spacing:.16em;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s}
+body.is-hc .hc-menu{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s}
+.hc-menu:hover{background:#9d0500}
+
+/* ③ 右下：白ボタン。押すとスライドの下へ抜ける */
+.hc-exit{position:absolute;right:var(--fvpad,var(--frame));bottom:calc(56px + clamp(18px,2vw,30px));z-index:8;
+  display:inline-flex;align-items:center;gap:12px;
+  padding:clamp(13px,1.4vw,18px) clamp(20px,2.2vw,30px);
+  border:0;background:#fff;color:var(--ink);cursor:pointer;
+  font-family:var(--jp);font-weight:700;font-size:clamp(13px,1.15vw,16px);letter-spacing:.06em;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s,color .25s}
+body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s,color .25s}
+.hc-exit::after{content:"↓";font-family:var(--en);font-size:1.15em;line-height:1}
+.hc-exit:hover{background:var(--red);color:#fff}
+
+@media(max-width:700px){
+  .hc-menu{width:64px;height:64px;font-size:10px}
+  .hc-exit{padding:11px 16px;font-size:12px}
+  .hc-photos{top:22vh;left:12vw;right:12vw;bottom:28vh}
+  body.is-hc .hc-photos{top:8vh;left:5vw;right:5vw;bottom:96px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hc-scene,.hc-lines,.hc-photos{transition:none}
+}
+</style>
+<script>
+/* ヒストリー詳細：近くまで来たら自動でスライドの頭へ／MENU・終わるボタン */
+(function(){
+  var scene=document.getElementById('hc'); if(!scene) return;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var root=document.documentElement;
+
+  /* ── 自動スクロール：スライドの頭が画面の下寄りまで来たら、頭までスッと送る ──
+     ⚠️送っている最中に自分のscrollでまた発火しないよう busy と cooldown で止める。
+     ⚠️上へ戻すときは邪魔しない（下向きに入ってきた時だけ）。 */
+  var busy=false, until=0, lastY=window.scrollY;
+  var AT=.45, DUR=800;
+  function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function snap(){
+    var to=Math.round(scene.getBoundingClientRect().top+window.scrollY);
+    var from=window.scrollY, d=to-from;
+    if(!d) return;
+    busy=true;
+    var prev=root.style.scrollBehavior; root.style.scrollBehavior='auto';
+    var t0=performance.now();
+    requestAnimationFrame(function step(now){
+      var p=Math.min(1,(now-t0)/DUR);
+      window.scrollTo(0, from+d*ease(p));
+      if(p<1) requestAnimationFrame(step);
+      else{ root.style.scrollBehavior=prev; busy=false; until=performance.now()+500; }
+    });
+  }
+  window.addEventListener('scroll', function(){
+    var y=window.scrollY, down=y>lastY; lastY=y;
+    if(reduce||busy||performance.now()<until||!down) return;
+    var t=scene.getBoundingClientRect().top;
+    if(t>1 && t<window.innerHeight*AT) snap();
+  }, {passive:true});
+
+  /* ── MENU：既存のハンバーガーを押したことにする（開閉ロジックを二重に持たない） ── */
+  var menu=scene.querySelector('.hc-menu'), burger=document.querySelector('.burger');
+  if(menu&&burger) menu.addEventListener('click', function(){ burger.click(); });
+
+  /* ── 終わる：スライドの下へ抜ける ── */
+  var exit=scene.querySelector('.hc-exit');
+  if(exit) exit.addEventListener('click', function(){
+    var to=Math.round(scene.getBoundingClientRect().bottom+window.scrollY-window.innerHeight);
+    try{ window.scrollTo({top:to,behavior:'smooth'}); }catch(e){ window.scrollTo(0,to); }
+  });
+})();
+</script>
 </body>
 </html>
