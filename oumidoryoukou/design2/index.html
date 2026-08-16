@@ -2122,7 +2122,7 @@ html,body{overflow-x:clip;max-width:100%}
       /* 赤帯はFV下端で見切れているので、その覗いている帯（bandTop 〜 FV下端）の中央へ */
       var stripBottom = fvTop + fvRect.height;
       var cueH = cue.offsetHeight || 19;
-      var CUE_UP = 10;  /* 中央からこのぶん上へ（＝SCROLL DOWNの上余白を詰める） */
+      var CUE_UP = 3;   /* 帯の覗いている範囲の中央に対する微調整（文字の行box分） */
       cue.style.top = Math.round((bandTop + stripBottom) / 2 - cueH / 2 - CUE_UP - fvTop) + 'px';
       cue.style.bottom = 'auto';
     }
@@ -3534,7 +3534,6 @@ body.is-logo-mini .site-logo{
   .hb figcaption span{font-family:var(--jp);font-size:11px;opacity:.62}
 }
 @media(prefers-reduced-motion:reduce){
-  .gsec.phil::before{animation:none}
   .hb__ph{transform:none}
   .hb__img{animation:none}
   .hist__type-row{animation:none}
@@ -3599,14 +3598,9 @@ body.is-logo-mini .site-logo{
   :root{--fvband:clamp(120px,12vw,170px)}
   .gsec.phil::before{width:var(--fvband)}
   .fv .fv__scroll{left:0;width:var(--fvband)}
-  /* SCROLL DOWN の文字は出さない（赤帯そのものがスクロールの合図になる） */
-  .fv .fv__scroll{display:none}
-  /* 赤帯：ちょっと下にぴょこっと沈む動きを繰り返す */
-  .gsec.phil::before{animation:fvBandBob 2.2s cubic-bezier(.4,0,.3,1) infinite}
-  @keyframes fvBandBob{
-    0%,58%,100%{transform:translateY(0)}
-    72%        {transform:translateY(10px)}
-    86%        {transform:translateY(2px)}}
+  /* SCROLL DOWN の文字。帯と同じ幅・同じ左端なので左右は中央に来る。
+     上下は帯の覗いている範囲の中央へ（JS側の CUE_UP を 0 にして揃えている）。 */
+  .fv .fv__scroll .txt{font-size:11px;letter-spacing:.12em}
   /* 帯の上下アキをなくす。行送りも削って文字が帯に密着する高さに。
      ⚠️「お問い合わせ」(.nav__cta) だけ字間(.14em)とフォントサイズが他と違い、
      同じ6文字でも帯が一回り長くなる。字間・サイズもここで揃えること。 */
