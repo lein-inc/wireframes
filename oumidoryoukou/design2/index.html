@@ -5204,5 +5204,17 @@ html{visibility:visible}
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ 700px以下：近江マップを少し小さく・右に余白 ══ -->
+<style id="sp-map-inset">
+/* ⚠️--mx は「縮小前の自分の幅」に対する％で右へ寄せる量、--ms は倍率。
+   どちらも body.is-map-small 側（詳細度0,5,0）で上書きされるので、
+   同じ詳細度で書かないと効かない。
+   草津の上下中央は --mfy が --ms に連動しているので、倍率を変えても保たれる。 */
+@media(max-width:700px){
+  .fv .phil__map .mapwrap,
+  body.is-map-small .fv .phil__map .mapwrap{--ms:.46;--mx:27%}
+}
+</style>
 </body>
 </html>
