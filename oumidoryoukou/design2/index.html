@@ -5192,5 +5192,17 @@ html{visibility:visible}
   .site-logo .logo-anv{height:clamp(10px,2.4vw,17.3px)}
 }
 </style>
+
+<!-- ══ 650px以下：ロゴをふた周り大きく ══ -->
+<style id="sp-logo-big">
+/* 900px以下の値の約1.4倍。社名:周年 = 1.5:1 のバランスと、幅なりに縮む仕様はそのまま。
+   ⚠️右上のハンバーガーとぶつからないか実測で確認すること
+   （375px幅でロゴ右端257 / バーガー左端315＝58px空き）。 */
+@media(max-width:650px){
+  .site-logo{gap:clamp(10px,2.1vw,18px)}
+  .site-logo .logo-name{height:clamp(21px,5.05vw,36px)}
+  .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
+}
+</style>
 </body>
 </html>
