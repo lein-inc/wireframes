@@ -3114,11 +3114,16 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 .hc-mark--tr{left:calc(100% - 5vw);top:5vh}
 .hc-mark--bl{left:5vw;top:calc(100% - 130px)}
 .hc-mark--br{left:calc(100% - 5vw);top:calc(100% - 130px)}
-/* 写真切替：右から左へスッと素早いスライド（旧写真はその場に残して被せる） */
-.hc-photo{position:absolute;inset:0;transform:translateX(101%);transition:none;z-index:1;
+/* 写真切替：その場で素早くクロスフェード（動かさない）
+   ⚠️元は translateX で右から差し込む作りだった。位置を動かす指定を残したままだと
+     フェードと同時にズレるので、transform は使わない。
+   ⚠️JS側は前の写真に .was-on を付けて下に残す。opacity を戻さないので
+     そのままフェードアウト＝新旧が重なって入れ替わる。 */
+.hc-photo{position:absolute;inset:0;opacity:0;z-index:1;
+  transition:opacity .28s ease;
   background-size:cover;background-position:center;filter:saturate(.95)}
-.hc-photo.was-on{transform:translateX(0);z-index:2}
-.hc-photo.is-on{transform:translateX(0);transition:transform .45s cubic-bezier(.72,0,.18,1);z-index:3}
+.hc-photo.was-on{z-index:2}
+.hc-photo.is-on{opacity:1;z-index:3}
 .hc-stage{position:absolute;inset:0;transform-style:preserve-3d;z-index:3}
 /* カード＝ブラー＋黒透過の座布団（赤枠なし） */
 .hc-panel{position:absolute;left:50%;top:50%;width:min(860px,92vw);transform:translate(-50%,-50%);opacity:0;
