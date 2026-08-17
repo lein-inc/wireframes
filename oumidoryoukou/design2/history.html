@@ -4,6 +4,26 @@
 <script src="_auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══ ページ遷移の白フラッシュ止め ══
+     ⚠️_pt.js は body の末尾で読まれるので、そこに到達するまでに一度
+       “素の白い画面”が描かれてしまう（＝切り替わり直後の一瞬の白）。
+       同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
+     ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
+     ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<script>
+(function(){
+  /* ⚠️再読み込み時のスクロール位置復元を切る。
+     復元されると、ロゴ／ナビ／マップの状態を決めるJSが「先頭にいる前提」で
+     一度描いたあとに実際の位置へ飛ばされ、白帯の追従ロゴなど別の姿が
+     パパッと切り替わって見える。演出も先頭から始まる前提なので先頭固定にする。 */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var d = document.documentElement;
+  d.className += ' pt-init pt-veil';
+  setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+})();
+</script>
 <title>126年ヒストリー｜近江度量衡株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1661,8 +1681,7 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
     <!-- 「Scroll — 1900 → 2026」は削除。年代は目盛りの中央に出す -->
     <p class="hc-now" aria-hidden="true"><span></span></p>
-    <button class="hc-menu" type="button">MENU</button>
-    <button class="hc-exit" type="button">終わる</button>
+    <button class="hc-exit" type="button" aria-label="ヒストリーを終わる"></button>
   </div>
 </section>
 
@@ -3389,6 +3408,9 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   if(pin){
     pin.style.cursor='pointer';
     pin.addEventListener('click',function(e){
+      /* ⚠️終わるボタンはこの中に置かれているので、除外しないと
+         「次のスライドへ送る」が同時に走って離脱できない。 */
+      if(e.target.closest && e.target.closest('.hc-exit')) return;
       goTo(last + ((e.clientX < window.innerWidth/2) ? -1 : 1));
     });
   }
@@ -3484,30 +3506,37 @@ body.is-hc .hc-lines{opacity:.6}
              right .9s cubic-bezier(.4,0,.2,1),bottom .9s cubic-bezier(.4,0,.2,1)}
 body.is-hc .hc-photos{top:5vh;left:5vw;right:5vw;bottom:110px}
 
-/* ② 右上：四角の中央に MENU の文字だけ */
-.hc-menu{position:absolute;right:var(--fvpad,var(--frame));top:var(--fvpad,var(--frame));z-index:8;
-  display:flex;align-items:center;justify-content:center;
-  width:clamp(76px,7vw,104px);height:clamp(76px,7vw,104px);
-  border:0;background:var(--red);color:#fff;cursor:pointer;
-  font-family:var(--en);font-weight:600;font-size:clamp(11px,1vw,13px);letter-spacing:.16em;
-  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s}
-body.is-hc .hc-menu{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s}
-.hc-menu:hover{background:#9d0500}
 
-/* ③ 右下：白ボタン。押すとスライドの下へ抜ける */
+/* ③ 右下：ヒストリー終了の矢印ボタン。押すとスライドの下へ抜ける
+   ⚠️共通の矢印（.svc__arrow など）は右上向き↗だが、これだけは「下へ抜ける」ので
+     右下向き↘。マスクのSVGを90°回した座標で描き直している（transform:rotate だと
+     矢印スワップの translate と食い合って動かせない）。 */
 .hc-exit{position:absolute;right:var(--fvpad,var(--frame));bottom:calc(56px + clamp(18px,2vw,30px));z-index:8;
-  display:inline-flex;align-items:center;gap:12px;
-  padding:clamp(13px,1.4vw,18px) clamp(20px,2.2vw,30px);
-  border:0;background:#fff;color:var(--ink);cursor:pointer;
-  font-family:var(--jp);font-weight:700;font-size:clamp(13px,1.15vw,16px);letter-spacing:.06em;
-  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s,color .25s}
-body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s,color .25s}
-.hc-exit::after{content:"↓";font-family:var(--en);font-size:1.15em;line-height:1}
-.hc-exit:hover{background:var(--red);color:#fff}
+  display:block;overflow:hidden;
+  width:clamp(56px,5.2vw,72px);height:clamp(56px,5.2vw,72px);
+  padding:0;border:0;background:#fff;cursor:pointer;
+  font-size:0;line-height:0;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s}
+body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s}
+.hc-exit::after{content:"";position:absolute;inset:22%;
+  background:var(--red);transition:background .25s ease;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.03' stroke-linecap='square'%3E%3Cpath d='M4 4L20 20'/%3E%3Cpath d='M20 4v16H4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.03' stroke-linecap='square'%3E%3Cpath d='M4 4L20 20'/%3E%3Cpath d='M20 4v16H4'/%3E%3C/svg%3E") center/contain no-repeat}
+.hc-exit:hover{background:var(--red)}
+.hc-exit:hover::after{background:#fff}
+
+/* 矢印スワップ（右下版）：右下へ抜けて左上から戻る。速度・イージングはTOPの共通ループと同じ */
+@keyframes arrowSwapDR{
+  0%{transform:translate(0,0);opacity:1}
+  42%{transform:translate(130%,130%);opacity:0}
+  43%{transform:translate(-130%,-130%);opacity:0}
+  58%{opacity:1}
+  100%{transform:translate(0,0);opacity:1}
+}
+.hc-exit.arr-on::after{animation:arrowSwapDR .9s cubic-bezier(.4,0,.2,1) infinite}
+@media(prefers-reduced-motion:reduce){.hc-exit.arr-on::after{animation:none}}
 
 @media(max-width:700px){
-  .hc-menu{width:64px;height:64px;font-size:10px}
-  .hc-exit{padding:11px 16px;font-size:12px}
+  .hc-exit{width:52px;height:52px}
   .hc-photos{top:22vh;left:12vw;right:12vw;bottom:28vh}
   body.is-hc .hc-photos{top:8vh;left:5vw;right:5vw;bottom:96px}
 }
@@ -3525,7 +3554,7 @@ body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,vi
   /* ── 自動スクロール：スライドの頭が画面の下寄りまで来たら、頭までスッと送る ──
      ⚠️送っている最中に自分のscrollでまた発火しないよう busy と cooldown で止める。
      ⚠️上へ戻すときは邪魔しない（下向きに入ってきた時だけ）。 */
-  var busy=false, until=0, lastY=window.scrollY;
+  var busy=false, until=0, lastY=window.scrollY, leaving=false;
   var AT=.45, DUR=800;
   function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
   function snap(){
@@ -3544,21 +3573,66 @@ body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,vi
   }
   window.addEventListener('scroll', function(){
     var y=window.scrollY, down=y>lastY; lastY=y;
-    if(reduce||busy||performance.now()<until||!down) return;
+    if(reduce||busy||leaving||performance.now()<until||!down) return;
     var t=scene.getBoundingClientRect().top;
     if(t>1 && t<window.innerHeight*AT) snap();
   }, {passive:true});
 
-  /* ── MENU：既存のハンバーガーを押したことにする（開閉ロジックを二重に持たない） ── */
-  var menu=scene.querySelector('.hc-menu'), burger=document.querySelector('.burger');
-  if(menu&&burger) menu.addEventListener('click', function(){ burger.click(); });
 
   /* ── 終わる：スライドの下へ抜ける ── */
   var exit=scene.querySelector('.hc-exit');
-  if(exit) exit.addEventListener('click', function(){
-    var to=Math.round(scene.getBoundingClientRect().bottom+window.scrollY-window.innerHeight);
-    try{ window.scrollTo({top:to,behavior:'smooth'}); }catch(e){ window.scrollTo(0,to); }
+  /* ⚠️スライドは sticky で画面に貼り付いているので、その「下」ではなく
+     次のセクション（受け継がれることば）の頭まで送らないと固定が外れて見えない。 */
+  var voices=document.querySelector('.voices');
+  if(exit) exit.addEventListener('click', function(e){
+    e.stopPropagation();                       /* クリック送り(.hc-pin)へ渡さない */
+    /* ⚠️自動送りを止めてから動かすこと。止めないと、下へ抜ける途中で
+       スライドの頭が判定範囲に入り、そのまま引き戻される。 */
+    leaving=true;
+    clearTimeout(exit._t);
+    exit._t=setTimeout(function(){ leaving=false; }, 2000);
+    /* ⚠️ここを素直に「受け継がれることばまでスムーススクロール」にすると、
+       固定区間(約2万5千px)の中をアニメーションで通過するのでスライドが
+       1900→2026までばーっと流れてしまう。
+       そこで二段構え：
+        ① まず固定が外れきる位置（シーン下端＝画面下端）へアニメなしで一気に飛ぶ
+           ＝スクロール固定がパッと外れる
+        ② そこから受け継がれることばの頭まで、1画面ぶんだけスッとスクロール */
+    var vh=window.innerHeight;
+    var end=Math.max(0, Math.round(scene.getBoundingClientRect().bottom+window.scrollY-vh));
+    var root=document.documentElement, prev=root.style.scrollBehavior;
+    root.style.scrollBehavior='auto';          /* CSSの scroll-behavior:smooth 対策 */
+    window.scrollTo(0, end);                   /* ① 固定が外れる位置へ即ジャンプ */
+    var t = voices
+      ? Math.round(voices.getBoundingClientRect().top+window.scrollY)
+      : end;
+    try{ window.scrollTo({top:t,behavior:'smooth'}); }   /* ② 1画面ぶんだけスッと */
+    catch(e){ window.scrollTo(0,t); }
+    root.style.scrollBehavior=prev||'';
   });
+
+  /* 矢印ループ：ホバー中はエンドレス、離れたら回っている一周の終わりで止める
+     ⚠️:hover に animation を直付けすると離れた瞬間に矢印が途中でパッと戻る。
+       TOPの共通ループ（.arr-on）と同じ作りに揃えてある。 */
+  if(exit){
+    var arrPending=false, arrFb=null;
+    function arrStop(){ arrPending=false; if(arrFb){clearTimeout(arrFb);arrFb=null;} exit.classList.remove('arr-on'); }
+    exit.addEventListener('mouseenter', function(){
+      arrPending=false; if(arrFb){clearTimeout(arrFb);arrFb=null;}
+      exit.classList.add('arr-on');
+    });
+    exit.addEventListener('mouseleave', function(){
+      if(!exit.classList.contains('arr-on')) return;
+      arrPending=true;
+      arrFb=setTimeout(arrStop, 1020);          /* CSSの再生時間900ms + 保険 */
+    });
+    exit.addEventListener('animationiteration', function(e){
+      if(arrPending && e.animationName==='arrowSwapDR') arrStop();
+    });
+    exit.addEventListener('animationend', function(e){
+      if(arrPending && e.animationName==='arrowSwapDR') arrStop();
+    });
+  }
 })();
 </script>
 </body>

@@ -4,6 +4,26 @@
 <script src="_auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══ ページ遷移の白フラッシュ止め ══
+     ⚠️_pt.js は body の末尾で読まれるので、そこに到達するまでに一度
+       “素の白い画面”が描かれてしまう（＝切り替わり直後の一瞬の白）。
+       同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
+     ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
+     ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<script>
+(function(){
+  /* ⚠️再読み込み時のスクロール位置復元を切る。
+     復元されると、ロゴ／ナビ／マップの状態を決めるJSが「先頭にいる前提」で
+     一度描いたあとに実際の位置へ飛ばされ、白帯の追従ロゴなど別の姿が
+     パパッと切り替わって見える。演出も先頭から始まる前提なので先頭固定にする。 */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var d = document.documentElement;
+  d.className += ' pt-init pt-veil';
+  setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+})();
+</script>
 <title>近江度量衡株式会社｜計量装置の総合システムメーカー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -4528,7 +4548,14 @@ body.is-ready .gsec.phil::before{transition:width .8s cubic-bezier(.2,.7,.2,1)}
   function anchor(){ return (spw.matches && phil2) ? phil2 : prod; }
   var AT = .12;  /* 画面高の何割まで上がってきたら出すか。小さいほど遅く出る */
   var showT = null, hideT = null, shown = false;
+  /* ⚠️読み込み直後は判定しない。フォント読み込みやFVコピーの実測でレイアウトが
+     動いている間に判定すると、白帯の追従ロゴが一瞬出て引っ込む＝チラつきになる。
+     ページ遷移のタイルが剥がれきる頃（_pt.js の 320+560+120ms）まで待ってから
+     初めて評価する。 */
+  var armed = false;
+  setTimeout(function(){ armed = true; u(); }, 1200);
   function u(){
+    if(!armed) return;
     var on = anchor().getBoundingClientRect().top <= window.innerHeight * AT;
     if(on === shown) return;
     shown = on;
@@ -5075,9 +5102,6 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
    そこを上書きすると塗りの出るタイミングが壊れる。 */
 .phil__map .mapsvg .mp-fill{fill:#fff;fill-opacity:.6}
 </style>
-<style id="uncloak">/* 上の #cloak を解除。必ず最後のスタイルより後ろに置くこと */
-html{visibility:visible}
-</style>
 
 <!-- ══ 900px以下：ロゴをPCと同じ形に／世界地図も表示 ══ -->
 <style id="sp-logo-world">
@@ -5275,6 +5299,13 @@ html{visibility:visible}
   .hist__scatter .hb:nth-child(9){   /* 2009 */
     display:none}
 }
+</style>
+<style id="uncloak">/* 上の #cloak を解除。
+   ⚠️必ず全スタイルより後ろに置くこと。ここから上にはロゴの見た目を
+     決める <style> が9個（sp-logo-world / sp-band-logo / sp-logo-big /
+     sp-mini-logo …）ぶら下がっていて、途中で解除すると
+     「白い座布団つきの赤ロゴ」など確定前の姿がパパッと見えてしまう。 */
+html{visibility:visible}
 </style>
 <script src="_pt.js?v=3"></script>
 </body>

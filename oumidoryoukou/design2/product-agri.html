@@ -4,6 +4,26 @@
 <script src="_auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══ ページ遷移の白フラッシュ止め ══
+     ⚠️_pt.js は body の末尾で読まれるので、そこに到達するまでに一度
+       “素の白い画面”が描かれてしまう（＝切り替わり直後の一瞬の白）。
+       同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
+     ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
+     ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<script>
+(function(){
+  /* ⚠️再読み込み時のスクロール位置復元を切る。
+     復元されると、ロゴ／ナビ／マップの状態を決めるJSが「先頭にいる前提」で
+     一度描いたあとに実際の位置へ飛ばされ、白帯の追従ロゴなど別の姿が
+     パパッと切り替わって見える。演出も先頭から始まる前提なので先頭固定にする。 */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var d = document.documentElement;
+  d.className += ' pt-init pt-veil';
+  setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+})();
+</script>
 <title>農産物用計量システム｜製品・技術｜近江度量衡株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

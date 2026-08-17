@@ -22,7 +22,16 @@
     'grid-auto-rows:calc(100vw / ' + COLS + ');pointer-events:none;}' +
     '.pt-grid i{display:block;background:' + RED + ';will-change:opacity;margin:-0.5px;}' +
     'html.pt-init body{visibility:hidden;}' +
-    'html.pt-veil .burger,html.pt-veil .drawer{visibility:hidden!important;}';
+    'html.pt-veil .burger,html.pt-veil .drawer{visibility:hidden!important;}' +
+    /* ⚠️ロゴ類はタイルが剥がれきるまで出さない。状態を決めるJS（追従ロゴの出し入れ、
+       ナビのコンパクト化）は読み込み直後に一度判定するので、そこで確定前の姿
+       （白帯の追従ロゴなど）が一瞬見えてしまう。透明にしておき、ヴェールが
+       外れてから既存の opacity トランジションでふわっと出す。 */
+    'html.pt-veil .site-logo,html.pt-veil .nav__mini,html.pt-veil .drawer__logo{'+
+      'opacity:0!important;visibility:hidden!important;}' +
+    /* ⚠️ロゴの白⇄赤はフィルタのトランジションで切り替わる。ヴェール中に状態が
+       決まると、剥がれた直後に赤→白のフェードが見えるので切っておく。 */
+    'html.pt-veil .site-logo img{transition:none!important;}';
   document.documentElement.appendChild(style);
   document.documentElement.classList.add('pt-init');
   document.documentElement.classList.add('pt-veil');
