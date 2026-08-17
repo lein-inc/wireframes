@@ -3100,6 +3100,21 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   layout();
 })();
 </script>
+
+<!-- ══ スライド：最初は写真だけ。画面に固定＆写真が広がってから文字類を出す ══ -->
+<style id="hc-reveal">
+/* ⚠️パネルの opacity は JS がインラインで書いているので !important でないと勝てない。
+   逆に body.is-hc-open が付いた瞬間はこの指定が外れ、既存の .hc-anim の
+   opacity .7s ease でふわっと出る（別途アニメを足す必要はない）。 */
+body:not(.is-hc-open) .hc-panel{opacity:0!important}
+/* 年号・年代・目盛りはフェードで。visibility も落として押せない状態にしておく */
+.hc-year,.hc-now,.era__ruler{transition:opacity .5s ease,visibility 0s}
+body:not(.is-hc-open) .hc-year,
+body:not(.is-hc-open) .hc-now,
+body:not(.is-hc-open) .era__ruler{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
+/* 年号の数字は、枠が出るのに合わせて下からせり上がる（初回もこの動きにする） */
+body:not(.is-hc-open) .hc-year .hc-year__t{transform:translateY(140%)}
+</style>
 <script src="_pt.js?v=4"></script>
 <style id="phist-css">
 /* ══ 126年ヒストリー：旧デザインの透視スクロール（design/history.html から移植） ══
@@ -3348,6 +3363,7 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     place(next); swap(next); last=next;
     setTimeout(function(){ stepping=false; step(); },150);
   }
+  var hcWas=false, openT=null;
   function upd(){
     var vh=window.innerHeight, max=scene.offsetHeight-vh, r=scene.getBoundingClientRect();
     var p= max>0 ? cl(-r.top,0,max)/max : 0;
@@ -3355,7 +3371,17 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     var nt=Math.abs(raw-target)>=0.6?Math.round(raw):target;
     nt=nt<0?0:(nt>N-1?N-1:nt);
     /* スライドが画面を占めている間だけ body.is-hc（ロゴを消す／メニューをバーガーに／背景を黒く） */
-    document.body.classList.toggle('is-hc', r.top<=1 && r.bottom>=vh-1);
+    var hcNow = (r.top<=1 && r.bottom>=vh-1);
+    document.body.classList.toggle('is-hc', hcNow);
+    /* ⚠️年号・年代・中央のテキスト・目盛りは「写真が広がりきってから」出す。
+       写真の拡大は .9s なので、少し待ってから body.is-hc-open を付ける。
+       外れる時は即座に落として、縮む写真と一緒に消えるようにする。 */
+    if(hcNow !== hcWas){
+      hcWas = hcNow;
+      clearTimeout(openT);
+      if(hcNow) openT = setTimeout(function(){ document.body.classList.add('is-hc-open'); }, 620);
+      else document.body.classList.remove('is-hc-open');
+    }
     if(nt!==target){ target=nt; step(); }
     ticking=false;
   }
@@ -3521,7 +3547,7 @@ body.is-hc .hc-photos{top:5vh;left:5vw;right:5vw;bottom:110px}
   padding:0;border:0;background:#fff;cursor:pointer;
   font-size:0;line-height:0;
   opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s,background .25s}
-body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s}
+body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s,background .25s}
 .hc-exit::after{content:"";position:absolute;inset:22%;
   background:var(--red);transition:background .25s ease;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.03' stroke-linecap='square'%3E%3Cpath d='M4 4L20 20'/%3E%3Cpath d='M20 4v16H4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.03' stroke-linecap='square'%3E%3Cpath d='M4 4L20 20'/%3E%3Cpath d='M20 4v16H4'/%3E%3C/svg%3E") center/contain no-repeat}
