@@ -3455,10 +3455,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
     repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px)}
 
-/* ① 左上ロゴを隠す */
-body.is-hc .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+/* ① 左上ロゴを隠す
+   ⚠️900px以下は左上に出ているのが .site-logo ではなく .nav__mini（白帯ロゴ）。
+     PCは前段の @media(min-width:901px) で .nav__mini を display:none にしているので
+     .site-logo だけ消せば足りるが、SPはこちらも消さないと白帯ロゴが残る。 */
+body.is-hc .site-logo,
+body.is-hc .nav__mini{opacity:0!important;visibility:hidden!important;pointer-events:none!important;
   transition:opacity .3s ease,visibility 0s .3s}
-.site-logo{transition:opacity .3s ease,visibility 0s}
+.site-logo,.nav__mini{transition:opacity .3s ease,visibility 0s}
 
 /* ② メニューをハンバーガーに差し替え
    ⚠️PC幅ではバーガーが display:none にされているので、ここで出し直す。
@@ -3537,8 +3541,9 @@ body.is-hc .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ease,vi
 
 @media(max-width:700px){
   .hc-exit{width:52px;height:52px}
-  .hc-photos{top:22vh;left:12vw;right:12vw;bottom:28vh}
-  body.is-hc .hc-photos{top:8vh;left:5vw;right:5vw;bottom:96px}
+  .hc-photos{top:24vh;left:12vw;right:12vw;bottom:30vh}
+  /* ⚠️SPは縦に余裕がないぶん写真が伸びすぎるので、PC(5vh/110px)より控えめに。 */
+  body.is-hc .hc-photos{top:12vh;left:5vw;right:5vw;bottom:120px}
 }
 @media(prefers-reduced-motion:reduce){
   .hc-scene,.hc-lines,.hc-photos{transition:none}
