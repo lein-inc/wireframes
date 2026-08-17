@@ -3947,7 +3947,8 @@ a.foot__contact.arr-on .cbtn::after,
 .drawer__rec.arr-on .ar,
 .phil .phil__cta .btn.arr-on>span,
 .nrow.arr-on .nrow__ar,
-.news__more.arr-on .arrow-i{
+.news__more.arr-on .arrow-i,
+.rjb__go.arr-on .arrow-i{
   animation:arrowSwap .9s cubic-bezier(.4,0,.2,1) infinite}   /* 旧.42s→.525s→さらに遅く */
 
 @media(prefers-reduced-motion:reduce){
@@ -3957,7 +3958,8 @@ a.foot__contact.arr-on .cbtn::after,
   a.foot__contact.arr-on .cbtn::after,.svc__arrow.arr-on::after,
   .fv .fv__cell--recruit.arr-on .rec-arrow,.drawer__rec.arr-on .ar,
   .phil .phil__cta .btn.arr-on>span,
-  .nrow.arr-on .nrow__ar,.news__more.arr-on .arrow-i{animation:none}
+  .nrow.arr-on .nrow__ar,.news__more.arr-on .arrow-i,
+  .rjb__go.arr-on .arrow-i{animation:none}
 }
 </style>
 <script>
@@ -3966,7 +3968,8 @@ a.foot__contact.arr-on .cbtn::after,
   var HOSTS = '.btn,.hist__go,.stats__cta,.news__all,.pf-info__btn,.strip__contact .cbtn,'
             + '.svc__arrow,.stats__band,.foot__recruit,a.foot__contact,'
             + '.fv__cell--recruit,.drawer__rec,'
-            + '.nrow,.news__more';                /* 新着情報の各行と一覧ボタン */
+            + '.nrow,.news__more,'               /* 新着情報の各行と一覧ボタン */
+            + '.rjb__go';                        /* 採用情報の新卒／中途ボタン */
   var CYCLE = 900;                       /* 上のCSSの再生時間(ms)と必ず揃えること */
 
   document.querySelectorAll(HOSTS).forEach(function(el){
