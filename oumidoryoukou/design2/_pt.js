@@ -17,7 +17,9 @@
 
   var style = document.createElement('style');
   style.textContent =
-    '.pt-grid{position:fixed;inset:0;z-index:995;display:grid;overflow:hidden;' +
+    /* ⚠️z-index はページ内のどの要素よりも確実に上に。ここが競り負けると、
+     追従ロゴやナビがタイルの上に出て「一瞬だけ別のロゴが見える」ことになる。 */
+    '.pt-grid{position:fixed;inset:0;z-index:2147483000;display:grid;overflow:hidden;' +
     'grid-template-columns:repeat(' + COLS + ',1fr);' +
     'grid-auto-rows:calc(100vw / ' + COLS + ');pointer-events:none;}' +
     '.pt-grid i{display:block;background:' + RED + ';will-change:opacity;margin:-0.5px;}' +
@@ -27,11 +29,14 @@
        ナビのコンパクト化）は読み込み直後に一度判定するので、そこで確定前の姿
        （白帯の追従ロゴなど）が一瞬見えてしまう。透明にしておき、ヴェールが
        外れてから既存の opacity トランジションでふわっと出す。 */
-    'html.pt-veil .site-logo,html.pt-veil .nav__mini,html.pt-veil .drawer__logo{'+
+    /* ⚠️入場（タイルが剥がれる側）だけに掛ける。退場（クリックしてタイルが
+       埋まっていく側）で消すと、リンクを押した瞬間にロゴだけ先に消えて見える。 */
+    'html.pt-veil:not(.pt-leave) .site-logo,html.pt-veil:not(.pt-leave) .nav__mini,'+
+    'html.pt-veil:not(.pt-leave) .drawer__logo{'+
       'opacity:0!important;visibility:hidden!important;}' +
     /* ⚠️ロゴの白⇄赤はフィルタのトランジションで切り替わる。ヴェール中に状態が
        決まると、剥がれた直後に赤→白のフェードが見えるので切っておく。 */
-    'html.pt-veil .site-logo img{transition:none!important;}';
+    'html.pt-veil:not(.pt-leave) .site-logo img{transition:none!important;}';
   document.documentElement.appendChild(style);
   document.documentElement.classList.add('pt-init');
   document.documentElement.classList.add('pt-veil');
@@ -80,6 +85,7 @@
     e.preventDefault();
     leaving = true;
     document.documentElement.classList.add('pt-veil');
+    document.documentElement.classList.add('pt-leave');
     var o = makeGrid(0);
     requestAnimationFrame(function () { requestAnimationFrame(function () {
       o.cells.forEach(function (c) {
