@@ -1512,12 +1512,12 @@ html,body{overflow-x:clip;max-width:100%}
 
 <!-- ロゴはヘッダー（fixed）から切り離し、ページ先頭に置いて追従させない -->
 <a class="site-logo" href="index.html">
+  <img class="logo-anv logo-mark" src="logo_mark_r.png" alt="">
   <img class="logo-name" src="logo_name_r.png" alt="近江度量衡株式会社">
-  <img class="logo-anv" src="logo_anv_r.png" alt="SINCE 1900 125th Anniv.">
 </a>
 
 <header class="nav">
-  <a class="nav__mini" href="index.html" aria-label="近江度量衡株式会社 トップへ"><img src="logo_name_r.png" alt="近江度量衡株式会社"></a>
+  <a class="nav__mini" href="index.html" aria-label="近江度量衡株式会社 トップへ"><img class="logo-anv logo-mark" src="logo_mark_r.png" alt=""><img class="logo-name" src="logo_name_r.png" alt="近江度量衡株式会社"></a>
   <nav class="nav__menu">
     <div class="nitem">
       <a class="nlink" href="products.html">製品・技術</a>
@@ -1577,7 +1577,7 @@ html,body{overflow-x:clip;max-width:100%}
 <!-- タブレット/SP：格納メニュー -->
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer__panel">
-    <a class="drawer__logo" href="index.html" aria-label="近江度量衡株式会社 トップへ"><img src="logo_name_w.png" alt="近江度量衡株式会社"></a>
+    <a class="drawer__logo" href="index.html" aria-label="近江度量衡株式会社 トップへ"><img class="logo-mark" src="logo_mark_w.png" alt=""><img src="logo_name_w.png" alt="近江度量衡株式会社"></a>
     <nav class="drawer__list">
       <a href="products.html">製品・技術<span>Products</span></a>
       <a href="service.html">サービス案内<span>Service</span></a>
@@ -2855,6 +2855,44 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   u();
 })();
 </script>
+
+<!-- ══ ロゴ：赤の3本線（社章）＋黒文字の社名。周年ロゴは廃止 ══ -->
+
+<!-- ══ 製品紹介の説明文：小さくて読みにくいので大きめに統一 ══ -->
+<style id="prod-text-up">
+/* ⚠️前段の指定は 13〜16px の固定値で、画面幅が広いほど相対的に小さく見えていた。
+     clamp で下限を上げつつ、大きい画面では素直に大きくなるようにする。 */
+.lcard__tx{font-size:clamp(15px,1.15vw,18px);line-height:1.95}
+</style>
+<style id="logo-mark">
+/* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
+     並び・余白・ブレークポイント別のサイズ指定がこのクラスにぶら下がっており、
+     クラスを変えると全ページぶん書き直しになるため。
+   ⚠️高さは align-self:stretch で社名画像に追従させる。ブレークポイントごとに
+     数値を書くと、あとで社名サイズを変えたときに必ずズレる。
+   ⚠️色は filter で作る。素材が赤ベタなので
+     brightness(0)=黒 ／ brightness(0) invert(1)=白 ／ none=赤。 */
+/* ⚠️align-self:stretch では効かない。画像の“本来の高さ(211px)”が行の高さを
+     決めてしまい、社名より大きく伸びる。素直にブレークポイントごとに書く。
+     数値は各幅で実測した社名の高さ × 0.83（社名画像は上下18%が余白のため）。 */
+.site-logo .logo-mark,.nav__mini .logo-mark{
+  flex:none;align-self:center;width:auto;background:none;padding:0}
+.site-logo .logo-mark{height:clamp(19.9px,2.02vw,31.5px)}
+/* ドロワー内のロゴも同じ組み（白版マーク＋白社名） */
+.drawer__logo{display:flex;align-items:center;gap:clamp(8px,1vw,14px)}
+.drawer__logo .logo-mark{height:18px;width:auto;flex:none}
+@media(min-width:901px){.drawer__logo .logo-mark{height:22px}}
+.nav__mini .logo-mark{height:clamp(16.6px,1.74vw,26.6px)}
+@media(max-width:900px){
+  .site-logo .logo-mark{height:clamp(12.5px,2.99vw,21.6px)}
+  .nav__mini .logo-mark{height:14.1px}
+}
+@media(max-width:700px){ .nav__mini .logo-mark{height:12.5px} }
+@media(max-width:650px){ .site-logo .logo-mark{height:clamp(17.4px,4.19vw,29.9px)} }
+/* 下層は常に 社名＝黒／3本線＝赤 */
+.site-logo .logo-name,.nav__mini .logo-name{filter:brightness(0)}
+.site-logo .logo-mark,.nav__mini .logo-mark{filter:none}
+</style>
 <script src="_pt.js?v=4"></script>
 
 <!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
