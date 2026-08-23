@@ -1741,9 +1741,9 @@ html,body{overflow-x:clip;max-width:100%}
   <h2 class="sec-jp rv">製品ラインナップ</h2>
   <p class="sec-ttl rv">Lineup</p>
   <div class="lineup__grid">
-    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-calistar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Calistar</p><h3 class="lcard__nm">キャリスター</h3><p class="lcard__obj"><span>対象物</span>玉葱</p><p class="lcard__tx">大規模選果施設向けのフラッグシップライン。AI画像処理と内部品位センサーで、外観と中身を同時に選別します。</p></div></div>
-    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-millistar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Millistar</p><h3 class="lcard__nm">ミリスター</h3><p class="lcard__obj"><span>対象物</span>ミニトマト・金柑などの小粒</p><p class="lcard__tx">全周10方向の画像処理と糖度センサーを備えた選別機。中規模施設のラインに柔軟に組み込めます。</p></div></div>
-    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-rollerstar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Rollerstar</p><h3 class="lcard__nm">ローラスター</h3><p class="lcard__obj"><span>対象物</span>柑橘・トマトなど</p><p class="lcard__tx">洗浄・ワックスがけから等階級振分までを担うローラー式選果ライン。柑橘など果面の仕上げが要る品目に。</p></div></div>
+    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-calistar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Calistar</p><h3 class="lcard__nm">キャリスター</h3><div class="lcard__obj"><span>対象物</span><b>玉葱</b><div class="lcard__fr"><i style="background-image:url(fr-onion.jpg)"></i></div></div><p class="lcard__tx">大規模選果施設向けのフラッグシップライン。AI画像処理と内部品位センサーで、外観と中身を同時に選別します。</p></div></div>
+    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-millistar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Millistar</p><h3 class="lcard__nm">ミリスター</h3><div class="lcard__obj"><span>対象物</span><b>ミニトマト・金柑などの小粒</b><div class="lcard__fr"><i style="background-image:url(fr-minitomato.jpg)"></i><i style="background-image:url(fr-kumquat.jpg)"></i></div></div><p class="lcard__tx">全周10方向の画像処理と糖度センサーを備えた選別機。中規模施設のラインに柔軟に組み込めます。</p></div></div>
+    <div class="lcard"><div class="lcard__ph" style="background-image:url(prod-rollerstar.jpg)"></div><div class="lcard__body"><p class="lcard__en">Rollerstar</p><h3 class="lcard__nm">ローラスター</h3><div class="lcard__obj"><span>対象物</span><b>柑橘・トマトなど</b><div class="lcard__fr"><i style="background-image:url(fr-citrus.jpg)"></i><i style="background-image:url(fr-orange.jpg)"></i><i style="background-image:url(fr-tomato.jpg)"></i></div></div><p class="lcard__tx">洗浄・ワックスがけから等階級振分までを担うローラー式選果ライン。柑橘など果面の仕上げが要る品目に。</p></div></div>
   </div>
 </section>
 
@@ -2974,10 +2974,15 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ ラインナップ：機種ごとの対象物を明記（近江様ご指示）══ -->
 <style id="lcard-obj">
-.lcard__obj{display:flex;align-items:baseline;gap:10px;margin-top:10px;
+.lcard__obj{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin-top:12px;
   font-family:var(--jp);font-weight:700;font-size:clamp(13px,1.05vw,15px);color:var(--ink)}
 .lcard__obj span{flex:none;font-weight:700;font-size:11px;letter-spacing:.12em;
   color:#fff;background:var(--red);padding:3px 8px 4px}
+.lcard__obj b{font-weight:700}
+/* 対象物の実物写真（会社案内カタログP10の切り抜き） */
+.lcard__fr{display:flex;gap:6px;flex:none;width:100%;margin-top:2px}
+.lcard__fr i{display:block;width:clamp(44px,4.6vw,60px);aspect-ratio:1;
+  background-size:cover;background-position:center;border:1px solid var(--line)}
 </style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
