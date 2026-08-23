@@ -1814,6 +1814,19 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
 </section>
 
+
+<section class="agallery">
+  <h2 class="sec-jp rv">導入されている現場</h2>
+  <p class="sec-ttl rv">Site</p>
+  <div class="agallery__grid">
+    <figure class="ag rv rv-d1"><i style="background-image:url(agri-line3.jpg)"></i><figcaption>トマトの等階級選別ライン</figcaption></figure>
+    <figure class="ag rv rv-d1"><i style="background-image:url(agri-line2.jpg)"></i><figcaption>内部品位センサーによる非破壊検査</figcaption></figure>
+    <figure class="ag rv rv-d2"><i style="background-image:url(agri-line1.jpg)"></i><figcaption>コンテナの荷受・供給</figcaption></figure>
+    <figure class="ag rv rv-d2"><i style="background-image:url(agri-line4.jpg)"></i><figcaption>ロボットによるパレタイズ</figcaption></figure>
+    <figure class="ag rv rv-d2"><i style="background-image:url(agri-demo.jpg)"></i><figcaption>草津本社のデモルーム。実機で選別を体感いただけます</figcaption></figure>
+  </div>
+</section>
+
 <section class="pcta">
   <div class="pcta__in">
     <h2 class="rv">導入のご相談・お見積り</h2>
@@ -2372,7 +2385,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 <script>
 /* ヘッダー：初期透明→スクロールで白背景／下スクロールで隠れ・上スクロールで出現 */
 (function(){
@@ -2983,6 +2996,35 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 .lcard__fr{display:flex;gap:6px;flex:none;width:100%;margin-top:2px}
 .lcard__fr i{display:block;width:clamp(44px,4.6vw,60px);aspect-ratio:1;
   background-size:cover;background-position:center;border:1px solid var(--line)}
+</style>
+
+<!-- ══ 導入されている現場（会社案内カタログP09）══ -->
+<style id="agallery-css">
+.agallery{padding:clamp(70px,8vw,120px) var(--frame);border-top:0.5px solid var(--line)}
+/* ⚠️.sec-jp は素が「白文字＋赤帯」の演出用。白地では見えないので他セクションと同じ扱いに戻す */
+.agallery .sec-jp{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:.04em;line-height:1.15;display:block;
+  color:var(--ink);padding:0;width:auto;overflow:visible}
+.agallery .sec-jp::before{content:none}
+.agallery .sec-jp .hch{transform:none}
+.agallery .sec-ttl{display:block;margin-top:14px;font-family:var(--en);font-weight:500;
+  font-size:clamp(9px,.72vw,11px);letter-spacing:.24em;text-transform:uppercase;opacity:.55}
+.agallery .sec-ttl::before{content:"( "}
+.agallery .sec-ttl::after{content:" )"}
+.agallery__grid{margin-top:clamp(34px,4vw,56px);display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.4vw,34px)}
+.ag i{display:block;width:100%;aspect-ratio:4/3;background-size:cover;background-position:center}
+.ag figcaption{margin-top:12px;font-size:clamp(12.5px,1vw,14px);line-height:1.85}
+/* デモルームは横長なので2列ぶん使う */
+.agallery__grid .ag:last-child{grid-column:span 2}
+.agallery__grid .ag:last-child i{aspect-ratio:16/8}
+@media(max-width:900px){
+  .agallery__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .agallery__grid{grid-template-columns:1fr}
+  .agallery__grid .ag:last-child{grid-column:auto}
+}
 </style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。

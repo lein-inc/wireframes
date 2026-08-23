@@ -1800,17 +1800,17 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
     <div class="grid-2 rv rv-d1">
       <div class="card">
-        <div class="card__no">ISO 9001</div>
+        <i class="card__ph" style="background-image:url(cert-iso.jpg)"></i><div class="card__no">ISO 9001</div>
         <div class="card__ttl">品質マネジメントシステム認証</div>
         <p class="card__txt">2000年2月、ISO（国際標準化機構）が定めた国際的な品質保証規格「ISO9001」の認証を取得（登録番号 JQA-QM4385）。製品の受注・開発・設計・生産・保管出荷等、各過程の管理体制が国際的に評価されています。</p>
       </div>
       <div class="card">
-        <div class="card__no">Regional Future</div>
+        <i class="card__ph" style="background-image:url(cert-regional.jpg)"></i><div class="card__no">Regional Future</div>
         <div class="card__ttl">地域未来牽引企業</div>
         <p class="card__txt">経済産業省が選定する「地域未来牽引企業」に選定。地域経済の中核を担う企業として、地域の特性・強みを活かし、地域経済の活性化に貢献していきます。</p>
       </div>
       <div class="card">
-        <div class="card__no">100 Years</div>
+        <i class="card__ph" style="background-image:url(cert-100y.jpg)"></i><div class="card__no">100 Years</div>
         <div class="card__ttl">優良100年企業表彰</div>
         <p class="card__txt">創業100年を超える長寿企業として、優れた経営理念を掲げ、雇用や税収などで地域貢献の実績を持つ企業として「優良100年企業」に表彰されました。</p>
       </div>
@@ -1821,7 +1821,7 @@ html,body{overflow-x:clip;max-width:100%}
       </div>
     </div>
     <div class="card rv rv-d2" style="margin-top:24px;">
-      <div class="card__no">Environment / Mother Lake</div>
+      <i class="card__ph" style="background-image:url(env-solar.jpg)"></i><div class="card__no">Environment / Mother Lake</div>
       <div class="card__ttl">環境に対する取り組み</div>
       <p class="card__txt">日本最大の湖・琵琶湖の豊かな水資源に恵まれた滋賀で創業・発展してきた私たちは、「Mother Lake」琵琶湖と地域の環境を保全する活動にも取り組んでいます。本社工場の屋上にはソーラーパネルを設置し、クリーンエネルギーの活用でCO2排出量の削減を進めています。</p>
     </div>
@@ -2399,7 +2399,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 
 <style id="rule-marks-css">
 /* 下層ページのセクション見出し（赤帯）はTOPより小さめに */
@@ -2829,6 +2829,15 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 </script>
 
 <!-- ══ ロゴ：赤の3本線（社章）＋黒文字の社名。周年ロゴは廃止 ══ -->
+
+<!-- ══ 品質・認証：証書とソーラーパネルの写真を添える（会社案内カタログP14）══ -->
+<style id="cert-photo">
+.card__ph{display:block;width:100%;aspect-ratio:16/10;margin-bottom:18px;
+  background-size:contain;background-repeat:no-repeat;background-position:center;background-color:#f4f4f4}
+/* ソーラーパネルだけは写真なので全面で */
+.card__ph[style*="env-solar"]{background-size:cover}
+@media(max-width:700px){ .card__ph{aspect-ratio:16/9} }
+</style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
      並び・余白・ブレークポイント別のサイズ指定がこのクラスにぶら下がっており、

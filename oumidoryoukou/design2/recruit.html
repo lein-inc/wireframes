@@ -1717,26 +1717,26 @@ html,body{overflow-x:clip;max-width:100%}
 <main class="pmain">
 <!-- ① FV：大タイポ×写真の重なり -->
 <section class="rct-fv">
+  <i class="rct-fv__bg" aria-hidden="true"></i>
+  <i class="rct-fv__veil" aria-hidden="true"></i>
   <p class="rct-fv__eyebrow">OMISCALE Recruit 2027</p>
   <h1 class="rct-fv__title"><span>「いきる」の単位とは、</span><span class="idnt">なんだろう。</span></h1>
-  <div class="rct-fv__grid">
-    <div class="rct-fv__sub rv">
-      <p>「働く人を大切にする」という理念のもと、あなたの確かな仕事で、豊かな未来を担う力になる。</p>
-      <div class="rct-fv__btns">
-        <a class="btn" href="#entry">募集要項を見る <i class="arrow-i" style="color:#fff">→</i></a>
-        <a class="btn btn--outline" href="#people">社員インタビュー</a>
-      </div>
-      <div class="rct-fv__subphoto ph rimg" style="aspect-ratio:4/5;background-image:url(agri-step2.jpg)"></div>
+  <div class="rct-fv__lead">
+    <p>「働く人を大切にする」という理念のもと、<br>あなたの確かな仕事が、豊かな未来を担う力になる。</p>
+    <div class="rct-fv__btns">
+      <a class="btn" href="#entry">募集要項を見る <i class="arrow-i" style="color:#fff">→</i></a>
+      <a class="btn btn--outline" href="#people">社員インタビュー</a>
     </div>
-    <div class="rct-fv__main ph rimg rv rv-d1" style="aspect-ratio:4/3;background-image:url(photo-industry.jpg)"></div>
   </div>
-  <div class="rct-marq"><div class="rct-marq__in">
-    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-    <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-  </div></div>
+  <a class="rct-fv__scroll" href="#vision"><span class="txt">SCROLL DOWN</span></a>
 </section>
+
+<div class="rct-marq"><div class="rct-marq__in">
+  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
+</div></div>
 
 <!-- ② コンテンツメニュー -->
 <section class="section">
@@ -2417,7 +2417,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 
 <style id="rule-marks-css">
 /* 下層ページのセクション見出し（赤帯）はTOPより小さめに */
@@ -2847,6 +2847,90 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 </script>
 
 <!-- ══ ロゴ：赤の3本線（社章）＋黒文字の社名。周年ロゴは廃止 ══ -->
+
+<!-- ══ 採用FV：全画面の写真に大きなコピーを載せる（TOPの言語を踏襲しつつ大胆に）══ -->
+<style id="rec-fv-bold">
+/* ⚠️前段の .rct-fv は「白地＋写真グリッド」前提の指定。全面的に上書きする。 */
+.rct-fv{position:relative;height:100vh;min-height:560px;padding:0;overflow:hidden;
+  background:#0a0b0a;color:#fff;display:block}
+.rct-fv__bg{position:absolute;inset:0;display:block;
+  background-image:url(svc-design.jpg);background-size:cover;background-position:center;
+  filter:grayscale(1) contrast(1.05) brightness(.62)}
+/* 文字を読ませるための膜。左が濃い斜めのグラデーション */
+.rct-fv__veil{position:absolute;inset:0;display:block;
+  background:linear-gradient(100deg,rgba(8,9,8,.80) 0%,rgba(8,9,8,.50) 52%,rgba(8,9,8,.34) 100%)}
+
+.rct-fv__eyebrow{position:absolute;left:var(--fvpad,var(--frame));top:calc(var(--fvpad,var(--frame)) + clamp(84px,9vw,132px));
+  z-index:3;font-family:var(--en);font-weight:600;font-size:clamp(10px,.85vw,13px);
+  letter-spacing:.34em;text-transform:uppercase;color:#fff;margin:0;
+  display:flex;align-items:center;gap:12px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+/* ⚠️赤文字のままだと明るい写真に負けて読めない。白文字＋頭の赤い線にする */
+.rct-fv__eyebrow::before{content:"";width:clamp(24px,3vw,44px);height:2px;background:var(--red)}
+
+/* 主役のコピー。TOPのFVと同じく縦長に圧縮して大きく */
+.rct-fv__title{position:absolute;left:var(--fvpad,var(--frame));z-index:3;
+  top:50%;transform:translateY(-54%);
+  font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(40px,8.4vw,132px);line-height:1.06;letter-spacing:-.03em;margin:0;color:#fff}
+.rct-fv__title span{display:block;transform:scaleX(.86);transform-origin:left center}
+.rct-fv__title .idnt{margin-left:.9em}
+
+/* リード文とボタンは右下に */
+.rct-fv__lead{position:absolute;right:var(--fvpad,var(--frame));bottom:calc(var(--fvpad,var(--frame)) + 18px);
+  z-index:3;max-width:min(42ch,44vw);text-align:right}
+.rct-fv__lead p{font-family:var(--jp);font-weight:500;font-size:clamp(13px,1.05vw,16px);
+  line-height:2.05;color:rgba(255,255,255,.9);margin:0}
+.rct-fv__btns{display:flex;gap:12px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.rct-fv .btn{background:var(--red);color:#fff;border:0}
+.rct-fv .btn--outline{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff}
+
+/* 左下の赤帯＋SCROLL DOWN（TOPと同じ扱い） */
+.rct-fv__scroll{position:absolute;left:var(--fvpad,var(--frame));bottom:var(--fvpad,var(--frame));
+  z-index:3;display:flex;align-items:center;height:clamp(44px,4.4vw,56px);
+  padding:0 clamp(18px,2vw,28px);background:var(--red);color:#fff;text-decoration:none}
+.rct-fv__scroll .txt{font-family:var(--en);font-weight:600;font-size:clamp(10px,.82vw,12px);
+  letter-spacing:.24em;text-transform:uppercase}
+.rct-fv__scroll::after{content:"";width:34px;height:1px;background:#fff;margin-left:16px;
+  transform-origin:left center;animation:recScroll 2.4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes recScroll{0%{transform:scaleX(0)}45%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:0}}
+
+/* 英字マーキーはFVの直後に独立させる */
+.rct-marq{background:#0a0b0a;color:rgba(255,255,255,.5);border-top:0.5px solid rgba(255,255,255,.18);
+  border-bottom:0.5px solid rgba(255,255,255,.18)}
+
+@media(max-width:900px){
+  .rct-fv__title{font-size:clamp(34px,10.5vw,64px);top:auto;bottom:calc(var(--fvpad,var(--frame)) + 180px);transform:none}
+  .rct-fv__lead{left:var(--fvpad,var(--frame));right:var(--fvpad,var(--frame));max-width:none;text-align:left;
+    bottom:calc(var(--fvpad,var(--frame)) + 74px)}
+  .rct-fv__btns{justify-content:flex-start}
+  .rct-fv__veil{background:linear-gradient(180deg,rgba(8,9,8,.5) 0%,rgba(8,9,8,.78) 60%,rgba(8,9,8,.9) 100%)}
+}
+
+/* ⚠️ヒーローが暗いので、その上にいる間だけロゴを白に。
+     下層は既定で「社名＝黒／3本線＝赤」なので、ここだけ切り替える。 */
+body:not(.is-logo-dark) .site-logo .logo-name,
+body:not(.is-logo-dark) .site-logo .logo-mark{filter:brightness(0) invert(1)}
+body.is-logo-dark .site-logo .logo-name{filter:brightness(0)}
+body.is-logo-dark .site-logo .logo-mark{filter:none}
+.site-logo .logo-name,.site-logo .logo-mark{transition:filter .25s ease}
+@media(prefers-reduced-motion:reduce){ .rct-fv__scroll::after{animation:none;transform:none} }
+</style>
+<script>
+/* FVの写真はリロードごとに切り替え（TOPと同じ考え方） */
+(function(){
+  var bg=document.querySelector('.rct-fv__bg'); if(!bg) return;
+  var P=['svc-design.jpg','photo-industry.jpg','flow5.jpg','flow6.jpg','agri-line3.jpg'];
+  bg.style.backgroundImage='url('+P[Math.floor(Math.random()*P.length)]+')';
+})();
+
+/* ヒーローを抜けたらロゴを黒へ */
+(function(){
+  function u(){ document.body.classList.toggle('is-logo-dark', window.scrollY > window.innerHeight * 0.72); }
+  window.addEventListener('scroll', u, {passive:true});
+  window.addEventListener('resize', u); u();
+})();
+
+</script>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
      並び・余白・ブレークポイント別のサイズ指定がこのクラスにぶら下がっており、

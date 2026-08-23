@@ -2260,7 +2260,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 
 <style id="rule-marks-css">
 /* 下層ページのセクション見出し（赤帯）はTOPより小さめに */
@@ -3753,7 +3753,9 @@ body.is-hc .tl{opacity:1}
 .tl-era{font-family:var(--jp);font-weight:700;font-size:13px;letter-spacing:.12em;color:rgba(255,255,255,.62);margin-top:6px}
 .tl-ttl{font-family:var(--jp);font-weight:700;font-size:17px;line-height:1.5;margin-top:10px;color:#fff}
 .tl-tx{font-family:var(--jp);font-weight:500;font-size:12.5px;line-height:1.85;color:rgba(255,255,255,.72);margin-top:8px}
-.tl-ph{width:100%;aspect-ratio:16/10;margin-top:12px;background-size:cover;background-position:center;
+/* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
+     札の幅いっぱいには広げない。 */
+.tl-ph{width:78%;aspect-ratio:3/2;margin-top:12px;background-size:cover;background-position:center;
   border:1px solid rgba(255,255,255,.18)}
 /* 手前の1件だけ本文と写真を出す。遠い札は年号だけにして混み合いを避ける */
 .tl-item .tl-tx,.tl-item .tl-ph{opacity:0;transition:opacity .35s ease}

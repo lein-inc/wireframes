@@ -1709,6 +1709,7 @@ html,body{overflow-x:clip;max-width:100%}
   <h2 class="sec-jp rv">主な装置</h2>
   <p class="sec-ttl rv">Lineup</p>
   <p class="lineup__lead rv rv-d1">平等で正確な計量・検査を行う装置を開発・製作・納入しています。</p>
+  <figure class="gterminal rv rv-d1"><i style="background-image:url(grain-terminal.jpg)"></i><figcaption>ライスターミナル全体のイメージ。荷受から乾燥・調製・出荷まで、各工程に計量装置が組み込まれます。</figcaption></figure>
   <div class="lineup__grid">
     <div class="lcard"><div class="lcard__ph" style="background-image:url(grain-twin.jpg)"></div><div class="lcard__body"><p class="lcard__en">Twinscale</p><h3 class="lcard__nm">ツインスケール</h3><p class="lcard__tx">計量槽を2基内蔵した穀物用計量機。2つの槽で交互に計量することでロスをなくし、荷受などの処理を効率良く行います。非破壊水分測定センサーで、計量と同時に水分量も測定します。</p></div></div>
     <div class="lcard"><div class="lcard__ph" style="background-image:url(grain-checker.jpg)"></div><div class="lcard__body"><p class="lcard__en">Autochecker</p><h3 class="lcard__nm">オートチェッカー</h3><p class="lcard__tx">選別からパッキングまでを一台で行う検査装置。低コスト・省スペースを実現し、タッチパネルで簡単に操作できます。検査後のサンプルはシールパックで保存、大豆用の三段選別にも対応します。</p></div></div>
@@ -2301,7 +2302,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 <script>
 /* ヘッダー：初期透明→スクロールで白背景／下スクロールで隠れ・上スクロールで出現 */
 (function(){
@@ -2869,6 +2870,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 <!-- ══ 会社案内カタログ P12 の内容を反映 ══ -->
 <style id="grain-lead">
 .lineup__lead{margin-top:18px;font-size:clamp(15px,1.25vw,18px);line-height:1.95;max-width:44em;font-weight:700}
+</style>
+
+<!-- ══ ライスターミナル全体図（会社案内カタログP12）══ -->
+<style id="gterminal-css">
+.gterminal{margin-top:clamp(28px,3vw,44px)}
+.gterminal i{display:block;width:100%;aspect-ratio:16/9;background-size:contain;
+  background-repeat:no-repeat;background-position:center;background-color:#f4f6f7}
+.gterminal figcaption{margin-top:12px;font-size:clamp(12.5px,1vw,14px);line-height:1.85;color:#444}
 </style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。

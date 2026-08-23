@@ -2514,7 +2514,7 @@ html{visibility:hidden}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 <style>
 /* フッターお問い合わせ：文字要素を上下センター、矢印は左下固定 */
 .foot__contact{position:relative;justify-content:center}
@@ -4031,10 +4031,13 @@ a.foot__contact.arr-on .cbtn::after,
      そこはまだ暗い写真の上なので白のままでいてほしい。 */
   var fv   = document.querySelector('.fv__slides');
   if(!logo || !fv) return;
+  /* ⚠️FV写真(.fv__slides)は position:fixed のまま居座るため、写真の下端と
+     ロゴの下端を比べる方式だと最後まで条件が成立せず、白ロゴのままになる
+     （実測：企業理念〜採用情報まで is-logo-dark=false）。
+     白のままでいいのはFV写真に載っている最初だけなので、
+     「FVを離れたら黒」に単純化する。 */
   function u(){
-    var lb = logo.getBoundingClientRect().bottom;   /* fixed なので画面座標そのまま */
-    var fb = fv.getBoundingClientRect().bottom;
-    document.body.classList.toggle('is-logo-dark', lb > fb);
+    document.body.classList.toggle('is-logo-dark', window.scrollY > 40);
   }
   window.addEventListener('scroll', u, {passive:true});
   window.addEventListener('resize', u);

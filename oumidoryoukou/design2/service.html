@@ -1711,12 +1711,12 @@ html,body{overflow-x:clip;max-width:100%}
       <p class="sec-ttl">Flow</p>
     </div>
     <div class="flow rv rv-d1">
-      <div class="flow__step"><div class="flow__ttl">お問い合わせ</div><p class="flow__txt">Webフォーム・電話にてご連絡ください。</p></div>
-      <div class="flow__step"><div class="flow__ttl">現地調査・ヒアリング</div><p class="flow__txt">現場の状況を確認し、ご要望を詳しくお聞きします。</p></div>
-      <div class="flow__step"><div class="flow__ttl">提案・見積</div><p class="flow__txt">最適なシステム構成をご提案します。</p></div>
-      <div class="flow__step"><div class="flow__ttl">設計・製造</div><p class="flow__txt">一品一様で設計・製造します。</p></div>
-      <div class="flow__step"><div class="flow__ttl">納品・設置調整</div><p class="flow__txt">現地への納品・据付・調整を行います。</p></div>
-      <div class="flow__step"><div class="flow__ttl">保守・サポート</div><p class="flow__txt">全国ネットワークで継続サポートします。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow1.jpg)"></i><div class="flow__ttl">お問い合わせ</div><p class="flow__txt">Webフォーム・電話にてご連絡ください。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow7.jpg)"></i><div class="flow__ttl">現地調査・ヒアリング</div><p class="flow__txt">現場の状況を確認し、ご要望を詳しくお聞きします。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow2.jpg)"></i><div class="flow__ttl">提案・見積</div><p class="flow__txt">最適なシステム構成をご提案します。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow3.jpg)"></i><div class="flow__ttl">設計・製造</div><p class="flow__txt">一品一様で設計・製造します。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow5.jpg)"></i><div class="flow__ttl">納品・設置調整</div><p class="flow__txt">現地への納品・据付・調整を行います。</p></div>
+      <div class="flow__step"><i class="flow__ph" style="background-image:url(flow6.jpg)"></i><div class="flow__ttl">保守・サポート</div><p class="flow__txt">全国ネットワークで継続サポートします。</p></div>
     </div>
     <p class="rv rv-d1" style="margin-top:44px;"><a class="btn" href="contact.html">サービス・保守について相談する <i class="arrow-i">→</i></a></p>
   </div>
@@ -2270,7 +2270,7 @@ html,body{overflow-x:clip;max-width:100%}
   u();
 })();
 </script>
-<script src="_simg.js?v=7"></script>
+<script src="_simg.js?v=2"></script>
 
 <style id="rule-marks-css">
 /* 下層ページのセクション見出し（赤帯）はTOPより小さめに */
@@ -2706,6 +2706,13 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 </script>
 
 <!-- ══ ロゴ：赤の3本線（社章）＋黒文字の社名。周年ロゴは廃止 ══ -->
+
+<!-- ══ ご依頼の流れ：各ステップに現場写真を添える（会社案内カタログP13）══ -->
+<style id="flow-photo">
+.flow__ph{display:block;width:100%;aspect-ratio:4/3;margin-bottom:14px;
+  background-size:cover;background-position:center;filter:grayscale(.15)}
+@media(max-width:700px){ .flow__ph{aspect-ratio:16/9} }
+</style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
      並び・余白・ブレークポイント別のサイズ指定がこのクラスにぶら下がっており、
