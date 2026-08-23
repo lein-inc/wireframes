@@ -1749,24 +1749,11 @@ html,body{overflow-x:clip;max-width:100%}
 
 <section class="kflow" id="flow">
   <div class="kflow__grid">
-    <div class="kflow__left" aria-hidden="true">
-      <div class="kflow__stage">
-        <i class="kflow__img is-on" style="background-image:url(agri-step1.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step2.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step3.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step4.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step5.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step6.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step7.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step8.jpg)"></i>
-        <i class="kflow__img" style="background-image:url(agri-step9.jpg)"></i>
-      </div>
-    </div>
     <div class="kflow__right">
       <header class="kflow__head">
-        <h2 class="sec-jp rv">選果ラインの流れ</h2>
+        <h2 class="sec-jp rv">玉葱選別設備の流れ</h2>
         <p class="sec-ttl rv">Line Flow</p>
-        <p class="flow__lead rv rv-d1">荷受からパレタイズまで、ひとつのラインとして設計します。（Calistarラインの例）</p>
+        <p class="flow__lead rv rv-d1">荷受からパレタイズまで、ひとつのラインとして設計します。（キャリスターによる玉葱選別設備の例）</p>
       </header>
       <div class="kstep">
         <div class="kstep__ph" style="background-image:url(agri-step1b.jpg)"></div>
@@ -2964,6 +2951,25 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
      clamp で下限を上げつつ、大きい画面では素直に大きくなるようにする。 */
 .lcard__tx{font-size:clamp(15px,1.15vw,18px);line-height:1.95}
 .kstep__tx{font-size:clamp(15px,1.1vw,17px);line-height:1.95}
+</style>
+
+<!-- ══ 選果ラインの流れ：左の大画像をやめ、ラベル付きの小さめ写真を並べる ══ -->
+<style id="kflow-nophoto">
+/* ⚠️.kflow__left は要素ごと削除済み。切替用のJSは対象が無ければ何もしない作り。 */
+.kflow__grid{grid-template-columns:1fr}
+.kflow__right{padding:clamp(90px,9vw,140px) var(--frame);
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(40px,4vw,64px) clamp(24px,2.6vw,40px);align-items:start}
+.kflow__head{grid-column:1 / -1;margin-bottom:clamp(8px,1.5vw,24px)}
+/* 写真は全体が見えるように。前段の 260% ズームを解除する */
+.kstep__ph{background-size:cover;aspect-ratio:16/11}
+.kstep__ttl{margin-top:16px}
+@media(max-width:1000px){
+  .kflow__right{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .kflow__right{grid-template-columns:1fr;gap:clamp(32px,7vw,48px)}
+}
 </style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
