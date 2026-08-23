@@ -3818,14 +3818,25 @@ body.is-hc .tl{opacity:1}
   function metrics(){
     W = tl.offsetWidth; H = tl.offsetHeight;
     var sp = W < 760;
-    VPX = W * (sp ? 0.22 : 0.30);   VPY = H * (sp ? 0.30 : 0.34);   /* 消失点（奥） */
-    NEX = W * (sp ? 0.80 : 0.92);   NEY = H * (sp ? 1.14 : 1.12);   /* 手前 */
+    /* 右上（奥）→ 左下（手前）。画面の中央を通るように取る */
+    VPX = W * (sp ? 0.72 : 0.64);   VPY = H * (sp ? 0.24 : 0.26);   /* 消失点（奥・右上） */
+    NEX = W * (sp ? 0.26 : 0.34);   NEY = H * (sp ? 1.12 : 1.08);   /* 手前・左下 */
     PIN_H = [H * (sp ? 0.26 : 0.30), H * (sp ? 0.42 : 0.46), H * (sp ? 0.58 : 0.62)];
     CARD_W = sp ? 210 : 300;
     /* 道と中心線の形（遠いほど細い） */
     var far = W * 0.010, near = W * (sp ? 0.16 : 0.13);
     road.style.clipPath = poly(far, near);
     mid.style.clipPath  = poly(far * 0.30, near * 0.16);
+    /* ⚠️奥の先端が直線でぶつ切りに見えないよう、消失点を中心に円形でフェードさせる。
+       linear-gradient だと基準が「要素の箱」になり、消失点の位置と噛み合わずに
+       先端が残る。消失点そのものを中心に置ける radial のほうが確実。 */
+    var R = Math.sqrt(W * W + H * H);
+    var mask = 'radial-gradient(circle at ' + VPX.toFixed(0) + 'px ' + VPY.toFixed(0) + 'px,'
+             + 'rgba(0,0,0,0) 0px,rgba(0,0,0,0) ' + (R * 0.06).toFixed(0) + 'px,'
+             + 'rgba(0,0,0,.35) ' + (R * 0.16).toFixed(0) + 'px,'
+             + '#000 ' + (R * 0.34).toFixed(0) + 'px)';
+    road.style.webkitMaskImage = mask; road.style.maskImage = mask;
+    mid.style.webkitMaskImage  = mask; mid.style.maskImage  = mask;
   }
   function poly(far, near){
     var p = [[VPX - far, VPY],[VPX + far, VPY],[NEX + near, NEY],[NEX - near, NEY]];
@@ -3834,7 +3845,10 @@ body.is-hc .tl{opacity:1}
 
   /* ── 1件ぶんの配置 ── */
   function place(el, i, p){
-    var d = i - p;                       /* 0=いま手前、+で奥 */
+    /* ⚠️奥が古く、手前が新しい並び。カメラが後退しながら時間が進むイメージで、
+       新しい年代が手前（下）から現れ、古い年代が奥へ遠ざかっていく。
+       d = i - p にすると逆（奥＝未来）になるので符号に注意。 */
+    var d = p - i;                       /* 0=いま手前、+で奥（＝古い） */
     if (d < -1.3 || d > DEPTH){
       /* ⚠️隠すときに状態クラスも落とす。残すと画面外の札が
          「手前の1件」の見た目のまま居座る。 */
@@ -3846,11 +3860,14 @@ body.is-hc .tl{opacity:1}
     var k = 1 / (1 + d * FALLOFF);       /* 1/z の射影＝そのまま縮尺 */
     var x = VPX + (NEX - VPX) * k;
     var y = VPY + (NEY - VPY) * k;
-    var op = d > DEPTH - 1.6 ? (DEPTH - d) / 1.6        /* 奥からふわっと */
-           : d < -0.5       ? Math.max(0, (d + 1.3) / 0.8)  /* 手前で抜けていく */
+    var op = d > DEPTH - 2.4 ? Math.max(0, (DEPTH - d) / 2.4)   /* 奥へゆっくり溶ける */
+           : d < -0.5       ? Math.max(0, (d + 1.3) / 0.8)      /* 手前から迫り上がる */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
     el.style.opacity = op.toFixed(3);
+    /* 奥ほどピントを外す。手前2件はぼかさない（本文が読めなくなるため） */
+    var bl = d > 1.8 ? Math.min(5.5, (d - 1.8) * 1.5) : 0;
+    el.style.filter = bl ? 'blur(' + bl.toFixed(2) + 'px)' : '';
     el.style.zIndex  = String(2000 - Math.round(d * 20));
     /* 支柱の高さは3種類を順に。2種類だと3件並んだときに札がぶつかる */
     var h = PIN_H[i % 3];
