@@ -1673,7 +1673,7 @@ html,body{overflow-x:clip;max-width:100%}
       <p class="sec-ttl">Service Area</p>
     </div>
     <p class="body-txt rv rv-d1" style="max-width:760px;">国内は北海道から九州まで全国に対応。海外は中国（上海）・タイ（バンコク）・韓国に拠点を展開しています。納入先は韓国・中国・タイのほか、アメリカ・ハンガリー・トルコ・ブラジル・インドネシア・南アフリカにも広がっています。</p>
-    <div class="ph ph--wide rv rv-d1" style="margin-top:30px;aspect-ratio:16/6;"><span>納入マップ（国内・海外／ピン表示）</span></div>
+    <div class="wmap rv rv-d1"><div class="wmap__img"></div><i class="wmap__pin is-r" style="left:41.5%;top:36.0%"><span><b>日本</b><em>本社・国内9拠点</em></span></i><i class="wmap__pin is-l" style="left:38.8%;top:32.6%"><span><b>韓国</b><em>現地法人</em></span></i><i class="wmap__pin is-l" style="left:37.5%;top:40.0%"><span><b>中国</b><em>上海・無錫</em></span></i><i class="wmap__pin is-l" style="left:35.0%;top:50.0%"><span><b>タイ</b><em>現地法人</em></span></i><i class="wmap__pin is-r" style="left:35.5%;top:62.0%"><span><b>インドネシア</b></span></i><i class="wmap__pin " style="left:78.0%;top:38.0%"><span><b>アメリカ</b></span></i><i class="wmap__pin is-l" style="left:15.0%;top:31.0%"><span><b>ハンガリー</b></span></i><i class="wmap__pin is-r" style="left:17.5%;top:34.5%"><span><b>トルコ</b></span></i><i class="wmap__pin is-l" style="left:89.0%;top:66.0%"><span><b>ブラジル</b></span></i><i class="wmap__pin " style="left:15.0%;top:75.5%"><span><b>南アフリカ</b></span></i></div><p class="wmap__note rv rv-d1">※ 地図上の位置はイメージです。</p>
   </div>
 </section>
 
@@ -2669,6 +2669,38 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 </script>
 
 <!-- ══ ロゴ：赤の3本線（社章）＋黒文字の社名。周年ロゴは廃止 ══ -->
+
+<!-- ══ 主な納入エリア：世界地図に導入国を表示 ══ -->
+<style id="wmap-css">
+/* ⚠️world.svg は緯度経度がそのまま比例しない図法。ピンの位置は
+     実際に描いて合わせた実測値（%）で持つ。座標計算に置き換えないこと。 */
+.wmap{position:relative;margin-top:34px;background:#0d0e0d;overflow:hidden;
+  aspect-ratio:4171 / 2167}
+.wmap__img{position:absolute;inset:0;background:url(world.svg) center/100% 100% no-repeat;opacity:.55}
+.wmap__pin{position:absolute;transform:translate(-50%,-50%);
+  display:flex;align-items:center;gap:7px;
+  font-style:normal;pointer-events:none;white-space:nowrap}
+/* 点 */
+.wmap__pin::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 0 4px rgba(204,7,0,.22)}
+.wmap__pin span{display:block}
+/* ⚠️東アジアはピンが密集するので、国ごとにラベルを左右へ振り分ける。
+     既定は点の下（中央）。is-l=左／is-r=右。 */
+.wmap__pin{flex-direction:column;gap:5px}
+.wmap__pin.is-l{flex-direction:row-reverse;gap:7px}
+.wmap__pin.is-l span{text-align:right}
+.wmap__pin.is-r{flex-direction:row;gap:7px}
+.wmap__pin b{font-family:var(--jp);font-weight:700;font-size:clamp(10px,.92vw,13px);
+  color:#fff;letter-spacing:.04em;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.wmap__pin em{display:block;font-family:var(--jp);font-style:normal;font-weight:500;
+  font-size:clamp(9px,.72vw,11px);color:rgba(255,255,255,.62);margin-top:1px}
+.wmap__note{margin-top:12px;font-size:11px;color:rgba(0,0,0,.45)}
+@media(max-width:700px){
+  .wmap__pin b{font-size:9px}
+  .wmap__pin em{display:none}
+  .wmap__pin::before{width:7px;height:7px;box-shadow:0 0 0 3px rgba(204,7,0,.22)}
+}
+</style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
      並び・余白・ブレークポイント別のサイズ指定がこのクラスにぶら下がっており、

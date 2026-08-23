@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>撮影指示書｜近江度量衡株式会社 コーポレートサイト・採用サイト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#cc0700; --ink:#111; --paper:#fff; --line:#d8d8d8;
+  --jp:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+  --en:"Albert Sans",sans-serif;
+  --mincho:"Shippori Mincho",serif;
+  --pad:clamp(20px,4vw,56px);
+}
+body{font-family:var(--jp);color:var(--ink);background:#f2f2f2;line-height:1.85;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:960px;margin:0 auto;background:var(--paper)}
+img{max-width:100%;display:block}
+
+/* ── 表紙 ── */
+.cover{padding:var(--pad);border-bottom:3px solid var(--red)}
+.cover__eyebrow{font-family:var(--en);font-size:11px;letter-spacing:.28em;color:var(--red);font-weight:600}
+.cover__ttl{font-family:var(--mincho);font-weight:600;font-size:clamp(28px,4.6vw,44px);
+  line-height:1.3;letter-spacing:-.02em;margin-top:10px}
+.cover__lead{margin-top:18px;font-size:15px;max-width:62ch}
+.meta{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line)}
+.meta div{background:#fff;padding:12px 14px}
+.meta dt{font-size:11px;letter-spacing:.14em;color:#777;font-weight:700}
+.meta dd{font-size:14px;font-weight:700;margin-top:3px}
+
+/* ── 章 ── */
+.sec{padding:var(--pad);border-top:1px solid var(--line);break-inside:avoid}
+.sec__no{font-family:var(--en);font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--red)}
+.sec__ttl{font-family:var(--mincho);font-weight:600;font-size:clamp(21px,2.6vw,28px);
+  line-height:1.4;margin-top:4px}
+.sec__lead{margin-top:12px;font-size:14.5px;max-width:66ch}
+h3{font-size:16px;font-weight:700;margin-top:26px;padding-left:12px;border-left:4px solid var(--red)}
+p+p{margin-top:10px}
+ul{margin-top:10px;padding-left:0;list-style:none}
+li{position:relative;padding-left:18px;font-size:14px;margin-top:6px}
+li::before{content:"";position:absolute;left:2px;top:.72em;width:6px;height:6px;background:var(--red)}
+.note{margin-top:14px;padding:12px 16px;background:#fff6f5;border-left:3px solid var(--red);font-size:13.5px}
+
+/* ── カット表 ── */
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:#f6f6f6;font-weight:700;white-space:nowrap;font-size:12.5px;letter-spacing:.04em}
+td.c{white-space:nowrap}
+tr.grp td{background:#111;color:#fff;font-weight:700;letter-spacing:.08em}
+
+/* ── 構図の図解 ── */
+.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:18px}
+.frame figcaption{font-size:12.5px;margin-top:8px;font-weight:700}
+.frame figcaption span{display:block;font-weight:400;color:#666;margin-top:2px}
+.box{position:relative;background:#ececec;border:1px solid #cfcfcf;overflow:hidden}
+.box--wide{aspect-ratio:16/9}
+.box--sq{aspect-ratio:1}
+.box--tall{aspect-ratio:3/4}
+/* 人物のシルエット */
+.fig{position:absolute;background:#9a9a9a;border-radius:50% 50% 46% 46%}
+.fig::after{content:"";position:absolute;left:50%;transform:translateX(-50%);
+  bottom:-58%;width:190%;height:58%;background:#9a9a9a;border-radius:44% 44% 0 0}
+/* 安全余白 */
+.safe{position:absolute;border:1px dashed var(--red);inset:10%}
+.safe span{position:absolute;left:4px;top:-8px;background:#fff;color:var(--red);
+  font-size:9px;letter-spacing:.08em;padding:0 4px}
+/* コピーが乗る想定の帯 */
+.copy{position:absolute;left:8%;bottom:12%;width:42%;height:22%;background:rgba(204,7,0,.85)}
+.copy::after{content:"文字が乗る";position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  color:#fff;font-size:10px;letter-spacing:.08em}
+.ng .box{background:#f0eaea}
+.ok-ng{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:16px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;padding:3px 9px;color:#fff}
+.tag--ok{background:#111}
+.tag--ng{background:#8a8a8a}
+
+/* ── 参考写真 ── */
+.refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:18px}
+.ref img{aspect-ratio:4/3;object-fit:cover;background:#eee}
+.ref p{font-size:12.5px;margin-top:7px;color:#444}
+.ref b{display:block;color:var(--ink);font-size:13px}
+
+/* ── チェックリスト ── */
+.check{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px 24px}
+.check div{position:relative;padding-left:26px;font-size:14px;padding-top:2px}
+.check div::before{content:"";position:absolute;left:0;top:5px;width:15px;height:15px;
+  border:1.5px solid var(--ink)}
+
+.foot{padding:var(--pad);background:#111;color:#fff}
+.foot p{font-size:13px;color:rgba(255,255,255,.75)}
+.foot b{display:block;font-size:15px;color:#fff;margin-bottom:6px}
+
+@media print{
+  body{background:#fff}
+  .sheet{max-width:none}
+  .sec{break-inside:auto;page-break-inside:auto}
+  h3,table,.frames,.refs{break-inside:avoid;page-break-inside:avoid}
+  @page{size:A4;margin:14mm}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<!-- ══ 表紙 ══ -->
+<header class="cover">
+  <p class="cover__eyebrow">PHOTO SHOOTING GUIDE</p>
+  <h1 class="cover__ttl">撮影指示書<br>近江度量衡株式会社 コーポレートサイト・採用サイト</h1>
+  <p class="cover__lead">2026年9月20日公開予定のWebサイトに掲載する写真の撮影指示書です。カメラマンの方と、被写体となる社員の皆さま・各営業所のご担当者の双方にご覧いただく前提でまとめています。</p>
+  <div class="meta">
+    <div><dt>撮影日</dt><dd>2026年9月1日（火）</dd></div>
+    <div><dt>掲載先</dt><dd>コーポレートサイト／採用サイト</dd></div>
+    <div><dt>公開予定</dt><dd>2026年9月20日</dd></div>
+    <div><dt>制作</dt><dd>le-in　関 直史</dd></div>
+  </div>
+</header>
+
+<!-- ══ 1 ══ -->
+<section class="sec">
+  <p class="sec__no">01</p>
+  <h2 class="sec__ttl">この撮影で伝えたいこと</h2>
+  <p class="sec__lead">サイト全体のテーマは「いきる」をはかり、豊かな世界へ。126年にわたり社会の基盤を支えてきた技術力と、そこで働く人の誠実さを、写真で伝えることが目的です。</p>
+
+  <h3>写真のトーン</h3>
+  <ul>
+    <li><b>自然光を活かした、演出しすぎない現場の空気感。</b>作り込んだスタジオ写真ではなく、実際に人が働いている様子を切り取る</li>
+    <li><b>広めの引きと、大きな余白。</b>サイトは写真を大きく使う設計です。人物や機械の周囲に空間があるほうが映えます</li>
+    <li><b>色は控えめに。</b>トップページの写真はモノトーン処理を掛けます。派手な色の小物や背景は避けてください</li>
+    <li><b>採用ページは「優しい現場の空気感」。</b>学生が自分の未来を想像できるよう、堅すぎない表情・自然な距離感で</li>
+  </ul>
+
+  <div class="note">
+    <b>いちばん大事なお願い</b><br>
+    Webはスマートフォンでの閲覧が中心です。<b>縦にトリミングしても成立するよう、被写体の上下左右にゆとりを持たせて撮影してください。</b>「これで十分」と思う枠より、ひと回り引いた画角をお願いします。
+  </div>
+</section>
+
+<!-- ══ 2 ══ -->
+<section class="sec">
+  <p class="sec__no">02</p>
+  <h2 class="sec__ttl">構図の考え方</h2>
+  <p class="sec__lead">サイト上では写真の上に文字が乗ったり、画面サイズに応じて左右・上下が切り落とされます。下図の考え方で撮っていただけると、どのページでも使い回せます。</p>
+
+  <div class="frames">
+    <figure class="frame">
+      <div class="box box--wide">
+        <i class="safe"><span>SAFE</span></i>
+        <i class="fig" style="left:56%;top:26%;width:11%;aspect-ratio:1"></i>
+      </div>
+      <figcaption>① 横位置・引き<span>破線の内側に主役を収める。外側はトリミングで消える前提</span></figcaption>
+    </figure>
+    <figure class="frame">
+      <div class="box box--wide">
+        <i class="fig" style="left:66%;top:22%;width:12%;aspect-ratio:1"></i>
+        <i class="copy"></i>
+      </div>
+      <figcaption>② 文字が乗る余白<span>主役を左右どちらかに寄せ、反対側を空ける</span></figcaption>
+    </figure>
+    <figure class="frame">
+      <div class="box box--tall">
+        <i class="safe"><span>SP</span></i>
+        <i class="fig" style="left:44%;top:24%;width:16%;aspect-ratio:1"></i>
+      </div>
+      <figcaption>③ 縦のトリミング<span>同じ写真をスマホでは縦に切ります。中央寄りに主役を</span></figcaption>
+    </figure>
+  </div>
+
+  <h3>やっていただきたいこと / 避けたいこと</h3>
+  <div class="ok-ng">
+    <div>
+      <span class="tag tag--ok">お願いしたい</span>
+      <ul>
+        <li>同じ場面を<b>「引き・中間・寄り」の3段階</b>で押さえる</li>
+        <li>横位置を基本に、余裕があれば縦位置も1カット</li>
+        <li>手元・工具・機械のディテールなど、寄りのカットも多めに</li>
+        <li>人物は<b>働いている最中の自然な姿</b>を中心に</li>
+      </ul>
+    </div>
+    <div>
+      <span class="tag tag--ng">避けたい</span>
+      <ul>
+        <li>被写体が画面いっぱいの、切りしろのない構図</li>
+        <li>強い逆光・白飛び（背景の窓の扱いにご注意ください）</li>
+        <li>散らかった机、写り込んだ私物・掲示物・個人名</li>
+        <li>他社製品のロゴ、取引先名の写り込み</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3 ══ -->
+<section class="sec">
+  <p class="sec__no">03</p>
+  <h2 class="sec__ttl">撮影カット一覧</h2>
+  <p class="sec__lead">優先度Aは掲載が確定している必須カットです。時間の都合で削る場合はCから外してください。</p>
+
+  <table>
+    <thead>
+      <tr><th class="c">優先</th><th>カット</th><th>内容・ポーズ</th><th class="c">枚数目安</th><th>掲載先</th></tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">代表撮影</td></tr>
+      <tr><td class="c">A</td><td>代表ポートレート（正対）</td><td>上半身。正面やや斜め、視線はカメラへ。背景は執務室または工場。表情は自然な微笑み程度</td><td class="c">3〜5</td><td>会社案内／代表挨拶</td></tr>
+      <tr><td class="c">A</td><td>代表ポートレート（引き）</td><td>膝上〜全身。背景の空間を広く。文字を乗せるため片側を空ける</td><td class="c">2〜3</td><td>トップ／採用</td></tr>
+      <tr><td class="c">B</td><td>代表・オフショット</td><td>視線を外した横顔、現場を見ている後ろ姿など</td><td class="c">2〜3</td><td>予備</td></tr>
+
+      <tr class="grp"><td colspan="5">社員インタビュー（7名／お一人あたり10〜15分）</td></tr>
+      <tr><td class="c">A</td><td>ポートレート（上半身）</td><td>正面やや斜め、視線はカメラへ。背景は所属部署の現場。腕組みなどのポーズは不要、自然体で</td><td class="c">3〜5</td><td>採用／社員紹介</td></tr>
+      <tr><td class="c">A</td><td>作業中の様子（引き）</td><td>実際の業務を行っている場面。カメラを意識しない自然な表情。周囲の空間も入れる</td><td class="c">3〜5</td><td>採用／社員紹介</td></tr>
+      <tr><td class="c">A</td><td>手元の寄り</td><td>工具・端末・図面・製品などを扱う手元。顔は入らなくて構いません</td><td class="c">2〜3</td><td>採用／記事内</td></tr>
+      <tr><td class="c">B</td><td>同僚とのやりとり</td><td>打ち合わせ・指差し確認など2〜3名の場面。会話の自然な流れを</td><td class="c">2〜3</td><td>採用／職場環境</td></tr>
+      <tr><td class="c">C</td><td>職場の引き</td><td>その方が働くフロア・ライン全体</td><td class="c">1〜2</td><td>予備</td></tr>
+
+      <tr class="grp"><td colspan="5">現場・製品</td></tr>
+      <tr><td class="c">A</td><td>本社・工場の外観</td><td>順光の時間帯に。正面と斜めから。空を広めに入れる</td><td class="c">3〜5</td><td>トップ／会社案内</td></tr>
+      <tr><td class="c">A</td><td>製造ライン全景</td><td>組立中の設備を含む工場内の引き。人が入っていると尚可</td><td class="c">5〜8</td><td>トップ／製品・技術</td></tr>
+      <tr><td class="c">A</td><td>制御盤・電装作業</td><td>配線・盤の中・PCでの調整など。技術力が伝わる寄り</td><td class="c">3〜5</td><td>製品・技術／サービス</td></tr>
+      <tr><td class="c">B</td><td>検査・計量の場面</td><td>分銅・センサー・計測器を扱う場面</td><td class="c">3〜5</td><td>サービス案内</td></tr>
+      <tr><td class="c">B</td><td>出荷・搬出</td><td>梱包、トラックへの積み込み、社用車</td><td class="c">2〜3</td><td>サービス案内</td></tr>
+      <tr><td class="c">C</td><td>ディテール</td><td>銘板、社章（三本線）、工具、図面など</td><td class="c">5〜</td><td>各所のアクセント</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    社員インタビューの対象者は、事前にお配りしているヒアリングシートにご記入いただいた方です。<b>シートの内容と写真が対応します</b>ので、記入いただいた業務内容が伝わる場面での撮影をお願いします。
+  </div>
+</section>
+
+<!-- ══ 4 ══ -->
+<section class="sec">
+  <p class="sec__no">04</p>
+  <h2 class="sec__ttl">雰囲気の参考</h2>
+  <p class="sec__lead">すでにご提供いただいている写真のなかから、方向性が近いものを挙げます。これに寄せていただく必要はありませんが、光の入り方・寄りの距離感の目安としてご覧ください。</p>
+  <div class="refs">
+    <div class="ref"><img src="svc-design.jpg" alt=""><p><b>作業中の様子（引き）</b>手前に作業者、奥に設備。周囲の空間が入っている</p></div>
+    <div class="ref"><img src="photo-industry.jpg" alt=""><p><b>制御盤・電装作業</b>技術が伝わる寄り。人の手と機器を一緒に</p></div>
+    <div class="ref"><img src="svc-plan.jpg" alt=""><p><b>検査・計量の場面</b>設備そのものを主役にした引き</p></div>
+    <div class="ref"><img src="svc-maint.jpg" alt=""><p><b>出荷・現場対応</b>社用車と人。屋外の順光</p></div>
+    <div class="ref"><img src="hq-building.jpg" alt=""><p><b>外観</b>空を広く。順光の時間帯に</p></div>
+    <div class="ref"><img src="stat-service.jpg" alt=""><p><b>手元の寄り</b>顔が入らなくても成立するカット</p></div>
+  </div>
+</section>
+
+<!-- ══ 5 ══ -->
+<section class="sec">
+  <p class="sec__no">05</p>
+  <h2 class="sec__ttl">被写体となる皆さまへ</h2>
+  <p class="sec__lead">構えていただく必要はありません。普段どおりに作業していただくのがいちばんです。以下だけご協力をお願いします。</p>
+  <h3>当日のお願い</h3>
+  <ul>
+    <li><b>服装は普段の作業着・制服で。</b>撮影用に新調いただく必要はありませんが、当日の朝に汚れ・ほつれをご確認ください</li>
+    <li><b>社名の入った作業着は歓迎です。</b>他社ロゴの入った衣類・帽子は避けてください</li>
+    <li>安全に関わる場所では、<b>ヘルメット・安全靴など通常どおりの装備で</b>お願いします（安全第一で結構です）</li>
+    <li>髪型・襟元など、鏡でひと目ご確認ください。眼鏡の方は照明の映り込みを調整させていただく場合があります</li>
+    <li>ポーズの指定はありません。<b>腕組みや作り笑いは不要です</b></li>
+  </ul>
+  <h3>掲載についてのご確認</h3>
+  <ul>
+    <li>撮影した写真は、コーポレートサイト・採用サイト・関連する印刷物に使用します</li>
+    <li>掲載の可否・お名前の表記（実名／イニシャル／部署のみ）にご希望があれば、当日カメラマンまたはご担当者にお伝えください</li>
+  </ul>
+</section>
+
+<!-- ══ 6 ══ -->
+<section class="sec">
+  <p class="sec__no">06</p>
+  <h2 class="sec__ttl">データの納品について</h2>
+  <ul>
+    <li><b>形式：</b>JPEG（できるだけ長辺3000px以上・圧縮率は低め）。RAWがある場合は併せていただけると調整の幅が広がります</li>
+    <li><b>色調整：</b>Web側でトーンを統一しますので、<b>強い加工は不要</b>です。撮って出し、または軽い露出補正まででお願いします</li>
+    <li><b>ファイル名：</b>「日付_場所_被写体」（例：<code>0901_kusatsu_設計_山田.jpg</code>）でいただけると振り分けが早くなります</li>
+    <li><b>ボツカットも含めてご共有ください。</b>引きのカットが後から必要になることがよくあります</li>
+    <li><b>共有方法：</b>Googleドライブの「支給リスト」フォルダ、または大容量ファイル便でお送りください</li>
+    <li><b>期限：</b>9月8日（月）までにいただけると、実装に余裕をもって間に合います</li>
+  </ul>
+</section>
+
+<!-- ══ 7 ══ -->
+<section class="sec">
+  <p class="sec__no">07</p>
+  <h2 class="sec__ttl">当日チェックリスト</h2>
+  <div class="check">
+    <div>撮影場所の片付け（私物・掲示物・書類）</div>
+    <div>他社ロゴ・取引先名の写り込み確認</div>
+    <div>作業着の汚れ・ほつれ確認</div>
+    <div>安全装備の着用</div>
+    <div>代表ポートレート（正対・引き）</div>
+    <div>インタビュー対象者7名ぶんのポートレート</div>
+    <div>各人の作業カット・手元の寄り</div>
+    <div>本社・工場外観（順光の時間帯）</div>
+    <div>製造ライン全景</div>
+    <div>制御盤・電装作業</div>
+    <div>ディテール（銘板・社章・工具）</div>
+    <div>引きのカットを各場面で1枚ずつ</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <b>お問い合わせ</b>
+  <p>撮影内容・カットについてご不明な点がありましたら、下記までお気軽にご連絡ください。<br>
+  le-in　関 直史　naofumi@le-in.net</p>
+</footer>
+
+</div>
+</body>
+</html>
