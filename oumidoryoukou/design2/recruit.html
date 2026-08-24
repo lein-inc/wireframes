@@ -1717,12 +1717,11 @@ html,body{overflow-x:clip;max-width:100%}
 <main class="pmain">
 <!-- ① FV：大タイポ×写真の重なり -->
 <section class="rct-fv">
-  <i class="rct-fv__bg" aria-hidden="true"></i>
-  <i class="rct-fv__veil" aria-hidden="true"></i>
-  <p class="rct-fv__eyebrow">OMISCALE Recruit 2027</p>
-  <h1 class="rct-fv__title"><span>「いきる」の単位とは、</span><span class="idnt">なんだろう。</span></h1>
-  <div class="rct-fv__lead">
-    <p>「働く人を大切にする」という理念のもと、<br>あなたの確かな仕事が、豊かな未来を担う力になる。</p>
+  <div class="rct-fv__bars" aria-hidden="true"><i style="--d:0.00s"></i><i style="--d:0.08s"></i><i style="--d:0.16s"></i><i style="--d:0.24s"></i><i style="--d:0.32s"></i><i style="--d:0.40s"></i><i style="--d:0.48s"></i><b class="rct-fv__acc rct-fv__acc--1"></b><b class="rct-fv__acc rct-fv__acc--2"></b></div>
+  <div class="rct-fv__center">
+    <p class="rct-fv__eyebrow">OMISCALE Recruit 2027</p>
+    <h1 class="rct-fv__title"><span>「いきる」の単位とは、</span><span>なんだろう。</span></h1>
+    <p class="rct-fv__sub">「働く人を大切にする」という理念のもと、<br>あなたの確かな仕事が、豊かな未来を担う力になる。</p>
     <div class="rct-fv__btns">
       <a class="btn" href="#entry">募集要項を見る <i class="arrow-i" style="color:#fff">→</i></a>
       <a class="btn btn--outline" href="#people">社員インタビュー</a>
@@ -2850,86 +2849,87 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ 採用FV：全画面の写真に大きなコピーを載せる（TOPの言語を踏襲しつつ大胆に）══ -->
 <style id="rec-fv-bold">
-/* ⚠️前段の .rct-fv は「白地＋写真グリッド」前提の指定。全面的に上書きする。 */
+/* ══ 採用FV：写真は使わず、四角の帯が左右から画面を覆う。中央に大きくコピー ══
+   ⚠️前段の .rct-fv は「白地＋写真グリッド」前提の指定。全面的に上書きする。
+   ⚠️帯は transform:scaleX で伸ばす。width のアニメーションはガタつく。 */
 .rct-fv{position:relative;height:100vh;min-height:560px;padding:0;overflow:hidden;
-  background:#0a0b0a;color:#fff;display:block}
-.rct-fv__bg{position:absolute;inset:0;display:block;
-  background-image:url(svc-design.jpg);background-size:cover;background-position:center;
-  filter:grayscale(1) contrast(1.05) brightness(.62)}
-/* 文字を読ませるための膜。左が濃い斜めのグラデーション */
-.rct-fv__veil{position:absolute;inset:0;display:block;
-  background:linear-gradient(100deg,rgba(8,9,8,.80) 0%,rgba(8,9,8,.50) 52%,rgba(8,9,8,.34) 100%)}
+  background:var(--paper);color:#fff;display:block}
 
-.rct-fv__eyebrow{position:absolute;left:var(--fvpad,var(--frame));top:calc(var(--fvpad,var(--frame)) + clamp(84px,9vw,132px));
-  z-index:3;font-family:var(--en);font-weight:600;font-size:clamp(10px,.85vw,13px);
-  letter-spacing:.34em;text-transform:uppercase;color:#fff;margin:0;
-  display:flex;align-items:center;gap:12px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
-/* ⚠️赤文字のままだと明るい写真に負けて読めない。白文字＋頭の赤い線にする */
-.rct-fv__eyebrow::before{content:"";width:clamp(24px,3vw,44px);height:2px;background:var(--red)}
+/* 画面を覆う7本の帯。奇数は左から、偶数は右から */
+.rct-fv__bars{position:absolute;inset:0;display:grid;grid-template-rows:repeat(7,1fr)}
+.rct-fv__bars i{display:block;background:#0a0b0a;transform:scaleX(0);
+  animation:barIn .78s cubic-bezier(.72,0,.18,1) forwards;animation-delay:var(--d)}
+.rct-fv__bars i:nth-child(odd){transform-origin:left center}
+.rct-fv__bars i:nth-child(even){transform-origin:right center}
+@keyframes barIn{to{transform:scaleX(1)}}
+/* 差し色の赤は細い線で。太い帯を赤にするとコピーの上を横切って読みにくい */
+.rct-fv__acc{position:absolute;left:0;right:0;height:clamp(6px,.7vw,10px);background:var(--red);
+  transform:scaleX(0);animation:barIn .7s cubic-bezier(.72,0,.18,1) forwards}
+.rct-fv__acc--1{top:15%;transform-origin:left center;animation-delay:.46s}
+.rct-fv__acc--2{top:87%;transform-origin:right center;animation-delay:.58s}
 
-/* 主役のコピー。TOPのFVと同じく縦長に圧縮して大きく */
-.rct-fv__title{position:absolute;left:var(--fvpad,var(--frame));z-index:3;
-  top:50%;transform:translateY(-54%);
-  font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
-  font-size:clamp(40px,8.4vw,132px);line-height:1.06;letter-spacing:-.03em;margin:0;color:#fff}
-.rct-fv__title span{display:block;transform:scaleX(.86);transform-origin:left center}
-.rct-fv__title .idnt{margin-left:.9em}
+/* 帯が閉じたあとに乗るコンテンツ */
+.rct-fv__center{position:absolute;inset:0;z-index:3;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 var(--fvpad,var(--frame));
+  opacity:0;transform:translateY(18px);
+  animation:fvIn .8s cubic-bezier(.2,.7,.2,1) .82s forwards}
+@keyframes fvIn{to{opacity:1;transform:none}}
 
-/* リード文とボタンは右下に */
-.rct-fv__lead{position:absolute;right:var(--fvpad,var(--frame));bottom:calc(var(--fvpad,var(--frame)) + 18px);
-  z-index:3;max-width:min(42ch,44vw);text-align:right}
-.rct-fv__lead p{font-family:var(--jp);font-weight:500;font-size:clamp(13px,1.05vw,16px);
-  line-height:2.05;color:rgba(255,255,255,.9);margin:0}
-.rct-fv__btns{display:flex;gap:12px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.rct-fv__eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 clamp(20px,2.6vw,34px);
+  font-family:var(--en);font-weight:600;font-size:clamp(10px,.85vw,13px);
+  letter-spacing:.34em;text-transform:uppercase;color:#fff}
+.rct-fv__eyebrow::before,.rct-fv__eyebrow::after{content:"";width:clamp(20px,2.6vw,40px);height:2px;background:#fff}
+
+.rct-fv__title{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(38px,7.6vw,124px);line-height:1.1;letter-spacing:-.03em;margin:0;color:#fff}
+.rct-fv__title span{display:block;transform:scaleX(.88)}
+
+.rct-fv__sub{margin-top:clamp(24px,3vw,40px);font-family:var(--jp);font-weight:500;
+  font-size:clamp(13px,1.05vw,16px);line-height:2.05;color:rgba(255,255,255,.86)}
+.rct-fv__btns{display:flex;gap:12px;justify-content:center;margin-top:clamp(26px,3vw,40px);flex-wrap:wrap}
 .rct-fv .btn{background:var(--red);color:#fff;border:0}
 .rct-fv .btn--outline{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff}
 
-/* 左下の赤帯＋SCROLL DOWN（TOPと同じ扱い） */
-.rct-fv__scroll{position:absolute;left:var(--fvpad,var(--frame));bottom:var(--fvpad,var(--frame));
-  z-index:3;display:flex;align-items:center;height:clamp(44px,4.4vw,56px);
-  padding:0 clamp(18px,2vw,28px);background:var(--red);color:#fff;text-decoration:none}
-.rct-fv__scroll .txt{font-family:var(--en);font-weight:600;font-size:clamp(10px,.82vw,12px);
+/* 下端中央の SCROLL DOWN */
+.rct-fv__scroll{position:absolute;left:50%;transform:translateX(-50%);
+  bottom:clamp(22px,3vw,40px);z-index:3;display:flex;flex-direction:column;align-items:center;gap:12px;
+  color:#fff;text-decoration:none;opacity:0;animation:fvIn .8s ease 1.05s forwards}
+.rct-fv__scroll .txt{font-family:var(--en);font-weight:600;font-size:clamp(9px,.78vw,11px);
   letter-spacing:.24em;text-transform:uppercase}
-.rct-fv__scroll::after{content:"";width:34px;height:1px;background:#fff;margin-left:16px;
-  transform-origin:left center;animation:recScroll 2.4s cubic-bezier(.4,0,.2,1) infinite}
-@keyframes recScroll{0%{transform:scaleX(0)}45%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:0}}
+.rct-fv__scroll::after{content:"";width:1px;height:clamp(34px,4vw,54px);background:#fff;
+  transform-origin:top center;animation:recScroll 2.4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes recScroll{0%{transform:scaleY(0)}45%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 
-/* 英字マーキーはFVの直後に独立させる */
-.rct-marq{background:#0a0b0a;color:rgba(255,255,255,.5);border-top:0.5px solid rgba(255,255,255,.18);
-  border-bottom:0.5px solid rgba(255,255,255,.18)}
+/* 英字マーキーはFVの直後。ここから下は白地に戻る */
+.rct-marq{background:#0a0b0a;color:rgba(255,255,255,.5);
+  border-top:0.5px solid rgba(255,255,255,.18);border-bottom:0.5px solid rgba(255,255,255,.18)}
 
-@media(max-width:900px){
-  .rct-fv__title{font-size:clamp(34px,10.5vw,64px);top:auto;bottom:calc(var(--fvpad,var(--frame)) + 180px);transform:none}
-  .rct-fv__lead{left:var(--fvpad,var(--frame));right:var(--fvpad,var(--frame));max-width:none;text-align:left;
-    bottom:calc(var(--fvpad,var(--frame)) + 74px)}
-  .rct-fv__btns{justify-content:flex-start}
-  .rct-fv__veil{background:linear-gradient(180deg,rgba(8,9,8,.5) 0%,rgba(8,9,8,.78) 60%,rgba(8,9,8,.9) 100%)}
-}
-
-/* ⚠️ヒーローが暗いので、その上にいる間だけロゴを白に。
+/* ⚠️ヒーローが黒いので、その上にいる間だけロゴを白に。
      下層は既定で「社名＝黒／3本線＝赤」なので、ここだけ切り替える。 */
 body:not(.is-logo-dark) .site-logo .logo-name,
 body:not(.is-logo-dark) .site-logo .logo-mark{filter:brightness(0) invert(1)}
 body.is-logo-dark .site-logo .logo-name{filter:brightness(0)}
 body.is-logo-dark .site-logo .logo-mark{filter:none}
 .site-logo .logo-name,.site-logo .logo-mark{transition:filter .25s ease}
-@media(prefers-reduced-motion:reduce){ .rct-fv__scroll::after{animation:none;transform:none} }
+
+@media(max-width:900px){
+  .rct-fv__title{font-size:clamp(32px,9.4vw,62px)}
+  .rct-fv__bars{grid-template-rows:repeat(7,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+  .rct-fv__bars i,.rct-fv__acc{transform:none;animation:none}
+  .rct-fv__center,.rct-fv__scroll{opacity:1;transform:none;animation:none}
+  .rct-fv__scroll::after{animation:none;transform:none}
+}
 </style>
 <script>
-/* FVの写真はリロードごとに切り替え（TOPと同じ考え方） */
-(function(){
-  var bg=document.querySelector('.rct-fv__bg'); if(!bg) return;
-  var P=['svc-design.jpg','photo-industry.jpg','flow5.jpg','flow6.jpg','agri-line3.jpg'];
-  bg.style.backgroundImage='url('+P[Math.floor(Math.random()*P.length)]+')';
-})();
-
-/* ヒーローを抜けたらロゴを黒へ */
+/* ヒーロー（黒）を抜けたらロゴを黒へ */
 (function(){
   function u(){ document.body.classList.toggle('is-logo-dark', window.scrollY > window.innerHeight * 0.72); }
   window.addEventListener('scroll', u, {passive:true});
   window.addEventListener('resize', u); u();
 })();
-
 </script>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
