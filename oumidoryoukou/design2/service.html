@@ -2709,9 +2709,22 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ ご依頼の流れ：各ステップに現場写真を添える（会社案内カタログP13）══ -->
 <style id="flow-photo">
-.flow__ph{display:block;width:100%;aspect-ratio:4/3;margin-bottom:14px;
+/* ⚠️.flow__step は flex。width:100% だけだと縮んで右に余白が出るので
+     flex-basis も 100% にして枠いっぱいに広げる。 */
+.flow__ph{display:block;flex:0 0 100%;width:100%;aspect-ratio:4/3;margin-bottom:14px;
   background-size:cover;background-position:center;filter:grayscale(.15)}
 @media(max-width:700px){ .flow__ph{aspect-ratio:16/9} }
+
+/* ⚠️PCは2カラム。前段の .flow は display:block ＋ .flow__step+.flow__step の
+     margin-top で縦に積む作りなので、両方を打ち消してからグリッドにする。 */
+@media(min-width:901px){
+  .flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:clamp(22px,2.6vw,40px);align-items:start}
+  .flow__step,.flow__step + .flow__step{margin-top:0}
+  /* 2カラムだと横幅が狭いので、見出しと本文は縦に積む */
+  .flow__txt{flex-basis:100%;margin-top:12px}
+  .flow__ph{aspect-ratio:16/10}
+}
 </style>
 <style id="logo-mark">
 /* ⚠️マークは .logo-anv のクラスを残したまま画像だけ差し替えている。
