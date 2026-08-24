@@ -3821,8 +3821,10 @@ body.is-hc .tl{opacity:1}
     W = tl.offsetWidth; H = tl.offsetHeight;
     var sp = W < 760;
     /* 右上（奥）→ 左下（手前）。画面の中央を通るように取る */
-    VPX = W * (sp ? 0.72 : 0.64);   VPY = H * (sp ? 0.24 : 0.26);   /* 消失点（奥・右上） */
-    NEX = W * (sp ? 0.26 : 0.34);   NEY = H * (sp ? 1.12 : 1.08);   /* 手前・左下 */
+    /* ⚠️消失点と手前の距離の取り方で「どこから見ているか」が決まる。
+       横方向の差を大きく・縦方向の差を小さくするほど、斜め横から見た角度になる。 */
+    VPX = W * (sp ? 0.86 : 0.90);   VPY = H * (sp ? 0.28 : 0.30);   /* 消失点（奥・右上） */
+    NEX = W * (sp ? 0.30 : 0.42);   NEY = H * (sp ? 1.06 : 0.98);   /* 手前・左下 */
     PIN_H = [H * (sp ? 0.26 : 0.30), H * (sp ? 0.42 : 0.46), H * (sp ? 0.58 : 0.62)];
     CARD_W = sp ? 210 : 300;
     /* 道と中心線の形（遠いほど細い） */
@@ -3846,7 +3848,7 @@ body.is-hc .tl{opacity:1}
   }
 
   /* ── 1件ぶんの配置 ── */
-  function place(el, i, p){
+  function place(el, i, p, isBest){
     /* ⚠️奥が古く、手前が新しい並び。カメラが後退しながら時間が進むイメージで、
        新しい年代が手前（下）から現れ、古い年代が奥へ遠ざかっていく。
        d = i - p にすると逆（奥＝未来）になるので符号に注意。 */
@@ -3882,15 +3884,20 @@ body.is-hc .tl{opacity:1}
     var wpx = CARD_W * k;
     var L = Math.min(Math.max(x - 14 * k, 16), Math.max(16, W - wpx - 16));
     card.style.left = ((L - x) / k).toFixed(1) + 'px';
-    el.classList.toggle('is-near', d > -0.6 && d < 0.6);
-    el.classList.toggle('is-far',  d > 2.4);
+    /* ⚠️詳細（見出し・本文・写真）を出すのは「いま一番手前の1件」だけ。
+       距離のしきい値で判定すると、2件のちょうど中間にいるときに
+       両方とも詳細表示になり、カードが重なる。 */
+    el.classList.toggle('is-near', !!isBest);
+    el.classList.toggle('is-far',  !isBest);
   }
 
   /* ── スクロール → 進行度 ── */
   var ticking = false, lastP = -1;
   function render(p){
     lastP = p;
-    for (var i = 0; i < N; i++) place(items[i], i, p);
+    var best = -1, bd = 1e9;
+    for (var i = 0; i < N; i++){ var dd = Math.abs(p - i); if (dd < bd){ bd = dd; best = i; } }
+    for (var i = 0; i < N; i++) place(items[i], i, p, i === best);
   }
   function upd(){
     ticking = false;
