@@ -1680,7 +1680,7 @@ html,body{overflow-x:clip;max-width:100%}
       <span class="era__cursor"></span>
     </div>
     <!-- 「Scroll — 1900 → 2026」は削除。年代は目盛りの中央に出す -->
-    <p class="hc-now" aria-hidden="true"><span></span></p>
+    <p class="hc-now" aria-hidden="true"><b class="hc-now__era"></b><span></span></p>
     <button class="hc-exit" type="button" aria-label="ヒストリーを終わる"></button>
   </div>
 </section>
@@ -3326,7 +3326,9 @@ body.is-hc-nopic .hc-photos{opacity:0}
   var stage=scene.querySelector('.hc-stage'), photos=scene.querySelector('.hc-photos'),
       ruler=scene.querySelector('.era__ruler'),
       yearEl=scene.querySelector('.hc-year'), yearT=scene.querySelector('.hc-year__t'),
-      nowT=scene.querySelector('.hc-now span'), scroll=scene.querySelector('.hc-scroll');
+      nowT=scene.querySelector('.hc-now span'),
+      nowEra=scene.querySelector('.hc-now__era'),   /* 元号（平成 など） */
+      scroll=scene.querySelector('.hc-scroll');
   var N=DATA.length;
   DATA.forEach(function(d,i){
     stage.insertAdjacentHTML('beforeend',
@@ -3399,6 +3401,7 @@ body.is-hc-nopic .hc-photos{opacity:0}
     }
     /* 目盛りの中央には「年代（西暦）」 */
     if(nowT && nowT.textContent!==DATA[active][0]) nowT.textContent=DATA[active][0];
+    if(nowEra && nowEra.textContent!==DATA[active][1]) nowEra.textContent=DATA[active][1];
   }
   /* どれだけ一気にスクロールしても、表示は1枚ずつの順送りで追いつく（乱れ防止）。
      4枚以上先へ飛んだ時は目的の2枚手前へスナップしてから順送り＝実質3枚程度で静止 */
@@ -3439,6 +3442,7 @@ body.is-hc-nopic .hc-photos{opacity:0}
   clearTimeout(textTimer); if(panels[0]) panels[0].classList.add('is-text');
   if(yearT) yearT.textContent=DATA[0][2];
   if(nowT)  nowT.textContent=DATA[0][0];
+  if(nowEra) nowEra.textContent=DATA[0][1];
   setTimeout(function(){ scene.classList.add('hc-anim'); }, 60);
   window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(upd);ticking=true;} },{passive:true});
   window.addEventListener('resize',upd); upd();
@@ -3468,6 +3472,7 @@ body.is-hc-nopic .hc-photos{opacity:0}
       /* 4) 年代帯の整合 */
       if(yearT && yearT.textContent!==DATA[last][2]){ yearT.textContent=DATA[last][2]; yearEl.classList.add('is-on'); }
       if(nowT && nowT.textContent!==DATA[last][0]) nowT.textContent=DATA[last][0];
+      if(nowEra && nowEra.textContent!==DATA[last][1]) nowEra.textContent=DATA[last][1];
     },170);
   },{passive:true});
   /* 指定項目の定位置へスクロールジャンプ */
@@ -3530,42 +3535,39 @@ body.is-hc-nopic .hc-photos{opacity:0}
     repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
     repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px)}
 
-/* ① 左上ロゴを隠す
+/* ① 左上ロゴはそのまま出す。黒地なので白へ反転させる
+   ⚠️素材は赤ベタなので brightness(0) invert(1) で白に転ぶ。
    ⚠️900px以下は左上に出ているのが .site-logo ではなく .nav__mini（白帯ロゴ）。
-     PCは前段の @media(min-width:901px) で .nav__mini を display:none にしているので
-     .site-logo だけ消せば足りるが、SPはこちらも消さないと白帯ロゴが残る。 */
-body.is-hc .site-logo,
-body.is-hc .nav__mini{opacity:0!important;visibility:hidden!important;pointer-events:none!important;
-  transition:opacity .3s ease,visibility 0s .3s}
-.site-logo,.nav__mini{transition:opacity .3s ease,visibility 0s}
+     こちらは白い座布団がついているので、黒地では帯を透明にして中身を白へ。 */
+body.is-hc .site-logo .logo-name,
+body.is-hc .site-logo .logo-mark{filter:brightness(0) invert(1)}
+body.is-hc .nav__mini{background:transparent!important;box-shadow:none!important}
+body.is-hc .nav__mini .logo-name,
+body.is-hc .nav__mini .logo-mark{filter:brightness(0) invert(1)}
+.site-logo .logo-name,.site-logo .logo-mark,
+.nav__mini .logo-name,.nav__mini .logo-mark{transition:filter .3s ease}
 
-/* ② メニューをハンバーガーに差し替え
-   ⚠️PC幅ではバーガーが display:none にされているので、ここで出し直す。
-     .nav 自体は pointer-events:none のことがあるのでボタン側で戻す。 */
-/* ⚠️前段に .nav .nav__menu の表示指定が複数あり、素直に書くと負ける。
-   ここは確実に隠したいので !important で押さえる。 */
-body.is-hc .nav .nav__menu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-body.is-hc .nav .nav__cta{opacity:0!important;visibility:hidden!important}
-body.is-hc .nav .burger{display:flex!important;opacity:1;visibility:visible;pointer-events:auto}
-body.is-hc .nav{pointer-events:none}
+/* ② メニューは通常仕様のまま。以前はここでハンバーガーへ差し替えていたが、
+      他ページと同じ見え方に戻した（隠す指定はすべて撤去） */
 
-/* ③ 左上の枠は「年号」。ひと回りコンパクトに */
-.hc-year{left:var(--fvpad,var(--frame));top:var(--fvpad,var(--frame));
-  padding:9px 18px 11px}
-.hc-year__t{font-size:clamp(20px,2vw,30px);letter-spacing:.06em}
+/* ③ 左上の年号枠は出さない。元号は画面下の年代表示にまとめる
+   ⚠️要素ごと消すとJS（年号の差し替え）が参照先を失うので、表示だけ落とす。 */
+.hc-year{display:none!important}
 
 /* ④ 目盛りはブラウザ下端にツラ付け。中央に年代（西暦） */
 .hc-pin .era__ruler{bottom:0;z-index:6;height:56px}
 /* カーソル脇の年号ラベルは出さない（中央表示に一本化） */
 .hc-pin .era__cursor::after{content:none}
 .hc-now{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);z-index:6;
-  margin:0;pointer-events:none;
+  margin:0;pointer-events:none;display:flex;align-items:baseline;gap:14px;
   font-family:var(--en);font-weight:600;letter-spacing:.14em;
   font-size:clamp(22px,2.4vw,36px);line-height:1;color:#fff}
+/* 元号（平成 など）は西暦の左に小さく添える */
+.hc-now .hc-now__era{font-family:var(--jp);font-weight:700;letter-spacing:.12em;
+  font-size:clamp(11px,1.05vw,15px);color:var(--red)}
 @media(max-width:700px){
-  .hc-year{padding:7px 13px 9px}
-  .hc-year__t{font-size:clamp(17px,4.6vw,24px)}
-  .hc-now{bottom:60px;font-size:clamp(18px,5.2vw,28px)}
+  .hc-now{bottom:60px;font-size:clamp(18px,5.2vw,28px);gap:9px}
+  .hc-now .hc-now__era{font-size:11px}
 }
 </style>
 
