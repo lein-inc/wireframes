@@ -1,0 +1,42 @@
+<!-- ======= 売買成約実績（bf-add / 2026-08 追加）======= -->
+<style>
+.bf-add .sec-inner{padding:100px 0}
+.bf-add__ttl{color:#2a4066;font-size:calc(26px + 8 * (100vw - 320px)/ 1600);font-weight:700;letter-spacing:.08em;text-align:center;margin:0 0 14px}
+.bf-add__lead{color:#3e3e3e;font-size:calc(13px + 2 * (100vw - 320px)/ 1600);text-align:center;margin:0 0 34px;line-height:1.9}
+.bf-add__frame{width:100%;overflow:hidden}
+.bf-add__frame iframe{display:block;width:100%;border:0;margin:0 auto}
+/* 売買成約実績（マップ＋成約実績テーブル） */
+.bf-add--map{background-color:#fff}
+#embed_map{height:1000px}
+/* REVIEW（口コミ） */
+.bf-add--review{background-color:#fdf7e6}
+.bf-add--review .ttl-unit{margin-bottom:0}
+.bf-add__rule{width:100%;height:2px;background-color:#e6c35c;margin:26px 0 34px}
+.bf-add__review iframe{height:390px}
+@media screen and (max-width:767px){
+  .bf-add .sec-inner{padding:60px 0 70px}
+  #embed_map{height:1180px}
+  .bf-add__review iframe{height:480px}
+  .bf-add__lead{margin-bottom:24px}
+}
+</style>
+<section class="bf-add bf-add--map">
+                <div class="sec-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="ttl-unit">
+                                    <h2 class="bf-add__ttl">売買成約実績</h2>
+                                    <p class="bf-add__lead">少しでも高い値段での売却をお手伝いします。まずはご相談ください。</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="bf-add__frame">
+                                    <iframe id="embed_map" title="売買成約実績マップ" allowfullscreen frameborder="0" src="https://iqra.cloud/embed/b9d67029005df4801eb2"></iframe>
+                                </div>
+                            </div>
+                        </div><!-- .row -->
+                    </div><!-- .container-fluid -->
+                </div>
+            </section>
+<!-- ======= /売買成約実績 ======= -->
