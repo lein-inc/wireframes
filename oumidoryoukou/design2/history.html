@@ -3752,14 +3752,14 @@ body.is-hc .tl{opacity:1}
 .tl-dot{position:absolute;left:-13px;bottom:-7px;width:26px;height:14px;border-radius:50%;
   border:2px solid var(--red);background:rgba(204,7,0,.18);display:block}
 /* カード：支柱の上端に置く */
-.tl-card{position:absolute;left:-14px;width:300px;color:#fff;text-align:left}
-.tl-year{font-family:var(--en);font-weight:700;font-size:46px;line-height:.9;color:var(--red);letter-spacing:.01em}
-.tl-era{font-family:var(--jp);font-weight:700;font-size:13px;letter-spacing:.12em;color:rgba(255,255,255,.62);margin-top:6px}
-.tl-ttl{font-family:var(--jp);font-weight:700;font-size:17px;line-height:1.5;margin-top:10px;color:#fff}
-.tl-tx{font-family:var(--jp);font-weight:500;font-size:12.5px;line-height:1.85;color:rgba(255,255,255,.72);margin-top:8px}
+.tl-card{position:absolute;left:-14px;width:380px;color:#fff;text-align:left}
+.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em}
+.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin-top:7px}
+.tl-ttl{font-family:var(--jp);font-weight:700;font-size:21px;line-height:1.5;margin-top:12px;color:#fff}
+.tl-tx{font-family:var(--jp);font-weight:500;font-size:15px;line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
 /* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
      札の幅いっぱいには広げない。 */
-.tl-ph{width:78%;aspect-ratio:3/2;margin-top:12px;background-size:cover;background-position:center;
+.tl-ph{width:92%;aspect-ratio:3/2;margin-top:12px;background-size:cover;background-position:center;
   border:1px solid rgba(255,255,255,.18)}
 /* 手前の1件だけ本文と写真を出す。遠い札は年号だけにして混み合いを避ける */
 .tl-item .tl-tx,.tl-item .tl-ph{opacity:0;transition:opacity .35s ease}
@@ -3770,10 +3770,11 @@ body.is-hc .tl{opacity:1}
 .tl-dot{box-shadow:0 0 0 4px rgba(204,7,0,.12)}
 
 @media(max-width:700px){
-  .tl-card{width:210px}
-  .tl-year{font-size:34px}
-  .tl-ttl{font-size:14.5px}
-  .tl-tx{font-size:11.5px}
+  .tl-card{width:262px}
+  .tl-year{font-size:42px}
+  .tl-era{font-size:13px}
+  .tl-ttl{font-size:17px}
+  .tl-tx{font-size:13.5px}
 }
 @media(prefers-reduced-motion:reduce){
   .tl-item{transition:none}
@@ -3829,8 +3830,10 @@ body.is-hc .tl{opacity:1}
        横方向の差を大きく・縦方向の差を小さくするほど、斜め横から見た角度になる。 */
     VPX = W * (sp ? 0.86 : 0.90);   VPY = H * (sp ? 0.28 : 0.30);   /* 消失点（奥・右上） */
     NEX = W * (sp ? 0.30 : 0.42);   NEY = H * (sp ? 1.06 : 0.98);   /* 手前・左下 */
-    PIN_H = [H * (sp ? 0.26 : 0.30), H * (sp ? 0.42 : 0.46), H * (sp ? 0.58 : 0.62)];
-    CARD_W = sp ? 210 : 300;
+    PIN_H = [H * (sp ? 0.24 : 0.27), H * (sp ? 0.43 : 0.47), H * (sp ? 0.62 : 0.67)];
+    /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
+         はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
+    CARD_W = sp ? 262 : 380;
     /* 道と中心線の形（遠いほど細い） */
     var far = W * 0.010, near = W * (sp ? 0.16 : 0.13);
     road.style.clipPath = poly(far, near);
