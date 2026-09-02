@@ -1749,56 +1749,160 @@ html,body{overflow-x:clip;max-width:100%}
 
 <section class="kflow" id="flow">
   <div class="kflow__grid">
-    <div class="kflow__right">
+    <div class="kflow__right" data-on="ca">
       <header class="kflow__head">
-        <h2 class="sec-jp rv">玉葱選別設備の流れ</h2>
+        <h2 class="sec-jp rv">選別ラインの流れ</h2>
         <p class="sec-ttl rv">Line Flow</p>
-        <p class="flow__lead rv rv-d1">荷受からパレタイズまで、ひとつのラインとして設計します。（キャリスターによる玉葱選別設備の例）</p>
+        <p class="flow__lead rv rv-d1">機種によってラインの構成は変わります。代表的な3機種の流れを切り替えてご覧いただけます。</p>
+        <div class="ftab rv rv-d1" role="tablist" aria-label="機種の切り替え">
+          <button class="ftab__b is-on" type="button" data-m="ca" role="tab" aria-selected="true">
+            <span class="ftab__en">Calistar</span><span class="ftab__nm">キャリスター</span><span class="ftab__ob">玉葱</span>
+          </button>
+          <button class="ftab__b" type="button" data-m="mi" role="tab" aria-selected="false">
+            <span class="ftab__en">Millistar</span><span class="ftab__nm">ミリスター</span><span class="ftab__ob">ミニトマト・金柑などの小粒</span>
+          </button>
+          <button class="ftab__b" type="button" data-m="ro" role="tab" aria-selected="false">
+            <span class="ftab__en">Rollerstar</span><span class="ftab__nm">ローラスター</span><span class="ftab__ob">柑橘・トマトなど</span>
+          </button>
+        </div>
       </header>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step1b.jpg)"></div>
+      <p class="kflow__note" data-m="ca">荷受からパレタイズまで、玉葱の選別設備の例です。</p>
+      <p class="kflow__note" data-m="mi">小粒の果実を一つずつ保持して選別する、中規模ライン向けの構成です。</p>
+      <p class="kflow__note" data-m="ro">洗浄・ワックスがけを含む、果面の仕上げが要る品目向けの構成です。</p>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-01.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">01</span>荷受ホッパー</h3>
-        <p class="kstep__tx">収穫コンテナから青果を受け入れ、ラインへ安定供給する入口。傷みを抑えるソフトな搬送で次の工程へ送ります。</p>
+        <p class="kstep__tx">収穫コンテナから玉葱を受け入れ、ラインへ安定供給する入口。傷みを抑えるソフトな搬送で次の工程へ送ります。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step2b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-02.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">02</span>一次手選別コンベア</h3>
         <p class="kstep__tx">目視で明らかな不良品や異物を取り除く工程。後段のセンサー選別の精度を高めます。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step3b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-03.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">03</span>整列コンベア</h3>
         <p class="kstep__tx">果実を一列・一定間隔に整え、計測装置が正確に「はかれる」状態をつくります。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step4b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-04.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">04</span>AI画像処理装置</h3>
         <p class="kstep__tx">全周カメラで外観を撮影し、AIがサイズ・色・キズを瞬時に判定します。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step5b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-05.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">05</span>内部品位センサー</h3>
-        <p class="kstep__tx">光センサーで糖度や熟度、内部障害を非破壊で計測。外からは見えない品質をはかります。</p>
+        <p class="kstep__tx">光センサーで内部の障害や熟度を非破壊で計測。外からは見えない品質をはかります。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step6b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-06.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">06</span>キャリスター内部</h3>
-        <p class="kstep__tx">判定結果に基づき、果実を一つずつ傷めずに等階級別のレーンへ振り分けます。</p>
+        <p class="kstep__tx">判定結果に基づき、玉葱を一つずつ傷めずに等階級別のレーンへ振り分けます。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step7b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-07.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">07</span>箱詰装置</h3>
-        <p class="kstep__tx">等階級ごとに集まった果実を、規定数・規定の姿勢で自動的に箱詰めします。</p>
+        <p class="kstep__tx">等階級ごとに集まった玉葱を、規定数・規定の姿勢で自動的に箱詰めします。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step8b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-08.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">08</span>製品箱情報印字</h3>
         <p class="kstep__tx">産地・等階級・重量などの情報を製品箱に印字し、トレーサビリティを確保します。</p>
       </div>
-      <div class="kstep">
-        <div class="kstep__ph" style="background-image:url(agri-step9b.jpg)"></div>
+      <div class="kstep" data-m="ca">
+        <div class="kstep__ph" style="background-image:url(flow-ca-09.jpg)"></div>
         <h3 class="kstep__ttl"><span class="kstep__no">09</span>ロボットパレタイザー</h3>
         <p class="kstep__tx">仕上がった製品箱をロボットが整然と積み付け、出荷へ。ライン省人化の要です。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-01.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">01</span>コンテナ反転ダンパー</h3>
+        <p class="kstep__tx">収穫コンテナをそのまま反転させ、小粒の果実を傷めずにラインへ投入します。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-02.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">02</span>小玉抜き装置</h3>
+        <p class="kstep__tx">規格に満たない小玉をあらかじめ取り除き、後工程の負担を減らします。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-03.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">03</span>整列装置</h3>
+        <p class="kstep__tx">果実を一列・一定間隔に整え、計測装置が正確に「はかれる」状態をつくります。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-04.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">04</span>ミリスター選別機</h3>
+        <p class="kstep__tx">果実を一つずつ保持して搬送する、ミニトマト・金柑など小粒品目のための選別機です。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-05.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">05</span>画像処理装置（全周10画像処理）</h3>
+        <p class="kstep__tx">全周を10方向から撮影し、サイズ・色・キズを死角なく判定します。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-06.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">06</span>糖度センサー</h3>
+        <p class="kstep__tx">光センサーで糖度を非破壊計測。外からは見えない品質をはかります。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-07.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">07</span>等階級振分（エアー振分）</h3>
+        <p class="kstep__tx">判定結果に応じてエアーで振り分け。小粒でも傷めずに仕分けます。</p>
+      </div>
+      <div class="kstep" data-m="mi">
+        <div class="kstep__ph" style="background-image:url(flow-mi-08.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">08</span>半自動計量箱詰装置</h3>
+        <p class="kstep__tx">規定重量まで計量しながら箱詰め。人の手を最小限に抑えます。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-01.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">01</span>荷下ろし</h3>
+        <p class="kstep__tx">搬入されたコンテナをラインへ荷下ろしし、選果の起点をつくります。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-02.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">02</span>一次手選別</h3>
+        <p class="kstep__tx">目視で明らかな不良品や異物を取り除き、後段のセンサー選別の精度を高めます。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-03.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">03</span>前処理（洗浄・ワックス・乾燥）</h3>
+        <p class="kstep__tx">洗浄からワックスがけ、乾燥までを連続で処理。果面の仕上がりを整えます。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-04.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">04</span>二次手選別</h3>
+        <p class="kstep__tx">前処理を終えた果実をもう一度目視で確認し、選別の精度を担保します。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-05.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">05</span>画像処理装置</h3>
+        <p class="kstep__tx">全周カメラで外観を撮影し、サイズ・色・キズを瞬時に判定します。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-06.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">06</span>内部品位センサー</h3>
+        <p class="kstep__tx">光センサーで糖度や内部障害を非破壊で計測します。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-07.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">07</span>ローラスター（等階級振分）</h3>
+        <p class="kstep__tx">ローラー式の搬送で果実を回しながら、等階級ごとに振り分けます。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-08.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">08</span>引出コンベア（ブラシ）</h3>
+        <p class="kstep__tx">ブラシ付きコンベアで果実をやさしく引き出し、次の工程へ送ります。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-09.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">09</span>昇降機自動箱詰装置</h3>
+        <p class="kstep__tx">昇降機で高さを合わせながら、規定数を自動で箱詰めします。</p>
+      </div>
+      <div class="kstep" data-m="ro">
+        <div class="kstep__ph" style="background-image:url(flow-ro-10.jpg)"></div>
+        <h3 class="kstep__ttl"><span class="kstep__no">10</span>製品自動倉庫</h3>
+        <p class="kstep__tx">仕上がった製品箱を自動で保管・払い出し。出荷までを一貫させます。</p>
       </div>
     </div>
   </div>
@@ -3081,5 +3185,63 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ 選別ラインの流れ：機種ごとにタブで切り替え（第十二回のご要望）══ -->
+<style id="flow-tab-css">
+/* ⚠️.kflow__right は3カラムのgrid。タブと注記は全幅に伸ばす。 */
+.kflow__note{grid-column:1 / -1;margin:-8px 0 4px;font-size:13.5px;line-height:2;color:rgba(0,0,0,.66)}
+.ftab{display:flex;flex-wrap:wrap;gap:0;margin-top:clamp(20px,2.4vw,34px);
+  border-top:0.5px solid var(--line);border-left:0.5px solid var(--line);width:fit-content;max-width:100%}
+.ftab__b{appearance:none;background:#fff;border:0;
+  border-right:0.5px solid var(--line);border-bottom:0.5px solid var(--line);
+  padding:14px 26px 15px;text-align:left;cursor:pointer;color:var(--ink);
+  display:flex;flex-direction:column;gap:3px;transition:background .25s ease,color .25s ease}
+.ftab__en{font-family:var(--en);font-weight:600;font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;opacity:.5}
+.ftab__nm{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(17px,1.5vw,21px);letter-spacing:.02em;line-height:1.2}
+.ftab__ob{font-size:11px;letter-spacing:.06em;color:rgba(0,0,0,.55)}
+.ftab__b:hover{background:#f6f5f3}
+.ftab__b.is-on{background:var(--red);color:#fff}
+.ftab__b.is-on .ftab__en{opacity:.75}
+.ftab__b.is-on .ftab__ob{color:rgba(255,255,255,.8)}
+/* 選ばれていない機種は畳む */
+.kflow__right[data-on="ca"] .kstep:not([data-m="ca"]),
+.kflow__right[data-on="ca"] .kflow__note:not([data-m="ca"]),
+.kflow__right[data-on="mi"] .kstep:not([data-m="mi"]),
+.kflow__right[data-on="mi"] .kflow__note:not([data-m="mi"]),
+.kflow__right[data-on="ro"] .kstep:not([data-m="ro"]),
+.kflow__right[data-on="ro"] .kflow__note:not([data-m="ro"]){display:none}
+/* ⚠️nth-of-type で個別に効いていた背景位置は、機種が混在すると噛み合わないので解除 */
+.kstep .kstep__ph{background-position:center!important}
+@media(max-width:640px){
+  .ftab{width:100%}
+  .ftab__b{flex:1 1 100%;padding:12px 18px 13px}
+}
+</style>
+<script>
+/* 機種タブ：押された機種を data-on に入れるだけ。表示の出し分けはCSS側。 */
+(function(){
+  var wrap = document.querySelector('.kflow__right');
+  if (!wrap) return;
+  var btns = [].slice.call(wrap.querySelectorAll('.ftab__b'));
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var m = b.dataset.m;
+      if (wrap.dataset.on === m) return;
+      wrap.dataset.on = m;
+      btns.forEach(function(x){
+        var on = x === b;
+        x.classList.toggle('is-on', on);
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      /* ⚠️切り替えで .rv（スクロールで出る演出）が未発火のまま残ると
+           工程が透明のままになるので、出現済み扱いにしておく。 */
+      wrap.querySelectorAll('.kstep[data-m="'+m+'"] .rv').forEach(function(e){ e.classList.add('is-in'); });
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
