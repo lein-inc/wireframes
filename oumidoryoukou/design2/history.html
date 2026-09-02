@@ -3831,7 +3831,9 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
        ・縦の差（NEY−VPY）を小さくするほど、地面を浅い角度で見ることになる
        いまは横 0.86W ／ 縦 0.56H。前回の 0.48W ／ 0.68H よりかなり寝かせている。 */
     VPX = W * (sp ? 1.00 : 1.04);   VPY = H * (sp ? 0.36 : 0.38);   /* 消失点（奥・右上／画面外すこし） */
-    NEX = W * (sp ? 0.22 : 0.18);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
+    /* ⚠️手前を左端に寄せすぎると、支柱の真上に置いた札が画面外へ出る。
+         札の半幅ぶんは内側に取ること。 */
+    NEX = W * (sp ? 0.32 : 0.27);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
     /* ⚠️全件の写真と文字を出すので、隣どうしがぶつからないよう
          支柱の高さを3段に散らす（2段だと3件並んだときに重なる）。 */
     /* ⚠️一番高い段は、札（写真＋見出し＋本文）を載せると画面の上に張り付く。
@@ -3911,12 +3913,11 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
     var topPx = y - (cb + el._ch) * k;
     if (topPx < TOPGAP) cb = Math.max(10, cb - (TOPGAP - topPx) / k);
     card.style.bottom  = cb + 'px';
-    /* ⚠️斜めに戻したので、手前の札が画面の左へはみ出す。札は translateX(-50%) で
-         支柱の真上に載せているため、中心の画面座標を丸めてから item 内の
-         ずらし量（＝差÷k）に直す。 */
-    var half = CARD_W * k / 2;
-    var cx = Math.min(Math.max(x, half + 16), Math.max(half + 16, W - half - 16));
-    card.style.left = ((cx - x) / k).toFixed(1) + 'px';
+    /* ⚠️以前はここで札の横位置を画面内へ丸めていた。左端に近づくほど支柱から
+         右へずれていくので、「右から定着する」ように見えてしまう。
+         札は常に支柱（＝年号）の真上。横は一切動かさない。
+         はみ出さないよう、道の手前側そのものを内側に取ってある（NEX）。 */
+    card.style.left = '0px';
     /* ⚠️年号を奥まで全部出すと、中央の一列が画面の上まで伸びて札の文字とぶつかる。
          手前の数件だけ残し、奥はすっと消す＝年号は常に「下の方」に居る。 */
     var base = el.children[3];
