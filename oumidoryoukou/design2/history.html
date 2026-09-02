@@ -3832,7 +3832,7 @@ body.is-hc .tl{opacity:1}
   var items = [].slice.call(box.children);
 
   /* ── 画面サイズごとの道の取り方 ── */
-  var W, H, VPX, VPY, NEX, NEY, PIN_H, CARD_W;
+  var W, H, VPX, VPY, NEX, NEY, PIN_H, CARD_W, TOPGAP;
   function metrics(){
     W = tl.offsetWidth; H = tl.offsetHeight;
     var sp = W < 760;
@@ -3845,7 +3845,10 @@ body.is-hc .tl{opacity:1}
     NEX = W * (sp ? 0.22 : 0.18);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
     /* ⚠️全件の写真と文字を出すので、隣どうしがぶつからないよう
          支柱の高さを3段に散らす（2段だと3件並んだときに重なる）。 */
-    PIN_H = [H * (sp ? 0.20 : 0.24), H * (sp ? 0.38 : 0.44), H * (sp ? 0.56 : 0.64)];
+    /* ⚠️一番高い段は、札（写真＋見出し＋本文）を載せると画面の上に張り付く。
+         段そのものを下げたうえで、下の TOPGAP でさらに余白を確保する。 */
+    PIN_H = [H * (sp ? 0.17 : 0.20), H * (sp ? 0.29 : 0.34), H * (sp ? 0.42 : 0.50)];
+    TOPGAP = Math.max(28, H * 0.07);   /* 札の上に必ず空ける余白 */
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
     CARD_W = sp ? 300 : 460;
@@ -3879,7 +3882,7 @@ body.is-hc .tl{opacity:1}
     var d = p - i;                       /* 0=いま手前、+で奥（＝古い） */
     /* ⚠️中央一列に並べたので、通り過ぎた札が下に残ると年号が重なって読めない。
          手前を過ぎたらすぐ消す。 */
-    if (d < -0.55 || d > DEPTH){
+    if (d < -0.44 || d > DEPTH){
       /* ⚠️隠すときに状態クラスも落とす。残すと画面外の札が
          「手前の1件」の見た目のまま居座る。 */
       el.style.display = 'none';
@@ -3890,8 +3893,10 @@ body.is-hc .tl{opacity:1}
     var k = 1 / (1 + d * FALLOFF);       /* 1/z の射影＝そのまま縮尺 */
     var x = VPX + (NEX - VPX) * k;
     var y = VPY + (NEY - VPY) * k;
-    var op = d > DEPTH - 1.6 ? Math.max(0, (DEPTH - d) / 1.6)   /* 最後の1.6件ぶんだけで溶ける */
-           : d < -0.05      ? Math.max(0, (d + 0.55) / 0.5)     /* 手前を過ぎたらすっと消す */
+    /* ⚠️溶ける距離を長く取ると「すーっと近づきながら濃くなる」動きになる。
+         その場でファッと出したいので、奥も手前も窓を狭くして一気に切り替える。 */
+    var op = d > DEPTH - 0.42 ? Math.max(0, (DEPTH - d) / 0.42)  /* 奥：その場で素早く出る */
+           : d < -0.05       ? Math.max(0, (d + 0.42) / 0.37)    /* 手前：過ぎたら素早く消す */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
     el.style.opacity = op.toFixed(3);
@@ -3915,7 +3920,7 @@ body.is-hc .tl{opacity:1}
     if (el._ch == null){ card.style.bottom = (h + 14) + 'px'; el._ch = card.offsetHeight; }
     var cb = h + 14;
     var topPx = y - (cb + el._ch) * k;
-    if (topPx < 14) cb = Math.max(10, cb - (14 - topPx) / k);
+    if (topPx < TOPGAP) cb = Math.max(10, cb - (TOPGAP - topPx) / k);
     card.style.bottom  = cb + 'px';
     /* ⚠️斜めに戻したので、手前の札が画面の左へはみ出す。札は translateX(-50%) で
          支柱の真上に載せているため、中心の画面座標を丸めてから item 内の
