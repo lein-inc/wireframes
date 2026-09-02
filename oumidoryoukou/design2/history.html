@@ -3525,15 +3525,8 @@ body.is-hc-nopic .hc-photos{opacity:0}
 <!-- ══ ヒストリー詳細：スライド中は黒背景・ロゴ非表示・バーガー化／目盛りは画面下 ══ -->
 <style id="hc-dark">
 /* body.is-hc ＝ スライドが画面いっぱいを占めている状態（JSが付け外し） */
-.hc-scene{background:#0a0b0a;color:#fff}
-/* 方眼は黒地用に反転（元は rgba(0,0,0,.12)） */
-.hc-lines{opacity:.6;
-  background-image:
-    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px),
-    repeating-linear-gradient(to right,rgba(255,255,255,.14) 0 1px,transparent 1px 6px)}
+.hc-scene{color:#fff}
+/* 縦罫（.hc-lines）は使わない。指定は #hc-open 側でまとめて消している */
 
 /* ① 左上ロゴはそのまま出す。黒地なので白へ反転させる
    ⚠️素材は赤ベタなので brightness(0) invert(1) で白に転ぶ。
@@ -3575,12 +3568,11 @@ body.is-hc .nav__mini .logo-mark{filter:brightness(0) invert(1)}
 
 <!-- ══ ヒストリー詳細：白→黒／写真がぐっと広がる／MENU・終わるボタン ══ -->
 <style id="hc-open">
-/* 初期は白地。スライドが画面を占めた時点(body.is-hc)で黒へ切り替わる */
-.hc-scene{background:#fff;transition:background-color .7s ease}
-body.is-hc .hc-scene{background:#0a0b0a}
-/* 方眼は黒地でだけ見せる */
-.hc-lines{opacity:0;transition:opacity .7s ease}
-body.is-hc .hc-lines{opacity:.6}
+/* ⚠️以前は「白地で始まり、画面を占めた時点で黒へ切り替える」作りだった。
+     いまは最初から黒。切り替えのトランジションごと不要。 */
+.hc-scene{background:#0a0b0a}
+/* ⚠️黒地の上の縦罫は出さない（要素ごと消す） */
+.hc-lines{display:none!important}
 
 /* ① 写真：小さく置いてから、ぐっと広がって定着（TOPの製品スライドと同じ考え方）
    ⚠️.hc-photos は inset で位置を決めているので、幅ではなく top/left/right/bottom を動かす。 */
@@ -3729,11 +3721,8 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
      年号枠(.hc-year)・年代(.hc-now)・目盛り(.era__ruler)・終わるボタンは従来のまま使う。 */
 .hc-stage,.hc-photos{display:none!important}
 
-/* ⚠️固定される前の背景は白。そこへ白文字のタイムラインを出すと読めないので、
-     黒くなる（body.is-hc）まで伏せておく。 */
-.tl{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;
-  opacity:0;transition:opacity .55s ease}
-body.is-hc .tl{opacity:1}
+/* ⚠️背景を最初から黒にしたので、伏せておく必要がなくなった。 */
+.tl{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;opacity:1}
 /* 奥へ伸びる道。頂点はJSが実測値で書き込む */
 .tl__road{position:absolute;inset:0;
   background:linear-gradient(200deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.16) 45%,rgba(255,255,255,.30) 100%);
