@@ -1650,8 +1650,8 @@ html,body{overflow-x:clip;max-width:100%}
 .dhero__sub{font-family:var(--en);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:16px}
 .dhero__sub::before{content:"( "}.dhero__sub::after{content:" )"}
 /* 各セクション見出し：日本語メイン（明朝大）＋（英語）サブ（小） */
-.lineup .sec-jp,.flow .sec-jp,.feat .sec-jp{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:.04em;line-height:1.15;display:block;gap:0;margin:0}
-.lineup .sec-jp .dot,.flow .sec-jp .dot,.feat .sec-jp .dot{display:none}
+.lineup .sec-jp,.flow .sec-jp,.feat .sec-jp,.tfd-flow .sec-jp,.tfd-in .sec-jp,.tfd-det .sec-jp{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.7rem);letter-spacing:.04em;line-height:1.15;display:block;gap:0;margin:0}
+.lineup .sec-jp .dot,.flow .sec-jp .dot,.feat .sec-jp .dot,.tfd-flow .sec-jp .dot,.tfd-in .sec-jp .dot,.tfd-det .sec-jp .dot{display:none}
 .lineup .sec-ttl,.flow .sec-ttl,.feat .sec-ttl{font-family:var(--en);font-weight:500;font-size:clamp(9px,.72vw,11px);line-height:1;letter-spacing:.24em;text-transform:uppercase;opacity:.55;margin-top:14px;display:block}
 .lineup .sec-ttl::before,.flow .sec-ttl::before,.feat .sec-ttl::before{content:"( "}
 .lineup .sec-ttl::after,.flow .sec-ttl::after,.feat .sec-ttl::after{content:" )"}
@@ -1717,21 +1717,37 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
 </section>
 
-<section class="flow">
-  <h2 class="sec-jp rv">仕様｜ドライヤー本体</h2>
-  <p class="sec-ttl rv">Spec</p>
-  <p class="flow__lead rv rv-d1">業界初のサンプル全自動自主検査装置「フルオートドライヤーシステム（TFD／CFD-120）」の主な仕様です。</p>
-  <dl class="gtbl rv rv-d1">
-    <div class="gtbl__row"><dt>型式</dt><dd>CFD-120</dd></div>
-    <div class="gtbl__row"><dt>対象物</dt><dd>穀類（米・麦・大豆）※高水分原料除く</dd></div>
-    <div class="gtbl__row"><dt>本体寸法（出荷時）</dt><dd>幅2,020 × 高さ1,800 × 奥行700（mm）</dd></div>
-    <div class="gtbl__row"><dt>処理数</dt><dd>120サンプル（10ボックス×6段×2テーブル）</dd></div>
-    <div class="gtbl__row"><dt>操作部</dt><dd>7インチ型タッチパネル</dd></div>
-    <div class="gtbl__row"><dt>消費電力</dt><dd>200V 約3.6kW 4.2KVA 18A</dd></div>
-    <div class="gtbl__row"><dt>備考</dt><dd>最大4台での連結可能／ヒーター自動調節機能／セーフティドアスイッチ／機内照明搭載</dd></div>
-  </dl>
+
+
+
+<!-- ══ フルオートドライヤーシステム（カタログ「OMI TOTAL FULL-AUTOMATIC DRYER SYSTEM」より）══ -->
+<section class="tfd" id="tfd">
+  <div class="tfd__head">
+    <p class="tfd__en rv">OMI TOTAL FULL-AUTOMATIC DRYER SYSTEM <b>TFD</b></p>
+    <h2 class="tfd__ttl rv">フルオートドライヤーシステム</h2>
+    <p class="tfd__sub rv rv-d1">穀類サンプルの自主検査工程を効率化<span>米・麦・大豆　3品目兼用</span></p>
+    <p class="tfd__catch rv rv-d1">業界初のサンプル全自動自主検査装置<i>※</i>が、<br>さらなる高効率化を実現してフルモデルチェンジ。</p>
+    <p class="tfd__lead rv rv-d1">これまでに200台以上の穀類フルオートドライヤーを納入してきたノウハウを結集し、現代のプラント設備に求められる性能を高い次元で実現した新型システムです。</p>
+    <p class="tfd__note rv rv-d1">※ 近江度量衡が1986年に開発・発売した検査装置</p>
+  </div>
+  <figure class="tfd__hero rv rv-d1"><img src="dryer-main.jpg" alt="フルオートドライヤーシステム CFD-120 本体" loading="lazy"></figure>
 </section>
 
+<section class="tfd-flow">
+  <h2 class="sec-jp rv">工程</h2>
+  <p class="sec-ttl rv">Flow</p>
+  <p class="flow__lead rv rv-d1">近江度量衡では、共同乾燥調製施設の荷受・サンプル検査・出荷の計量に係る重要な部分を担っています。本システムは、サンプル検査に係るサンプル搬送・乾燥・検査までをワンストップで行います。</p>
+  <div class="tflow rv rv-d1">
+    <em class="tflow__band">フルオートドライヤーシステム</em>
+    <div class="tflow__row">
+      <span class="tflow__b">荷受</span>
+      <span class="tflow__b">計量</span>
+      <span class="tflow__b is-on">サンプル搬送</span>
+      <span class="tflow__b is-on">乾燥</span>
+      <span class="tflow__b is-on">検査</span>
+    </div>
+  </div>
+</section>
 <section class="feat">
   <h2 class="sec-jp rv">フルオートドライヤーシステムの特長</h2>
   <p class="sec-ttl rv">Features</p>
@@ -1742,6 +1758,87 @@ html,body{overflow-x:clip;max-width:100%}
     <div class="fitem rv"><span class="olno">04</span><h3>米・麦・大豆の3品目兼用</h3><p>1台で3品目に対応。品目ごとに機器をそろえる必要がありません。</p></div>
     <div class="fitem rv rv-d1"><span class="olno">05</span><h3>トータルコスト削減</h3><p>更新時の建築工事を縮小し、導入から運用までの総コストを抑えます。</p></div>
   </div>
+</section>
+
+<section class="tfd-in">
+  <h2 class="sec-jp rv">内部機構</h2>
+  <p class="sec-ttl rv">Mechanism</p>
+  <div class="tfd-in__grid rv rv-d1">
+    <figure><img src="dryer-open.jpg" alt="扉を開けた状態の機内" loading="lazy"><figcaption>扉を開けた状態。左右2つのテーブルに、10ボックス×6段のサンプルボックスが並びます。</figcaption></figure>
+    <figure><img src="dryer-3d.jpg" alt="内部機構の構造図" loading="lazy"><figcaption>中央が A＝搬送部、左右が B＝サンプルボックス。</figcaption></figure>
+  </div>
+
+  <h3 class="tfd-in__h rv"><span>A</span>搬送部</h3>
+  <div class="tfd-in__row rv rv-d1">
+    <figure><img src="dryer-arm.jpg" alt="電磁吸着式アーム" loading="lazy">
+      <figcaption><b>電磁吸着式アーム</b>高速かつ精密にサンプルを搬送し格納します。</figcaption></figure>
+    <figure><img src="dryer-moisture.jpg" alt="静電容量式水分計" loading="lazy">
+      <figcaption><b>静電容量式水分計</b>サンプルを破壊せず、高精度の水分検査を行います。</figcaption></figure>
+    <figure><img src="dryer-dust.jpg" alt="防塵仕様の配線" loading="lazy">
+      <figcaption><b>防塵仕様</b>機械内部の配線はすべて防塵仕様となっています。</figcaption></figure>
+  </div>
+
+  <h3 class="tfd-in__h rv"><span>B</span>サンプルボックス</h3>
+  <p class="tfd-in__tx rv rv-d1">サンプルボックスの底面はメッシュ機構になっており、下からの熱風でサンプルを乾燥させます。電磁吸着式4軸アームによりサンプルが投入されるとファンゲートが開き、乾燥を終えると自動的に閉まります。各テーブルの上下2箇所に搭載されたヒーターで、室内の温度を適切に管理します。</p>
+  <div class="tfd-in__row rv rv-d1">
+    <figure><img src="dryer-box.jpg" alt="回転式の乾燥ケース" loading="lazy">
+      <figcaption>回転式の乾燥ケース。一目で開閉が分かるシャッター付き。</figcaption></figure>
+    <figure><img src="dryer-box-open.jpg" alt="ファンゲートが開いた状態" loading="lazy">
+      <figcaption><b>開いた状態</b>サンプル投入時はゲートが開きます。</figcaption></figure>
+    <figure><img src="dryer-box-close.jpg" alt="ファンゲートが閉じた状態" loading="lazy">
+      <figcaption><b>閉じた状態</b>乾燥を終えると自動的に閉まります。</figcaption></figure>
+  </div>
+</section>
+
+<section class="tfd-det">
+  <h2 class="sec-jp rv">機器詳細</h2>
+  <p class="sec-ttl rv">Details</p>
+  <div class="tfd-det__grid">
+    <div class="tfd-det__box rv rv-d1">
+      <p class="tfd-det__nm">ドライヤー本体<b>CFD-120</b></p>
+      <ol class="tfd-det__list">
+        <li>サンプル投入口</li>
+        <li>メンテナンス用扉セーフティドアスイッチ<small>前面4カ所、後面1カ所</small></li>
+        <li>ドライヤー操作部<small>正面のフックにも移動可能</small></li>
+        <li>ドライヤー盤</li>
+        <li>排気ダクト</li>
+        <li>搬入用キャスター</li>
+      </ol>
+    </div>
+    <figure class="tfd-det__ph rv rv-d1"><img src="dryer-3d-out.jpg" alt="ドライヤー本体の外観図" loading="lazy"></figure>
+    <figure class="tfd-det__panel rv rv-d1"><img src="dryer-panel.jpg" alt="集中盤（専用タッチパネル操作盤）" loading="lazy">
+      <figcaption><b>集中盤</b>（専用タッチパネル操作盤）<br>検査結果を含む全情報を集約します。</figcaption></figure>
+  </div>
+</section>
+
+<section class="tfd-ac">
+  <div class="tfd-ac__in rv rv-d1">
+    <figure><img src="dryer-checker.jpg" alt="オートチェッカー" loading="lazy"></figure>
+    <div class="tfd-ac__tx">
+      <p class="tfd-ac__en">Autochecker</p>
+      <h2 class="tfd-ac__ttl">オートチェッカー</h2>
+      <p>ドライヤーで乾燥されたサンプルが搬送され、自動検査を行います。籾摺り・選別の後、選別結果ごとにシールパックされます。オプションで、大豆用回転選機仕様や品位計、食味計といった分析装置との自動連動も可能です。</p>
+    </div>
+  </div>
+</section>
+<section class="flow">
+  <h2 class="sec-jp rv">仕様｜ドライヤー本体</h2>
+  <p class="sec-ttl rv">Spec</p>
+  <p class="flow__lead rv rv-d1">業界初のサンプル全自動自主検査装置「フルオートドライヤーシステム（TFD／CFD-120）」の主な仕様です。</p>
+  <dl class="gtbl rv rv-d1">
+    <div class="gtbl__row"><dt>型式</dt><dd>CFD-120</dd></div>
+    <div class="gtbl__row"><dt>対象物</dt><dd>穀類（米・麦・大豆）※高水分原料除く</dd></div>
+    <div class="gtbl__row"><dt>本体寸法（出荷時）</dt><dd>幅2,020 × 高さ1,800 × 奥行700（mm）</dd></div>
+    <div class="gtbl__row"><dt>処理数</dt><dd>120サンプル（10ボックス×6段×2テーブル）</dd></div>
+    <div class="gtbl__row"><dt>操作部</dt><dd>7インチ型タッチパネル</dd></div>
+    <div class="gtbl__row"><dt>塗装色</dt><dd>マンセル 5Y7/1</dd></div>
+    <div class="gtbl__row"><dt>サンプルボックス最大投入量</dt><dd>約800g（籾）</dd></div>
+    <div class="gtbl__row"><dt>機器重量</dt><dd>850kg</dd></div>
+    <div class="gtbl__row"><dt>消費電力</dt><dd>200V 約3.6kW 4.2KVA 18A</dd></div>
+    <div class="gtbl__row"><dt>消費エアー量</dt><dd>25L/min</dd></div>
+    <div class="gtbl__row"><dt>排風量</dt><dd>12㎥/min（50Hz）／ 14㎥/min（60Hz）</dd></div>
+    <div class="gtbl__row"><dt>備考</dt><dd>最大4台での連結可能／ヒーター自動調節機能／セーフティドアスイッチ／機内照明搭載</dd></div>
+  </dl>
 </section>
 
 <section class="pcta">
@@ -2934,5 +3031,105 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ フルオートドライヤーシステム：見た目（カタログ準拠）══ -->
+<style id="tfd-css">
+/* ⚠️余白は既存の .lineup/.flow/.feat に合わせて 150px 5vw 系で揃える。 */
+.tfd,.tfd-flow,.tfd-in,.tfd-det{background:var(--paper);color:var(--ink);padding:150px 5vw 150px}
+.tfd{padding-bottom:110px;border-top:0.5px solid var(--line)}
+.tfd-flow,.tfd-in,.tfd-det{padding-top:110px}
+
+/* ── 導入部 ── */
+.tfd__en{font-family:var(--en);font-weight:600;font-size:clamp(11px,1.05vw,14px);letter-spacing:.16em;color:var(--red)}
+.tfd__en b{display:inline-block;border:1px solid var(--red);padding:1px 8px 2px;margin-left:8px;font-size:.85em;letter-spacing:.1em}
+.tfd__ttl{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(2.1rem,5vw,4.4rem);line-height:1.12;letter-spacing:.02em;margin:14px 0 0}
+.tfd__sub{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:20px;
+  font-size:clamp(13px,1.15vw,16px);letter-spacing:.04em}
+.tfd__sub span{background:var(--red);color:#fff;font-weight:700;font-size:.86em;padding:4px 12px 5px;letter-spacing:.06em}
+.tfd__catch{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(19px,2.2vw,30px);line-height:1.75;margin-top:44px;border-top:1px solid var(--ink);padding-top:34px}
+.tfd__catch i{font-style:normal;font-size:.5em;vertical-align:super;color:var(--red)}
+.tfd__lead{font-size:14px;line-height:2.1;margin-top:22px;max-width:820px}
+.tfd__note{font-size:11.5px;line-height:1.9;color:rgba(0,0,0,.5);margin-top:14px}
+.tfd__hero{margin:56px 0 0}
+.tfd__hero img{display:block;width:100%;max-width:820px;margin:0 auto;height:auto}
+
+/* ── 工程 ── */
+.tflow{position:relative;margin-top:60px;padding-top:44px}
+.tflow__band{position:absolute;left:40%;right:0;top:0;font-style:normal;
+  font-size:11.5px;letter-spacing:.08em;color:var(--red);text-align:center;padding-bottom:8px;
+  border-bottom:1px solid var(--red);border-left:1px solid var(--red);border-right:1px solid var(--red)}
+.tflow__row{display:flex;flex-wrap:wrap;gap:10px}
+.tflow__b{flex:1 1 0;min-width:96px;display:flex;align-items:center;justify-content:center;
+  padding:22px 8px;background:#eceae6;color:rgba(0,0,0,.6);
+  font-family:var(--jp);font-weight:700;font-size:clamp(12px,1.1vw,15px);letter-spacing:.06em;
+  position:relative}
+.tflow__b.is-on{background:var(--red);color:#fff}
+.tflow__b:not(:last-child)::after{content:"";position:absolute;right:-10px;top:50%;z-index:2;
+  transform:translateY(-50%);border-left:7px solid #cfcbc4;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.tflow__b.is-on:not(:last-child)::after{border-left-color:var(--red)}
+
+/* ── 内部機構 ── */
+.tfd-in__grid{display:grid;grid-template-columns:1.35fr 1fr;gap:34px;margin-top:60px;align-items:start}
+.tfd-in__grid img,.tfd-in__row img{display:block;width:100%;height:auto}
+.tfd-in__grid figure,.tfd-in__row figure{margin:0}
+.tfd-in__grid figcaption,.tfd-in__row figcaption{font-size:12.5px;line-height:1.95;color:rgba(0,0,0,.62);margin-top:12px}
+.tfd-in__row figcaption b{display:block;font-weight:700;font-size:14px;color:var(--ink);margin-bottom:4px}
+.tfd-in__h{display:flex;align-items:center;gap:14px;margin-top:72px;
+  font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(20px,2vw,28px);letter-spacing:.02em;border-bottom:1px solid var(--ink);padding-bottom:16px}
+.tfd-in__h span{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--en);font-weight:700;font-size:14px}
+.tfd-in__tx{font-size:14px;line-height:2.1;margin-top:24px;max-width:900px}
+.tfd-in__row{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:34px}
+
+/* ── 機器詳細 ── */
+.tfd-det__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:44px 40px;margin-top:60px;align-items:start}
+.tfd-det__nm{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;
+  font-weight:700;font-size:15px;letter-spacing:.06em;padding:9px 16px 10px}
+.tfd-det__nm b{font-family:var(--en);font-weight:600;font-size:12px;letter-spacing:.1em;
+  background:#fff;color:var(--red);padding:2px 8px 3px}
+.tfd-det__list{list-style:none;counter-reset:d;margin:24px 0 0;padding:0}
+.tfd-det__list li{counter-increment:d;position:relative;padding:14px 0 14px 40px;
+  border-bottom:0.5px solid var(--line);font-size:14px;line-height:1.7}
+.tfd-det__list li::before{content:counter(d);position:absolute;left:0;top:13px;
+  width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;
+  font-family:var(--en);font-size:11px;display:flex;align-items:center;justify-content:center}
+.tfd-det__list small{display:block;font-size:11.5px;color:rgba(0,0,0,.5);margin-top:3px}
+.tfd-det__ph{margin:0;grid-row:span 2}
+.tfd-det__ph img{display:block;width:100%;height:auto}
+.tfd-det__panel{margin:0}
+.tfd-det__panel img{display:block;width:100%;max-width:280px;height:auto}
+.tfd-det__panel figcaption{font-size:12.5px;line-height:1.95;color:rgba(0,0,0,.62);margin-top:12px}
+.tfd-det__panel b{color:var(--ink)}
+
+/* ── オートチェッカー ── */
+.tfd-ac{background:#f4f2ee;padding:110px 5vw}
+.tfd-ac__in{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:48px;align-items:center;max-width:1180px;margin:0 auto}
+.tfd-ac__in figure{margin:0}
+.tfd-ac__in img{display:block;width:100%;max-width:340px;height:auto;margin:0 auto}
+.tfd-ac__en{font-family:var(--en);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+.tfd-ac__ttl{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(24px,2.6vw,36px);letter-spacing:.02em;margin:10px 0 20px}
+.tfd-ac__tx p{font-size:14px;line-height:2.1}
+
+@media(max-width:900px){
+  .tfd,.tfd-flow,.tfd-in,.tfd-det{padding:90px 5vw}
+  .tfd-in__grid,.tfd-det__grid,.tfd-ac__in{grid-template-columns:1fr}
+  .tfd-det__ph{grid-row:auto}
+  .tfd-in__row{grid-template-columns:1fr 1fr;gap:22px}
+  .tflow__band{left:0}
+}
+@media(max-width:600px){
+  .tfd-in__row{grid-template-columns:1fr}
+  .tflow__row{flex-direction:column}
+  .tflow__b:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-10px;
+    transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;
+    border-top:7px solid #cfcbc4;border-bottom:0}
+  .tflow__b.is-on:not(:last-child)::after{border-top-color:var(--red);border-left-color:transparent}
+}
+</style>
+
 </body>
 </html>
