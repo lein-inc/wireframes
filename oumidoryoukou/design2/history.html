@@ -3761,7 +3761,7 @@ body.is-hc .tl{opacity:1}
 /* 年号は常に道のすぐ上。上へ伸びるのは札だけ */
 .tl-base{position:absolute;left:0;bottom:10px;transform:translateX(-50%);
   text-align:center;color:#fff;white-space:nowrap}
-.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em;margin:0}
+.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:#fff;letter-spacing:.01em;margin:0}
 .tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin:0 0 4px}
 .tl-ttl{font-family:var(--jp);font-weight:700;font-size:23px;line-height:1.5;margin-top:16px;color:#fff}
 .tl-tx{font-family:var(--jp);font-weight:500;font-size:15px;line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
@@ -3769,14 +3769,10 @@ body.is-hc .tl{opacity:1}
      札の幅いっぱいには広げない。 */
 .tl-ph{width:100%;aspect-ratio:3/2;margin-top:0;background-size:cover;background-position:center;
   border:1px solid rgba(255,255,255,.18)}
-/* 手前の1件だけ本文と写真を出す。遠い札は年号だけにして混み合いを避ける */
-.tl-item .tl-tx,.tl-item .tl-ph{opacity:0;transition:opacity .35s ease}
-/* ⚠️opacity:0 のままだと写真の高さが残り、奥の札まで背が高くなって
-     年号が上へ押し上げられる（＝隣とぶつかる）。手前の1件以外は場所ごと畳む。 */
-.tl-item:not(.is-near) .tl-ph{display:none}
-.tl-item.is-near .tl-tx,.tl-item.is-near .tl-ph{opacity:1}
-.tl-item.is-far .tl-era,.tl-item.is-far .tl-ttl{opacity:0}
-.tl-item .tl-era,.tl-item .tl-ttl{transition:opacity .3s ease}
+/* ⚠️以前は「手前の1件だけ本文と写真を出す」作りだった。
+     いまは全件を最初から出す。奥行きは大きさ・ぼけ・不透明度で表す。 */
+.tl-item .tl-tx,.tl-item .tl-ph,
+.tl-item .tl-era,.tl-item .tl-ttl{opacity:1}
 /* 接地点は手前ほどはっきり */
 .tl-dot{box-shadow:0 0 0 4px rgba(204,7,0,.12)}
 
@@ -3803,7 +3799,7 @@ body.is-hc .tl{opacity:1}
   if (!pin) return;
 
   var N = DATA.length;
-  var DEPTH   = 5.0;    /* 何件先まで見えるか */
+  var DEPTH   = 8.0;    /* 何件先まで見えるか（大きいほど奥まで残る） */
   var FALLOFF = 0.42;   /* 遠近の効き。大きいほど急に小さくなる */
 
   /* ── 層をつくる ── */
@@ -3847,8 +3843,9 @@ body.is-hc .tl{opacity:1}
        いまは横 0.86W ／ 縦 0.56H。前回の 0.48W ／ 0.68H よりかなり寝かせている。 */
     VPX = W * (sp ? 1.00 : 1.04);   VPY = H * (sp ? 0.36 : 0.38);   /* 消失点（奥・右上／画面外すこし） */
     NEX = W * (sp ? 0.22 : 0.18);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
-    /* 支柱は2種類だけ。手前の1件だけ、すっと上へ伸ばす */
-    PIN_H = [H * (sp ? 0.030 : 0.028), H * (sp ? 0.38 : 0.46)];
+    /* ⚠️全件の写真と文字を出すので、隣どうしがぶつからないよう
+         支柱の高さを3段に散らす（2段だと3件並んだときに重なる）。 */
+    PIN_H = [H * (sp ? 0.20 : 0.24), H * (sp ? 0.38 : 0.44), H * (sp ? 0.56 : 0.64)];
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
     CARD_W = sp ? 300 : 460;
@@ -3893,13 +3890,13 @@ body.is-hc .tl{opacity:1}
     var k = 1 / (1 + d * FALLOFF);       /* 1/z の射影＝そのまま縮尺 */
     var x = VPX + (NEX - VPX) * k;
     var y = VPY + (NEY - VPY) * k;
-    var op = d > DEPTH - 2.4 ? Math.max(0, (DEPTH - d) / 2.4)   /* 奥へゆっくり溶ける */
+    var op = d > DEPTH - 1.6 ? Math.max(0, (DEPTH - d) / 1.6)   /* 最後の1.6件ぶんだけで溶ける */
            : d < -0.05      ? Math.max(0, (d + 0.55) / 0.5)     /* 手前を過ぎたらすっと消す */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
     el.style.opacity = op.toFixed(3);
     /* 奥ほどピントを外す。手前2件はぼかさない（本文が読めなくなるため） */
-    var bl = d > 1.8 ? Math.min(5.5, (d - 1.8) * 1.5) : 0;
+    var bl = d > 2.8 ? Math.min(5.5, (d - 2.8) * 1.1) : 0;
     el.style.filter = bl ? 'blur(' + bl.toFixed(2) + 'px)' : '';
     el.style.zIndex  = String(2000 - Math.round(d * 20));
     /* 支柱の高さは3種類を順に。2種類だと3件並んだときに札がぶつかる */
@@ -3910,9 +3907,7 @@ body.is-hc .tl{opacity:1}
     el.classList.toggle('is-near', !!isBest);
     el.classList.toggle('is-far',  !isBest);
 
-    /* ⚠️支柱の高さは「手前の1件かどうか」だけで決める。毎フレーム変わる値にすると
-         CSSのトランジションが追従できず、すっと伸びる動きが出ない。 */
-    var h = PIN_H[isBest ? 1 : 0];
+    var h = PIN_H[i % 3];
     var pinEl = el.children[1], card = el.children[2];
     card.style.width   = CARD_W + 'px';
     pinEl.style.height = h + 'px';
@@ -3931,7 +3926,7 @@ body.is-hc .tl{opacity:1}
     /* ⚠️年号を奥まで全部出すと、中央の一列が画面の上まで伸びて札の文字とぶつかる。
          手前の数件だけ残し、奥はすっと消す＝年号は常に「下の方」に居る。 */
     var base = el.children[3];
-    if (base) base.style.opacity = (d > 2.0 ? Math.max(0, (3.0 - d) / 1.0) : 1).toFixed(3);
+    if (base) base.style.opacity = 1;
     /* ⚠️詳細を出すのは「いま一番手前の1件」だけ。距離のしきい値で判定すると、
        2件のちょうど中間で両方とも詳細表示になり、札が重なる。
        （切り替えはこの関数の先頭で済ませている） */
