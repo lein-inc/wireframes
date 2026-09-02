@@ -3724,8 +3724,10 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 /* ⚠️背景を最初から黒にしたので、伏せておく必要がなくなった。 */
 .tl{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;opacity:1}
 /* 奥へ伸びる道。頂点はJSが実測値で書き込む */
+/* ⚠️道が明るいと、半透明になった写真の裏に白が回り込んで「白い下敷き」に見える。
+     地面として分かる最低限まで落とす。 */
 .tl__road{position:absolute;inset:0;
-  background:linear-gradient(200deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.16) 45%,rgba(255,255,255,.30) 100%);
+  background:linear-gradient(200deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.06) 45%,rgba(255,255,255,.12) 100%);
   clip-path:polygon(0 0,0 0,0 0,0 0)}
 /* 道の中心線 */
 .tl__mid{position:absolute;inset:0;
@@ -3757,7 +3759,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 /* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
      札の幅いっぱいには広げない。 */
 .tl-ph{width:100%;aspect-ratio:3/2;margin-top:0;background-size:cover;background-position:center;
-  border:1px solid rgba(255,255,255,.18)}
+  border:0}
 /* ⚠️以前は「手前の1件だけ本文と写真を出す」作りだった。
      いまは全件を最初から出す。奥行きは大きさ・ぼけ・不透明度で表す。 */
 .tl-item .tl-tx,.tl-item .tl-ph,
