@@ -3790,6 +3790,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
   var N = DATA.length;
   var DEPTH   = 8.0;    /* 何件先まで見えるか（大きいほど奥まで残る） */
   var FALLOFF = 0.74;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く */
+  var MAIN    = 0.60;   /* 主役になる距離。0=最前列、大きいほど奥（画面の中ほど）が主役 */
 
   /* ── 層をつくる ── */
   var tl = document.createElement('div');
@@ -3872,10 +3873,11 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
     /* ⚠️奥が古く、手前が新しい並び。カメラが後退しながら時間が進むイメージで、
        新しい年代が手前（下）から現れ、古い年代が奥へ遠ざかっていく。
        d = i - p にすると逆（奥＝未来）になるので符号に注意。 */
-    var d = p - i;                       /* 0=いま手前、+で奥（＝古い） */
-    /* ⚠️中央一列に並べたので、通り過ぎた札が下に残ると年号が重なって読めない。
-         手前を過ぎたらすぐ消す。 */
-    if (d < -0.44 || d > DEPTH){
+    /* ⚠️主役の位置を「道のいちばん手前」ではなく途中（＝画面の中ほど）に置く。
+         MAIN ぶん全体をずらすと、p==i の札がちょうどそこに来る。
+         主役を過ぎた札はさらに手前へ進みながら薄くなって画面から抜ける。 */
+    var d = p - i + MAIN;                /* MAIN=主役の距離、+で奥（＝古い） */
+    if (d < -0.34 || d > DEPTH){
       /* ⚠️隠すときに状態クラスも落とす。残すと画面外の札が
          「手前の1件」の見た目のまま居座る。 */
       el.style.display = 'none';
@@ -3889,19 +3891,19 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
     /* ⚠️溶ける距離を長く取ると「すーっと近づきながら濃くなる」動きになる。
          その場でファッと出したいので、奥も手前も窓を狭くして一気に切り替える。 */
     var op = d > DEPTH - 0.42 ? Math.max(0, (DEPTH - d) / 0.42)  /* 奥：その場で素早く出る */
-           : d < -0.05       ? Math.max(0, (d + 0.42) / 0.37)    /* 手前：過ぎたら素早く消す */
+           : d < 0.06        ? Math.max(0, (d + 0.34) / 0.40)    /* 手前：主役を過ぎたら抜けていく */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
     /* ⚠️狭い画面ほど札どうしが重なる。いま主役の1件だけをはっきり見せ、
          それ以外は薄く・暗くして下に沈める（重なっても主役が読める）。
          真ん中からの距離でなだらかに効かせないと、切り替わりでパッと跳ねる。
        ⚠️不透明度をここで掛けてから element に入れること。先に入れると反映されない。 */
-    var near01 = Math.max(0, 1 - Math.abs(d) / 0.9);      /* 1=主役 → 0=それ以外 */
+    var near01 = Math.max(0, 1 - Math.abs(d - MAIN) / 0.85);   /* 1=主役の位置 → 0=離れるほど薄く */
     op *= (0.34 + 0.66 * near01);
     var bri = (0.5 + 0.5 * near01).toFixed(3);
     el.style.opacity = op.toFixed(3);
     /* 奥ほどピントを外す。手前2件はぼかさない（本文が読めなくなるため） */
-    var bl = d > 2.8 ? Math.min(5.5, (d - 2.8) * 1.1) : 0;
+    var bl = d > MAIN + 2.4 ? Math.min(5.5, (d - MAIN - 2.4) * 1.1) : 0;
     el.style.filter = (bl ? 'blur(' + bl.toFixed(2) + 'px) ' : '') + 'brightness(' + bri + ')';
     el.style.zIndex  = String(2000 - Math.round(d * 20));
     /* 支柱の高さは3種類を順に。2種類だと3件並んだときに札がぶつかる */
