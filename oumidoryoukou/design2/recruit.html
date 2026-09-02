@@ -3463,63 +3463,64 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
 </script>
 
 
-<!-- ══ 採用ページ FVより下：oki.com/global/ja のレイアウトを踏襲 ══ -->
-<style id="rct-oki-layout">
-/* 参考サイトから引いたのは「並べ方」だけ。書体・文字サイズ・色は今のまま。
-   ・見出しは左に置いて貼り付け、中身は右カラムに積む（非対称の2カラム）
-   ・一覧は「細い罫線の行」。左に番号とサムネ、中央に大きなタイトル、右端に赤い矢印
-   ・ボタンは赤い角丸に右向きの矢印 */
+<!-- ══ 採用ページ FVより下：レイアウトの作り直し ══ -->
+<style id="rct-layout2">
+/* ── 決めごと ────────────────────────────────────────────
+   グリッド : 見出し（左・貼り付け）26〜30% ／ 中身（右）残り
+   罫線     : 0.5px rgba(0,0,0,.22) を基本。節目だけ 1px の黒
+   写真     : 一覧のサムネ=4/3、セクションの主役=16/9、人物=3/4 の3種類だけ
+   段差     : 「2枚目だけ下げる」を共通の型にする（バラバラに散らさない）
+   余白     : 節の上下は clamp(96px,10vw,150px) に統一
+   ⚠️色・書体・文字サイズは既存のまま。ここで決めるのは並べ方と線だけ。 */
+:root{--rule:0.5px solid rgba(0,0,0,.22); --rule-strong:1px solid var(--ink);
+      --step:clamp(28px,4vw,72px)}          /* 段差の落とし幅 */
 
-/* ── 1. 見出しは左・中身は右（非対称2カラム）────────────────── */
-/* ⚠️中身は複数の兄弟要素なので、見出しだけ1列目に固定し、
-     残りは全部2列目へ流す。行をまたいで貼り付くよう row は span で確保する。 */
+/* ── 1. 節のリズム ───────────────────────────────── */
+#vision,#numbers,#people,#welfare,#career{padding-block:clamp(96px,10vw,150px)}
+#numbers{background:var(--oki-gray)}
+#vision,#welfare{background:var(--oki-gray)}
+#people,#career{background:#fff}
+
+/* ── 2. 見出しは左・中身は右 ─────────────────────── */
 @media(min-width:1000px){
   #vision > .container,
   #numbers > .container,
   #people > .container,
   #welfare > .container{
-    display:grid;grid-template-columns:minmax(0,34%) minmax(0,1fr);
-    column-gap:clamp(28px,3.6vw,72px);row-gap:clamp(18px,2vw,30px);align-items:start}
+    display:grid;grid-template-columns:minmax(0,26%) minmax(0,1fr);
+    column-gap:clamp(28px,4vw,80px);row-gap:clamp(20px,2.4vw,36px);align-items:start}
   #vision > .container > *,
   #numbers > .container > *,
   #people > .container > *,
   #welfare > .container > *{grid-column:2;min-width:0}
+  /* ⚠️span 20 のような固定値にすると、中身より多い行が空のまま確保されて
+       節の下に巨大な余白ができる。行いっぱいを指す 1 / -1 を使うこと。 */
   #vision > .container > .rct-wm,
   #numbers > .container > .rct-wm,
   #people > .container > .rct-wm,
   #welfare > .container > .rct-wm{
-    grid-column:1;grid-row:1 / span 20;
-    position:sticky;top:clamp(90px,12vh,150px);
-    white-space:normal;border-bottom:0;padding-bottom:0;
-    /* ⚠️英字の見出しは全幅前提の大きさ（最大118px）で組まれている。左カラムに置くと
-         1語で折り返せず溢れるので、ここだけカラム幅に収まる大きさへ落とす。 */
-    font-size:clamp(1.7rem,4.2vw,4rem)!important;line-height:.95;overflow-wrap:anywhere}
-  /* 左に置いたぶん幅が狭いので、下線は文字の下だけに引く */
-  #vision > .container > .rct-wm::after,
-  #numbers > .container > .rct-wm::after,
-  #people > .container > .rct-wm::after,
-  #welfare > .container > .rct-wm::after{
-    content:"";display:block;width:clamp(40px,4vw,72px);height:2px;
-    background:var(--red);margin-top:clamp(14px,1.6vw,24px)}
-  /* 中の2カラム（ビジョン・福利厚生）は、外側が2カラムになったぶん詰まらせない */
-  .rct-vision,.rct-welf{gap:clamp(24px,3vw,48px)}
+    grid-column:1;grid-row:1 / -1;
+    position:sticky;top:clamp(90px,12vh,150px);align-self:start}
 }
+/* ⚠️英字1語は途中で折り返せない。列に収まる大きさへ落とし、折り返しは禁止する。 */
+.rct-wm{white-space:nowrap!important;overflow-wrap:normal!important;
+  font-size:clamp(1.5rem,3.1vw,3.1rem)!important;line-height:1;
+  border-bottom:0!important;padding-bottom:0!important;margin-bottom:0!important}
+.rct-wm::after{content:"";display:block;width:clamp(36px,3.4vw,60px);height:2px;
+  background:var(--red);margin-top:clamp(12px,1.4vw,20px)}
 
-/* ── 2. コンテンツメニュー：カードの並びから「行の一覧」へ ──────── */
-.rct-menu{display:block;border-top:1px solid var(--ink)}
+/* ── 3. コンテンツメニュー：罫線の行 ─────────────────── */
+.rct-menu{display:block;border-top:var(--rule-strong)}
 .rct-menu a{display:grid;align-items:center;text-decoration:none;color:var(--ink);
-  grid-template-columns:clamp(96px,10vw,150px) auto minmax(0,1fr) auto;
-  gap:clamp(16px,2.2vw,40px);
-  padding:clamp(16px,2vw,26px) 0;border-bottom:1px solid var(--ink);
+  grid-template-columns:clamp(120px,12vw,190px) auto minmax(0,1fr) auto;
+  gap:clamp(18px,2.4vw,44px);
+  padding:clamp(16px,1.8vw,24px) 0;border-bottom:var(--rule);
   transition:padding-left .3s ease}
+.rct-menu a:last-child{border-bottom:var(--rule-strong)}
 .rct-menu a:hover{padding-left:clamp(6px,1vw,16px)}
-/* ⚠️前段に .rct-menu a:first-child .ph{aspect-ratio:auto;min-height:300px} がある
-     （カード並びのとき1枚目だけ大きく見せていた名残）。行の一覧では邪魔になるので潰す。 */
 .rct-menu a > .ph,
-.rct-menu a:first-child > .ph{width:100%;aspect-ratio:16/10;height:auto;min-height:0;flex:none;margin:0}
+.rct-menu a:first-child > .ph{width:100%;aspect-ratio:4/3;height:auto;min-height:0;flex:none;margin:0}
 .rct-menu a:first-child{grid-row:auto}
-/* ⚠️display:contents で、帯の中の「番号・タイトル・矢印」を親のグリッドへ直接流す。
-     こうすると3つが行のカラムにそのまま乗り、余計な入れ子を作らずに済む。 */
 .rct-menu__bar{display:contents}
 .rct-menu__no{font-family:var(--en);font-weight:700;color:var(--red);
   font-size:clamp(12px,1.05vw,15px);letter-spacing:.12em}
@@ -3529,28 +3530,63 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
   background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;
   font-style:normal;font-size:15px;transition:transform .3s ease}
 .rct-menu a:hover i{transform:translateX(5px)}
+
+/* ── 4. ビジョン：文章のあとに写真2枚。2枚目だけ下げる ──────── */
+.rct-vision{display:block}
+.rct-vision__photos{display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(14px,1.8vw,28px);margin-top:clamp(28px,3.4vw,52px);align-items:start}
+.rct-vision__p1,.rct-vision__p2{aspect-ratio:4/3!important;width:100%;margin:0!important;
+  position:static!important;transform:none!important}
+.rct-vision__p2{margin-top:var(--step)!important}
+
+/* ── 5. 数字：罫線で仕切った2列 ──────────────────── */
+#numbers .rct-num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;
+  border-top:var(--rule)}
+#numbers .rct-num__cell{background:transparent;border-bottom:var(--rule);
+  padding:clamp(20px,2.2vw,32px) clamp(14px,1.6vw,24px)}
+#numbers .rct-num__cell:nth-child(odd){padding-left:0;border-right:var(--rule)}
+#numbers .rct-num .--wide{grid-column:1 / -1;border-right:0}
+
+/* ── 6. 社員インタビュー：等幅3列、2枚目だけ下げる ────────── */
+.rct-people{background:transparent;padding:0;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(14px,1.8vw,28px);align-items:start;margin-top:clamp(24px,3vw,44px)}
+.interview-card{background:transparent;border:0;box-shadow:none;
+  display:block;transform:none!important;margin:0!important}
+.interview-card:nth-child(2){margin-top:var(--step)!important}
+.interview-card .ph{aspect-ratio:3/4!important;width:100%;height:auto;min-height:0}
+.interview-card__body{padding:clamp(12px,1.4vw,18px) 0 0;border-top:var(--rule);margin-top:14px}
+.interview-card__dept{color:var(--red)}
+
+/* ── 7. 福利厚生：写真は1枚だけ大きく、下にリスト ───────── */
+.rct-welf{display:block}
+.rct-welf > div:first-child .ph{aspect-ratio:16/9!important;width:100%;margin-top:clamp(22px,2.6vw,34px)!important}
+.rct-welf > div:last-child{margin-top:clamp(30px,3.6vw,56px)}
+.rct-welf__row{border-bottom:var(--rule)}
+.rct-welf__row:first-child{border-top:var(--rule)}
+.rct-welf__no{color:var(--red)}
+
+/* ── 8. 研修・キャリアパス：段の罫線をそろえる ──────────── */
+#career .process{border-top:var(--rule-strong)}
+#career .process-step{border-bottom:var(--rule);border-top:0}
+#career .use-item{border:var(--rule)}
+
+/* ── 9. ボタンの形をそろえる ───────────────────── */
+.rct-fv .btn,#people .btn,.pcta__go,.entry-card__go{border-radius:3px}
+
+@media(max-width:999px){
+  .rct-people{grid-template-columns:1fr 1fr}
+  .interview-card:nth-child(2){margin-top:0!important}
+  .rct-vision__p2{margin-top:0!important}
+}
 @media(max-width:700px){
-  .rct-menu a{grid-template-columns:72px minmax(0,1fr) auto;gap:14px;padding:14px 0}
+  .rct-menu a{grid-template-columns:84px minmax(0,1fr) auto;gap:14px;padding:14px 0}
   .rct-menu__no{grid-row:1;grid-column:2;font-size:11px}
   .rct-menu__ttl{grid-row:2;grid-column:2;font-size:17px}
   .rct-menu a > .ph{grid-row:1 / span 2}
   .rct-menu a i{grid-row:1 / span 2;width:34px;height:34px}
-}
-
-/* ── 3. ボタン：赤い角丸＋右向きの矢印 ───────────────────── */
-.rct-fv .btn,
-#people .btn,
-.pcta__go,
-.entry-card__go{border-radius:3px}
-#people .btn.btn--outline{border-radius:3px}
-
-/* ── 4. 「数字で見る」：罫線で仕切った一覧に ─────────────── */
-@media(min-width:1000px){
-  #numbers .rct-num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
-  #numbers .rct-num__cell{background:transparent;border-top:1px solid rgba(0,0,0,.14);
-    padding:clamp(20px,2.2vw,32px) clamp(14px,1.6vw,24px)}
-  #numbers .rct-num__cell:nth-child(odd){padding-left:0}
-  #numbers .rct-num .--wide{grid-column:1 / -1}
+  .rct-people{grid-template-columns:1fr}
+  .rct-vision__photos{grid-template-columns:1fr}
 }
 </style>
 
