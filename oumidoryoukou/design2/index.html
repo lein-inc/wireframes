@@ -5431,7 +5431,14 @@ html{visibility:visible}
    ⚠️repeat-x は残す。1周ぶんの幅より画面が広いとき、右側に余白ができてしまうため。 */
 @media(min-width:901px){
   :root{--worldH:100vh}
-  .fv .mapworld::before{animation:none}
+  /* ⚠️前段は「画面幅＋1周ぶん」の箱に repeat-x で敷き、左へ流していた。
+       繰り返しをやめるので、箱は画面幅ちょうどでよい。
+       位置も、日本の位置から逆算する式ではなく素直に「上下中央・少し右」に置く。 */
+  .fv .mapworld::before{
+    width:100vw;
+    background-repeat:no-repeat;
+    background-position:calc(50% + 4vw) center;
+    animation:none}
 }
 </style>
 
