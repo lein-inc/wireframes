@@ -3789,7 +3789,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 
   var N = DATA.length;
   var DEPTH   = 8.0;    /* 何件先まで見えるか（大きいほど奥まで残る） */
-  var FALLOFF = 0.56;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く */
+  var FALLOFF = 0.74;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く */
 
   /* ── 層をつくる ── */
   var tl = document.createElement('div');
@@ -3830,7 +3830,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
        ・横の差（VPX−NEX）を大きくするほど「斜め横から」見た絵になる
        ・縦の差（NEY−VPY）を小さくするほど、地面を浅い角度で見ることになる
        いまは横 0.86W ／ 縦 0.56H。前回の 0.48W ／ 0.68H よりかなり寝かせている。 */
-    VPX = W * (sp ? 1.00 : 1.04);   VPY = H * (sp ? 0.36 : 0.38);   /* 消失点（奥・右上／画面外すこし） */
+    VPX = W * (sp ? 1.00 : 1.04);   VPY = H * (sp ? 0.32 : 0.33);   /* 消失点（奥・右上／画面外すこし） */
     /* ⚠️手前を左端に寄せすぎると、支柱の真上に置いた札が画面外へ出る。
          札の半幅ぶんは内側に取ること。 */
     NEX = W * (sp ? 0.32 : 0.27);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
