@@ -1745,11 +1745,11 @@ html,body{overflow-x:clip;max-width:100%}
 <section class="section">
   <div class="container">
     <div class="rct-menu rv">
-      <a href="#people"><span class="ph rimg" style="background-image:url(flow3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">01</span><span class="rct-menu__ttl">社員インタビュー</span><i>→</i></span></a>
-      <a href="#vision"><span class="ph rimg" style="background-image:url(agri-line3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">02</span><span class="rct-menu__ttl">ビジョン</span><i>→</i></span></a>
-      <a href="#numbers"><span class="ph rimg" style="background-image:url(agri-demo.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">03</span><span class="rct-menu__ttl">数字で見る近江度量衡</span><i>→</i></span></a>
-      <a href="#welfare"><span class="ph rimg" style="background-image:url(flow1.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">04</span><span class="rct-menu__ttl">福利厚生・職場環境</span><i>→</i></span></a>
-      <a href="#requirements"><span class="ph rimg" style="background-image:url(flow7.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">05</span><span class="rct-menu__ttl">募集要項</span><i>→</i></span></a>
+      <a href="#people"><span class="rct-menu__desc">現場・設計・営業。それぞれの視点で語る、近江度量衡の仕事。</span><span class="ph rimg" style="background-image:url(flow3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">01</span><span class="rct-menu__ttl">社員インタビュー</span><i>→</i></span></a>
+      <a href="#vision"><span class="rct-menu__desc">「いきる」をはかり、豊かな世界へ。126年つづく仕事の芯。</span><span class="ph rimg" style="background-image:url(agri-line3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">02</span><span class="rct-menu__ttl">ビジョン</span><i>→</i></span></a>
+      <a href="#numbers"><span class="rct-menu__desc">創業からの年数、拠点、休日。数字で見る近江度量衡。</span><span class="ph rimg" style="background-image:url(agri-demo.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">03</span><span class="rct-menu__ttl">数字で見る近江度量衡</span><i>→</i></span></a>
+      <a href="#welfare"><span class="rct-menu__desc">「働く人を大切にする」を体現する制度と職場環境。</span><span class="ph rimg" style="background-image:url(flow1.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">04</span><span class="rct-menu__ttl">福利厚生・職場環境</span><i>→</i></span></a>
+      <a href="#requirements"><span class="rct-menu__desc">新卒・中途の募集職種、待遇、選考の流れ。</span><span class="ph rimg" style="background-image:url(flow7.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">05</span><span class="rct-menu__ttl">募集要項</span><i>→</i></span></a>
     </div>
   </div>
 </section>
@@ -3589,6 +3589,98 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
   .rct-vision__photos{grid-template-columns:1fr}
 }
 </style>
+
+
+<!-- ══ 採用：01〜05の一覧を OKI の Business Segment と同じ仕様に ══ -->
+<style id="rct-menu-oki">
+/* 参考：oki.com/global/ja の事業セグメント一覧
+   ・節いっぱいの写真を暗く敷き、その上に細い白罫で行を切る
+   ・行は「番号／短い説明／大きな見出し／矢印」の4段
+   ・選ばれている行だけ白く浮かび、ほかは沈む。背景写真もその行のものへ入れ替わる
+   ⚠️行(a)を position:static のままにしておくと、中の .ph（背景写真）が
+     .rct-menu を基準に inset:0 で広がる。行ごとの写真をそのまま背景に使える。 */
+.rct-menu{position:relative;display:block;background:#0a0b0a;overflow:hidden;
+  border:0;padding:clamp(26px,3.2vw,54px) clamp(20px,3vw,56px)}
+.rct-menu a{position:static;display:grid;align-items:center;text-decoration:none;
+  grid-template-columns:auto minmax(0,27%) minmax(0,1fr) auto;
+  gap:clamp(18px,2.4vw,48px);
+  min-height:clamp(104px,12.5vh,168px);padding:clamp(14px,1.6vw,22px) 0;
+  border-top:0.5px solid rgba(255,255,255,.28);border-bottom:0;
+  color:rgba(255,255,255,.34);transition:color .4s ease}
+.rct-menu a:last-child{border-bottom:0.5px solid rgba(255,255,255,.28)}
+.rct-menu a.is-on{color:#fff}
+
+/* 背景写真：その行のものが節いっぱいに広がる */
+.rct-menu a > .ph{position:absolute;inset:0;width:100%;height:100%;
+  aspect-ratio:auto!important;min-height:0;margin:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity .7s ease;z-index:0;
+  filter:brightness(.46) saturate(.9)}
+.rct-menu a.is-on > .ph{opacity:1}
+
+/* 中身は写真より前に */
+.rct-menu__bar{display:contents}
+.rct-menu__no,.rct-menu__desc,.rct-menu__ttl,.rct-menu a i{position:relative;z-index:1}
+/* ⚠️説明文は写真(.ph)より前に置いてあるので、そのままだと番号より左に来る。
+     並び順はDOMではなく、列を明示して決める。 */
+/* ⚠️列だけ指定すると、DOM順（説明→番号→見出し→矢印）で自動配置のカーソルが
+     戻れず、番号以降が2行目に落ちる。行も明示して1行に揃えること。 */
+.rct-menu__no{grid-column:1;grid-row:1}
+.rct-menu__desc{grid-column:2;grid-row:1}
+.rct-menu__ttl{grid-column:3;grid-row:1}
+.rct-menu a i{grid-column:4;grid-row:1}
+
+.rct-menu__no{font-family:var(--en);font-weight:600;font-size:clamp(11px,.95vw,14px);
+  letter-spacing:.14em;color:inherit;opacity:.85}
+.rct-menu__desc{font-family:var(--jp);font-weight:500;
+  font-size:clamp(11.5px,.92vw,13.5px);line-height:1.85;color:inherit}
+.rct-menu__ttl{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
+  font-size:clamp(20px,2.5vw,38px);letter-spacing:.02em;line-height:1.3;color:inherit;
+  display:flex;align-items:center;gap:clamp(10px,1.2vw,18px)}
+/* 選ばれている行の見出しの前に、小さな赤い四角 */
+.rct-menu__ttl::before{content:"";flex:none;width:clamp(6px,.62vw,9px);aspect-ratio:1;
+  background:var(--red);opacity:0;transform:scale(.4);
+  transition:opacity .35s ease,transform .35s ease}
+.rct-menu a.is-on .rct-menu__ttl::before{opacity:1;transform:none}
+
+/* 矢印：選ばれている行だけ赤い四角のボタン、ほかは細い矢印 */
+.rct-menu a i{width:clamp(36px,3.2vw,46px);height:clamp(36px,3.2vw,46px);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;font-style:normal;
+  font-size:15px;background:transparent;color:var(--red);
+  transition:background .35s ease,color .35s ease,transform .35s ease}
+.rct-menu a.is-on i{background:var(--red);color:#fff}
+.rct-menu a.is-on:hover i{transform:translateX(5px)}
+.rct-menu a:hover{padding-left:0}   /* 前段の「ホバーで右へずらす」は使わない */
+
+@media(max-width:900px){
+  .rct-menu{padding:18px}
+  .rct-menu a{grid-template-columns:auto minmax(0,1fr) auto;gap:12px;min-height:0;
+    padding:18px 0;color:#fff}
+  .rct-menu__desc{grid-column:2;grid-row:2;font-size:11.5px}
+  .rct-menu__ttl{grid-column:2;grid-row:1;font-size:18px}
+  .rct-menu__no{grid-row:1 / span 2}
+  .rct-menu a i{grid-row:1 / span 2;width:34px;height:34px}
+  .rct-menu a > .ph{opacity:.34}
+  .rct-menu a.is-on > .ph{opacity:.34}
+}
+</style>
+<script>
+/* 行にふれた（またはキーボードで入った）ものを「選ばれている行」にする。
+   ⚠️どれにも触れていないときは先頭を選んだ状態に戻す。全部沈むと背景が真っ黒になる。 */
+(function(){
+  var menu = document.querySelector('.rct-menu');
+  if (!menu) return;
+  var rows = [].slice.call(menu.querySelectorAll('a'));
+  if (!rows.length) return;
+  function on(el){ rows.forEach(function(r){ r.classList.toggle('is-on', r === el); }); }
+  rows.forEach(function(r){
+    r.addEventListener('mouseenter', function(){ on(r); });
+    r.addEventListener('focus',      function(){ on(r); });
+  });
+  menu.addEventListener('mouseleave', function(){ on(rows[0]); });
+  on(rows[0]);
+})();
+</script>
 
 </body>
 </html>
