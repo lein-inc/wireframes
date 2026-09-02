@@ -3747,24 +3747,23 @@ body.is-hc .tl{opacity:1}
 .tl-item{position:absolute;left:0;top:0;width:0;height:0;
   transform-origin:0 0;will-change:transform,opacity}
 /* 支柱：接地点から上へ伸びる細い線 */
-.tl-pin{position:absolute;left:-1px;bottom:0;width:2px;background:var(--red);display:block}
+.tl-pin{position:absolute;left:-1.5px;bottom:0;width:3px;background:var(--red);display:block;
+  transition:height .55s cubic-bezier(.18,.85,.22,1)}
 /* 接地点の楕円 */
 .tl-dot{position:absolute;left:-13px;bottom:-7px;width:26px;height:14px;border-radius:50%;
   border:2px solid var(--red);background:rgba(204,7,0,.18);display:block}
 /* カード：支柱の上端に置く */
-/* ⚠️西暦を頭に置くと、札が上へ伸びたときに真っ先に画面外へ出てしまう。
-     並びを入れ替えて、西暦は最下段（道のすぐ上）に固定する。
-     写真と文字はその上へ積み上がる。 */
-.tl-card{position:absolute;left:-14px;width:460px;color:#fff;text-align:left;
-  display:flex;flex-direction:column;align-items:flex-start}
-.tl-ph{order:1}
-.tl-ttl{order:2}
-.tl-tx{order:3}
-.tl-era{order:4}
-.tl-year{order:5}
-.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em;margin-top:6px}
-.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin-top:14px}
-.tl-ttl{font-family:var(--jp);font-weight:700;font-size:23px;line-height:1.5;margin-top:14px;color:#fff}
+/* ⚠️道は画面中央をまっすぐ手前へ来る（消失点も手前も x は中央）。
+     札も支柱の真上に来るよう、左右中央でそろえる。 */
+.tl-card{position:absolute;left:0;width:460px;color:#fff;text-align:center;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center}
+/* 年号は常に道のすぐ上。上へ伸びるのは札だけ */
+.tl-base{position:absolute;left:0;bottom:10px;transform:translateX(-50%);
+  text-align:center;color:#fff;white-space:nowrap}
+.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em;margin:0}
+.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin:0 0 4px}
+.tl-ttl{font-family:var(--jp);font-weight:700;font-size:23px;line-height:1.5;margin-top:16px;color:#fff}
 .tl-tx{font-family:var(--jp);font-weight:500;font-size:15px;line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
 /* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
      札の幅いっぱいには広げない。 */
@@ -3818,14 +3817,18 @@ body.is-hc .tl{opacity:1}
 
   var html = '';
   DATA.forEach(function(d, i){
+    /* ⚠️年号は常に道のすぐ上（低い位置）に置きたいので、写真・見出し・本文とは
+         別のかたまりにする。上へ伸びるのは .tl-card の側だけ。 */
     html += '<div class="tl-item">'
           +   '<i class="tl-dot"></i><i class="tl-pin"></i>'
           +   '<div class="tl-card">'
-          +     '<p class="tl-year">'+d[0]+'</p>'
-          +     '<p class="tl-era">'+d[1]+'</p>'
+          +     (d[5] ? '<div class="tl-ph" style="background-image:url('+d[5]+')"></div>' : '')
           +     '<h3 class="tl-ttl">'+d[3]+'</h3>'
           +     '<p class="tl-tx">'+d[4]+'</p>'
-          +     (d[5] ? '<div class="tl-ph" style="background-image:url('+d[5]+')"></div>' : '')
+          +   '</div>'
+          +   '<div class="tl-base">'
+          +     '<p class="tl-era">'+d[1]+'</p>'
+          +     '<p class="tl-year">'+d[0]+'</p>'
           +   '</div>'
           + '</div>';
   });
@@ -3837,19 +3840,20 @@ body.is-hc .tl{opacity:1}
   function metrics(){
     W = tl.offsetWidth; H = tl.offsetHeight;
     var sp = W < 760;
-    /* 右上（奥）→ 左下（手前）。画面の中央を通るように取る */
-    /* ⚠️消失点と手前の距離の取り方で「どこから見ているか」が決まる。
-       横方向の差を大きく・縦方向の差を小さくするほど、斜め横から見た角度になる。 */
-    VPX = W * (sp ? 0.86 : 0.90);   VPY = H * (sp ? 0.28 : 0.30);   /* 消失点（奥・右上） */
-    NEX = W * (sp ? 0.30 : 0.42);   NEY = H * (sp ? 1.06 : 0.98);   /* 手前・左下 */
-    PIN_H = [H * (sp ? 0.24 : 0.27), H * (sp ? 0.43 : 0.47), H * (sp ? 0.62 : 0.67)];
+    /* ⚠️斜めのパースはやめ、画面中央をまっすぐ手前へ来る一点透視にする。
+       消失点と手前の x を同じ（中央）にすると横のブレが消え、
+       奥行きは「道の幅」だけで表れる＝左右に広がって見える。 */
+    VPX = W * 0.5;                  VPY = H * (sp ? 0.30 : 0.32);   /* 消失点（奥・中央） */
+    NEX = W * 0.5;                  NEY = H * (sp ? 1.04 : 1.00);   /* 手前・中央 */
+    /* 支柱は2種類だけ。手前の1件だけ、すっと上へ伸ばす */
+    PIN_H = [H * (sp ? 0.030 : 0.028), H * (sp ? 0.38 : 0.46)];
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
     CARD_W = sp ? 300 : 460;
     /* 幅が変われば札の高さも変わる。覚えていた高さは捨てる */
     items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
-    var far = W * 0.010, near = W * (sp ? 0.16 : 0.13);
+    var far = W * 0.006, near = W * (sp ? 0.30 : 0.34);   /* 手前の半幅。左右への広がり */
     road.style.clipPath = poly(far, near);
     mid.style.clipPath  = poly(far * 0.30, near * 0.16);
     /* ⚠️奥の先端が直線でぶつ切りに見えないよう、消失点を中心に円形でフェードさせる。
@@ -3874,7 +3878,9 @@ body.is-hc .tl{opacity:1}
        新しい年代が手前（下）から現れ、古い年代が奥へ遠ざかっていく。
        d = i - p にすると逆（奥＝未来）になるので符号に注意。 */
     var d = p - i;                       /* 0=いま手前、+で奥（＝古い） */
-    if (d < -1.3 || d > DEPTH){
+    /* ⚠️中央一列に並べたので、通り過ぎた札が下に残ると年号が重なって読めない。
+         手前を過ぎたらすぐ消す。 */
+    if (d < -0.55 || d > DEPTH){
       /* ⚠️隠すときに状態クラスも落とす。残すと画面外の札が
          「手前の1件」の見た目のまま居座る。 */
       el.style.display = 'none';
@@ -3886,7 +3892,7 @@ body.is-hc .tl{opacity:1}
     var x = VPX + (NEX - VPX) * k;
     var y = VPY + (NEY - VPY) * k;
     var op = d > DEPTH - 2.4 ? Math.max(0, (DEPTH - d) / 2.4)   /* 奥へゆっくり溶ける */
-           : d < -0.5       ? Math.max(0, (d + 1.3) / 0.8)      /* 手前から迫り上がる */
+           : d < -0.05      ? Math.max(0, (d + 0.55) / 0.5)     /* 手前を過ぎたらすっと消す */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
     el.style.opacity = op.toFixed(3);
@@ -3902,23 +3908,22 @@ body.is-hc .tl{opacity:1}
     el.classList.toggle('is-near', !!isBest);
     el.classList.toggle('is-far',  !isBest);
 
-    var h = PIN_H[i % 3];
+    /* ⚠️支柱の高さは「手前の1件かどうか」だけで決める。毎フレーム変わる値にすると
+         CSSのトランジションが追従できず、すっと伸びる動きが出ない。 */
+    var h = PIN_H[isBest ? 1 : 0];
     var pinEl = el.children[1], card = el.children[2];
     card.style.width   = CARD_W + 'px';
-    /* ⚠️札は下端を支柱の先に置いて上へ伸びる作り。支柱が高いと、写真のぶんだけ
-         画面の上へ突き抜ける。札の高さを測って、はみ出すぶんだけ支柱を縮める。
-       ⚠️高さは中身が変わらないかぎり一定なので、毎フレーム測らずに覚えておく
-         （読み取りが増えるとスクロールが重くなる）。metrics() で捨てて測り直す。 */
-    if (el._ch == null){ card.style.bottom = (h + 14) + 'px'; el._ch = card.offsetHeight; }
-    var topPx = y - (h + 14 + el._ch) * k;
-    if (topPx < 14) h = Math.max(20, h - (14 - topPx) / k);
     pinEl.style.height = h + 'px';
-    card.style.bottom  = (h + 14) + 'px';
-    /* ⚠️札は縮尺kが掛かるので画面上の幅は CARD_W*k。左右にはみ出さないよう、
-       画面座標で収まる位置を出してから、item内のオフセット(=差÷k)に直す。 */
-    var wpx = CARD_W * k;
-    var L = Math.min(Math.max(x - 14 * k, 16), Math.max(16, W - wpx - 16));
-    card.style.left = ((L - x) / k).toFixed(1) + 'px';
+    /* 札の高さを覚えておき、画面の上へ出るぶんは札を下げて吸収する（支柱は動かさない） */
+    if (el._ch == null){ card.style.bottom = (h + 14) + 'px'; el._ch = card.offsetHeight; }
+    var cb = h + 14;
+    var topPx = y - (cb + el._ch) * k;
+    if (topPx < 14) cb = Math.max(10, cb - (14 - topPx) / k);
+    card.style.bottom  = cb + 'px';
+    /* ⚠️年号を奥まで全部出すと、中央の一列が画面の上まで伸びて札の文字とぶつかる。
+         手前の数件だけ残し、奥はすっと消す＝年号は常に「下の方」に居る。 */
+    var base = el.children[3];
+    if (base) base.style.opacity = (d > 1.1 ? Math.max(0, (1.9 - d) / 0.8) : 1).toFixed(3);
     /* ⚠️詳細を出すのは「いま一番手前の1件」だけ。距離のしきい値で判定すると、
        2件のちょうど中間で両方とも詳細表示になり、札が重なる。
        （切り替えはこの関数の先頭で済ませている） */
