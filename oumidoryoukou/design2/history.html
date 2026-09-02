@@ -3840,11 +3840,13 @@ body.is-hc .tl{opacity:1}
   function metrics(){
     W = tl.offsetWidth; H = tl.offsetHeight;
     var sp = W < 760;
-    /* ⚠️斜めのパースはやめ、画面中央をまっすぐ手前へ来る一点透視にする。
-       消失点と手前の x を同じ（中央）にすると横のブレが消え、
-       奥行きは「道の幅」だけで表れる＝左右に広がって見える。 */
-    VPX = W * 0.5;                  VPY = H * (sp ? 0.30 : 0.32);   /* 消失点（奥・中央） */
-    NEX = W * 0.5;                  NEY = H * (sp ? 1.04 : 1.00);   /* 手前・中央 */
+    /* ⚠️真正面（消失点も手前も中央）だと、ただ迫ってくるだけで奥行きが痩せる。
+       右奥→左手前の斜めに戻したうえで、より横から見た角度にする。
+       ・横の差（VPX−NEX）を大きくするほど「斜め横から」見た絵になる
+       ・縦の差（NEY−VPY）を小さくするほど、地面を浅い角度で見ることになる
+       いまは横 0.86W ／ 縦 0.56H。前回の 0.48W ／ 0.68H よりかなり寝かせている。 */
+    VPX = W * (sp ? 1.00 : 1.04);   VPY = H * (sp ? 0.36 : 0.38);   /* 消失点（奥・右上／画面外すこし） */
+    NEX = W * (sp ? 0.22 : 0.18);   NEY = H * (sp ? 0.98 : 0.94);   /* 手前・左下 */
     /* 支柱は2種類だけ。手前の1件だけ、すっと上へ伸ばす */
     PIN_H = [H * (sp ? 0.030 : 0.028), H * (sp ? 0.38 : 0.46)];
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
@@ -3853,7 +3855,7 @@ body.is-hc .tl{opacity:1}
     /* 幅が変われば札の高さも変わる。覚えていた高さは捨てる */
     items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
-    var far = W * 0.006, near = W * (sp ? 0.30 : 0.34);   /* 手前の半幅。左右への広がり */
+    var far = W * 0.007, near = W * (sp ? 0.22 : 0.20);   /* 手前の半幅 */
     road.style.clipPath = poly(far, near);
     mid.style.clipPath  = poly(far * 0.30, near * 0.16);
     /* ⚠️奥の先端が直線でぶつ切りに見えないよう、消失点を中心に円形でフェードさせる。
@@ -3920,10 +3922,16 @@ body.is-hc .tl{opacity:1}
     var topPx = y - (cb + el._ch) * k;
     if (topPx < 14) cb = Math.max(10, cb - (14 - topPx) / k);
     card.style.bottom  = cb + 'px';
+    /* ⚠️斜めに戻したので、手前の札が画面の左へはみ出す。札は translateX(-50%) で
+         支柱の真上に載せているため、中心の画面座標を丸めてから item 内の
+         ずらし量（＝差÷k）に直す。 */
+    var half = CARD_W * k / 2;
+    var cx = Math.min(Math.max(x, half + 16), Math.max(half + 16, W - half - 16));
+    card.style.left = ((cx - x) / k).toFixed(1) + 'px';
     /* ⚠️年号を奥まで全部出すと、中央の一列が画面の上まで伸びて札の文字とぶつかる。
          手前の数件だけ残し、奥はすっと消す＝年号は常に「下の方」に居る。 */
     var base = el.children[3];
-    if (base) base.style.opacity = (d > 1.1 ? Math.max(0, (1.9 - d) / 0.8) : 1).toFixed(3);
+    if (base) base.style.opacity = (d > 2.0 ? Math.max(0, (3.0 - d) / 1.0) : 1).toFixed(3);
     /* ⚠️詳細を出すのは「いま一番手前の1件」だけ。距離のしきい値で判定すると、
        2件のちょうど中間で両方とも詳細表示になり、札が重なる。
        （切り替えはこの関数の先頭で済ませている） */
