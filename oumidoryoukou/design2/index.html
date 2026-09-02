@@ -1735,7 +1735,7 @@ html{visibility:hidden}
     </div>
   </div>
   <a class="stats__band" href="delivery.html">
-    <i class="bandfx" aria-hidden="true"><i class="bandfx__a"></i><i class="bandfx__b"></i><i class="bandfx__c"></i></i>
+    <i class="bandfx" aria-hidden="true"><i class="bandfx__a"></i><i class="bandfx__b"></i><i class="bandfx__c"></i><i class="bandfx__d"></i></i>
     <span class="stats__band-inner">
       <span class="stats__lead">農産物・穀類から工業分野まで、全国の生産者・メーカーの現場へ計量システムを納入。用途ごとに最適化した一品一様の設計で、確かな「はかる」を支えつづけています。</span>
       <span class="stats__cta">詳しくはこちら <i>→</i></span>
@@ -5421,55 +5421,71 @@ html{visibility:visible}
 </style>
 
 
-<!-- ══ 納入実績の帯：赤ベタ → ゆっくり波打つマルチグラデーション ══ -->
+<!-- ══ 納入実績の帯：赤ベタ → アメーバのように形を変える多色グラデーション ══ -->
 <style id="band-gradient">
-/* 白2：オレンジ2：赤6。大きな塊を長い周期でゆっくり回す。
-   ⚠️背景(background-position)を動かすと毎フレーム塗り直しが起きて重い。
-     transform だけを動かす（＝GPUの合成で済む）ように、塊を実要素に持たせている。
-   ⚠️帯は overflow:visible（3D機材が下と右へはみ出す作り）。塊がはみ出さないよう、
-     .bandfx 側で overflow:hidden を掛けて枠内に収める。
+/* 白2：オレンジ2：赤6。塊が伸び縮みしながら回り、重なった所で色が混ざる。
+   ⚠️「玉が平行移動するだけ」に見せないための肝は、拡大率を縦横で別々に変えながら
+     回すこと。楕円の長軸が向きを変えるので、輪郭が生き物のように歪んで見える。
+   ⚠️動かすのは transform だけ（＝GPUの合成で完結）。
+     background-position や filter:blur を毎フレーム変えると塗り直しが走って重い。
+   ⚠️帯は overflow:visible（3D機材が下と右へはみ出す作り）。塊は .bandfx 側で
+     切り抜いて枠内に収める。
    ⚠️左上には白のリード文が乗る。::after の濃赤ベール（静止）が塊より前面に来る
-     順番になっているので、白い塊が通っても文字が沈まない。 */
+     順番なので、白い塊が通っても文字が沈まない。 */
 .stats__band{background-color:var(--red);isolation:isolate}
 
 .bandfx{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:block}
-.bandfx i{position:absolute;display:block;border-radius:50%;
-  will-change:transform;transform:translate3d(0,0,0)}
+.bandfx i{position:absolute;display:block;will-change:transform;
+  animation-timing-function:cubic-bezier(.45,.05,.55,.95);
+  animation-iteration-count:infinite}
 
-/* 白：右下から左上へ、大きくゆっくり */
-.bandfx__a{left:-16%;top:6%;width:86%;height:150%;
-  background:radial-gradient(closest-side circle at 50% 50%,
-    rgba(255,255,255,.72) 0%, rgba(255,255,255,.38) 30%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
-  animation:bandWaveA 56s cubic-bezier(.42,0,.58,1) infinite}
-/* オレンジ：逆回り */
-.bandfx__b{left:24%;top:-38%;width:104%;height:190%;
-  background:radial-gradient(closest-side circle at 50% 50%,
-    rgba(238,110,16,.92) 0%, rgba(238,110,16,.46) 34%, rgba(238,110,16,.14) 64%, rgba(238,110,16,0) 100%);
-  animation:bandWaveB 44s cubic-bezier(.42,0,.58,1) infinite}
-/* 濃赤：全体の重心。いちばんゆっくり */
-.bandfx__c{left:-26%;top:-46%;width:130%;height:210%;
-  background:radial-gradient(closest-side circle at 50% 50%,
-    rgba(146,8,0,.85) 0%, rgba(146,8,0,.42) 40%, rgba(146,8,0,.12) 70%, rgba(146,8,0,0) 100%);
-  animation:bandWaveC 72s cubic-bezier(.42,0,.58,1) infinite}
+/* 白 */
+.bandfx__a{left:-12%;top:16%;width:72%;height:132%;
+  background:radial-gradient(closest-side ellipse at 50% 50%,
+    rgba(255,255,255,.74) 0%, rgba(255,255,255,.40) 30%, rgba(255,255,255,.13) 62%, rgba(255,255,255,0) 100%);
+  animation-name:amoebaA;animation-duration:34s}
+/* オレンジ */
+.bandfx__b{left:26%;top:-26%;width:84%;height:166%;
+  background:radial-gradient(closest-side ellipse at 50% 50%,
+    rgba(238,110,16,.94) 0%, rgba(238,110,16,.48) 34%, rgba(238,110,16,.15) 64%, rgba(238,110,16,0) 100%);
+  animation-name:amoebaB;animation-duration:26s}
+/* 濃赤（重心） */
+.bandfx__c{left:-26%;top:-44%;width:108%;height:184%;
+  background:radial-gradient(closest-side ellipse at 50% 50%,
+    rgba(146,8,0,.88) 0%, rgba(146,8,0,.44) 40%, rgba(146,8,0,.13) 70%, rgba(146,8,0,0) 100%);
+  animation-name:amoebaC;animation-duration:44s}
+/* 明るい赤（つなぎ） */
+.bandfx__d{left:44%;top:2%;width:76%;height:148%;
+  background:radial-gradient(closest-side ellipse at 50% 50%,
+    rgba(214,32,8,.90) 0%, rgba(214,32,8,.44) 38%, rgba(214,32,8,.12) 68%, rgba(214,32,8,0) 100%);
+  animation-name:amoebaD;animation-duration:30s}
 
-/* ⚠️0%と100%を必ず同じ値にすること。ズレると1周ごとにカクッと飛ぶ。 */
-@keyframes bandWaveA{
-   0%{transform:translate3d(4%,26%,0) scale(1)}
-  25%{transform:translate3d(38%,6%,0)  scale(1.10)}
-  50%{transform:translate3d(64%,30%,0) scale(1)}
-  75%{transform:translate3d(30%,44%,0) scale(.94)}
- 100%{transform:translate3d(4%,26%,0)  scale(1)}}
-@keyframes bandWaveB{
-   0%{transform:translate3d(0,0,0)        scale(1)}
-  25%{transform:translate3d(-28%,18%,0)   scale(1.08)}
-  50%{transform:translate3d(-48%,-6%,0)   scale(1)}
-  75%{transform:translate3d(-20%,-18%,0)  scale(.95)}
- 100%{transform:translate3d(0,0,0)        scale(1)}}
-@keyframes bandWaveC{
-   0%{transform:translate3d(0,0,0)      scale(1)}
-  33%{transform:translate3d(16%,10%,0)  scale(1.06)}
-  66%{transform:translate3d(-10%,16%,0) scale(1.02)}
- 100%{transform:translate3d(0,0,0)      scale(1)}}
+/* ⚠️0%と100%は必ず同じ値。ズレると1周ごとにカクッと飛ぶ。
+     rotate と scale の縦横比を毎ステップずらすのが、アメーバらしさの正体。 */
+@keyframes amoebaA{
+   0%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}
+  20%{transform:translate3d(13%,-9%,0)   rotate(28deg)  scale(1.30,.80)}
+  40%{transform:translate3d(4%,11%,0)    rotate(-18deg) scale(.82,1.28)}
+  60%{transform:translate3d(-11%,6%,0)   rotate(42deg)  scale(1.22,.92)}
+  80%{transform:translate3d(-6%,-12%,0)  rotate(-26deg) scale(.90,1.16)}
+ 100%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}}
+@keyframes amoebaB{
+   0%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}
+  25%{transform:translate3d(-12%,10%,0)  rotate(-32deg) scale(1.26,.84)}
+  50%{transform:translate3d(-16%,-7%,0)  rotate(14deg)  scale(.84,1.30)}
+  75%{transform:translate3d(6%,-11%,0)   rotate(36deg)  scale(1.18,.90)}
+ 100%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}}
+@keyframes amoebaC{
+   0%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}
+  33%{transform:translate3d(9%,7%,0)     rotate(20deg)  scale(1.18,.88)}
+  66%{transform:translate3d(-8%,9%,0)    rotate(-18deg) scale(.88,1.20)}
+ 100%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}}
+@keyframes amoebaD{
+   0%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}
+  25%{transform:translate3d(-9%,12%,0)   rotate(26deg)  scale(.86,1.24)}
+  50%{transform:translate3d(-15%,2%,0)   rotate(-22deg) scale(1.30,.82)}
+  75%{transform:translate3d(-5%,-10%,0)  rotate(12deg)  scale(1.04,1.14)}
+ 100%{transform:translate3d(0,0,0)       rotate(0deg)   scale(1,1)}}
 
 /* リード文の可読性を守る濃赤ベール（静止＝塗り直しなし）。塊より前面に置く */
 .stats__band::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
