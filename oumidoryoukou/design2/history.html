@@ -3767,10 +3767,16 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 /* 接地点は手前ほどはっきり */
 .tl-dot{box-shadow:0 0 0 4px rgba(204,7,0,.12)}
 
-@media(max-width:700px){
-  /* ⚠️文字は clamp で画面幅に連動させたので、ここで固定値に戻さないこと。
-       札の幅は JS（CARD_W）が実寸で入れるので、ここは初期値のみ。 */
+/* ⚠️JS側の判定は W < 760。CSSの区切りをずらすと、札の幅だけSP扱いで
+     文字はPCのまま、という食い違いが出る。760で揃えること。 */
+@media(max-width:760px){
+  /* ⚠️PC向けの clamp（vw基準）はSPだと下限に張り付いて小さくなりすぎる。
+       ここだけSP用の目盛りで入れ直す。札の幅は JS（CARD_W）が実寸で上書きする。 */
   .tl-card{width:300px}
+  .tl-year{font-size:clamp(34px,9.4vw,52px)}
+  .tl-era{font-size:clamp(11.5px,3.1vw,15px)}
+  .tl-ttl{font-size:clamp(16px,4.6vw,23px)}
+  .tl-tx{font-size:clamp(12.5px,3.5vw,16px)}
 }
 @media(prefers-reduced-motion:reduce){
   .tl-item{transition:none}
@@ -3789,7 +3795,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 
   var N = DATA.length;
   var DEPTH   = 8.0;    /* 何件先まで見えるか（大きいほど奥まで残る） */
-  var FALLOFF = 0.74;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く */
+  var FALLOFF = 0.74;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く（metrics で幅ごとに入れ直す） */
   var MAIN    = 0.60;   /* 主役になる距離。0=最前列、大きいほど奥（画面の中ほど）が主役 */
 
   /* ── 層をつくる ── */
@@ -3845,7 +3851,11 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
     /* ⚠️札の幅は画面幅に連動。狭い画面で固定幅のままだと、隣とぶつかって読めなくなる。
          CSSの .tl-card の width より、ここで入れる実寸が優先される。 */
-    CARD_W = Math.round(Math.min(460, Math.max(210, W * 0.34)));
+    /* ⚠️SPは画面が狭いぶん、札を相対的に大きく取らないと写真も文字も小さくなりすぎる。 */
+    CARD_W = Math.round(sp ? Math.min(380, Math.max(250, W * 0.74))
+                           : Math.min(460, Math.max(210, W * 0.34)));
+    /* ⚠️SPは1件あたりの縮み方を強めて、隣との間隔を広げる（重なりも減る） */
+    FALLOFF = sp ? 0.98 : 0.74;
     /* 幅が変われば札の高さも変わる。覚えていた高さは捨てる */
     items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
