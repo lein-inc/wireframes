@@ -3750,10 +3750,10 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 /* 年号は常に道のすぐ上。上へ伸びるのは札だけ */
 .tl-base{position:absolute;left:0;bottom:10px;transform:translateX(-50%);
   text-align:center;color:#fff;white-space:nowrap}
-.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:#fff;letter-spacing:.01em;margin:0}
-.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin:0 0 4px}
-.tl-ttl{font-family:var(--jp);font-weight:700;font-size:23px;line-height:1.5;margin-top:16px;color:#fff}
-.tl-tx{font-family:var(--jp);font-weight:500;font-size:15px;line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
+.tl-year{font-family:var(--en);font-weight:700;font-size:clamp(28px,4.2vw,58px);line-height:.9;color:#fff;letter-spacing:.01em;margin:0}
+.tl-era{font-family:var(--jp);font-weight:700;font-size:clamp(10.5px,1.1vw,15px);letter-spacing:.12em;color:rgba(255,255,255,.66);margin:0 0 4px}
+.tl-ttl{font-family:var(--jp);font-weight:700;font-size:clamp(14px,1.7vw,23px);line-height:1.5;margin-top:16px;color:#fff}
+.tl-tx{font-family:var(--jp);font-weight:500;font-size:clamp(11px,1.15vw,15px);line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
 /* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
      札の幅いっぱいには広げない。 */
 .tl-ph{width:100%;aspect-ratio:3/2;margin-top:0;background-size:cover;background-position:center;
@@ -3766,11 +3766,9 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 .tl-dot{box-shadow:0 0 0 4px rgba(204,7,0,.12)}
 
 @media(max-width:700px){
+  /* ⚠️文字は clamp で画面幅に連動させたので、ここで固定値に戻さないこと。
+       札の幅は JS（CARD_W）が実寸で入れるので、ここは初期値のみ。 */
   .tl-card{width:300px}
-  .tl-year{font-size:42px}
-  .tl-era{font-size:13px}
-  .tl-ttl{font-size:17px}
-  .tl-tx{font-size:13.5px}
 }
 @media(prefers-reduced-motion:reduce){
   .tl-item{transition:none}
@@ -3789,7 +3787,7 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 
   var N = DATA.length;
   var DEPTH   = 8.0;    /* 何件先まで見えるか（大きいほど奥まで残る） */
-  var FALLOFF = 0.42;   /* 遠近の効き。大きいほど急に小さくなる */
+  var FALLOFF = 0.56;   /* 遠近の効き。大きいほど急に小さくなる＝間隔が開く */
 
   /* ── 層をつくる ── */
   var tl = document.createElement('div');
@@ -3842,7 +3840,9 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
     TOPGAP = Math.max(28, H * 0.07);   /* 札の上に必ず空ける余白 */
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
-    CARD_W = sp ? 300 : 460;
+    /* ⚠️札の幅は画面幅に連動。狭い画面で固定幅のままだと、隣とぶつかって読めなくなる。
+         CSSの .tl-card の width より、ここで入れる実寸が優先される。 */
+    CARD_W = Math.round(Math.min(460, Math.max(210, W * 0.34)));
     /* 幅が変われば札の高さも変わる。覚えていた高さは捨てる */
     items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
@@ -3890,10 +3890,17 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
            : d < -0.05       ? Math.max(0, (d + 0.42) / 0.37)    /* 手前：過ぎたら素早く消す */
            : 1;
     el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+k.toFixed(4)+')';
+    /* ⚠️狭い画面ほど札どうしが重なる。いま主役の1件だけをはっきり見せ、
+         それ以外は薄く・暗くして下に沈める（重なっても主役が読める）。
+         真ん中からの距離でなだらかに効かせないと、切り替わりでパッと跳ねる。
+       ⚠️不透明度をここで掛けてから element に入れること。先に入れると反映されない。 */
+    var near01 = Math.max(0, 1 - Math.abs(d) / 0.9);      /* 1=主役 → 0=それ以外 */
+    op *= (0.34 + 0.66 * near01);
+    var bri = (0.5 + 0.5 * near01).toFixed(3);
     el.style.opacity = op.toFixed(3);
     /* 奥ほどピントを外す。手前2件はぼかさない（本文が読めなくなるため） */
     var bl = d > 2.8 ? Math.min(5.5, (d - 2.8) * 1.1) : 0;
-    el.style.filter = bl ? 'blur(' + bl.toFixed(2) + 'px)' : '';
+    el.style.filter = (bl ? 'blur(' + bl.toFixed(2) + 'px) ' : '') + 'brightness(' + bri + ')';
     el.style.zIndex  = String(2000 - Math.round(d * 20));
     /* 支柱の高さは3種類を順に。2種類だと3件並んだときに札がぶつかる */
     /* ⚠️手前かどうかで写真の有無が変わる＝札の高さが変わる。
