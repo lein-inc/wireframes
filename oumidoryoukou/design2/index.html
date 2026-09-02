@@ -5421,5 +5421,19 @@ html{visibility:visible}
 
 
 
+
+<!-- ══ TOPのFV：世界地図を画面いっぱいに、流さずに置く ══ -->
+<style id="fv-world-full">
+/* ⚠️前段 #map-world は「画面中央に横長の帯」として置き、110秒かけて左へ流していた。
+     FVの主役として画面全体に大きく出すため、高さを 100vh にして流しを止める。
+   ⚠️帯の幅(--tileW)は --worldH から計算されている。高さだけ変えれば横幅も追従するので、
+     ここで触るのは --worldH と animation の2つでよい。
+   ⚠️repeat-x は残す。1周ぶんの幅より画面が広いとき、右側に余白ができてしまうため。 */
+@media(min-width:901px){
+  :root{--worldH:100vh}
+  .fv .mapworld::before{animation:none}
+}
+</style>
+
 </body>
 </html>
