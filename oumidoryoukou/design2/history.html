@@ -3752,17 +3752,29 @@ body.is-hc .tl{opacity:1}
 .tl-dot{position:absolute;left:-13px;bottom:-7px;width:26px;height:14px;border-radius:50%;
   border:2px solid var(--red);background:rgba(204,7,0,.18);display:block}
 /* カード：支柱の上端に置く */
-.tl-card{position:absolute;left:-14px;width:380px;color:#fff;text-align:left}
-.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em}
-.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin-top:7px}
-.tl-ttl{font-family:var(--jp);font-weight:700;font-size:21px;line-height:1.5;margin-top:12px;color:#fff}
+/* ⚠️西暦を頭に置くと、札が上へ伸びたときに真っ先に画面外へ出てしまう。
+     並びを入れ替えて、西暦は最下段（道のすぐ上）に固定する。
+     写真と文字はその上へ積み上がる。 */
+.tl-card{position:absolute;left:-14px;width:460px;color:#fff;text-align:left;
+  display:flex;flex-direction:column;align-items:flex-start}
+.tl-ph{order:1}
+.tl-ttl{order:2}
+.tl-tx{order:3}
+.tl-era{order:4}
+.tl-year{order:5}
+.tl-year{font-family:var(--en);font-weight:700;font-size:58px;line-height:.9;color:var(--red);letter-spacing:.01em;margin-top:6px}
+.tl-era{font-family:var(--jp);font-weight:700;font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.66);margin-top:14px}
+.tl-ttl{font-family:var(--jp);font-weight:700;font-size:23px;line-height:1.5;margin-top:14px;color:#fff}
 .tl-tx{font-family:var(--jp);font-weight:500;font-size:15px;line-height:1.85;color:rgba(255,255,255,.78);margin-top:10px}
 /* ⚠️写真が大きいと、ひとつ奥の札が完全に隠れて奥行きが読めなくなる。
      札の幅いっぱいには広げない。 */
-.tl-ph{width:92%;aspect-ratio:3/2;margin-top:12px;background-size:cover;background-position:center;
+.tl-ph{width:100%;aspect-ratio:3/2;margin-top:0;background-size:cover;background-position:center;
   border:1px solid rgba(255,255,255,.18)}
 /* 手前の1件だけ本文と写真を出す。遠い札は年号だけにして混み合いを避ける */
 .tl-item .tl-tx,.tl-item .tl-ph{opacity:0;transition:opacity .35s ease}
+/* ⚠️opacity:0 のままだと写真の高さが残り、奥の札まで背が高くなって
+     年号が上へ押し上げられる（＝隣とぶつかる）。手前の1件以外は場所ごと畳む。 */
+.tl-item:not(.is-near) .tl-ph{display:none}
 .tl-item.is-near .tl-tx,.tl-item.is-near .tl-ph{opacity:1}
 .tl-item.is-far .tl-era,.tl-item.is-far .tl-ttl{opacity:0}
 .tl-item .tl-era,.tl-item .tl-ttl{transition:opacity .3s ease}
@@ -3770,7 +3782,7 @@ body.is-hc .tl{opacity:1}
 .tl-dot{box-shadow:0 0 0 4px rgba(204,7,0,.12)}
 
 @media(max-width:700px){
-  .tl-card{width:262px}
+  .tl-card{width:300px}
   .tl-year{font-size:42px}
   .tl-era{font-size:13px}
   .tl-ttl{font-size:17px}
@@ -3833,7 +3845,9 @@ body.is-hc .tl{opacity:1}
     PIN_H = [H * (sp ? 0.24 : 0.27), H * (sp ? 0.43 : 0.47), H * (sp ? 0.62 : 0.67)];
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
-    CARD_W = sp ? 262 : 380;
+    CARD_W = sp ? 300 : 460;
+    /* 幅が変われば札の高さも変わる。覚えていた高さは捨てる */
+    items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
     var far = W * 0.010, near = W * (sp ? 0.16 : 0.13);
     road.style.clipPath = poly(far, near);
@@ -3881,21 +3895,33 @@ body.is-hc .tl{opacity:1}
     el.style.filter = bl ? 'blur(' + bl.toFixed(2) + 'px)' : '';
     el.style.zIndex  = String(2000 - Math.round(d * 20));
     /* 支柱の高さは3種類を順に。2種類だと3件並んだときに札がぶつかる */
+    /* ⚠️手前かどうかで写真の有無が変わる＝札の高さが変わる。
+         位置を決める前に状態を確定させ、変わったら測り直す。 */
+    var wasNear = el.classList.contains('is-near');
+    if (wasNear !== !!isBest) el._ch = null;
+    el.classList.toggle('is-near', !!isBest);
+    el.classList.toggle('is-far',  !isBest);
+
     var h = PIN_H[i % 3];
     var pinEl = el.children[1], card = el.children[2];
+    card.style.width   = CARD_W + 'px';
+    /* ⚠️札は下端を支柱の先に置いて上へ伸びる作り。支柱が高いと、写真のぶんだけ
+         画面の上へ突き抜ける。札の高さを測って、はみ出すぶんだけ支柱を縮める。
+       ⚠️高さは中身が変わらないかぎり一定なので、毎フレーム測らずに覚えておく
+         （読み取りが増えるとスクロールが重くなる）。metrics() で捨てて測り直す。 */
+    if (el._ch == null){ card.style.bottom = (h + 14) + 'px'; el._ch = card.offsetHeight; }
+    var topPx = y - (h + 14 + el._ch) * k;
+    if (topPx < 14) h = Math.max(20, h - (14 - topPx) / k);
     pinEl.style.height = h + 'px';
     card.style.bottom  = (h + 14) + 'px';
-    card.style.width   = CARD_W + 'px';
     /* ⚠️札は縮尺kが掛かるので画面上の幅は CARD_W*k。左右にはみ出さないよう、
        画面座標で収まる位置を出してから、item内のオフセット(=差÷k)に直す。 */
     var wpx = CARD_W * k;
     var L = Math.min(Math.max(x - 14 * k, 16), Math.max(16, W - wpx - 16));
     card.style.left = ((L - x) / k).toFixed(1) + 'px';
-    /* ⚠️詳細（見出し・本文・写真）を出すのは「いま一番手前の1件」だけ。
-       距離のしきい値で判定すると、2件のちょうど中間にいるときに
-       両方とも詳細表示になり、カードが重なる。 */
-    el.classList.toggle('is-near', !!isBest);
-    el.classList.toggle('is-far',  !isBest);
+    /* ⚠️詳細を出すのは「いま一番手前の1件」だけ。距離のしきい値で判定すると、
+       2件のちょうど中間で両方とも詳細表示になり、札が重なる。
+       （切り替えはこの関数の先頭で済ませている） */
   }
 
   /* ── スクロール → 進行度 ── */
