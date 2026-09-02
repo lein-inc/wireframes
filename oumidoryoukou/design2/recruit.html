@@ -3177,5 +3177,133 @@ body.is-logo-dark .site-logo .logo-mark{filter:none}
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ 採用ページ デザイン刷新（参考：oki.com／OKIキャリア採用）══ -->
+<style id="rct-oki">
+/* ── 考え方 ──────────────────────────────────────────────
+   ・白基調＋大きな余白。色は赤ひとつに絞る
+   ・セクションの入口は「特大の英字（赤）＋細い赤の下線」
+   ・写真やカードは薄グレーのパネルに載せ、左右へ裁ち落とす
+   ・幾何学の赤い帯（シェブロン）をヒーローの主役に据える
+   ⚠️前段の #rec-fv-bold で黒背景・白文字のFVを作っているので、ここで全面的に反転する。
+     ロゴの白反転もそこで指定されているため、あわせて打ち消すこと。 */
+
+:root{--oki-gray:#f1f0ee; --oki-pink:#fbeeec}
+
+/* ══ 1. ヒーロー：白地＋左寄せ＋赤いシェブロン ══ */
+.rct-fv{background:#fff;color:var(--ink)}
+
+/* 覆う帯は「読み込みの赤いワイプ」に。閉じきったら消えて白地が残る */
+.rct-fv__bars i{background:var(--red);
+  animation:barIn .62s cubic-bezier(.72,0,.18,1) forwards,
+            barGone .5s ease var(--fade,1.05s) forwards}
+@keyframes barGone{to{opacity:0}}
+
+/* ⚠️.rct-fv__acc は前段では「細い赤線」。ここでは全面のクリップ図形として使い回す。
+     2枚を multiply で重ねると、交差部だけが自動的に濃い赤になる（OKIの帯と同じ見え方）。 */
+.rct-fv__acc{position:absolute;inset:0;left:0;right:0;height:auto;background:var(--red);
+  transform:none;opacity:0;animation:okiChev .9s cubic-bezier(.2,.7,.2,1) 1.15s forwards}
+.rct-fv__acc--1{top:0;clip-path:polygon(0% 74%, 62% 111%, 62% 118%, 0% 81%)}
+.rct-fv__acc--2{top:0;mix-blend-mode:multiply;
+  clip-path:polygon(100% 68%, 46% 100%, 46% 107%, 100% 75%)}
+@keyframes okiChev{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+.rct-fv__center{align-items:flex-start;text-align:left;
+  padding:0 var(--fvpad,var(--frame));justify-content:center}
+.rct-fv__eyebrow{color:var(--red);gap:10px;letter-spacing:.28em}
+.rct-fv__eyebrow::before{width:10px;height:10px;background:var(--red)}
+.rct-fv__eyebrow::after{content:none}
+.rct-fv__title{color:var(--ink);letter-spacing:-.02em;
+  font-size:clamp(34px,6.6vw,104px)}
+.rct-fv__title span{transform:none}
+.rct-fv__sub{color:rgba(0,0,0,.72)}
+.rct-fv__btns{justify-content:flex-start}
+.rct-fv .btn--outline{border:1px solid var(--ink);color:var(--ink);background:transparent}
+.rct-fv__scroll{left:var(--fvpad,var(--frame));transform:none;color:var(--ink)}
+.rct-fv__scroll::after{background:var(--ink)}
+/* ⚠️FVが白くなったので、ロゴは最初から黒。前段の白反転を打ち消す */
+body:not(.is-logo-dark) .site-logo .logo-name{filter:brightness(0)}
+body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
+
+/* 右上に居座るエントリーボタン */
+.rct-entry{position:fixed;top:0;right:0;z-index:60;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;
+  width:clamp(120px,11vw,168px);height:clamp(62px,5.4vw,78px);
+  background:var(--red);color:#fff;text-decoration:none;transition:background .25s ease}
+.rct-entry span{font-family:var(--jp);font-weight:700;font-size:clamp(10px,.82vw,12px);letter-spacing:.14em}
+.rct-entry b{font-family:var(--en);font-weight:700;font-size:clamp(14px,1.25vw,19px);letter-spacing:.12em}
+.rct-entry:hover{background:#a50600}
+@media(max-width:900px){.rct-entry{width:96px;height:52px}}
+
+/* 英字マーキーは白地に戻す */
+.rct-marq{background:#fff;color:rgba(0,0,0,.28);
+  border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line)}
+
+/* ══ 2. セクション見出し：特大の英字＋赤の下線 ══ */
+/* ⚠️.rct-wm は前段では「背景に薄く敷く透かし文字」。主役へ格上げする。 */
+.rct-wm{position:static!important;opacity:1!important;color:var(--red)!important;
+  font-family:var(--en);font-weight:700;
+  font-size:clamp(2.6rem,8.4vw,7.4rem)!important;line-height:.94;letter-spacing:-.02em;
+  margin:0 0 clamp(20px,2.6vw,36px)!important;padding-bottom:clamp(10px,1.2vw,18px);
+  border-bottom:2px solid var(--red);white-space:nowrap;transform:none!important}
+
+/* ══ 3. 面の作り：黒とグレーをやめて白＋薄グレーのパネルへ ══ */
+.section--ink{background:#fff!important;color:var(--ink)!important}
+.section--gray{background:var(--oki-gray)!important}
+#numbers{background:var(--oki-gray)!important}
+#numbers .sec-ttl{color:rgba(0,0,0,.5)!important}
+#numbers .rct-num__cell{background:#fff;border:0;padding:clamp(22px,2.4vw,34px)}
+#numbers .rct-num{gap:2px;background:transparent}
+#numbers .rct-num__val{color:var(--ink)}
+#numbers .rct-num__val small{color:var(--red)}
+#numbers .rct-num__label{color:rgba(0,0,0,.6)}
+#entry{background:var(--ink)!important;color:#fff!important}
+#entry .statement__lead,#entry .body-txt{color:#fff!important}
+
+/* ══ 4. コンテンツメニュー：黒丸の矢印を重ねる ══ */
+.rct-menu a{position:relative}
+.rct-menu__bar{background:#fff;border-bottom:1px solid var(--ink)}
+.rct-menu__no{color:var(--red)}
+.rct-menu a>i,.rct-menu__bar i{width:clamp(38px,3.6vw,50px);height:clamp(38px,3.6vw,50px);
+  border-radius:50%;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-style:normal;
+  transition:transform .3s ease,background .3s ease}
+.rct-menu a:hover .rct-menu__bar i{transform:translateX(6px);background:var(--red)}
+
+/* ══ 5. 社員インタビュー：グレーのパネルに写真を並べる ══ */
+#people{background:#fff}
+.rct-people{background:var(--oki-gray);padding:clamp(28px,3vw,44px);gap:clamp(16px,1.8vw,26px)}
+.interview-card{background:#fff}
+.interview-card__dept{color:var(--red)}
+
+/* ══ 6. 募集要項：見出しセルを薄いピンクに ══ */
+.yoko-tbl>div{border-bottom:1px solid #e6e2de}
+.yoko-tbl dt{background:var(--oki-pink);margin:-1px 0;padding:clamp(14px,1.6vw,20px) clamp(12px,1.4vw,20px)}
+.yoko-tbl>div{padding:0;gap:0;align-items:stretch;grid-template-columns:minmax(0,28%) minmax(0,1fr)}
+.yoko-tbl dd{padding:clamp(14px,1.6vw,20px) clamp(14px,1.8vw,26px)}
+.yoko-tabs button.is-on{background:var(--red)}
+
+/* 黒い全幅バー（お問い合わせ）：右端に矢印 */
+.yoko-contact{border-radius:0;align-items:center}
+.yoko-contact::after{content:"→";margin-left:auto;font-family:var(--en);font-size:20px;color:#fff}
+
+/* ══ 7. 余白に散らす赤い小さな正方形 ══ */
+#vision,#welfare,#career{position:relative}
+#vision::after,#welfare::after,#career::after{content:"";position:absolute;
+  width:clamp(14px,1.4vw,22px);aspect-ratio:1;background:var(--red);pointer-events:none}
+#vision::after{top:12%;right:6%}
+#welfare::after{bottom:14%;left:4%}
+#career::after{top:18%;right:10%}
+
+@media(max-width:900px){
+  .rct-wm{white-space:normal;font-size:clamp(2.2rem,11vw,4rem)!important}
+  .rct-fv__acc--1{clip-path:polygon(0% 80%, 48% 100%, 48% 110%, 0% 90%)}
+  .rct-fv__acc--2{clip-path:polygon(100% 76%, 48% 100%, 48% 110%, 100% 86%)}
+}
+@media(prefers-reduced-motion:reduce){
+  .rct-fv__bars i,.rct-fv__acc{animation:none;opacity:1}
+}
+</style>
+
 </body>
 </html>
