@@ -1735,6 +1735,7 @@ html{visibility:hidden}
     </div>
   </div>
   <a class="stats__band" href="delivery.html">
+    <i class="bandfx" aria-hidden="true"><i class="bandfx__a"></i><i class="bandfx__b"></i><i class="bandfx__c"></i></i>
     <span class="stats__band-inner">
       <span class="stats__lead">農産物・穀類から工業分野まで、全国の生産者・メーカーの現場へ計量システムを納入。用途ごとに最適化した一品一様の設計で、確かな「はかる」を支えつづけています。</span>
       <span class="stats__cta">詳しくはこちら <i>→</i></span>
@@ -5420,54 +5421,66 @@ html{visibility:visible}
 </style>
 
 
-<!-- ══ 納入実績の帯：赤ベタ → 流動するマルチグラデーション ══ -->
+<!-- ══ 納入実績の帯：赤ベタ → ゆっくり波打つマルチグラデーション ══ -->
 <style id="band-gradient">
-/* 白2：オレンジ2：赤6 のバランスで、ゆっくり流れるマルチグラデーション。
-   ⚠️帯は overflow:visible（3D機材が下と右へはみ出す作り）。グラデ層は inset:0 の
-     擬似要素で持たせれば、overflow を触らずに箱の中へ収まる。
-   ⚠️置ける場所には制約がある。右半分は3D機材が覆い、左上〜中央左には白のリード文が
-     乗る。そこで白は「帯の下辺」を横に流し、オレンジは中央を大きく回す。
-     左端には濃赤のベールを固定で敷き、リード文の可読性を確保している。 */
+/* 白2：オレンジ2：赤6。大きな塊を長い周期でゆっくり回す。
+   ⚠️背景(background-position)を動かすと毎フレーム塗り直しが起きて重い。
+     transform だけを動かす（＝GPUの合成で済む）ように、塊を実要素に持たせている。
+   ⚠️帯は overflow:visible（3D機材が下と右へはみ出す作り）。塊がはみ出さないよう、
+     .bandfx 側で overflow:hidden を掛けて枠内に収める。
+   ⚠️左上には白のリード文が乗る。::after の濃赤ベール（静止）が塊より前面に来る
+     順番になっているので、白い塊が通っても文字が沈まない。 */
 .stats__band{background-color:var(--red);isolation:isolate}
-.stats__band::before,
-.stats__band::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-repeat:no-repeat}
 
-/* 大きい層：ゆっくり。オレンジ（主役の動き）＋濃赤2枚で赤の厚みを出す */
-.stats__band::before{
-  background-image:
-    radial-gradient(closest-side circle at 50% 50%, rgba(238,110,16,.95) 0%, rgba(238,110,16,.50) 46%, rgba(238,110,16,0) 100%),
-    radial-gradient(closest-side circle at 50% 50%, rgba(146,8,0,.90) 0%, rgba(146,8,0,.44) 50%, rgba(146,8,0,0) 100%),
-    radial-gradient(closest-side circle at 50% 50%, rgba(178,14,0,.85) 0%, rgba(178,14,0,.40) 52%, rgba(178,14,0,0) 100%);
-  background-size:104% 178%, 128% 200%, 116% 190%;
-  background-position:26% 92%, 96% 26%, 4% 6%;
-  animation:bandFlowA 30s ease-in-out infinite alternate}
+.bandfx{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:block}
+.bandfx i{position:absolute;display:block;border-radius:50%;
+  will-change:transform;transform:translate3d(0,0,0)}
 
-/* 小さい層：やや速い。左の濃赤ベール（固定）＋白2枚は下辺を流す */
-.stats__band::after{
-  background-image:
-    linear-gradient(94deg, rgba(132,5,0,.66) 0%, rgba(132,5,0,.34) 26%, rgba(132,5,0,0) 52%),
-    radial-gradient(closest-side circle at 50% 50%, rgba(255,255,255,.72) 0%, rgba(255,255,255,.40) 26%, rgba(255,255,255,.14) 58%, rgba(255,255,255,0) 100%),
-    radial-gradient(closest-side circle at 50% 50%, rgba(255,238,218,.66) 0%, rgba(255,238,218,.32) 30%, rgba(255,238,218,.10) 62%, rgba(255,238,218,0) 100%);
-  background-size:100% 100%, 72% 78%, 88% 56%;
-  background-position:0 0, 10% 100%, 74% 96%;
-  animation:bandFlowB 19s ease-in-out infinite alternate}
+/* 白：右下から左上へ、大きくゆっくり */
+.bandfx__a{left:-16%;top:6%;width:86%;height:150%;
+  background:radial-gradient(closest-side circle at 50% 50%,
+    rgba(255,255,255,.72) 0%, rgba(255,255,255,.38) 30%, rgba(255,255,255,.12) 62%, rgba(255,255,255,0) 100%);
+  animation:bandWaveA 56s cubic-bezier(.42,0,.58,1) infinite}
+/* オレンジ：逆回り */
+.bandfx__b{left:24%;top:-38%;width:104%;height:190%;
+  background:radial-gradient(closest-side circle at 50% 50%,
+    rgba(238,110,16,.92) 0%, rgba(238,110,16,.46) 34%, rgba(238,110,16,.14) 64%, rgba(238,110,16,0) 100%);
+  animation:bandWaveB 44s cubic-bezier(.42,0,.58,1) infinite}
+/* 濃赤：全体の重心。いちばんゆっくり */
+.bandfx__c{left:-26%;top:-46%;width:130%;height:210%;
+  background:radial-gradient(closest-side circle at 50% 50%,
+    rgba(146,8,0,.85) 0%, rgba(146,8,0,.42) 40%, rgba(146,8,0,.12) 70%, rgba(146,8,0,0) 100%);
+  animation:bandWaveC 72s cubic-bezier(.42,0,.58,1) infinite}
 
-@keyframes bandFlowA{
-  from{background-position:26% 92%, 96% 26%,  4%  6%}
-  50% {background-position:62% 40%, 12% 84%, 88% 12%}
-  to  {background-position:44% 96%, 70%  8%, 18% 62%}}
-@keyframes bandFlowB{
-  from{background-position:0 0, 10% 100%, 74%  96%}
-  50% {background-position:0 0, 52%  92%, 16% 100%}
-  to  {background-position:0 0, 84% 100%, 46%  92%}}
+/* ⚠️0%と100%を必ず同じ値にすること。ズレると1周ごとにカクッと飛ぶ。 */
+@keyframes bandWaveA{
+   0%{transform:translate3d(4%,26%,0) scale(1)}
+  25%{transform:translate3d(38%,6%,0)  scale(1.10)}
+  50%{transform:translate3d(64%,30%,0) scale(1)}
+  75%{transform:translate3d(30%,44%,0) scale(.94)}
+ 100%{transform:translate3d(4%,26%,0)  scale(1)}}
+@keyframes bandWaveB{
+   0%{transform:translate3d(0,0,0)        scale(1)}
+  25%{transform:translate3d(-28%,18%,0)   scale(1.08)}
+  50%{transform:translate3d(-48%,-6%,0)   scale(1)}
+  75%{transform:translate3d(-20%,-18%,0)  scale(.95)}
+ 100%{transform:translate3d(0,0,0)        scale(1)}}
+@keyframes bandWaveC{
+   0%{transform:translate3d(0,0,0)      scale(1)}
+  33%{transform:translate3d(16%,10%,0)  scale(1.06)}
+  66%{transform:translate3d(-10%,16%,0) scale(1.02)}
+ 100%{transform:translate3d(0,0,0)      scale(1)}}
 
-/* テキストとボタンは必ずグラデより上へ */
+/* リード文の可読性を守る濃赤ベール（静止＝塗り直しなし）。塊より前面に置く */
+.stats__band::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(94deg, rgba(132,5,0,.58) 0%, rgba(132,5,0,.32) 28%, rgba(132,5,0,0) 56%)}
+
+/* テキストとボタンは必ず上へ */
 .stats__band .stats__band-inner{z-index:3}
 .stats__band-ph{z-index:2}
 
 @media(prefers-reduced-motion:reduce){
-  .stats__band::before,.stats__band::after{animation:none}
+  .bandfx i{animation:none}
 }
 </style>
 
