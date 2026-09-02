@@ -5393,5 +5393,31 @@ body.is-logo-dark .site-logo .logo-mark{filter:none}
 html{visibility:visible}
 </style>
 <script src="_pt.js?v=4"></script>
+
+<!-- ══ 新着情報：ヒストリーの流れる背景タイポが透けるのを止める ══ -->
+<style id="news-opaque">
+/* ⚠️採用(.recjoin)は margin-top:-100vh で持ち上げているので、その後ろに続く
+     新着情報も同じだけ上がり、ヒストリーの箱（sticky の背景タイポが動ける範囲）に
+     重なっている。.gsec を透明にしている指定のせいで、そこだけタイポが透けていた。
+   ⚠️ベタ塗りにすると全面の方眼が途切れるので、採用と同じ「白＋方眼を
+     background-attachment:fixed で描く」やり方に揃える。画面基準で描かれるため
+     下敷き(body::before)とマス目がぴったり重なる。 */
+.gsec.newsblock{
+  background-color:var(--paper);
+  background-image:var(--grid-img);
+  background-size:var(--grid-size);
+  background-repeat:no-repeat;
+  background-position:var(--grid-pos);
+  background-attachment:fixed}
+/* ⚠️根本原因はこちら。露出する帯の高さ ＝ 100vh −（採用セクションの高さ）。
+     採用が 100vh より低いウィンドウでは、その差だけヒストリーの箱がはみ出して
+     背景タイポが見えてしまう。採用に 100vh の下限を与えて、必ず覆いきるようにする。
+   ⚠️仕切り線(.secline)は採用と新着のあいだにある別要素。上から白を被せると線が
+     消えるので、覆うのはあくまで採用セクション自身を伸ばす形で行うこと。 */
+@media(min-width:901px){
+  .gsec.recjoin{min-height:100vh}
+}
+</style>
+
 </body>
 </html>
