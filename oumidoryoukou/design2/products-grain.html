@@ -3060,9 +3060,12 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 /* ── 工程 ── */
 .tflow{position:relative;margin-top:60px;padding-top:44px}
+/* ⚠️括弧の向きは、横線をどちらの辺に置くかで決まる。
+     下辺に置くと両端の縦線が上へ伸びて「∪」＝上向きになる。
+     囲みたいのは下の工程なので、横線を上辺に移して「∩」＝下向きにする。 */
 .tflow__band{position:absolute;left:40%;right:0;top:0;font-style:normal;
-  font-size:11.5px;letter-spacing:.08em;color:var(--red);text-align:center;padding-bottom:8px;
-  border-bottom:1px solid var(--red);border-left:1px solid var(--red);border-right:1px solid var(--red)}
+  font-size:11.5px;letter-spacing:.08em;color:var(--red);text-align:center;padding-top:8px;
+  border-top:1px solid var(--red);border-left:1px solid var(--red);border-right:1px solid var(--red)}
 .tflow__row{display:flex;flex-wrap:wrap;gap:10px}
 .tflow__b{flex:1 1 0;min-width:96px;display:flex;align-items:center;justify-content:center;
   padding:22px 8px;background:#eceae6;color:rgba(0,0,0,.6);
