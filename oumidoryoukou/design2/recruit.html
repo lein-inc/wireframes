@@ -1730,6 +1730,10 @@ html,body{overflow-x:clip;max-width:100%}
       <a class="btn btn--outline" href="#people">社員インタビュー</a>
     </div>
   </div>
+  <div class="fvppl" aria-hidden="true">
+    <img src="fvp-2.png" alt="" loading="lazy">
+    <img src="fvp-1.png" alt="" loading="lazy">
+  </div>
   <a class="rct-fv__scroll" href="#vision"><span class="txt">SCROLL DOWN</span></a>
   </div>
 </section>
@@ -3330,13 +3334,21 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
 .fvart__svg{width:min(68vw,900px);height:auto;max-height:58vh;overflow:visible;
   transform:translateX(5.5%)}
 /* ⚠️SVGは「書いた順」に重なる。育てる点は最後尾へ動かす（JSでやっている）。 */
-#fvDot{transform-box:fill-box;transform-origin:center;transform:scale(var(--g,1))}
+#fvDot{transform-box:fill-box;transform-origin:center;
+  transform:translate(var(--dx,0),var(--dy,0)) scale(var(--g,1))}
 #fvArtBody{opacity:var(--ao,1)}
 
 /* 育った円の上に乗る説明コピー */
-.fvcopy{position:absolute;z-index:3;left:50%;top:50%;width:min(620px,80vw);
-  transform:translate(-50%,-50%);text-align:center;pointer-events:none;
+.fvcopy{position:absolute;z-index:5;left:64%;top:62%;width:min(520px,44vw);
+  transform:translate(-50%,-50%);text-align:left;pointer-events:none;
   opacity:var(--co,0);transition:opacity .2s linear}
+
+/* 左下に立つ社員（いまはダミーの切り抜き）。赤が上がってくるのに合わせて現れる */
+.fvppl{position:absolute;z-index:4;left:clamp(10px,3.5vw,72px);bottom:0;
+  display:flex;align-items:flex-end;gap:clamp(4px,1.4vw,28px);pointer-events:none;
+  opacity:var(--po,0);transform:translateY(calc((1 - var(--po,0)) * 46px))}
+.fvppl img{display:block;width:auto;height:clamp(190px,38vh,430px)}
+.fvppl img:nth-child(2){height:clamp(150px,30vh,330px);margin-bottom:0}
 .rct-fv .fvcopy .rct-fv__sub{margin:0;color:#fff;
   font-size:clamp(14px,1.35vw,20px);line-height:2.1;letter-spacing:.04em}
 
@@ -3352,19 +3364,11 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
 /* ⚠️左下はボタンが占めるので、SCROLL DOWN は右下へ逃がす */
 .rct-fv__scroll{left:auto;right:var(--fvpad,var(--frame));transform:none;opacity:var(--uo,1)}
 
-/* ⚠️円が画面を覆うと、赤いナビとロゴが赤地に溶けて読めなくなる。
-     覆っている間だけ白へ反転させる。 */
-body.is-fvfull .site-logo .logo-name,
-body.is-fvfull .site-logo .logo-mark{filter:brightness(0) invert(1)!important}
-body.is-fvfull .burger span{background:#fff}
-body.is-fvfull .nav .nav__menu .nlink,
-body.is-fvfull .nav .nav__cta{color:#fff!important}
-body.is-fvfull .nav .nav__menu{mix-blend-mode:normal}
-body.is-fvfull .nav .nav__menu .nlink{background:transparent;box-shadow:inset 0 0 0 0.5px rgba(255,255,255,.55)}
-
 @media(max-width:900px){
   .fvart__svg{width:78vw;max-height:46vh}
-  .fvcopy{width:82vw}
+  .fvcopy{left:50%;top:58%;width:82vw;text-align:center}
+  .fvppl img{height:clamp(140px,26vh,240px)}
+  .fvppl img:nth-child(2){height:clamp(115px,21vh,190px)}
 }
 @media(prefers-reduced-motion:reduce){
   .fvart{animation:none;opacity:1}
@@ -3404,18 +3408,32 @@ body.is-fvfull .nav .nav__menu .nlink{background:transparent;box-shadow:inset 0 
   copy.appendChild(sub);
   stage.appendChild(copy);
 
-  var GMAX = 20, cx = 0, cy = 0;
+  /* ⚠️「画面の下を赤で埋めきる」条件から、最終の中心と半径を逆算する。
+       中心を右寄り(CX)・画面下より下に置き、左下の角(0,H)がちょうど円の中に入り、
+       かつ円の上端が TOPY に来るように解く。式は
+         CX^2 + (H-cy)^2 = (cy-TOPY)^2  →  cy = (CX^2 + H^2 - TOPY^2) / (2(H-TOPY))
+       これで下辺と左右の角は必ず覆われ、上に白が TOPY ぶん残る。 */
+  var GMAX = 20, DX = 0, DY = 0;
   function metrics(){
     var b = dot.getBBox();                       /* 変形前の素の位置 */
     var m = dot.getScreenCTM();
     if (!m) return;
     var sx = (b.x + b.width/2), sy = (b.y + b.height/2);
     var st = stage.getBoundingClientRect();
-    cx = m.a*sx + m.c*sy + m.e - st.left;
-    cy = m.b*sx + m.d*sy + m.f - st.top;
-    var r = (b.width/2) * Math.abs(m.a);         /* 画面上の半径 */
-    var need = Math.hypot(st.width, st.height)/2 + 40;
-    GMAX = r > 0 ? Math.max(6, need / r) : 20;
+    var px = m.a*sx + m.c*sy + m.e - st.left;    /* いまの中心（画面px） */
+    var py = m.b*sx + m.d*sy + m.f - st.top;
+    var r0 = (b.width/2) * Math.abs(m.a);        /* いまの半径（画面px） */
+    if (!r0) return;
+    var W = st.width, H = st.height;
+    var TOPY = H * 0.30;                          /* 上に残す白の帯 */
+    var CX   = W * 0.66;                          /* 右寄りの中心 */
+    var CY   = (CX*CX + H*H - TOPY*TOPY) / (2*(H - TOPY));
+    /* ⚠️式どおりだと左下の角がちょうど円周に乗る（＝接する）だけなので、
+         端に白い三日月が残る。少し太らせて確実に飲み込ませる。 */
+    var R    = (CY - TOPY) * 1.05;
+    GMAX = R / r0;
+    DX = (CX - px) / Math.abs(m.a);              /* 移動量はSVGのユーザー単位へ戻す */
+    DY = (CY - py) / Math.abs(m.a);
   }
 
   var ticking = false;
@@ -3425,19 +3443,20 @@ body.is-fvfull .nav .nav__menu .nlink{background:transparent;box-shadow:inset 0 
     if (len <= 0) return;
     var p = (window.scrollY - sec.offsetTop) / len;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
-    /* 0〜.75 で育ちきる。加速させたほうが「膨らむ」感じが出る */
-    var gp = Math.min(1, p / .75); gp = gp*gp;
+    /* ⚠️早く大きくしたいので、頭から効く曲線（ease-out）にして .42 で育ちきる。
+         二乗（ease-in）だと最初がほとんど動かず「遅い」と感じる。 */
+    var t = Math.min(1, p / .42), gp = t * (2 - t);
     stage.style.setProperty('--g',  (1 + gp * (GMAX - 1)).toFixed(3));
+    stage.style.setProperty('--dx', (gp * DX).toFixed(2) + 'px');
+    stage.style.setProperty('--dy', (gp * DY).toFixed(2) + 'px');
     /* グラフィック本体とUIは、育つのに合わせて引く */
-    var f = Math.min(1, Math.max(0, (p - .12) / .34));
+    var f = Math.min(1, Math.max(0, (p - .08) / .28));
     stage.style.setProperty('--ao', (1 - f).toFixed(3));
     stage.style.setProperty('--uo', (1 - f).toFixed(3));
     /* コピーは円が広がりきる少し前から */
-    var c = Math.min(1, Math.max(0, (p - .46) / .3));
+    var c = Math.min(1, Math.max(0, (p - .38) / .26));
     stage.style.setProperty('--co', c.toFixed(3));
-    /* ⚠️切り替えが早いと、まだ白い左上でロゴが白へ反転して消える。
-         円が四隅を覆いきってから切り替えること。 */
-    document.body.classList.toggle('is-fvfull', p > .72);
+    stage.style.setProperty('--po', Math.min(1, Math.max(0, (p - .30) / .28)).toFixed(3));
   }
   function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
 
