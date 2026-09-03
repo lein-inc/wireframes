@@ -3724,5 +3724,116 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .rct-menu a > .ph{pointer-events:none}
 </style>
 
+
+<!-- ══ 採用FV：「？」の点を地球に置き換える ══ -->
+<style id="fv-globe">
+/* ⚠️地球は #fvDot と「同じ外接矩形・同じ transform」で動かす。
+     位置や大きさを別計算にすると、スクロール中に点と地球がずれる。 */
+#fvGlobe image{transform-box:fill-box;transform-origin:center;
+  transform:translate(var(--dx,0),var(--dy,0)) scale(var(--g,1))}
+
+/* モノクロ3枚をぱっぱっぱと切り替える。
+   ⚠️クロスフェードではなく「切り替え」なので steps(1,end) で中間を作らない。
+     3枚とも素の opacity は 0。ディレイ待ちの間は素の値が使われるので、
+     常に1枚だけが表示される。 */
+#fvGlobe .mono{opacity:0;animation:globeFlip .66s steps(1,end) infinite}
+#fvGlobe .m2{animation-delay:.22s}
+#fvGlobe .m3{animation-delay:.44s}
+@keyframes globeFlip{0%,33.33%{opacity:1}33.34%,100%{opacity:0}}
+
+/* スクロールで色付きへ。--go だけをスクリプトが渡す。
+   ⚠️モノクロ側は薄くしない。両方を半端な不透明度で重ねると、
+     ①下の赤い点が透けて赤茶けた中間色になり、
+     ②2枚の合成アルファが1に満たず、背景の白が抜けて色が濁る。
+     下は不透明のまま置き、上のカラーだけを重ねれば、この2つとも起きない。 */
+#fvGlobe .mono{opacity:0}
+#fvGlobe.is-mono .mono{animation-play-state:running}
+#fvGlobe .monowrap{opacity:1}
+#fvGlobe .color{opacity:var(--go,0)}
+/* 育ちきったらモノクロの点滅は止める（見えないところで回し続けない） */
+#fvGlobe.is-color .mono{animation-play-state:paused}
+
+@media(prefers-reduced-motion:reduce){
+  #fvGlobe .mono{animation:none}
+  #fvGlobe .m1{opacity:1}
+}
+</style>
+<script>
+/* 「？」の点に地球を重ねる。
+   ⚠️点(#fvDot)はそのまま残す。画面下を埋めきる幾何はこの点が持っているので、
+     消すと当たり判定ならぬ「埋まり判定」が崩れる。地球は真上に同じ変形で乗せるだけ。 */
+(function(){
+  var svg = document.getElementById('fvart-svg');
+  var dot = document.getElementById('fvDot');
+  var stage = document.querySelector('.rct-fv__stage');
+  if (!svg || !dot || !stage) return;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  var g = document.createElementNS(NS,'g');
+  g.setAttribute('id','fvGlobe');
+  g.classList.add('is-mono');
+
+  /* モノクロ3枚はまとめて薄くしたいので、1枚の入れ物に入れる */
+  var wrap = document.createElementNS(NS,'g');
+  wrap.setAttribute('class','monowrap');
+
+  function img(src, cls){
+    var im = document.createElementNS(NS,'image');
+    im.setAttributeNS('http://www.w3.org/1999/xlink','href',src);
+    im.setAttribute('href', src);
+    im.setAttribute('class', cls);
+    im.setAttribute('preserveAspectRatio','xMidYMid meet');
+    return im;
+  }
+  var m1 = img('globe-a.webp','mono m1');
+  var m2 = img('globe-b.webp','mono m2');
+  var m3 = img('globe-c.webp','mono m3');
+  var col = img('globe-color.webp','color');
+  wrap.appendChild(m1); wrap.appendChild(m2); wrap.appendChild(m3);
+  g.appendChild(wrap); g.appendChild(col);
+
+  /* ⚠️点の「変形前の」外接矩形にぴったり合わせる。書き出し時に球の余白を
+       落として正方形にしてあるので、これで円が一致する。 */
+  function fit(){
+    var b = dot.getBBox();
+    /* ⚠️点の円のほうがわずかに大きく、そのままだと縁に赤い糸が残る。
+         2%だけ太らせて確実に覆う（中心を保つため x,y も半分ずらす）。 */
+    var pad = b.width * 0.01;
+    [m1,m2,m3,col].forEach(function(im){
+      im.setAttribute('x', b.x - pad); im.setAttribute('y', b.y - pad);
+      im.setAttribute('width', b.width + pad*2); im.setAttribute('height', b.height + pad*2);
+    });
+  }
+
+  /* 点のすぐ後ろ＝真上に置く */
+  function place(){ if (dot.nextSibling) svg.insertBefore(g, dot.nextSibling); else svg.appendChild(g); }
+  fit(); place();
+  window.addEventListener('resize', fit);
+  /* 前段のスクリプトが点を最後尾へ動かすので、その後にもう一度置き直す */
+  setTimeout(function(){ fit(); place(); }, 0);
+  setTimeout(function(){ fit(); place(); }, 2100);
+
+  /* スクロール量に応じてモノクロ→カラー。点が育ち始めてすぐ入れ替える */
+  var sec = document.querySelector('.rct-fv');
+  var ticking = false;
+  function render(){
+    ticking = false;
+    var len = sec.offsetHeight - window.innerHeight;
+    if (len <= 0) return;
+    var p = (window.scrollY - sec.offsetTop) / len;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    /* カラーがモノクロの上へすっと乗る。モノクロ側は触らない（上のCSSの理由） */
+    var k = Math.min(1, Math.max(0, (p - .010) / .150));
+    stage.style.setProperty('--go', k.toFixed(3));
+    g.classList.toggle('is-color', k > .98);
+    g.classList.toggle('is-mono',  k <= .98);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', render);
+  render();
+})();
+</script>
+
 </body>
 </html>
