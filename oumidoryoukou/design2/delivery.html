@@ -2796,5 +2796,21 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 }
 </style>
 
+
+<!-- ══ CASEレール：番号を控えめに、システム名を主役に ══ -->
+<style id="fieldrow-scale">
+/* ⚠️「01」が62pxでシステム名が21px＝番号のほうが主役に見えていた。
+     読ませたいのは分野名なので、番号を約半分に落として名前を上げ、主従を入れ替える。 */
+.fieldrow__no{font-size:clamp(10.5px,1vw,13px);letter-spacing:.16em}
+.fieldrow__no b{margin-top:4px;font-size:clamp(20px,2.1vw,28px);letter-spacing:.04em;
+  color:rgba(255,255,255,.82)}
+.fieldrow__jp{font-size:clamp(19px,2vw,27px);line-height:1.1;letter-spacing:.08em}
+.fieldrow__head{gap:clamp(10px,1.1vw,16px)}
+@media(max-width:600px){
+  .fieldrow__no b{font-size:22px}
+  .fieldrow__jp{font-size:20px}
+}
+</style>
+
 </body>
 </html>
