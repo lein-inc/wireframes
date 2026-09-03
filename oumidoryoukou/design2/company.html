@@ -1848,6 +1848,18 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
 </section>
 
+
+<!-- ============ 共通コンタクトバナー（他下層ページと同じ .pcta） ============ -->
+<section class="pcta">
+  <div class="pcta__in">
+    <h2 class="rv">会社・製品についてのお問い合わせ</h2>
+    <div class="pcta__foot rv rv-d1">
+      <p>製品のご相談、お取引のご検討、取材・採用に関するお問い合わせまで。<br>担当者より折り返しご連絡いたします。</p>
+      <a class="pcta__go" href="contact.html">CONTACT<i aria-hidden="true"></i></a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ フォトマーキー帯 ============ -->
 </main>
 <section class="strip">
@@ -2902,5 +2914,37 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
 </style>
 
+<!-- ══ 共通コンタクトバナー：他下層ページと同じ見た目に揃える ══ -->
+<style id="pcta-common">
+/* ⚠️このページには旧 .pcta（全幅の黒ベタ）のCSSしか無かった。
+     他ページは「左右に余白を持つ黒ボックス＋上部に赤いグラデ」に更新済みなので、
+     同じ指定をここにも入れて見た目を揃える。 */
+.pcta{position:relative;margin:clamp(60px,7vw,110px) var(--frame);
+  padding:clamp(48px,5vw,78px) clamp(28px,3vw,56px) clamp(38px,3.6vw,54px);
+  background-color:#0d0c0c;color:#fff;overflow:hidden}
+.pcta::before{content:none}
+.pcta::after{content:"";position:absolute;left:0;right:0;top:0;height:62%;pointer-events:none;
+  background:
+    radial-gradient(80% 120% at 62% -18%, rgba(233,98,74,.95) 0%, rgba(204,7,0,.72) 34%, rgba(13,12,12,0) 72%),
+    radial-gradient(60% 100% at 12% -10%, rgba(160,60,120,.55) 0%, rgba(13,12,12,0) 68%)}
+.pcta__in{position:relative;z-index:1;display:block}
+.pcta h2{font-family:var(--jp);font-weight:900;letter-spacing:.02em;line-height:1.35;
+  font-size:clamp(28px,3.8vw,54px);transform:none}
+.pcta__foot{display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,3vw,56px);
+  margin-top:clamp(30px,3.2vw,46px);padding-top:clamp(24px,2.6vw,36px);
+  border-top:1px solid rgba(255,255,255,.55)}
+.pcta__foot p{margin:0;font-size:14px;line-height:2;color:rgba(255,255,255,.82);max-width:560px}
+.pcta__go{flex:none;display:inline-flex;align-items:center;gap:clamp(14px,1.4vw,20px);
+  font-family:var(--en);font-weight:700;letter-spacing:.02em;line-height:1;color:#fff;
+  font-size:clamp(30px,3.6vw,52px)}
+.pcta__go i{display:block;width:clamp(44px,3.8vw,56px);height:clamp(44px,3.8vw,56px);background:#fff;position:relative;overflow:hidden}
+.pcta__go i::after{content:"";position:absolute;inset:26%;background:#0d0c0c;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='square'%3E%3Cpath d='M4 20L20 4'/%3E%3Cpath d='M4 4h16v16'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='square'%3E%3Cpath d='M4 20L20 4'/%3E%3Cpath d='M4 4h16v16'/%3E%3C/svg%3E") center/contain no-repeat}
+.pcta__go:hover i::after{animation:arrowSwap .42s cubic-bezier(.4,0,.2,1)}
+@media(max-width:900px){
+  .pcta__foot{flex-direction:column;align-items:flex-start;gap:26px}
+  .pcta__go{font-size:30px}
+}
+</style>
 </body>
 </html>
