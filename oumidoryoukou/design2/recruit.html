@@ -1578,6 +1578,12 @@ html,body{overflow-x:clip;max-width:100%}
 .rimg::before{display:none}
 .rimg>span{display:none}
 </style>
+<!-- ⚠️地球はFVの主役なので先読みする。特にカラーは632KBあり、
+     スクロール開始と同時に必要になる（間に合わないと一瞬白く飛ぶ）。 -->
+<link rel="preload" as="image" href="globe-a.webp">
+<link rel="preload" as="image" href="globe-b.webp">
+<link rel="preload" as="image" href="globe-c.webp">
+<link rel="preload" as="image" href="globe-color.webp">
 </head>
 <body>
 
