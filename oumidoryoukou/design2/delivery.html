@@ -2797,18 +2797,34 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 </style>
 
 
-<!-- ══ CASEレール：番号を控えめに、システム名を主役に ══ -->
+<!-- ══ CASEレール：番号を控えめに、システム名を主役に／横書き1カラム3段 ══ -->
 <style id="fieldrow-scale">
 /* ⚠️「01」が62pxでシステム名が21px＝番号のほうが主役に見えていた。
-     読ませたいのは分野名なので、番号を約半分に落として名前を上げ、主従を入れ替える。 */
+     読ませたいのは分野名なので、番号を落として名前を上げ、主従を入れ替える。 */
 .fieldrow__no{font-size:clamp(10.5px,1vw,13px);letter-spacing:.16em}
 .fieldrow__no b{margin-top:4px;font-size:clamp(20px,2.1vw,28px);letter-spacing:.04em;
   color:rgba(255,255,255,.82)}
-.fieldrow__jp{font-size:clamp(19px,2vw,27px);line-height:1.1;letter-spacing:.08em}
-.fieldrow__head{gap:clamp(10px,1.1vw,16px)}
-@media(max-width:600px){
-  .fieldrow__no b{font-size:22px}
-  .fieldrow__jp{font-size:20px}
+
+/* ⚠️見出しは縦書きをやめて横書きへ。2列グリッドも解いて1カラム3段に積む。
+     縦書きのままだと帯の高さがタグ数に引きずられ、3件で高さがバラバラになる。 */
+.fieldrows{grid-template-columns:minmax(0,1fr)}
+/* ⚠️帯の幅と見出しの級数を同じ vw 基準で連動させ、最長の「農産物用計量システム」が
+     どの画面幅でも1行で収まるようにする（min() なので上限だけ固定・下限は付けない）。
+     clamp の下限を付けると、幅が縮んだときだけ字が縮まらず途中で折り返す。 */
+.fieldrow{grid-template-columns:min(28vw,300px) minmax(0,1fr)}
+.fieldrow__head{align-items:center;text-align:center;justify-content:center;
+  padding:clamp(24px,2.6vw,34px) 18px;gap:clamp(10px,1.1vw,16px)}
+.fieldrow__jp{writing-mode:horizontal-tb;text-orientation:mixed;white-space:nowrap;
+  font-size:min(2vw,24px);line-height:1.45;letter-spacing:.06em}
+
+@media(max-width:900px){
+  /* ⚠️SPは左右に割ると帯が細くなりすぎるので、帯を上に積む1列に切り替える */
+  .fieldrow{grid-template-columns:minmax(0,1fr)}
+  .fieldrow__head{flex-direction:row;justify-content:center;align-items:baseline;
+    gap:14px;padding:16px 18px}
+  .fieldrow__no{display:flex;align-items:baseline;gap:8px}
+  .fieldrow__no b{display:inline;margin-top:0;font-size:22px}
+  .fieldrow__jp{font-size:19px;white-space:normal}
 }
 </style>
 
