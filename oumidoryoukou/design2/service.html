@@ -2838,5 +2838,46 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 }
 </style>
 
+
+<!-- ══ ご依頼の流れ：見出しを他ページ並みに／STEPを写真の左上へ2段組で ══ -->
+<style id="flow-step2">
+/* ⚠️左の赤い縦罫を削除。罫線ぶんの余白も詰めないと写真が右へずれる。 */
+.flow__step{border-left:0;padding-left:0;padding-right:0}
+
+/* ⚠️見出しが34pxで、他ページのカード見出し（18〜27px）より明らかに大きかった。
+     写真＋短い説明のカードなので、同じ重みに落として揃える。 */
+.flow__ttl{font-size:clamp(17px,1.5vw,20px);font-weight:800;line-height:1.4}
+
+/* ⚠️STEPは「上にSTEP／下に01」の2段。1つの content では上下で級数を変えられないので
+     ::before＝ラベル、::after＝番号に分け、カウンタの加算も ::after 側へ移す。
+     どちらも absolute なので、写真は .flow__step の先頭要素として通常フローに残る。 */
+.flow__step::before,.flow__step::after{
+  position:absolute;z-index:2;left:16px;color:#fff;font-family:var(--en);
+  margin:0;flex:none;text-shadow:0 1px 12px rgba(0,0,0,.55)}
+/* ⚠️前段の .flow__step::before にも counter-increment が残っている。
+     打ち消さないと ::before と ::after で二重に加算され、02・04・06…になる。 */
+.flow__step::before{counter-increment:none;content:"STEP";top:calc(clamp(24px,2.8vw,38px) + 14px);
+  font-size:10.5px;font-weight:700;letter-spacing:.3em;line-height:1}
+.flow__step::after{counter-increment:fl;content:"0" counter(fl);
+  top:calc(clamp(24px,2.8vw,38px) + 29px);
+  font-size:clamp(24px,2.4vw,32px);font-weight:700;letter-spacing:.02em;line-height:1}
+
+/* ⚠️白文字を写真の明暗にかかわらず読ませるための下地。
+     背景は inline style の background-image が入っていて上書きできないので、
+     .flow__ph 自身の ::after に黒のグラデを敷いて重ねる。
+     inset box-shadow だとぼけ幅の実効濃度が読めず、明るい事務所の写真（04〜06）で
+     コントラストが 2:1 前後まで落ちていた。 */
+.flow__ph{position:relative}
+/* ⚠️濃度は実測で決めた。事務所など明るい写真（04〜06）は .66→.34 では
+     文字位置の背景輝度が0.38残り、コントラストが2.4:1しか出なかった。 */
+.flow__ph::after{content:"";position:absolute;left:0;right:0;top:0;height:44%;
+  background:linear-gradient(180deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.58) 46%,
+    rgba(0,0,0,.26) 78%,rgba(0,0,0,0) 100%)}
+
+@media(max-width:700px){
+  .flow__step::after{font-size:26px}
+}
+</style>
+
 </body>
 </html>
