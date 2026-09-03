@@ -1738,12 +1738,7 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
 </section>
 
-<div class="rct-marq"><div class="rct-marq__in">
-  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-  <span>OMISCALE Recruit 2027 — We Measure the Value of Living —</span>
-</div></div>
+
 
 <!-- ② コンテンツメニュー -->
 <section class="section">
@@ -3408,7 +3403,12 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
   var GMAX = 20, DX = 0, DY = 0;
   function metrics(){
     var b = dot.getBBox();                       /* 変形前の素の位置 */
-    var m = dot.getScreenCTM();
+    /* ⚠️dot.getScreenCTM() は「点自身の transform を含んだ」行列を返す。
+         スクロールで育ったあとに metrics() が走ると、いまの拡大後の半径を
+         「素の半径」と誤認して GMAX が 1 に潰れ、円が育たなくなる。
+         （リサイズ時と、読み込み2秒後の boot() で実際に起きる）
+         親である <svg> の行列なら点の transform を含まないので、こちらで測る。 */
+    var m = svg.getScreenCTM ? svg.getScreenCTM() : dot.getScreenCTM();
     if (!m) return;
     var sx = (b.x + b.width/2), sy = (b.y + b.height/2);
     var st = stage.getBoundingClientRect();
@@ -3417,12 +3417,15 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
     var r0 = (b.width/2) * Math.abs(m.a);        /* いまの半径（画面px） */
     if (!r0) return;
     var W = st.width, H = st.height;
-    var TOPY = H * 0.30;                          /* 上に残す白の帯 */
-    var CX   = W * 0.66;                          /* 右寄りの中心 */
-    var CY   = (CX*CX + H*H - TOPY*TOPY) / (2*(H - TOPY));
-    /* ⚠️式どおりだと左下の角がちょうど円周に乗る（＝接する）だけなので、
-         端に白い三日月が残る。少し太らせて確実に飲み込ませる。 */
-    var R    = (CY - TOPY) * 1.05;
+    /* ⚠️以前は「画面下を赤で埋めきる」条件から中心と半径を逆算していた。
+         いまは赤いベタではなく地球なので、埋めきる必要がない。
+         球として見せたいので、位置と大きさを直接決める。 */
+    var CXF = (W < 900) ? 0.62 : 0.78;            /* 中心の横位置（画面幅に対する比） */
+    var RF  = (W < 900) ? 0.38 : 0.46;            /* 半径（画面高さに対する比） */
+    var TOPF= (W < 900) ? 0.42 : 0.40;            /* 円の上端（画面高さに対する比） */
+    var R    = H * RF;
+    var CX   = W * CXF;
+    var CY   = H * TOPF + R;
     GMAX = R / r0;
     DX = (CX - px) / Math.abs(m.a);              /* 移動量はSVGのユーザー単位へ戻す */
     DY = (CY - py) / Math.abs(m.a);
@@ -3840,6 +3843,27 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   render();
 })();
 </script>
+
+
+<!-- ══ 採用FV：地球の上に乗るコピーの位置と可読性 ══ -->
+<style id="fv-copy-globe">
+/* ⚠️地球を小さく右へ寄せたので、コピーも円の内側へ寄せ直す。
+     元の left:64% / 520px幅のままだと、左端が円からはみ出して白地に落ちる。 */
+/* ⚠️幅を詰めすぎると「理念の／もと、」のように句の途中で折れる。
+     球からはみ出さない範囲でいっぱいまで広げる。 */
+.fvcopy{left:73%;top:64%;width:min(460px,34vw)}
+/* ⚠️地球は雲や陸地で明るい部分があり、白文字が沈む。
+     ベタを敷くと球の質感が死ぬので、文字側に影を持たせて浮かせる。 */
+.rct-fv .fvcopy .rct-fv__sub{font-size:clamp(13px,1.15vw,17px);
+  text-shadow:0 1px 2px rgba(0,0,0,.7),0 2px 26px rgba(0,0,0,.9)}
+/* ⚠️影だけだと雲や氷の白の上で足りない。輪郭のない暗がりを敷いて底上げする。
+     縁を持たせない放射グラデなので、球の質感は残る。 */
+.fvcopy::before{content:"";position:absolute;z-index:-1;inset:-70% -22%;
+  background:radial-gradient(closest-side, rgba(0,0,0,.46), rgba(0,0,0,.22) 55%, rgba(0,0,0,0) 100%)}
+@media(max-width:900px){
+  .fvcopy{left:50%;top:62%;width:74vw}
+}
+</style>
 
 </body>
 </html>
