@@ -2946,5 +2946,20 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   .pcta__go{font-size:30px}
 }
 </style>
+
+<!-- ══ 社是：左の赤罫をやめて文字を一回り大きく ══ -->
+<style id="creed-plain">
+/* ⚠️.creed の元指定は site.css 側（全ページ共通）。社是を使っているのはこのページだけだが、
+     共通ファイルを触らずここで上書きして影響範囲を閉じる。
+   ⚠️罫線を消すぶん、左のインデントも外さないと文字が中途半端に右へ寄ったままになる。 */
+.creed__item{border-left:0;padding-left:0}
+.creed__no{font-size:13.5px;letter-spacing:.12em}
+.creed__txt{font-size:15.5px;line-height:2;margin-top:10px}
+@media(max-width:900px){
+  .creed__no{font-size:12.5px}
+  .creed__txt{font-size:14.5px}
+}
+</style>
+
 </body>
 </html>
