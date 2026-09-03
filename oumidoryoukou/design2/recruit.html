@@ -3706,5 +3706,23 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 }
 </style>
 
+
+<!-- ══ 採用メニュー：謎の白枠と高速点滅の修正 ══ -->
+<style id="rct-menu-fix">
+/* ⚠️謎の薄い白枠の正体は、前段 .rct-menu a の `border:0.5px solid var(--line)`。
+     後段では border-top / border-bottom しか指定しておらず、左右の辺が生き残っていた。
+     同じ理由で background:#fff も残っているので、あわせて透明に戻す。 */
+.rct-menu a{border-left:0;border-right:0;background:transparent}
+/* ⚠️前段の「ホバーで薄くする」も、暗い写真の上では明滅に見えるので打ち消す。 */
+.rct-menu a:hover{opacity:1}
+
+/* ⚠️高速点滅の原因。.ph は inset:0 で「節いっぱい」に広がるので、
+     どの行の .ph も5行ぶんの領域を覆っている。DOMの最後＝05の .ph が最前面になり、
+     文字の隙間にカーソルが入るたび mouseenter が 05 に飛んで、
+     実際にホバーしている行と 05 が交互に選ばれていた。
+     写真は見せるだけの層なので、当たり判定から外す。 */
+.rct-menu a > .ph{pointer-events:none}
+</style>
+
 </body>
 </html>
