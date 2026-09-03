@@ -3692,5 +3692,19 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
 </style>
 
+
+<!-- ══ 採用FV：ボタンを左下へ、文字を一回り小さく ══ -->
+<style id="rct-fv-btns">
+/* ⚠️.rct-fv__center は justify-content:space-between だが、
+     eyebrow と SCROLL DOWN を消した結果、中の可視要素はボタンだけになった。
+     子が1つだと space-between は先頭寄せと同じ挙動になり上に張り付くので、
+     明示的に flex-end で下端へ落とす。左寄せは前段の align-items:flex-start が効いている。 */
+.rct-fv__center{justify-content:flex-end}
+.rct-fv .btn{font-size:12px;letter-spacing:.12em;padding:15px 28px;gap:10px}
+@media(max-width:900px){
+  .rct-fv .btn{font-size:11.5px;padding:13px 22px}
+}
+</style>
+
 </body>
 </html>
