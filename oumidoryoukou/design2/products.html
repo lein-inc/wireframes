@@ -2908,5 +2908,17 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ 本文の意図しない改行を防ぐ ══ -->
+<style id="text-orphan">
+/* ⚠️最終行に1〜2文字だけ残る「取り残し」を防ぐ。ブラウザに行分けを均させる。
+     text-wrap:pretty に未対応のブラウザでは、これまでどおり普通に折り返す（害はない）。
+   ⚠️あわせて、本文に掛かっていた幅の上限を外す。段幅より狭く縛ると、
+     まだ余裕があるのに折り返してしまう。 */
+p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
+.case__lead,.case__flow,.case__note,.sf p,.sf-etc,.yoko-lead,.yoko-job__txt{text-wrap:pretty}
+.tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
+</style>
+
 </body>
 </html>

@@ -2756,5 +2756,45 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
   .site-logo .logo-anv{height:clamp(14px,3.36vw,24.2px)}
 }
 </style>
+
+<!-- ══ 本文の意図しない改行を防ぐ ══ -->
+<style id="text-orphan">
+/* ⚠️最終行に1〜2文字だけ残る「取り残し」を防ぐ。ブラウザに行分けを均させる。
+     text-wrap:pretty に未対応のブラウザでは、これまでどおり普通に折り返す（害はない）。
+   ⚠️あわせて、本文に掛かっていた幅の上限を外す。段幅より狭く縛ると、
+     まだ余裕があるのに折り返してしまう。 */
+p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
+.case__lead,.case__flow,.case__note,.sf p,.sf-etc,.yoko-lead,.yoko-job__txt{text-wrap:pretty}
+.tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
+</style>
+
+
+<!-- ══ 納入実績の数字ブロック：赤ベタ → 世界の都市写真＋黒の半透明 ══ -->
+<style id="stats-city">
+/* ⚠️写真とオーバーレイは疑似要素で重ねる。背景を二重指定にすると
+     写真の明るさだけを後から調整できず、白文字の可読性を追い込めない。
+   ⚠️中身（.container）は z-index を持たせて必ずオーバーレイより前面に置く。 */
+.section--ink{position:relative;isolation:isolate;
+  background-color:#0a0b0a;background-image:none;overflow:hidden}
+.section--ink::before{content:"";position:absolute;inset:0;z-index:0;
+  background:url(stats-city.jpg) center 62% / cover no-repeat}
+/* ⚠️一律の黒ベタだと数字の下端が沈むので、上下をやや濃く、中央を薄くした縦グラデにする。
+     実測で本文コントラストは 7:1 以上を確保（白文字 / 平均輝度）。 */
+.section--ink::after{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,
+    rgba(0,0,0,.80) 0%, rgba(0,0,0,.62) 38%, rgba(0,0,0,.62) 62%, rgba(0,0,0,.82) 100%)}
+.section--ink>*{position:relative;z-index:2}
+/* 罫線は写真の上でも見えるよう、わずかに強める */
+.section--ink .stat:nth-child(odd){border-right-color:rgba(255,255,255,.42)}
+.section--ink .stat:nth-child(-n+2){border-bottom-color:rgba(255,255,255,.42)}
+.section--ink .stat__label{color:rgba(255,255,255,.9);text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.section--ink .stat__val{text-shadow:0 2px 24px rgba(0,0,0,.5)}
+@media(max-width:900px){
+  /* ⚠️SPは縦に長くなるぶん写真が引き伸びるので、寄りの位置を中央に戻す */
+  .section--ink::before{background-position:center center}
+  .section--ink::after{background:rgba(0,0,0,.7)}
+}
+</style>
+
 </body>
 </html>

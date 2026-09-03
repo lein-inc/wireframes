@@ -1728,9 +1728,14 @@ html,body{overflow-x:clip;max-width:100%}
     <p class="tfd__sub rv rv-d1">穀類サンプルの自主検査工程を効率化<span>米・麦・大豆　3品目兼用</span></p>
     <p class="tfd__catch rv rv-d1">業界初のサンプル全自動自主検査装置<i>※</i>が、<br>さらなる高効率化を実現してフルモデルチェンジ。</p>
     <p class="tfd__lead rv rv-d1">これまでに200台以上の穀類フルオートドライヤーを納入してきたノウハウを結集し、現代のプラント設備に求められる性能を高い次元で実現した新型システムです。</p>
-    <p class="tfd__note rv rv-d1">※ 近江度量衡が1986年に開発・発売した検査装置</p>
   </div>
-  <figure class="tfd__hero rv rv-d1"><img src="dryer-main.jpg" alt="フルオートドライヤーシステム CFD-120 本体" loading="lazy"></figure>
+  <div class="tfd__foot">
+    <p class="tfd__note rv rv-d1">※ 近江度量衡が1986年に開発・発売した検査装置</p>
+    <figure class="tfd__hero rv rv-d1">
+      <img src="dryer-main.jpg" alt="フルオートドライヤーシステム CFD-120 本体" loading="lazy">
+      <figcaption>フルオートドライヤーシステム　CFD-120 本体</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section class="tfd-flow">
@@ -3135,6 +3140,69 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
     transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;
     border-top:7px solid #cfcbc4;border-bottom:0}
   .tflow__b.is-on:not(:last-child)::after{border-top-color:var(--red);border-left-color:transparent}
+}
+</style>
+
+
+<!-- ══ 本文の意図しない改行を防ぐ ══ -->
+<style id="text-orphan">
+/* ⚠️最終行に1〜2文字だけ残る「取り残し」を防ぐ。ブラウザに行分けを均させる。
+     text-wrap:pretty に未対応のブラウザでは、これまでどおり普通に折り返す（害はない）。
+   ⚠️あわせて、本文に掛かっていた幅の上限を外す。段幅より狭く縛ると、
+     まだ余裕があるのに折り返してしまう。 */
+p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
+.case__lead,.case__flow,.case__note,.sf p,.sf-etc,.yoko-lead,.yoko-job__txt{text-wrap:pretty}
+.tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
+</style>
+
+
+<!-- ══ 本体写真の縮小＋工程のSP縦組み ══ -->
+<style id="tfd-fit">
+/* ⚠️機材写真は幅820px＝画面の半分以上を占めて主張が強すぎた。約半分（410px）に落とす。
+     ただし本文（.tfd__lead）は1行で読ませたいので、上段は全幅のまま触らない。
+     縮めた写真は中央に浮かせず、注釈と横並びの「下段」を作って右に寄せる。 */
+.tfd__foot{margin-top:44px}
+.tfd__note{margin-top:0}
+.tfd__hero{margin:0}
+.tfd__hero img{width:100%;max-width:410px;margin:0;height:auto}
+.tfd__hero figcaption{margin-top:12px;max-width:410px;
+  font-size:11.5px;letter-spacing:.06em;line-height:1.8;color:rgba(0,0,0,.5)}
+
+@media(min-width:901px){
+  .tfd__foot{display:grid;grid-template-columns:minmax(0,1fr) 410px;
+    column-gap:clamp(40px,5vw,80px);align-items:end}
+  .tfd__hero{justify-self:end}
+  .tfd__hero figcaption{text-align:right}
+}
+@media(max-width:900px){
+  .tfd__foot{margin-top:34px}
+  .tfd__hero{margin-top:30px}
+  .tfd__hero img{max-width:340px;margin:0 auto}
+  .tfd__hero figcaption{max-width:340px;margin-left:auto;margin-right:auto}
+}
+
+/* ── 工程：SPは縦の流れに ──
+   ⚠️5工程を横並びのままSPに持ち込むと1枠60px弱になり文字が読めない。
+     900px以下で縦積みにし、矢印も下向きへ。
+     括弧は上辺の「∩」だと縦組みで意味を成さないので、左側の「⊐」に組み替えて
+     下3工程（サンプル搬送・乾燥・検査）を横から囲う。 */
+@media(max-width:900px){
+  .tflow{padding-top:0;padding-left:78px}
+  .tflow__row{flex-direction:column;flex-wrap:nowrap;gap:14px}
+  .tflow__b{flex:0 0 auto;width:100%;min-width:0;padding:15px 10px}
+  .tflow__b:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-14px;
+    transform:translateX(-50%);
+    border-left:6px solid transparent;border-right:6px solid transparent;
+    border-top:8px solid #cfcbc4;border-bottom:0}
+  .tflow__b.is-on:not(:last-child)::after{border-top-color:var(--red);border-left-color:transparent}
+  /* ⚠️高さは「下3枠ぶん」。5枠+4隙間(14px)の総高から逆算すると (300% - 28px)/5 になる。 */
+  .tflow__band{left:0;right:auto;top:auto;bottom:0;width:64px;
+    height:calc((300% - 28px) / 5);
+    display:flex;align-items:center;justify-content:center;
+    padding:0 10px 0 0;line-height:1.5;font-size:10.5px;white-space:nowrap;
+    writing-mode:vertical-rl;text-orientation:upright;
+    border:0;border-top:1px solid var(--red);border-bottom:1px solid var(--red);
+    border-right:1px solid var(--red)}
 }
 </style>
 
