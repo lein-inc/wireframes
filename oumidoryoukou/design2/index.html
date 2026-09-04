@@ -5454,5 +5454,34 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
 </style>
 
+<!-- ══ FVの世界地図：左右に少し余白を入れて画面幅に収める ══ -->
+<style id="world-inset">
+/* ⚠️地図の帯は width:100vw で画面の端いっぱい＝端で大陸が切れて「はみ出して」見える。
+     左右を少し空けて、帯として画面の中に収まるようにする。
+   ⚠️中の計算（::before の幅・背景の基準位置）がどれも 100vw 前提なので、
+     幅を --worldW にまとめて置き換える。ここだけ直すと日本の位置がずれる。
+   ⚠️PC用（min-width:901px）とSP用（max-width:900px）で同じ指定が二重に書かれているが、
+     この指定はどちらより後ろにあり、幅の条件も付けていないので両方に効く。 */
+:root{--world-inset:clamp(12px,2vw,36px);
+      --worldW:calc(100vw - var(--world-inset) * 2);
+      /* ⚠️日本を画面のどこに置くか。前段は .74＝右寄せだったが、右へ寄せない指定に変更。 */
+      --world-at:.5;
+      /* ⚠️「画面に収まりきっていない」の正体。
+           --tileW（世界1周ぶんの幅）は --worldH から逆算されていて、
+           縦を画面いっぱい（100vh）にしていたぶん、横は帯より広くなって両端で切れていた。
+           1周ぶん＝帯の幅ぴったりにして、世界全体が一度に入るようにする。
+           縦は元の比率（1.925:1・横を --world-squeeze で詰める）から逆算する。 */
+      --tileW:var(--worldW);
+      --worldH:calc(var(--worldW) / (1.925 * var(--world-squeeze,.84)))}
+/* ⚠️流し続けると、幅が収まっていても必ずどこかで大陸が分断されて見える。
+     収める以上は位置も止める（元に戻すならこの3行を消す）。 */
+.fv .mapworld::before{width:var(--worldW)!important;
+  background-position:0 center!important;
+  animation:none!important}
+.fv .mapworld{left:var(--world-inset);width:var(--worldW)}
+.fv .mapworld::before{width:calc(var(--worldW) + var(--tileW));
+  background-position:calc(var(--worldW) * var(--world-at) - var(--tileW) * var(--world-jp)) center}
+</style>
+
 </body>
 </html>

@@ -3845,7 +3845,12 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
          支柱の高さを3段に散らす（2段だと3件並んだときに重なる）。 */
     /* ⚠️一番高い段は、札（写真＋見出し＋本文）を載せると画面の上に張り付く。
          段そのものを下げたうえで、下の TOPGAP でさらに余白を確保する。 */
-    PIN_H = [H * (sp ? 0.17 : 0.20), H * (sp ? 0.29 : 0.34), H * (sp ? 0.42 : 0.50)];
+    /* ⚠️もとは3段に散らして隣とぶつからないようにしていたが、
+         「下の位置にそろえる」指示により、いちばん低い段に統一する。
+         そろえたぶん隣の札とは重なりやすくなるが、主役以外は薄く・暗く沈む
+         （place() の near01）ので、主役は読める。 */
+    var PIN_BASE = H * (sp ? 0.17 : 0.20);
+    PIN_H = [PIN_BASE, PIN_BASE, PIN_BASE];
     TOPGAP = Math.max(28, H * 0.07);   /* 札の上に必ず空ける余白 */
     /* ⚠️CSSの .tl-card の width と必ず揃える。ここがズレると
          はみ出し防止の計算（wpx = CARD_W*k）が効かない。 */
@@ -3860,8 +3865,14 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
     items.forEach(function(el){ el._ch = null; });
     /* 道と中心線の形（遠いほど細い） */
     var far = W * 0.007, near = W * (sp ? 0.22 : 0.20);   /* 手前の半幅 */
-    road.style.clipPath = poly(far, near);
-    mid.style.clipPath  = poly(far * 0.30, near * 0.16);
+    var roadClip = poly(far, near);
+    road.style.clipPath = roadClip;
+    /* ⚠️道の端をぼかす層（.tl__road::before）へ同じ形を渡す。
+         filter は clip-path より先に適用されるので、親を直接ぼかしても
+         そのあと切り抜かれて端は硬いまま。切り抜きを子に持たせ、親でぼかす。 */
+    road.style.setProperty('--road-clip', roadClip);
+    /* ⚠️赤い中心線はひと回り細く（0.30/0.16 → 0.20/0.11）。道の面より控えめにする。 */
+    mid.style.clipPath  = poly(far * 0.20, near * 0.11);
     /* ⚠️奥の先端が直線でぶつ切りに見えないよう、消失点を中心に円形でフェードさせる。
        linear-gradient だと基準が「要素の箱」になり、消失点の位置と噛み合わずに
        先端が残る。消失点そのものを中心に置ける radial のほうが確実。 */
@@ -3984,6 +3995,47 @@ body.is-hc-open .hc-exit{opacity:1;visibility:visible;transition:opacity .35s ea
 p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .case__lead,.case__flow,.case__note,.sf p,.sf-etc,.yoko-lead,.yoko-job__txt{text-wrap:pretty}
 .tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
+</style>
+
+<!-- ══ ヒストリー：タイムラインの写真をひと回り大きく ══ -->
+<style id="tl-ph-bigger">
+/* ⚠️写真は札（.tl-card）の幅ぴったり（100%）だった。これを1.5倍にする。
+     ・札は align-items:center なので、はみ出しは左右へ均等に出る＝支柱の真上のまま。
+     ・縦は aspect-ratio:3/2 で連動するので、タテヨコとも1.5倍になる。
+     ・札の高さはJS（el._ch = card.offsetHeight）が測り直して位置を合わせるため、
+       ここを変えるだけで上下の詰まりは自動で吸収される。
+   ⚠️札の幅そのもの（JSの CARD_W）は触らない。あれを広げると本文の折り返しまで変わる。 */
+.tl-ph{width:150%;flex:none;align-self:center}
+</style>
+
+<!-- ══ ヒストリー：道（薄い白の面）の端をぼかす ══ -->
+<style id="tl-road-blur">
+/* ⚠️やり方に一手間いる。CSSの描画順は「塗る → filter → clip-path → mask」なので、
+     clip-path を持った要素に filter:blur() を掛けても、ぼかしたあとに切り抜かれて
+     端はカミソリのように硬いまま。
+     そこで、切り抜き（JSが --road-clip に入れてくれる形）を子の ::before に移し、
+     ぼかしは親に掛ける。子はぼかす対象＝先に描かれるので、輪郭ごとぼける。
+   ⚠️奥の先端を消す mask はJSが親に直接入れている。mask は filter の後なので、
+     こちらは触らなくてもそのまま効く。
+   ⚠️赤い中心線（.tl__mid）は「薄い白」ではないので、輪郭を残したままにする。 */
+.tl__road{background:none!important;clip-path:none!important;
+  filter:blur(clamp(8px,1.2vw,22px))}
+.tl__road::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(200deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.06) 45%,rgba(255,255,255,.12) 100%);
+  clip-path:var(--road-clip)}
+</style>
+
+<!-- ══ ヒストリー：写真をもう一回り／見出しを大きく ══ -->
+<style id="tl-bigger-2">
+/* ⚠️写真は札の幅に対する％。150% → 175%（もう一回り）。
+     縦は aspect-ratio:3/2 で連動するので、札の高さも自動で伸びる。 */
+.tl-ph{width:175%}
+/* ⚠️見出しは3回りぶん（23px → 40px 上限＝約1.7倍）。
+     年号(.tl-year)と本文(.tl-tx)は指示外なので触らない。 */
+.tl-ttl{font-size:clamp(24px,3vw,40px);line-height:1.4;margin-top:20px}
+@media(max-width:760px){
+  .tl-ttl{font-size:clamp(26px,7.5vw,40px)}
+}
 </style>
 
 </body>

@@ -1729,7 +1729,14 @@ html,body{overflow-x:clip;max-width:100%}
 
   <div class="rct-fv__center">
     <h1 class="rct-fv__title"><span>「いきる」の単位とは、</span><span>なんだろう。</span></h1>
-    <p class="rct-fv__sub">「働く人を大切にする」という理念のもと、<br>あなたの確かな仕事が、豊かな未来を担う力になる。</p>
+    <!-- ⚠️class="rct-fv__sub" は外さないこと。FVのスクリプトはこの要素を目印にして
+         「地球の左の白地」へ移している。無いと初期化ごと止まる。 -->
+    <div class="rct-fv__sub fv-vision">
+      <p class="rct-wm">VISION</p>
+      <h2 class="sec-jp">「いきる」をはかり、<br>豊かな世界へ。</h2>
+      <p class="body-txt">「技術」と「誇り」を礎に、日本から世界へ、計量という仕事で社会を豊かにし続けること。それが、近江度量衡の使命です。採用においても「働く人を大切にする」という理念を核に、長く誇りを持って働ける環境を目指しています。</p>
+      <p class="fv-vision__go"><a class="btn" href="history.html">126年ヒストリーを見る <i class="arrow-i" style="color:#fff">→</i></a></p>
+    </div>
     <div class="rct-fv__btns">
       <a class="btn" href="#entry">募集要項を見る <i class="arrow-i" style="color:#fff">→</i></a>
       <a class="btn btn--outline" href="#people">社員インタビュー</a>
@@ -1739,43 +1746,6 @@ html,body{overflow-x:clip;max-width:100%}
 </section>
 
 
-
-<!-- ② コンテンツメニュー -->
-<section class="section">
-  <div class="container">
-    <div class="rct-menu rv">
-      <a href="#people"><span class="rct-menu__desc">現場・設計・営業。それぞれの視点で語る、近江度量衡の仕事。</span><span class="ph rimg" style="background-image:url(flow3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">01</span><span class="rct-menu__ttl">社員インタビュー</span><i>→</i></span></a>
-      <a href="#vision"><span class="rct-menu__desc">「いきる」をはかり、豊かな世界へ。126年つづく仕事の芯。</span><span class="ph rimg" style="background-image:url(agri-line3.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">02</span><span class="rct-menu__ttl">ビジョン</span><i>→</i></span></a>
-      <a href="#numbers"><span class="rct-menu__desc">創業からの年数、拠点、休日。数字で見る近江度量衡。</span><span class="ph rimg" style="background-image:url(agri-demo.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">03</span><span class="rct-menu__ttl">数字で見る近江度量衡</span><i>→</i></span></a>
-      <a href="#welfare"><span class="rct-menu__desc">「働く人を大切にする」を体現する制度と職場環境。</span><span class="ph rimg" style="background-image:url(flow1.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">04</span><span class="rct-menu__ttl">福利厚生・職場環境</span><i>→</i></span></a>
-      <a href="#requirements"><span class="rct-menu__desc">新卒・中途の募集職種、待遇、選考の流れ。</span><span class="ph rimg" style="background-image:url(flow7.jpg)"></span><span class="rct-menu__bar"><span class="rct-menu__no">05</span><span class="rct-menu__ttl">募集要項</span><i>→</i></span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ③ VISION -->
-<section class="section section--gray" id="vision" style="overflow:hidden;">
-  <div class="container">
-    <p class="rct-wm rv">VISION</p>
-    <div class="rct-vision">
-      <div class="rv rv-d1">
-        <p class="sec-ttl" style="margin-top:0;">Vision &amp; Values</p>
-        <h2 class="sec-jp" style="font-size:clamp(1.6rem,3vw,2.6rem);margin-top:10px;">「いきる」をはかり、<br>豊かな世界へ。</h2>
-        <p class="body-txt" style="margin-top:22px;max-width:520px;">「技術」と「誇り」を礎に、日本から世界へ、計量という仕事で社会を豊かにし続けること。それが、近江度量衡の使命です。採用においても「働く人を大切にする」という理念を核に、長く誇りを持って働ける環境を目指しています。</p>
-        <div class="grid-3" style="margin-top:30px;gap:14px;">
-          <div class="pillar"><div class="pillar__title">技術</div></div>
-          <div class="pillar"><div class="pillar__title">誇り</div></div>
-          <div class="pillar"><div class="pillar__title">グローバル</div></div>
-        </div>
-        <p style="font-size:13px;margin-top:26px;"><a href="history.html" style="border-bottom:1px solid #999;">126年ヒストリーを見る →</a></p>
-      </div>
-      <div class="rct-vision__photos rv rv-d1">
-        <div class="rct-vision__p1 ph rimg" style="aspect-ratio:4/3;background-image:url(stat-service.jpg)"></div>
-        <div class="rct-vision__p2 ph rimg" style="aspect-ratio:1/1;background-image:url(agri-step5.jpg)"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ④ NUMBERS -->
 <section class="section section--ink" id="numbers" style="overflow:hidden;">
@@ -3431,41 +3401,12 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
     DY = (CY - py) / Math.abs(m.a);
   }
 
-  var ticking = false;
-  function render(){
-    ticking = false;
-    var len = sec.offsetHeight - window.innerHeight;
-    if (len <= 0) return;
-    var p = (window.scrollY - sec.offsetTop) / len;
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    /* ⚠️早く大きくしたいので、頭から効く曲線（ease-out）にして .42 で育ちきる。
-         二乗（ease-in）だと最初がほとんど動かず「遅い」と感じる。 */
-    var t = Math.min(1, p / .42), gp = t * (2 - t);
-    stage.style.setProperty('--g',  (1 + gp * (GMAX - 1)).toFixed(3));
-    stage.style.setProperty('--dx', (gp * DX).toFixed(2) + 'px');
-    stage.style.setProperty('--dy', (gp * DY).toFixed(2) + 'px');
-    /* グラフィック本体とUIは、育つのに合わせて引く */
-    var f = Math.min(1, Math.max(0, (p - .08) / .28));
-    stage.style.setProperty('--ao', (1 - f).toFixed(3));
-    stage.style.setProperty('--uo', (1 - f).toFixed(3));
-    /* コピーは円が広がりきる少し前から */
-    var c = Math.min(1, Math.max(0, (p - .38) / .26));
-    stage.style.setProperty('--co', c.toFixed(3));
-  }
-  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
-
-  /* ⚠️前段の登場アニメは fill:forwards で opacity を握り続ける。そのままだと
-       スクロール連動のフェード（--uo）が効かないので、出終わったら外す。 */
-  function releaseIntro(){
-    [sec.querySelector('.rct-fv__center'), sec.querySelector('.rct-fv__scroll')]
-      .forEach(function(el){ if (el) el.style.animation = 'none'; });
-  }
-  function boot(){ metrics(); render(); }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', function(){ metrics(); render(); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
-  boot();
-  setTimeout(function(){ releaseIntro(); boot(); }, 2000);
+  /* ⚠️スクロール連動（--g / --dx / --dy / --ao / --uo / --co の書き込み）は
+       後段 #fv-snap がまとめて持っている。ここに残しておくと、同じ変数へ
+       別の計算結果を交互に書き込み合って動きが破綻する。
+       このブロックの役目は「DOMの組み直し」だけ（点を最後尾へ／本体をまとめる／
+       コピーを円の中へ移す）。計測と描画は後段に任せる。 */
+  metrics();
 })();
 </script>
 
@@ -3598,96 +3539,7 @@ body:not(.is-logo-dark) .site-logo .logo-mark{filter:none}
 </style>
 
 
-<!-- ══ 採用：01〜05の一覧を OKI の Business Segment と同じ仕様に ══ -->
-<style id="rct-menu-oki">
-/* 参考：oki.com/global/ja の事業セグメント一覧
-   ・節いっぱいの写真を暗く敷き、その上に細い白罫で行を切る
-   ・行は「番号／短い説明／大きな見出し／矢印」の4段
-   ・選ばれている行だけ白く浮かび、ほかは沈む。背景写真もその行のものへ入れ替わる
-   ⚠️行(a)を position:static のままにしておくと、中の .ph（背景写真）が
-     .rct-menu を基準に inset:0 で広がる。行ごとの写真をそのまま背景に使える。 */
-.rct-menu{position:relative;display:block;background:#0a0b0a;overflow:hidden;
-  border:0;padding:clamp(26px,3.2vw,54px) clamp(20px,3vw,56px)}
-.rct-menu a{position:static;display:grid;align-items:center;text-decoration:none;
-  grid-template-columns:auto minmax(0,27%) minmax(0,1fr) auto;
-  gap:clamp(18px,2.4vw,48px);
-  min-height:clamp(104px,12.5vh,168px);padding:clamp(14px,1.6vw,22px) 0;
-  border-top:0.5px solid rgba(255,255,255,.28);border-bottom:0;
-  color:rgba(255,255,255,.34);transition:color .4s ease}
-.rct-menu a:last-child{border-bottom:0.5px solid rgba(255,255,255,.28)}
-.rct-menu a.is-on{color:#fff}
 
-/* 背景写真：その行のものが節いっぱいに広がる */
-.rct-menu a > .ph{position:absolute;inset:0;width:100%;height:100%;
-  aspect-ratio:auto!important;min-height:0;margin:0;
-  background-size:cover;background-position:center;
-  opacity:0;transition:opacity .7s ease;z-index:0;
-  filter:brightness(.46) saturate(.9)}
-.rct-menu a.is-on > .ph{opacity:1}
-
-/* 中身は写真より前に */
-.rct-menu__bar{display:contents}
-.rct-menu__no,.rct-menu__desc,.rct-menu__ttl,.rct-menu a i{position:relative;z-index:1}
-/* ⚠️説明文は写真(.ph)より前に置いてあるので、そのままだと番号より左に来る。
-     並び順はDOMではなく、列を明示して決める。 */
-/* ⚠️列だけ指定すると、DOM順（説明→番号→見出し→矢印）で自動配置のカーソルが
-     戻れず、番号以降が2行目に落ちる。行も明示して1行に揃えること。 */
-.rct-menu__no{grid-column:1;grid-row:1}
-.rct-menu__desc{grid-column:2;grid-row:1}
-.rct-menu__ttl{grid-column:3;grid-row:1}
-.rct-menu a i{grid-column:4;grid-row:1}
-
-.rct-menu__no{font-family:var(--en);font-weight:600;font-size:clamp(11px,.95vw,14px);
-  letter-spacing:.14em;color:inherit;opacity:.85}
-.rct-menu__desc{font-family:var(--jp);font-weight:500;
-  font-size:clamp(11.5px,.92vw,13.5px);line-height:1.85;color:inherit}
-.rct-menu__ttl{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:600;
-  font-size:clamp(20px,2.5vw,38px);letter-spacing:.02em;line-height:1.3;color:inherit;
-  display:flex;align-items:center;gap:clamp(10px,1.2vw,18px)}
-/* 選ばれている行の見出しの前に、小さな赤い四角 */
-.rct-menu__ttl::before{content:"";flex:none;width:clamp(6px,.62vw,9px);aspect-ratio:1;
-  background:var(--red);opacity:0;transform:scale(.4);
-  transition:opacity .35s ease,transform .35s ease}
-.rct-menu a.is-on .rct-menu__ttl::before{opacity:1;transform:none}
-
-/* 矢印：選ばれている行だけ赤い四角のボタン、ほかは細い矢印 */
-.rct-menu a i{width:clamp(36px,3.2vw,46px);height:clamp(36px,3.2vw,46px);border-radius:3px;
-  display:flex;align-items:center;justify-content:center;font-style:normal;
-  font-size:15px;background:transparent;color:var(--red);
-  transition:background .35s ease,color .35s ease,transform .35s ease}
-.rct-menu a.is-on i{background:var(--red);color:#fff}
-.rct-menu a.is-on:hover i{transform:translateX(5px)}
-.rct-menu a:hover{padding-left:0}   /* 前段の「ホバーで右へずらす」は使わない */
-
-@media(max-width:900px){
-  .rct-menu{padding:18px}
-  .rct-menu a{grid-template-columns:auto minmax(0,1fr) auto;gap:12px;min-height:0;
-    padding:18px 0;color:#fff}
-  .rct-menu__desc{grid-column:2;grid-row:2;font-size:11.5px}
-  .rct-menu__ttl{grid-column:2;grid-row:1;font-size:18px}
-  .rct-menu__no{grid-row:1 / span 2}
-  .rct-menu a i{grid-row:1 / span 2;width:34px;height:34px}
-  .rct-menu a > .ph{opacity:.34}
-  .rct-menu a.is-on > .ph{opacity:.34}
-}
-</style>
-<script>
-/* 行にふれた（またはキーボードで入った）ものを「選ばれている行」にする。
-   ⚠️どれにも触れていないときは先頭を選んだ状態に戻す。全部沈むと背景が真っ黒になる。 */
-(function(){
-  var menu = document.querySelector('.rct-menu');
-  if (!menu) return;
-  var rows = [].slice.call(menu.querySelectorAll('a'));
-  if (!rows.length) return;
-  function on(el){ rows.forEach(function(r){ r.classList.toggle('is-on', r === el); }); }
-  rows.forEach(function(r){
-    r.addEventListener('mouseenter', function(){ on(r); });
-    r.addEventListener('focus',      function(){ on(r); });
-  });
-  menu.addEventListener('mouseleave', function(){ on(rows[0]); });
-  on(rows[0]);
-})();
-</script>
 
 
 <!-- ══ 本文の意図しない改行を防ぐ ══ -->
@@ -3716,22 +3568,7 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 </style>
 
 
-<!-- ══ 採用メニュー：謎の白枠と高速点滅の修正 ══ -->
-<style id="rct-menu-fix">
-/* ⚠️謎の薄い白枠の正体は、前段 .rct-menu a の `border:0.5px solid var(--line)`。
-     後段では border-top / border-bottom しか指定しておらず、左右の辺が生き残っていた。
-     同じ理由で background:#fff も残っているので、あわせて透明に戻す。 */
-.rct-menu a{border-left:0;border-right:0;background:transparent}
-/* ⚠️前段の「ホバーで薄くする」も、暗い写真の上では明滅に見えるので打ち消す。 */
-.rct-menu a:hover{opacity:1}
 
-/* ⚠️高速点滅の原因。.ph は inset:0 で「節いっぱい」に広がるので、
-     どの行の .ph も5行ぶんの領域を覆っている。DOMの最後＝05の .ph が最前面になり、
-     文字の隙間にカーソルが入るたび mouseenter が 05 に飛んで、
-     実際にホバーしている行と 05 が交互に選ばれていた。
-     写真は見せるだけの層なので、当たり判定から外す。 */
-.rct-menu a > .ph{pointer-events:none}
-</style>
 
 
 <!-- ══ 採用FV：「？」の点を地球に置き換える ══ -->
@@ -3822,25 +3659,9 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   setTimeout(function(){ fit(); place(); }, 0);
   setTimeout(function(){ fit(); place(); }, 2100);
 
-  /* スクロール量に応じてモノクロ→カラー。点が育ち始めてすぐ入れ替える */
-  var sec = document.querySelector('.rct-fv');
-  var ticking = false;
-  function render(){
-    ticking = false;
-    var len = sec.offsetHeight - window.innerHeight;
-    if (len <= 0) return;
-    var p = (window.scrollY - sec.offsetTop) / len;
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    /* カラーがモノクロの上へすっと乗る。モノクロ側は触らない（上のCSSの理由） */
-    var k = Math.min(1, Math.max(0, (p - .010) / .150));
-    stage.style.setProperty('--go', k.toFixed(3));
-    g.classList.toggle('is-color', k > .98);
-    g.classList.toggle('is-mono',  k <= .98);
-  }
-  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', render);
-  render();
+  /* ⚠️モノクロ→カラー（--go）の進行も後段 #fv-snap が持つ。
+       ここで二重に書き込むと、フレームごとに別の値が入って色が明滅する。
+       このブロックの役目は「地球を点の真上に置く」ことだけ。 */
 })();
 </script>
 
@@ -3862,6 +3683,253 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   background:radial-gradient(closest-side, rgba(0,0,0,.46), rgba(0,0,0,.22) 55%, rgba(0,0,0,0) 100%)}
 @media(max-width:900px){
   .fvcopy{left:50%;top:62%;width:74vw}
+}
+</style>
+
+<!-- ══ 採用FV：1スクロールで一気に定着（中途半端な位置を作らない） ══ -->
+<style id="fv-snap">
+/* ⚠️育ちはスクロール量に連動させる（下のJS）。節の高さ − 1画面 が「育てるための助走」。
+     前段 #rct-fvart は 190vh ＝ 90vh 走ってようやく育ちきる設定で、これが「遅い」の正体。
+     150vh に詰めたうえで、その助走（50vh）の 42% ＝ 画面の約2割ぶんスクロールした時点で
+     育ちきらせる。残りは大きいまま画面に貼り付いてから、次の節へ送り出すための余白。 */
+.rct-fv{height:150vh;min-height:0}
+
+/* ⚠️地球が舞台の下辺でスパッと切れていた。原因は .rct-fv__stage の overflow:hidden。
+     球は舞台の下端よりさらに 3割ほど下まで続くので、縦方向は切らずにはみ出させる。
+     横は clip のままにしておく（画面外へ広がるぶんは見せる必要がない。
+     ※html,body にも overflow-x:clip があるので横スクロールバーは出ない）。 */
+.rct-fv__stage{overflow-x:clip;overflow-y:visible}
+/* ⚠️stage は position:sticky ＝ 位置指定要素なので、後ろに続く静的な節より前面に描かれる。
+     そのままだと、はみ出した地球がメニューの節に覆いかぶさる。
+     次の節を持ち上げて（z-index）不透明にし、地球はその下をくぐらせる。 */
+.rct-fv{position:relative;z-index:0}
+/* ⚠️ベタ白で受けると、節の境目で球がスパッと切れた線が出る。
+     上から20vhだけ白を薄→濃にして、球が白へ溶けて消えるようにする。
+     20vh より下は最後の色（#fff）がそのまま続くので、メニューの中身は白地の上。 */
+/* ⚠️セレクタが2本あるのは詳細度のため。いまFVの次に来る #numbers には、
+     前段が「#numbers{background:...!important}」とID＋!importantで背景を敷いている。
+     クラスだけの指定（0,2,0）では勝てないので、ID込み（1,1,0）も併記する。
+     節の並びを変えたときは、こちらのIDも合わせること。 */
+.rct-fv + .section,
+.rct-fv + #numbers{position:relative;z-index:1;
+  background:linear-gradient(to bottom, rgba(255,255,255,0) 0, #fff 20vh)!important}
+
+/* 大きい地球のときのコピーは、球の上ではなく左の白地に置く。
+   ⚠️球は中心 x=78% ・半径 0.46画面高 なので、左半分は常に白。
+     幅を 38vw 以下に押さえれば、どの画面幅でも球にかからない。 */
+/* ⚠️幅は「白地の残り」から逆算した --fvcw（JSが渡す）に合わせる。
+     vw で決め打ちすると、縦長ウィンドウで球が大きくなったときに文字が球へ乗る。 */
+.fvcopy{left:var(--fvcl,clamp(24px,6vw,96px));top:50%;width:min(520px,var(--fvcw,38vw));
+  transform:translateY(-50%);text-align:left}
+.rct-fv .fvcopy .rct-fv__sub{color:var(--ink);text-shadow:none;
+  font-size:clamp(14px,1.25vw,19px);line-height:2.15}
+/* 白地にのせるので、球の上で使っていた暗がりは不要 */
+.fvcopy::before{display:none}
+/* ⚠️コピーは「出る」だけでなく、わずかに上がりながら出す（--cy）。
+     top:50% の translateY(-50%) と足し算になるので calc で1つにまとめる。 */
+.fvcopy{transform:translateY(calc(-50% + var(--cy,0px)))}
+/* グラフィックは薄くなりながら少し上へ抜ける（--ay はSVGのユーザー単位） */
+#fvArtBody{transform:translate(0,var(--ay,0px))}
+/* ⚠️1行コピーだったころの飾り（頭の赤い短い罫線）は、VISIONのラベルが入ったので不要。 */
+.fvcopy .rct-fv__sub::before{display:none}
+
+@media(max-width:900px){
+  /* 球の上端は画面高の42%。その上の白地に置く */
+  .fvcopy{left:var(--frame,16px);top:15%;width:min(88vw,520px)!important;
+    transform:translateY(var(--cy,0px));text-align:left}
+  .rct-fv .fvcopy .rct-fv__sub{font-size:14px;line-height:2}
+  .fvcopy .rct-fv__sub::before{margin-bottom:16px}
+}
+</style>
+<script>
+/* FVのスクロール連動を、ここ1か所に集約する。
+   ⚠️前段の2つのスクリプト（#rct-fvart / #fv-globe）も同じ CSS変数へ書き込んでいたので、
+     そちらの描画は止めてある（DOMの組み直しと地球の重ね置きだけ残す）。
+     2か所から同じ変数を書くと、フレームごとに別の値が入って動きが破綻する。 */
+(function(){
+  var sec   = document.querySelector('.rct-fv');
+  var stage = sec && sec.querySelector('.rct-fv__stage');
+  var svg   = document.getElementById('fvart-svg');
+  var dot   = document.getElementById('fvDot');
+  if (!sec || !stage || !svg || !dot) return;
+
+  /* ⚠️「1スクロールで発火して一気に定着」はやめた。少し指を動かしただけで
+       いきなり大きな地球になってしまうため。スクロール量に連動して育てる。
+       SPAN＝節の可動域のうち、どこまでで育ちきるか。小さいほど速く育つ。 */
+  var SPAN = 0.42;
+  var GMAX = 20, DX = 0, DY = 0;
+
+  /* 育ちきったときの中心と半径を逆算する（前段と同じ式）。
+     ⚠️半径は dot 自身の CTM ではなく <svg> の CTM で測る。
+       dot の行列には育ったあとの scale が入るので、素の半径を見誤る。 */
+  function metrics(){
+    var b = dot.getBBox();
+    var m = svg.getScreenCTM ? svg.getScreenCTM() : null;
+    if (!m) return;
+    var sx = b.x + b.width/2, sy = b.y + b.height/2;
+    var st = stage.getBoundingClientRect();
+    var px = m.a*sx + m.c*sy + m.e - st.left;
+    var py = m.b*sx + m.d*sy + m.f - st.top;
+    var r0 = (b.width/2) * Math.abs(m.a);
+    if (!r0) return;
+    var W = st.width, H = st.height;
+    var CXF = (W < 900) ? 0.62 : 0.78;
+    var RF  = (W < 900) ? 0.38 : 0.46;
+    var TOPF= (W < 900) ? 0.42 : 0.40;
+    var R = H * RF, CX = W * CXF, CY = H * TOPF + R;
+    GMAX = R / r0;
+    DX = (CX - px) / Math.abs(m.a);
+    DY = (CY - py) / Math.abs(m.a);
+    /* 左の白地に置くコピーの幅。球の左端（CX-R）まで 28px 手前で止める。 */
+    var L = Math.min(96, Math.max(24, W * 0.06));
+    stage.style.setProperty('--fvcl', L.toFixed(0) + 'px');
+    stage.style.setProperty('--fvcw', Math.max(240, (CX - R) - L - 28).toFixed(0) + 'px');
+  }
+
+  var globe = null;
+  /* 区間を切り出して 0→1 に均す（演出の「順番」を作るための道具） */
+  function seg(t, a, b){ return Math.min(1, Math.max(0, (t - a) / (b - a))); }
+  function easeInOut(x){ return x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2; }
+  function easeOut(x){ return 1 - Math.pow(1 - x, 3); }
+  /* 三次より当たりの柔らかいカーブ。加速も減速も角が立たない */
+  function easeSine(x){ return (1 - Math.cos(Math.PI * x)) / 2; }
+
+  /* ⚠️引数は「素の経過（0→1）」。ここで初めて緩急をつける。
+       育ちのカーブを先にかけてしまうと、下の区間指定（0.30〜0.78 など）が
+       時間軸ではなく大きさの軸になり、順番を組めなくなる。 */
+  function apply(t){
+    /* ① グラフィックは「地球が動いている最中」に引く（0.08〜0.52）。
+         先に消しきってしまうと、白いだけの間ができて演出が途切れる。 */
+    var f = easeInOut(seg(t, .08, .52));
+    stage.style.setProperty('--ao', (1 - f).toFixed(3));
+    stage.style.setProperty('--uo', (1 - f).toFixed(3));
+    stage.style.setProperty('--ay', (-46 * f).toFixed(1) + 'px');
+    /* ② 地球は最初から最後まで、ゆっくり出てゆっくり着地する（0〜1.00）。
+         ⚠️ここが「一瞬で切り替わって見える」正体だった。
+           拡大率を 1→GMAX（約10倍）で直線に動かすと、見た目の変化量は前半に集中する。
+           1→2 は倍だが 9→10 は1割しか変わらないので、頭でパッと弾けて残りは
+           ほとんど動いていないように見える。
+           そこで倍率は「掛け算で」進める（GMAX^g）。こうすると毎フレームの
+           大きくなる割合が一定になり、最後まで同じ速さで育って見える。
+           中心の移動も、その見かけの大きさに歩調を合わせる（u）。 */
+    var g = easeSine(seg(t, 0, 1));
+    var sc = Math.pow(GMAX, g);
+    var u = (sc - 1) / (GMAX - 1);
+    stage.style.setProperty('--g',  sc.toFixed(3));
+    stage.style.setProperty('--dx', (u * DX).toFixed(2) + 'px');
+    stage.style.setProperty('--dy', (u * DY).toFixed(2) + 'px');
+    /* ③ 動いている途中でモノクロ→カラー（0.30〜0.80）。
+         いきなり色がつくと「一瞬で切り替わった」ように見えるので、移動中に重ねる。 */
+    var k = easeInOut(seg(t, .30, .80));
+    stage.style.setProperty('--go', k.toFixed(3));
+    globe = globe || document.getElementById('fvGlobe');
+    if (globe){
+      globe.classList.toggle('is-color', k > .98);
+      globe.classList.toggle('is-mono',  k <= .98);
+    }
+    /* ④ 最後に左の白地のコピーが少し上がりながら出る（0.70〜1.00） */
+    var c = easeOut(seg(t, .70, 1));
+    stage.style.setProperty('--co', c.toFixed(3));
+    stage.style.setProperty('--cy', ((1 - c) * 16).toFixed(1) + 'px');
+  }
+
+  var released = false;
+  /* ⚠️登場アニメは fill:forwards で opacity を握り続けるので、--uo が効かない。
+       スクロールが始まったら外す（この時点ではもう出ている）。 */
+  function releaseIntro(){
+    if (released) return;
+    released = true;
+    [sec.querySelector('.rct-fv__center'), sec.querySelector('.rct-fv__scroll')]
+      .forEach(function(el){ if (el) el.style.animation = 'none'; });
+  }
+
+  /* いまのスクロール位置を 0→1 の「育ち具合」に直す */
+  function progress(){
+    var len = sec.offsetHeight - window.innerHeight;
+    if (len <= 0) return 1;
+    var q = (window.scrollY - sec.offsetTop) / len;
+    q = q < 0 ? 0 : q > 1 ? 1 : q;
+    return Math.min(1, q / SPAN);
+  }
+
+  var ticking = false, cur = -1;
+  function render(){
+    ticking = false;
+    var t = progress();
+    if (t === cur) return;
+    cur = t;
+    if (t > 0) releaseIntro();
+    apply(t);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ⚠️metrics() は「素の点の大きさ」を測る。フォント読み込みで文字組みが動くと
+       点の位置も動くので、読み込み後と 2秒後にも測り直す。 */
+  function boot(){ metrics(); cur = -1; render(); }
+  window.addEventListener('resize', boot);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
+  setTimeout(boot, 0);
+  setTimeout(boot, 2100);
+  boot();
+})();
+</script>
+
+<!-- ══ 生成りの地色をやめて白に ══ -->
+<style id="rct-no-ecru">
+/* ⚠️#f1f0ee（生成り）が節の地色として3か所に入っていた。
+     前段は !important 付きなので、こちらも同じ強さで白に戻す。
+     ・.section--gray（#vision / #welfare が持つ）
+     ・#numbers（クラスではなくID指定で直に敷かれている）
+   ※社員インタビューのカード（.rct-people）は「面」ではなく部品なので生成りのまま。 */
+/* ⚠️#vision / #welfare の生成りは .section--gray（!important）が出どころ。
+     ID で書くと、FV直後の節に敷いた「白へのグラデーション」を打ち消してしまうので、
+     ここはクラスのままにしておく（#numbers だけは前段がID+!importantなので同じ強さで返す）。 */
+.section--gray,#numbers{background:#fff!important}
+/* 生成りの上に置く前提で薄くしていた透かし文字は、白地だと消えるので少し濃くする */
+.section--gray .rct-wm{color:#eeecea}
+</style>
+
+
+
+
+
+
+
+
+
+<!-- ══ 採用FV：地球の左の白地に VISION を置く ══ -->
+<style id="fv-vision">
+/* ⚠️元は1行のコピーだったので、.rct-fv__sub に段落用のサイズと行間が入っている。
+     中身が「ラベル＋見出し＋本文＋ボタン」の塊に変わったので、そこは打ち消して
+     子ども側でそれぞれ組む。 */
+.rct-fv .fvcopy .rct-fv__sub{font-size:inherit;line-height:inherit}
+/* ⚠️.fvcopy は pointer-events:none（地球のスクロールを邪魔しないため）。
+     ボタンだけは押せるように戻す。 */
+.fvcopy .btn{pointer-events:auto}
+/* 見出しが入るぶん、白地の許す範囲でひと回り広げる */
+.fvcopy{width:min(560px,var(--fvcw,38vw))}
+
+.fv-vision .rct-wm{margin:0 0 clamp(16px,1.8vw,26px)!important}
+/* ⚠️.sec-jp はサイト共通で「赤い帯が横に伸びて白抜き文字が出る」見出し。
+     FVの白地に置くとその赤帯が主役の地球とけんかするので、素の見出しに戻す。
+     （帯は ::before、白文字は color、横詰めは transform:scaleX(.8) で作られている） */
+.fv-vision .sec-jp{font-size:clamp(1.5rem,2.5vw,2.3rem);line-height:1.62;margin:0;
+  font-feature-settings:"palt";
+  color:var(--ink);padding:0;width:auto;overflow:visible;
+  transform:none;letter-spacing:.02em;white-space:normal}
+.fv-vision .sec-jp::before{display:none}
+.fv-vision .sec-jp .hch{transform:none}
+.fv-vision .body-txt{font-size:clamp(13px,1.05vw,15.5px);line-height:2.05;
+  margin-top:clamp(16px,1.8vw,24px);max-width:none}
+.fv-vision__go{margin:clamp(22px,2.4vw,34px) 0 0}
+
+@media(max-width:900px){
+  /* 球の上端は画面高の42%。その上に収めるため、少し上げて詰める */
+  .fvcopy{top:11%;width:min(88vw,520px)!important}
+  .fv-vision .sec-jp{font-size:clamp(1.35rem,6vw,1.9rem)}
+  .fv-vision .body-txt{font-size:13px;line-height:1.95}
+  .fv-vision__go{margin-top:18px}
 }
 </style>
 
