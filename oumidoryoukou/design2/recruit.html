@@ -1947,21 +1947,11 @@ html,body{overflow-x:clip;max-width:100%}
 <!-- ⚠️ENTRY の導入ブロック（「あなたの「はかる」を、見つけてください。」＋リード）は削除。
      新卒／中途のカードがそのまま募集要項への入口になる。
      ⚠️アンカー #entry を参照している箇所があれば下のカード側（#new）に付け替えること。 -->
-<div class="entry-split rv" id="new">
-  <a class="entry-card entry-card--new" href="#requirements">
-    <span class="entry-card__en">New Graduate</span>
-    <span class="entry-card__ttl">新卒採用</span>
-    <p class="entry-card__copy">未来を測る第一歩を、ここから。文系・理系は問いません。ものづくりを一から学ぶ技術者へ。</p>
-    <span class="entry-card__go">募集要項へ <i class="arrow-i">→</i></span>
-  </a>
-  <a class="entry-card entry-card--mid" href="#requirements" id="mid">
-    <span class="entry-card__en">Mid-Career</span>
-    <span class="entry-card__ttl">中途採用</span>
-    <p class="entry-card__copy">培った経験を、126年の精度に加えてください。設計・製造・制御・営業など各職種で募集。</p>
-    <span class="entry-card__go">募集要項へ <i class="arrow-i">→</i></span>
-  </a>
-</div>
-
+<!-- ⚠️新卒／中途の2枚カードは削除。TOPなどから来る #new / #mid のリンクが
+     行き先を失わないよう、アンカーだけ募集要項の手前に残し、ハッシュに応じて
+     募集要項のタブを開く（末尾のスクリプト）。 -->
+<span id="new" class="anchor-only" aria-hidden="true"></span>
+<span id="mid" class="anchor-only" aria-hidden="true"></span>
 <!-- ══ 募集要項 ══ -->
 <section class="yoko" id="requirements">
   <div class="sec-head"><h2 class="sec-jp">募集要項</h2><p class="sec-ttl">Requirements</p></div>
@@ -2033,11 +2023,20 @@ html,body{overflow-x:clip;max-width:100%}
     <div><dt>その他</dt><dd>マイカー通勤可（無料駐車場あり）／単身用社宅あり／屋内禁煙</dd></div>
   </dl>
 
-  <div class="yoko-contact">
-    <p class="yoko-contact__ttl">応募・お問い合わせ</p>
-    <p class="yoko-contact__body">近江度量衡株式会社　総務部　採用担当<br>
-      <a href="tel:0775627111">077-562-7111</a>　／　<a href="mailto:maruo.kengo@omiscale.co.jp">maruo.kengo@omiscale.co.jp</a></p>
-    <p class="yoko-contact__btn"><a class="btn" href="contact.html">お問い合わせフォームへ <i class="arrow-i">→</i></a></p>
+  <!-- 応募導線：新卒／中途それぞれ外部のエントリーフォームへ
+       ⚠️href は未確定のプレースホルダ。フォームのURLが決まり次第、data-entry の2箇所を差し替える。
+       ⚠️外部サイトへ出るので target="_blank" ＋ rel="noopener" を付けている。 -->
+  <div class="yoko-entry">
+    <a class="btn yoko-entry__b" data-entry="new" href="#" target="_blank" rel="noopener">
+      <span class="yoko-entry__jp">新卒採用エントリー</span>
+      <span class="yoko-entry__en">New Graduate</span>
+      <i class="arrow-i" aria-hidden="true">→</i>
+    </a>
+    <a class="btn yoko-entry__b" data-entry="mid" href="#" target="_blank" rel="noopener">
+      <span class="yoko-entry__jp">中途採用エントリー</span>
+      <span class="yoko-entry__en">Mid-Career</span>
+      <i class="arrow-i" aria-hidden="true">→</i>
+    </a>
   </div>
 </section>
 </main>
@@ -4317,6 +4316,46 @@ html.intro .rct-fv,html.intro-run .rct-fv{
   .cgoal__it > p{margin:0}
 }
 </style>
+
+<!-- ══ 募集要項：応募エントリーボタン ══ -->
+<style id="rct-entry">
+/* ⚠️アンカー専用の空要素。高さ0だと固定ヘッダーに潜るので、少し上に余白を持たせる。 */
+.anchor-only{display:block;height:0;scroll-margin-top:100px}
+.yoko-entry{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.6vw,26px);
+  margin-top:clamp(38px,4.4vw,72px)}
+/* .btn の共通ルール（白地・赤枠・赤文字／ホバーで赤帯＋白文字）に乗せる。
+   中身だけ2段組みにして、和文＋英字＋矢印を並べる。 */
+.yoko-entry__b{display:flex;align-items:center;gap:clamp(12px,1.4vw,22px);
+  padding:clamp(20px,2.2vw,32px) clamp(18px,2vw,30px);width:100%}
+/* ⚠️共通ボタンには .btn>span{display:none}（旧矢印スパンを消すための指定）がある。
+     ラベルを span で書くとそれに巻き込まれて文字が消えるので、ここで戻す。 */
+.yoko-entry__b > span{display:block}
+.yoko-entry__jp{font-family:var(--jp);font-weight:700;letter-spacing:.06em;
+  font-size:clamp(16px,1.5vw,22px);line-height:1.3}
+.yoko-entry__en{font-family:var(--en);font-weight:600;letter-spacing:.14em;
+  font-size:clamp(9.5px,.82vw,12px);text-transform:uppercase;opacity:.72}
+.yoko-entry__b .arrow-i{margin-left:auto;font-style:normal}
+@media(max-width:700px){
+  .yoko-entry{grid-template-columns:1fr}
+  .yoko-entry__b{padding:18px 18px}
+}
+</style>
+<script>
+/* #new / #mid で来たときに、募集要項のタブを合わせて開く。
+   ⚠️タブの切り替えは既存スクリプトが .is-on の付け替えで行っているので、
+     ここではボタンを click するだけにして実装を二重に持たない。 */
+(function(){
+  function openTab(){
+    var h = location.hash;
+    var key = h === '#mid' ? 'mid' : (h === '#new' ? 'dai' : null);
+    if(!key) return;
+    var b = document.querySelector('.yoko-tabs button[data-y="' + key + '"]');
+    if(b && !b.classList.contains('is-on')) b.click();
+  }
+  window.addEventListener('hashchange', openTab);
+  openTab();
+})();
+</script>
 
 </body>
 </html>
