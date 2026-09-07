@@ -10,7 +10,15 @@
        同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
      ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
      ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
-<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}
+/* ⚠️ロゴ隠し（ヴェール）の指定は _pt.js が注入しているが、あれは body の末尾で読まれる。
+     初回ロードで読み込みが遅いと、下の3秒の保険で pt-init（body丸ごと非表示）が外れた時点では
+     まだ届いておらず、タイルも敷かれていないので左上のロゴだけが一瞬見える。
+     同じ内容を head にも置いて、最初の1フレームから効かせる。
+   ⚠️退場（.pt-leave）には掛けないこと。リンクを押した瞬間にロゴだけ先に消える。 */
+html.pt-veil:not(.pt-leave) .site-logo,
+html.pt-veil:not(.pt-leave) .nav__mini,
+html.pt-veil:not(.pt-leave) .drawer__logo{opacity:0!important;visibility:hidden!important}</style>
 <script>
 (function(){
   /* ⚠️再読み込み時のスクロール位置復元を切る。
@@ -22,9 +30,12 @@
   var d = document.documentElement;
   d.className += ' pt-init pt-veil';
   setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+  /* ⚠️ヴェールを外すのは _pt.js の役目。ただしJSが届かない・こけた場合に
+       ロゴが永久に消えたままになるので、こちらにも保険を置く（pt-init より後）。 */
+  setTimeout(function(){ d.classList.remove('pt-veil'); }, 4500);
 })();
 </script>
-<title>126年ヒストリー｜近江度量衡株式会社</title>
+<title>近江度量衡の歴史｜近江度量衡株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1555,7 +1566,7 @@ html,body{overflow-x:clip;max-width:100%}
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">近江度量衡の歴史</a></div>
     <div class="nitem">
       <a class="nlink" href="recruit.html">採用情報</a>
       <div class="mega"><div class="mega__inner">
@@ -1582,7 +1593,7 @@ html,body{overflow-x:clip;max-width:100%}
       <a href="service.html">サービス案内<span>Service</span></a>
       <a href="delivery.html">納入実績<span>Track Record</span></a>
       <a href="company.html">会社案内<span>Company</span></a>
-      <a href="history.html">126年ヒストリー<span>History</span></a>
+      <a href="history.html">近江度量衡の歴史<span>History</span></a>
       <a href="recruit.html">採用情報<span>Recruit</span></a>
       <a href="contact.html">お問い合わせ<span>Contact</span></a>
     </nav>
@@ -1645,7 +1656,7 @@ html,body{overflow-x:clip;max-width:100%}
 
 <main class="pmain">
 <section class="phero">
-  <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><span>126年ヒストリー</span></p>
+  <p class="pcrumb"><a href="index.html">TOP</a><span>/</span><span>近江度量衡の歴史</span></p>
   <div class="phero__bar">
     <h1 class="phero-en2 rv">近江度量衡の歴史</h1>
     <p class="phero-jp2 rv rv-d1">History</p>
@@ -1749,7 +1760,7 @@ html,body{overflow-x:clip;max-width:100%}
       </div>
       <div>
         <a href="company.html">会社案内</a>
-        <a href="history.html">126年ヒストリー</a>
+        <a href="history.html">近江度量衡の歴史</a>
         <a href="news.html">新着情報</a>
         <a href="recruit.html">採用情報</a>
         <a href="contact.html">お問い合わせ</a>
@@ -4036,6 +4047,24 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 @media(max-width:760px){
   .tl-ttl{font-size:clamp(26px,7.5vw,40px)}
 }
+</style>
+
+<!-- ══ ボタン：白地・赤枠・赤文字／ホバーで赤帯が入って白文字（採用ページと共通ルール） ══ -->
+<style id="btn-red-common">
+/* ⚠️この動き（帯が左から入って文字色が反転）は共通CSSに既にある。
+     .btn{--bc: 枠と文字と帯の色 ／ --bg: 地の色} という変数で色を決める作りなので、
+     疑似要素を自作せず変数を差し替えるのが正しい直し方。
+   ⚠️セレクタを並べているのは詳細度をそろえるため。
+     .pmain .btn / .phil .btn のように、文脈ごとに色を直書きしている指定が先にある。 */
+.btn,.btn--outline,.pmain .btn,.pmain .btn--outline,.phil .btn,.svc__lead .btn{
+  --bc:var(--red);--bg:#fff;
+  background:var(--bg);color:var(--bc);border:1px solid var(--bc)}
+.btn:hover,.btn--outline:hover,.pmain .btn:hover,.pmain .btn--outline:hover,
+.phil .btn:hover,.svc__lead .btn:hover{background:var(--bg);color:var(--bg)}
+/* 矢印は文字色に追従させる（白を直書きしている箇所も打ち消す） */
+.btn .arrow-i,.btn i,.btn span{color:inherit!important}
+.btn .arrow-i{transition:transform .3s ease}
+.btn:hover .arrow-i{transform:translateX(4px)}
 </style>
 
 </body>

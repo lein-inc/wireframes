@@ -10,7 +10,15 @@
        同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
      ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
      ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
-<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}
+/* ⚠️ロゴ隠し（ヴェール）の指定は _pt.js が注入しているが、あれは body の末尾で読まれる。
+     初回ロードで読み込みが遅いと、下の3秒の保険で pt-init（body丸ごと非表示）が外れた時点では
+     まだ届いておらず、タイルも敷かれていないので左上のロゴだけが一瞬見える。
+     同じ内容を head にも置いて、最初の1フレームから効かせる。
+   ⚠️退場（.pt-leave）には掛けないこと。リンクを押した瞬間にロゴだけ先に消える。 */
+html.pt-veil:not(.pt-leave) .site-logo,
+html.pt-veil:not(.pt-leave) .nav__mini,
+html.pt-veil:not(.pt-leave) .drawer__logo{opacity:0!important;visibility:hidden!important}</style>
 <script>
 (function(){
   /* ⚠️再読み込み時のスクロール位置復元を切る。
@@ -22,12 +30,15 @@
   var d = document.documentElement;
   d.className += ' pt-init pt-veil';
   setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+  /* ⚠️ヴェールを外すのは _pt.js の役目。ただしJSが届かない・こけた場合に
+       ロゴが永久に消えたままになるので、こちらにも保険を置く（pt-init より後）。 */
+  setTimeout(function(){ d.classList.remove('pt-veil'); }, 4500);
 })();
 </script>
 <title>近江度量衡株式会社｜計量装置の総合システムメーカー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Old+Mincho:wght@500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 /* 左上ロゴ：この先の <style> でサイズと位置を何度も上書きしているため、
@@ -635,7 +646,7 @@ body.menu-open{overflow:hidden}
 
 /* ============ フォトマーキー帯（WE MEASURE THE FUTURE） ============ */
 .strip{position:relative;overflow:hidden;height:46vh;min-height:340px;background:var(--ink)}
-.strip__bg{position:absolute;inset:0;background:url(hq-building.jpg) center/cover no-repeat;filter:brightness(.8) saturate(.9)}
+.strip__bg{position:absolute;inset:0;background:url(p_hq.jpg) center/cover no-repeat;filter:brightness(.5) saturate(.85)}  /* ⚠️社屋は白壁で明るいので、白の英字マーキーが読めるところまで落とす */
 .strip::after{content:"";position:absolute;inset:0;background:rgba(12,13,12,.28)}
 .strip__marquee{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:2;display:flex;white-space:nowrap;overflow:hidden}
 .strip__track{display:flex;flex-shrink:0;min-width:100%;animation:stripScroll 26s linear infinite}
@@ -1571,7 +1582,7 @@ html{visibility:hidden}
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">近江度量衡の歴史</a></div>
     <div class="nitem">
       <a class="nlink" href="#recruit">採用情報</a>
       <div class="mega"><div class="mega__inner">
@@ -1598,7 +1609,7 @@ html{visibility:hidden}
       <a href="service.html">サービス案内<span>Service</span></a>
       <a href="delivery.html">納入実績<span>Track Record</span></a>
       <a href="company.html">会社案内<span>Company</span></a>
-      <a href="history.html">126年ヒストリー<span>History</span></a>
+      <a href="history.html">近江度量衡の歴史<span>History</span></a>
       <a href="recruit.html">採用情報<span>Recruit</span></a>
       <a href="contact.html">お問い合わせ<span>Contact</span></a>
     </nav>
@@ -1661,15 +1672,19 @@ html{visibility:hidden}
   <h2 class="sec-ttl rv">Philosophy</h2>
   <p class="sec-jp rv"><i class="dot"></i>はかる</p>
   <div class="phil__box">
-  <div class="phil__st js-chars">
+  <!-- ⚠️js-chars は外してある。前段の共通スクリプト（時間で1字ずつ出す＋行ごとの帯を伸ばす）
+       ではなく、末尾の #phil-st-flow が「スクロール量で濃くする」担当。二重に動かさない。 -->
+  <div class="phil__st">
     <p><span class="ln"><span class="lt">私たちの暮らしは、</span></span><span class="ln"><span class="lt">数えきれない「はかる」で、できている。</span></span></p>
     <p><span class="ln"><span class="lt">一粒の米も、一滴の水も、</span></span><span class="ln"><span class="lt">正しくはかられて、はじめて価値になる。</span></span><span class="ln"><span class="lt">公正な取引も、たしかな品質も、安心できる毎日も、</span></span><span class="ln"><span class="lt">すべては、正確にはかることから始まる。</span></span></p>
     <p><span class="ln"><span class="lt">1900年の創業から126年。</span></span><span class="ln"><span class="lt">近江度量衡は、あらゆる現場の「はかる」に、</span></span><span class="ln"><span class="lt">一品一様のものづくりで応えつづけてきた。</span></span></p>
     <p><span class="ln"><span class="lt">暮らしを、産業を、その先の未来を。</span></span><span class="ln"><span class="lt">私たちは、これからもはかりつづける。</span></span></p>
   </div>
   <h2 class="phil__close js-chars" data-once><span><b class="lg">近江</b><b class="sm">から、</b></span><span><b class="lg">世界</b><b class="sm">を</b><b class="lg">はかる</b></span></h2>
-  <div class="phil__cta rv"><a class="btn" href="company.html">近江度量衡について <span>→</span></a></div>
   </div>
+  <!-- ⚠️横いっぱいに置きたいので .phil__box（左カラム）の外に出している。
+       中に戻すとカラム幅（約56%）までしか広がらない。 -->
+  <div class="phil__cta rv"><a class="btn" href="company.html">近江度量衡について <span>→</span></a></div>
 </section>
 
 <div class="secline secline--1" aria-hidden="true"></div>
@@ -1690,7 +1705,7 @@ html{visibility:hidden}
   <div class="pf">
     <div class="pf-stage">
       <div class="pf-img is-on" style="background-image:url(photo-agri.jpg)"></div>
-      <div class="pf-img" style="background-image:url(photo-grain.jpg)"></div>
+      <div class="pf-img" style="background-image:url(p_grain.jpg);background-position:center 52%"></div>
       <div class="pf-img" style="background-image:url(photo-industry.jpg)"></div>
       <div class="pf-img" style="background-image:url(photo-others.jpg)"></div>
       <div class="pf-veil"></div>
@@ -1742,17 +1757,19 @@ html{visibility:hidden}
     <i class="stats__band-ph" aria-hidden="true"></i>
   </a>
   <div class="stats__clients rv">
-    <p class="cl-lbl">CLIENTS — 主な納入先</p>
-    <div class="clients-marquee">
-      <div class="clients-track">
-        <div class="clients-set">
-          <span class="clchip">沖縄県農業協同組合 様</span><span class="clchip">熊本市農業協同組合 様</span><span class="clchip">大分県椎茸農業協同組合 様</span><span class="clchip">宮崎県農業協同組合 様</span><span class="clchip">ベルファーム株式会社 様</span><span class="clchip">となみ野農業協同組合 様</span><span class="clchip">イノチオみらい株式会社 様</span><span class="clchip">みちのく村山農業協同組合 様</span><span class="clchip">当麻農業協同組合 様</span><span class="clchip">きょうわ農業協同組合 様</span><span class="clchip">ふらの農業協同組合 様</span><span class="clchip">天安梨農業協同組合（韓国） 様</span><span class="clchip">ヤンマーグリーンシステム株式会社 様</span><span class="clchip">株式会社サタケ 様</span><span class="clchip">井関農機株式会社 様</span><span class="clchip">株式会社山本製作所 様</span><span class="clchip">住友ゴム株式会社 様</span><span class="clchip">日本電気硝子株式会社 様</span><span class="clchip">豊田合成株式会社 様</span><span class="clchip">Hankook Tire & Technology 様</span>
-        </div>
-        <div class="clients-set" aria-hidden="true">
-          <span class="clchip">沖縄県農業協同組合 様</span><span class="clchip">熊本市農業協同組合 様</span><span class="clchip">大分県椎茸農業協同組合 様</span><span class="clchip">宮崎県農業協同組合 様</span><span class="clchip">ベルファーム株式会社 様</span><span class="clchip">となみ野農業協同組合 様</span><span class="clchip">イノチオみらい株式会社 様</span><span class="clchip">みちのく村山農業協同組合 様</span><span class="clchip">当麻農業協同組合 様</span><span class="clchip">きょうわ農業協同組合 様</span><span class="clchip">ふらの農業協同組合 様</span><span class="clchip">天安梨農業協同組合（韓国） 様</span><span class="clchip">ヤンマーグリーンシステム株式会社 様</span><span class="clchip">株式会社サタケ 様</span><span class="clchip">井関農機株式会社 様</span><span class="clchip">株式会社山本製作所 様</span><span class="clchip">住友ゴム株式会社 様</span><span class="clchip">日本電気硝子株式会社 様</span><span class="clchip">豊田合成株式会社 様</span><span class="clchip">Hankook Tire & Technology 様</span>
+    <p class="cl-lbl">主な納入先</p>
+    <div class="clients-marquee clients-marquee--a">
+        <div class="clients-track">
+          <div class="clients-set"><span class="clchip">沖縄県農業協同組合 様</span><span class="clchip">熊本市農業協同組合 様</span><span class="clchip">大分県椎茸農業協同組合 様</span><span class="clchip">宮崎県農業協同組合 様</span><span class="clchip">ベルファーム株式会社 様</span><span class="clchip">となみ野農業協同組合 様</span><span class="clchip">イノチオみらい株式会社 様</span><span class="clchip">みちのく村山農業協同組合 様</span><span class="clchip">当麻農業協同組合 様</span><span class="clchip">きょうわ農業協同組合 様</span></div>
+          <div class="clients-set" aria-hidden="true"><span class="clchip">沖縄県農業協同組合 様</span><span class="clchip">熊本市農業協同組合 様</span><span class="clchip">大分県椎茸農業協同組合 様</span><span class="clchip">宮崎県農業協同組合 様</span><span class="clchip">ベルファーム株式会社 様</span><span class="clchip">となみ野農業協同組合 様</span><span class="clchip">イノチオみらい株式会社 様</span><span class="clchip">みちのく村山農業協同組合 様</span><span class="clchip">当麻農業協同組合 様</span><span class="clchip">きょうわ農業協同組合 様</span></div>
         </div>
       </div>
-    </div>
+      <div class="clients-marquee clients-marquee--b">
+        <div class="clients-track">
+          <div class="clients-set"><span class="clchip">ふらの農業協同組合 様</span><span class="clchip">天安梨農業協同組合（韓国） 様</span><span class="clchip">ヤンマーグリーンシステム株式会社 様</span><span class="clchip">株式会社サタケ 様</span><span class="clchip">井関農機株式会社 様</span><span class="clchip">株式会社山本製作所 様</span><span class="clchip">住友ゴム株式会社 様</span><span class="clchip">日本電気硝子株式会社 様</span><span class="clchip">豊田合成株式会社 様</span><span class="clchip">Hankook Tire & Technology 様</span></div>
+          <div class="clients-set" aria-hidden="true"><span class="clchip">ふらの農業協同組合 様</span><span class="clchip">天安梨農業協同組合（韓国） 様</span><span class="clchip">ヤンマーグリーンシステム株式会社 様</span><span class="clchip">株式会社サタケ 様</span><span class="clchip">井関農機株式会社 様</span><span class="clchip">株式会社山本製作所 様</span><span class="clchip">住友ゴム株式会社 様</span><span class="clchip">日本電気硝子株式会社 様</span><span class="clchip">豊田合成株式会社 様</span><span class="clchip">Hankook Tire & Technology 様</span></div>
+        </div>
+      </div>
   </div>
 </section>
 
@@ -1763,12 +1780,6 @@ html{visibility:hidden}
 <!-- ============ 126年ヒストリー（TOP動線） ============ -->
 <section class="gsec hist" id="history">
   <div class="hist__stage">
-    <div class="hist__left">
-      <h2 class="sec-ttl rv">History</h2>
-      <p class="sec-jp rv"><i class="dot"></i>近江度量衡の歴史</p>
-      <h2 class="disp-jp rv rv-d1">計量ひとすじ、<br>126年。</h2>
-      <a class="hist__go rv rv-d2" href="history.html">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></a>
-    </div>
     <!-- 年表を散りばめた縦長の面。特大/大/中/小/極小の5サイズ×各2点＝10点。
          ⚠️旧 .hist__rail は廃止。あれが無くなったことで「固定して横に流す」JSは
          早期returnして無効になる（スクリプトは消していない）。 -->
@@ -1782,17 +1793,37 @@ html{visibility:hidden}
         <span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span><span>SINCE 1900&nbsp;&nbsp;SINCE 1900&nbsp;&nbsp;</span>
       </div>
     </div>
+    <!-- ⚠️年代カードは同じ大きさで並べる（旧＝大小まばらな絶対配置は廃止）。
+       15枚に足りないぶんは先頭から複製して壁を埋める（複製は読み上げ対象外）。 -->
+    <div class="hist__hd2">
+      <h2 class="sec-ttl rv">History</h2>
+      <p class="sec-jp rv"><i class="dot"></i>近江度量衡の歴史</p>
+    </div>
     <div class="hist__scatter">
-      <figure class="hb hb--xl rv" style="--x:76.7%;--y:1.8%;--r:-1.4deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1900_1.jpg);--kd:0s;--kx:-2%;--ky:-1.8%"></i></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
-      <figure class="hb hb--s rv" style="--x:6.25%;--y:6.4%;--r:2.2deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1946.jpg);--kd:0.7s;--kx:2%;--ky:-2.2%"></i></span><figcaption><b>1946</b><span>米軍用バススケール</span></figcaption></figure>
-      <figure class="hb hb--m rv" style="--x:26.4%;--y:13.7%;--r:-1.8deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1959.jpg);--kd:1.4s;--kx:-1.6%;--ky:2%"></i></span><figcaption><b>1959</b><span>工場拡張</span></figcaption></figure>
-      <figure class="hb hb--xl rv" style="--x:0.5%;--y:36.5%;--r:1.2deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1961_1.jpg);--kd:2.1s;--kx:1.8%;--ky:1.6%"></i></span><figcaption><b>1961</b><span>草津工場 完成</span></figcaption></figure>
-      <figure class="hb hb--s rv" style="--x:38%;--y:40.5%;--r:-2.4deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1974.jpg);--kd:0.35s;--kx:-2.2%;--ky:2.2%"></i></span><figcaption><b>1974</b><span>海外輸出を開始</span></figcaption></figure>
-      <figure class="hb hb--m rv" style="--x:52.8%;--y:33%;--r:1.6deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1980.jpg);--kd:1.05s;--kx:1.4%;--ky:-1.6%"></i></span><figcaption><b>1980</b><span>創立80周年</span></figcaption></figure>
-      <figure class="hb hb--s rv" style="--x:83.5%;--y:47.4%;--r:-2.8deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1993.jpg);--kd:1.75s;--kx:-1.2%;--ky:-2%"></i></span><figcaption><b>1993</b><span>草津工場 改築</span></figcaption></figure>
-      <figure class="hb hb--xl rv" style="--x:42%;--y:58.5%;--r:1.1deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1999.jpg);--kd:2.45s;--kx:2.2%;--ky:1.4%"></i></span><figcaption><b>1999</b><span>選果システム展開</span></figcaption></figure>
-      <figure class="hb hb--m rv" style="--x:8.3%;--y:75.7%;--r:-1.5deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_2009.jpg);--kd:0.5s;--kx:-1.8%;--ky:1.8%"></i></span><figcaption><b>2009</b><span>旭日双光章 受章</span></figcaption></figure>
-      <figure class="hb hb--s rv" style="--x:81.9%;--y:72.9%;--r:2.6deg"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_2015.jpg);--kd:1.2s;--kx:1.6%;--ky:-1.4%"></i></span><figcaption><b>2015</b><span>上海 無錫工場</span></figcaption></figure>
+      <div class="hb-hole">
+        <i class="hb-hole__c hb-hole__c--tl" aria-hidden="true"></i>
+        <i class="hb-hole__c hb-hole__c--tr" aria-hidden="true"></i>
+        <i class="hb-hole__c hb-hole__c--bl" aria-hidden="true"></i>
+        <i class="hb-hole__c hb-hole__c--br" aria-hidden="true"></i>
+        <div class="hb-hole__mid">
+          <div class="hb-hole__stack">
+            <h2 class="disp-jp rv rv-d1">計量ひとすじ、126年。</h2>
+            <a class="hist__go rv rv-d2" href="history.html">126年ヒストリーを見る <i class="arrow-i" style="color:inherit">→</i></a>
+          </div>
+        </div>
+      </div>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1900_1.jpg)"></i></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1946.jpg)"></i></span><figcaption><b>1946</b><span>米軍用バススケール</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1959.jpg)"></i></span><figcaption><b>1959</b><span>工場拡張</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1961_1.jpg)"></i></span><figcaption><b>1961</b><span>草津工場 完成</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1974.jpg)"></i></span><figcaption><b>1974</b><span>海外輸出を開始</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1980.jpg)"></i></span><figcaption><b>1980</b><span>創立80周年</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1993.jpg)"></i></span><figcaption><b>1993</b><span>草津工場 改築</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1999.jpg)"></i></span><figcaption><b>1999</b><span>選果システム展開</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_2009.jpg)"></i></span><figcaption><b>2009</b><span>旭日双光章 受章</span></figcaption></figure>
+      <figure class="hb"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_2015.jpg)"></i></span><figcaption><b>2015</b><span>上海 無錫工場</span></figcaption></figure>
+      <figure class="hb" aria-hidden="true"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1900_1.jpg)"></i></span><figcaption><b>1900</b><span>大津にて創業</span></figcaption></figure>
+      <figure class="hb" aria-hidden="true"><span class="hb__ph"><i class="hb__img" style="background-image:url(h_1946.jpg)"></i></span><figcaption><b>1946</b><span>米軍用バススケール</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -1808,35 +1839,29 @@ html{visibility:hidden}
       <h2 class="disp-jp" style="margin-top:0">「はかる」の未来を、<br>一緒につくる仲間へ。</h2>
     </div>
   </div>
-  <div class="recjoin__split">
-    <!-- 新卒＝縦書き見出しが左／中途＝右（.rjb--mid で左右を入れ替え）。
-         ボタンは写真と同じ列に置いてあるので、幅は自動で揃う -->
-    <article class="rjb rjb--new rv">
-      <div class="rjb__row">
-        <p class="rjb__label"><span class="rjb__jp">新卒採用</span></p>
-        <div class="rjb__main">
-          <a class="rjb__ph" href="recruit.html#new" aria-label="新卒採用のページへ"
-             style="background-image:url(stat-service.jpg)"></a>
-          <a class="rjb__go" href="recruit.html#new">
-            <span class="rjb__go-jp">新卒採用</span>
-            <span class="rjb__go-en">詳しくはこちら <i class="arrow-i" aria-hidden="true">→</i></span>
-          </a>
-        </div>
-      </div>
-    </article>
-    <article class="rjb rjb--mid rv rv-d1">
-      <div class="rjb__row">
-        <p class="rjb__label"><span class="rjb__jp">中途採用</span></p>
-        <div class="rjb__main">
-          <a class="rjb__ph" href="recruit.html#mid" aria-label="中途採用のページへ"
-             style="background-image:url(photo-industry.jpg)"></a>
-          <a class="rjb__go" href="recruit.html#mid">
-            <span class="rjb__go-jp">中途採用</span>
-            <span class="rjb__go-en">詳しくはこちら <i class="arrow-i" aria-hidden="true">→</i></span>
-          </a>
-        </div>
-      </div>
-    </article>
+  <!-- メイン：採用のキーアート（recruit.html のFVと同じSVG）を使ったバナー。
+       ⚠️SVGは id と内部の #セレクタを rcbart-svg に付け替えてある。
+         recruit.html と同じ id のまま置くと、同一ページに2つ無くても
+         将来まとめたときにスタイルが衝突する。
+       ⚠️アートは "Zen Old Mincho" 前提。index.html には読み込みが無かったので
+         <head> のフォント指定に追加した（無いと明朝が別の書体に化ける）。 -->
+  <a class="rcb rv" href="recruit.html" aria-label="採用情報を見る">
+    <span class="rcb__lbl">RECRUITMENT 2027</span>
+    <span class="rcb__art" aria-hidden="true"><svg id="rcbart-svg" overflow="visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.61 611.64"><defs><style> #rcbart-svg .fvc-1{fill:none;} #rcbart-svg .fvc-2{letter-spacing:-.72em;stroke-width:.95px;} #rcbart-svg .fvc-2,#rcbart-svg .fvc-3,#rcbart-svg .fvc-4,#rcbart-svg .fvc-5,#rcbart-svg .fvc-6{stroke:#000;stroke-miterlimit:10;} #rcbart-svg .fvc-2,#rcbart-svg .fvc-4,#rcbart-svg .fvc-5{font-family:"Zen Kaku Gothic New", sans-serif;font-size:40px;} #rcbart-svg .fvc-3{font-size:106.9px;stroke-width:2.13px;} #rcbart-svg .fvc-3,#rcbart-svg .fvc-6{font-family:"Zen Old Mincho","Shippori Mincho",serif;font-weight:500;} #rcbart-svg .fvc-4,#rcbart-svg .fvc-5{stroke-width:1.5px;} #rcbart-svg .fvc-7{letter-spacing:-.32em;} #rcbart-svg .fvc-8{letter-spacing:-.36em;} #rcbart-svg .fvc-9{letter-spacing:-.25em;} #rcbart-svg .fvc-10{letter-spacing:-.2em;} #rcbart-svg .fvc-11{letter-spacing:-.18em;} #rcbart-svg .fvc-12{letter-spacing:-.14em;} #rcbart-svg .fvc-13{letter-spacing:-.03em;} #rcbart-svg .fvc-5{letter-spacing:-.22em;} #rcbart-svg .fvc-14{fill:#e60012;} #rcbart-svg .fvc-6{font-size:175.96px;stroke-width:3.5px;}</style></defs><text class="fvc-6" transform="translate(41.61 190.8) scale(.96 1)"><tspan class="fvc-10" x="0" y="0">い</tspan><tspan class="fvc-7" x="140.77" y="0">き</tspan><tspan class="fvc-10" x="260.42" y="0">る</tspan></text><text class="fvc-5" transform="translate(434.92 194.61) scale(.9 1)"><tspan x="0" y="0">の</tspan></text><text class="fvc-4" transform="translate(59.3 508.91) scale(.9 1)"><tspan class="fvc-9"><tspan x="0" y="0">と</tspan></tspan><tspan class="fvc-13"><tspan x="0" y="38.06">は</tspan></tspan></text><text class="fvc-2" transform="translate(82.09 563.29) scale(.9 1)"><tspan x="0" y="0">、</tspan></text><text class="fvc-3" transform="translate(97.41 558.78) scale(.9 1)"><tspan class="fvc-11" x="0" y="0">な</tspan><tspan class="fvc-12" x="87.66" y="0">ん</tspan><tspan class="fvc-11" x="179.6" y="0">だ</tspan><tspan class="fvc-8" x="267.26" y="0">ろ</tspan><tspan class="fvc-11" x="335.68" y="0">う</tspan></text><polyline class="fvc-14" points="311.42 269.78 311.42 448.94 281.66 448.94 281.66 340.59"/><rect class="fvc-1" x="156.31" y="327.48" width="29.39" height="18.66"/><rect class="fvc-1" x="156.31" y="281.92" width="29.39" height="18.88"/><polygon class="fvc-1" points="397.32 369.26 430.51 292.12 364.82 292.12 397.32 369.26"/><rect class="fvc-1" x="92.48" y="281.92" width="31.07" height="18.88"/><rect class="fvc-1" x="92.48" y="327.48" width="31.07" height="18.66"/><polygon class="fvc-1" points="119.52 243.9 134.63 218.01 118.85 218.01 103.73 243.9 119.52 243.9"/><polygon class="fvc-1" points="174.02 243.9 189.13 218.01 172.57 218.01 157.46 243.9 174.02 243.9"/><polygon class="fvc-14" points="118.85 218.01 80.9 218.01 65.79 243.9 103.73 243.9 118.85 218.01"/><polygon class="fvc-14" points="157.46 243.9 172.57 218.01 134.63 218.01 119.52 243.9 157.46 243.9"/><polygon class="fvc-14" points="174.02 243.9 211.96 243.9 227.08 218.01 189.13 218.01 174.02 243.9"/><path d="M185.7,255.25h-119.89v117.56h57.74v23.14h-57.71v26.67h57.71v25.96h32.77v-25.96h56.08v-26.67h-56.08v-23.14h56.06v-117.56h-26.67ZM185.7,300.81h-29.39v-18.88h29.39v18.88ZM123.54,300.81h-31.07v-18.88h31.07v18.88ZM92.48,346.14v-18.66h31.07v18.66h-31.07ZM156.31,346.14v-18.66h29.39v18.66h-29.39Z"/><polygon points="380.04 252.83 335.52 252.83 335.52 279.5 460.59 279.5 460.59 252.83 412.8 252.83 412.8 218.01 380.04 218.01 380.04 252.83"/><polygon points="312.42 274.14 337.6 218.01 303.69 218.01 233.92 373.54 267.83 373.54 279.66 347.17 312.42 274.14"/><polygon class="fvc-14" points="459.55 292.12 430.51 292.12 397.32 369.26 364.82 292.12 335.87 292.12 384.82 408.26 409.58 408.26 459.55 292.12"/><polygon points="462.09 421.66 330.81 421.66 328.74 421.66 328.74 448.33 467.02 448.33 467.02 421.66 462.09 421.66"/><rect class="fvc-14" x="92.15" y="301.26" width="93.06" height="27.09"/><path d="M569.91,433.26c-9.2-2.25-12.91-7-11.14-14.26l8.16-33.4c4.85-19.84,11.76-36.62,20.76-50.33,8.98-13.7,19.07-26.12,30.26-37.24,11.18-11.12,22.36-22.24,33.54-33.36,11.18-11.12,21.32-23.77,30.43-37.96,9.1-14.19,16.15-31.45,21.11-51.78s4.85-39.85-.67-57.1c-5.54-17.25-18.95-28.48-40.25-33.68-18.4-4.5-33.44-3.81-45.13,2.05-11.7,5.87-16.19,12.72-13.49,20.56.73,1.21,1.55,2.57,2.47,4.06.91,1.51,1.73,2.86,2.47,4.07,3.77,5.54,7.13,11.74,10.07,18.62,2.94,6.87,2.97,15.09.13,24.66-3.45,11.99-10.17,20.6-20.16,25.85-10.01,5.25-20.58,6.52-31.71,3.8s-20.67-9.4-28.57-20.06c-7.92-10.65-9.51-25.66-4.78-45.02,4.02-16.45,12.83-30.46,26.42-42.02,13.59-11.55,30.67-19.56,51.26-24.03,20.58-4.46,42.73-3.8,66.45,2,22.75,5.56,42.71,15.18,59.89,28.86,17.17,13.69,29.65,30.33,37.43,49.92,7.78,19.6,8.89,40.77,3.33,63.52-4.97,20.33-13.73,37.31-26.28,50.9-12.56,13.61-26.81,25.76-42.77,36.49-15.96,10.72-31.98,21.17-48.05,31.35-16.09,10.19-30.34,21.83-42.78,34.95-12.44,13.12-21.02,29.37-25.75,48.72l-5.5,22.51c-1.77,7.26-7.51,9.71-17.18,7.34Z"/><path id="fvDot" class="fvc-14" d="M545.03,567.8c-13.35,0-24.85-4.72-34.51-14.15-9.66-9.43-14.49-21.05-14.49-34.85s4.83-25.42,14.49-34.85c9.66-9.42,21.16-14.15,34.51-14.15s25.42,4.72,34.85,14.15c9.42,9.44,14.15,21.05,14.15,34.85s-4.72,25.43-14.15,34.85c-9.44,9.42-21.05,14.15-34.85,14.15Z"/><polygon points="467.01 439.34 444.22 439.34 454.22 414.71 467.01 414.71 467.01 439.34"/><polygon points="460.59 272.5 437.8 272.5 447.8 247.87 460.59 247.87 460.59 272.5"/><polygon points="212.36 413.59 189.56 413.59 199.56 388.96 212.36 388.96 212.36 413.59"/></svg></span>
+    <span class="rcb__go">採用情報を見る <i class="arrow-i" aria-hidden="true">→</i></span>
+  </a>
+  <!-- サブ：新卒／中途それぞれの入口 -->
+  <div class="rcb-sub rv rv-d1">
+    <a class="rcb-sub__b" href="recruit.html#new">
+      <span class="rcb-sub__ph" style="background-image:url(p_recruit_new.jpg)" aria-hidden="true"></span>
+      <span class="rcb-sub__jp">新卒採用</span>
+      <i class="arrow-i" aria-hidden="true">→</i>
+    </a>
+    <a class="rcb-sub__b" href="recruit.html#mid">
+      <span class="rcb-sub__ph" style="background-image:url(p_recruit_mid.jpg)" aria-hidden="true"></span>
+      <span class="rcb-sub__jp">中途採用</span>
+      <i class="arrow-i" aria-hidden="true">→</i>
+    </a>
   </div>
 </section>
 
@@ -1936,7 +1961,7 @@ html{visibility:hidden}
       </div>
       <div>
         <a href="company.html">会社案内</a>
-        <a href="history.html">126年ヒストリー</a>
+        <a href="history.html">近江度量衡の歴史</a>
         <a href="news.html">新着情報</a>
         <a href="#recruit">採用情報</a>
         <a href="contact.html">お問い合わせ</a>
@@ -2074,8 +2099,11 @@ html{visibility:hidden}
     els.forEach(function(el){
       if(el._fired) return;
       var r = el.getBoundingClientRect();
-      /* 要素上端が画面の80%ラインに達したら発火（1点通過トリガー） */
-      if(r.top < vh * 0.80 && r.bottom > 0){ el._fired = true; el._t0 = performance.now(); fire = true; }
+      /* 要素上端が画面の80%ラインに達したら発火（1点通過トリガー）。
+         ⚠️締めコピー「近江から、世界をはかる」だけは、しっかり画面に入ってから出したいので
+           ラインを上げる（＝発火が遅くなる）。 */
+      var line = el.classList.contains('phil__close') ? 0.52 : 0.80;
+      if(r.top < vh * line && r.bottom > 0){ el._fired = true; el._t0 = performance.now(); fire = true; }
     });
     if(fire) req();
   }
@@ -2152,7 +2180,12 @@ html{visibility:hidden}
        なるよう S を逆算する。
        ⚠️以前は区切り線(.secline--1)を基準にしていたが、区切り線の上下アキは
          セクション共通の値にしたいので、写真の位置決めから切り離した。 */
-    var base = cta ? (cta.getBoundingClientRect().bottom + y) : (line || svc).getBoundingClientRect().top + y;
+    /* ⚠️以前は「ボタンの下端＋アキ」で写真を切っていたが、それだとボタンが写真の縁に
+         貼り付いて下の余白が出ない。理念セクションの下パディング（--cta-bottom）ぶんまで
+         写真を伸ばし、ボタンの下にも余白が見えるようにする。 */
+    var philSec = document.querySelector('.gsec.phil');
+    var philPad = philSec ? (parseFloat(getComputedStyle(philSec).paddingBottom) || 0) : 0;
+    var base = cta ? (cta.getBoundingClientRect().bottom + y + philPad) : (line || svc).getBoundingClientRect().top + y;
     var S = Math.max(0, base + gap0 * 2 - window.innerHeight);
     /* ⚠️|| 15 だと --fvgap が 0 のときに 0 が falsy 扱いされて 15 が入り、
        写真が15px下へずれる（白フレームを0にしたとき、これが原因で
@@ -4287,9 +4320,23 @@ body.is-map-small .fv .phil__map .mapwrap{--mx:12%;--ms:1;--mfy:calc(var(--kz-up
        ぬるっと追従する）。.fv .phil__map の transition は opacity だけにしてある。 */
   var mapEl  = document.querySelector('.fv .phil__map');
   var closeEl = phil.querySelector('.phil__close');
+  var mapWrapEl = document.querySelector('.fv .phil__map .mapwrap');
+  /* 解除の位置＝「近江から、世界をはかる」の下端が、追従中の地図の下端に並んだところ。
+     ⚠️以前は見出しの上端が画面の58%に来た時点だった（＝もっと手前で外れていた）。
+     ⚠️地図の下端は追従ぶん(--mty)を含んだ実測値なので、その分を引いて素の位置に戻す。
+       引かないと、外れかけた瞬間の位置で測り直して基準がずるずる動く。 */
   function relY(){
     if(!closeEl) return Infinity;
-    return closeEl.getBoundingClientRect().top + window.scrollY - window.innerHeight * .58;
+    var closeBottomDoc = closeEl.getBoundingClientRect().bottom + window.scrollY;
+    var mapBottomVp = window.innerHeight;
+    if(mapWrapEl){
+      var r = mapWrapEl.getBoundingClientRect();
+      if(r.height){
+        var mty = parseFloat(mapEl && mapEl.style.getPropertyValue('--mty')) || 0;
+        mapBottomVp = r.bottom - mty;
+      }
+    }
+    return closeBottomDoc - mapBottomVp;
   }
   function mapFollow(){
     if(!mapEl) return;
@@ -5316,11 +5363,11 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
    大・中・小のサイズ差も残る組み合わせ）。
    ⚠️並び順は DOM の順。写真を足し引きしたら nth-child の番号を振り直すこと。 */
 @media(max-width:900px){
-  .hist__scatter .hb:nth-child(2),   /* 1946 */
-  .hist__scatter .hb:nth-child(4),   /* 1961 */
-  .hist__scatter .hb:nth-child(6),   /* 1980 */
-  .hist__scatter .hb:nth-child(7),   /* 1993 */
-  .hist__scatter .hb:nth-child(9){   /* 2009 */
+  .hist__scatter .hb:nth-of-type(2),   /* 1946 */
+  .hist__scatter .hb:nth-of-type(4),   /* 1961 */
+  .hist__scatter .hb:nth-of-type(6),   /* 1980 */
+  .hist__scatter .hb:nth-of-type(7),   /* 1993 */
+  .hist__scatter .hb:nth-of-type(9){   /* 2009 */
     display:none}
 }
 </style>
@@ -5481,6 +5528,772 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .fv .mapworld{left:var(--world-inset);width:var(--worldW)}
 .fv .mapworld::before{width:calc(var(--worldW) + var(--tileW));
   background-position:calc(var(--worldW) * var(--world-at) - var(--tileW) * var(--world-jp)) center}
+
+/* ── SP：日本を中心に大きく（画面から溢れたぶんは切って見せる） ──
+   ⚠️PCは「世界1周ぶん＝帯の幅」に収めているが、狭い画面で同じことをすると地図が小さくなりすぎる。
+     SPだけ絵を画面幅の 2.2倍 で描き、はみ出したぶんは帯の overflow:hidden で切る。
+   ⚠️中央に置くのは日本。--world-jp（0.40）は「絵の中の日本の位置」という名前だが実測と合わない。
+     マーカーを重ねて測った実測値は 0.423（絵の左端から）。中央合わせにはこちらを使う。
+     PC側は現状の見え方を変えたくないのでそのまま。 */
+@media(max-width:900px){
+  :root{--world-zoom:2.2;
+        --tileW:calc(var(--worldW) * var(--world-zoom));
+        --worldH:calc(var(--tileW) / (1.925 * var(--world-squeeze,.84)))}
+  .fv .mapworld::before{width:var(--tileW)!important;
+    background-position:calc(var(--worldW) * .5 - var(--tileW) * .423) center!important}
+}
+</style>
+
+<!-- ══ ボタン：白地・赤枠・赤文字／ホバーで赤帯が入って白文字（採用ページと共通ルール） ══ -->
+<style id="btn-red-common">
+/* ⚠️この動き（帯が左から入って文字色が反転）は共通CSSに既にある。
+     .btn{--bc: 枠と文字と帯の色 ／ --bg: 地の色} という変数で色を決める作りなので、
+     疑似要素を自作せず変数を差し替えるのが正しい直し方。
+   ⚠️セレクタを並べているのは詳細度をそろえるため。
+     .pmain .btn / .phil .btn のように、文脈ごとに色を直書きしている指定が先にある。 */
+.btn,.btn--outline,.pmain .btn,.pmain .btn--outline,.phil .btn,.svc__lead .btn{
+  --bc:var(--red);--bg:#fff;
+  background:var(--bg);color:var(--bc);border:1px solid var(--bc)}
+.btn:hover,.btn--outline:hover,.pmain .btn:hover,.pmain .btn--outline:hover,
+.phil .btn:hover,.svc__lead .btn:hover{background:var(--bg);color:var(--bg)}
+/* 矢印は文字色に追従させる（白を直書きしている箇所も打ち消す） */
+.btn .arrow-i,.btn i,.btn span{color:inherit!important}
+.btn .arrow-i{transition:transform .3s ease}
+.btn:hover .arrow-i{transform:translateX(4px)}
+</style>
+
+<!-- ══ 理念ステートメント：1枚の黒帯に流し込み、スクロールで文字が濃くなる ══ -->
+<style id="phil-st-flow">
+/* ⚠️前段は「1行＝1本の黒帯」で、帯が左から伸びてから白文字が下線マスクで上がる作り。
+     ここでは帯を1枚の面にして最初から出しっぱなしにし、文字は薄い白で置いて
+     スクロールに合わせて濃くする（Goodpatch 15th 参考）。
+   ⚠️.ln / .lt のマークアップはそのまま使い、表示だけ inline に戻して流し込みにしている。 */
+.phil__box{width:100%}
+/* ⚠️黒帯は「面」ではなく、文字にぶら下がる帯にする。
+     インライン要素に背景を敷くと、折り返した行ごとに背景が分かれ、
+     行の終わり＝文末でぴたりと切れる（＝1行ずつの帯に見える）。
+     box-decoration-break:clone を付けないと、途中の行に padding が付かず角が繋がる。 */
+.phil__st{background:none;color:#fff;
+  max-width:min(1080px,100%);padding:0;
+  font-weight:600;font-size:clamp(20px,2.9vw,42px);line-height:1.62;letter-spacing:.03em;
+  font-feature-settings:"palt"}
+.phil__st .band{background:var(--ink);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  padding:.06em .26em .12em .22em}
+.phil__st .ln{display:inline;position:static;width:auto;padding:0;overflow:visible;
+  color:inherit;line-height:inherit;margin:0}
+.phil__st .ln::before{display:none}
+.phil__st .lt{display:inline;transform:none}
+.phil__st p+p{margin-top:1.1em}
+
+/* 文字は薄く置いておき、読み進むぶんだけ濃くする */
+.phil__st .ch{opacity:.26;transition:opacity .45s ease}
+.phil__st .ch.is-on{opacity:1}
+
+@media(max-width:900px){
+  .phil__st{font-size:clamp(17px,4.6vw,26px);line-height:1.7}
+  .phil__st .band{padding:.05em .22em .12em .18em}
+}
+@media(prefers-reduced-motion:reduce){
+  .phil__st .ch{opacity:1;transition:none}
+}
+</style>
+<script>
+(function(){
+  var st = document.querySelector('.phil__st');
+  if (!st) return;
+
+  /* ⚠️帯は段落ごとに1本のインライン要素で敷く。
+       1字ずつの span に背景を付けると、文字と文字の間で padding が二重になって
+       帯がガタガタになる。包んでから中を1字ずつに割ること。 */
+  [].slice.call(st.querySelectorAll('p')).forEach(function(pp){
+    if (pp.querySelector('.band')) return;
+    var band = document.createElement('span');
+    band.className = 'band';
+    while (pp.firstChild) band.appendChild(pp.firstChild);
+    pp.appendChild(band);
+  });
+
+  /* 1字ずつ span に包む。改行位置はブラウザに任せる（spanの間で折り返せる）。 */
+  var chs = [];
+  (function walk(node){
+    [].slice.call(node.childNodes).forEach(function(n){
+      if (n.nodeType === 3){
+        if (!n.textContent.trim()) return;
+        var frag = document.createDocumentFragment();
+        n.textContent.split('').forEach(function(c){
+          var s = document.createElement('span');
+          s.className = 'ch'; s.textContent = c;
+          frag.appendChild(s); chs.push(s);
+        });
+        node.replaceChild(frag, n);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') {
+        walk(n);
+      }
+    });
+  })(st);
+  if (!chs.length) return;
+
+  /* ⚠️濃くなる進み具合はスクロール位置そのもの（時間ではない）。
+       読み始め＝ブロックの上端が画面の83.5%の高さに来たとき、
+       読み終わり＝ブロックの中心が画面の18%あたりまで上がったとき。
+       戻ると薄く戻る（読み返しの手触りを合わせる）。 */
+  var ticking = false, last = -1;
+  function render(){
+    ticking = false;
+    var r = st.getBoundingClientRect(), vh = window.innerHeight;
+    /* ⚠️読み始め＝ブロックの上端が画面の83.5%。読み終わり＝ブロックの中心が画面の18%あたり。
+         元の「72%スタート／中心が-19%で完了」（遅い）と、一度試した「95%スタート／中心55%で完了」
+         （速い）のちょうど中間。数値を触るときはこの2つの間で振ること。 */
+    var span = r.height * 0.75 + vh * 0.42;
+    var p = (vh * 0.835 - r.top) / span;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    var n = Math.round(chs.length * p);
+    if (n === last) return;
+    last = n;
+    for (var i = 0; i < chs.length; i++) chs[i].classList.toggle('is-on', i < n);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  render();
+})();
+</script>
+
+<!-- ══ FVの世界地図：近江とカーソルを結ぶ赤い線 ══ -->
+<style id="world-interact">
+/* 近江とカーソルを結ぶ細い線。長さは scaleX、向きは rotate だけで作る（毎フレームの再レイアウトを避ける）
+   ⚠️要素は body 直下に置く（下のスクリプト）。.fv の中に入れると .fv の重ね順に閉じ込められ、
+     いくら z-index を上げても後続セクションの下に潜る。
+   ⚠️z-index はサイト内の最大（ドロワー70・ロゴ60）より上。
+     ページ遷移の赤い幕（_pt.js の 2147483000）だけは上に残す。 */
+.wlink{position:fixed;left:0;top:0;width:1px;height:1px;z-index:9999;pointer-events:none;
+  transform-origin:0 50%;opacity:0;
+  /* 近江側は薄く、カーソル側で少し濃く。線そのものは1pxのまま伸ばすだけ */
+  background:linear-gradient(90deg,rgba(204,7,0,.28),rgba(204,7,0,.8))}
+/* 両端の点。scaleX で伸ばす線とは別要素にする（線の中に入れると横に潰れる） */
+.wpin,.wjp{position:fixed;left:0;top:0;border-radius:50%;background:var(--red);
+  z-index:9999;pointer-events:none;opacity:0}
+.wpin{width:7px;height:7px;margin:-3.5px 0 0 -3.5px}
+.wjp{width:9px;height:9px;margin:-4.5px 0 0 -4.5px;box-shadow:0 0 0 4px rgba(204,7,0,.18)}
+@media(prefers-reduced-motion:reduce){.wlink,.wpin,.wjp{display:none}}
+</style>
+<script>
+/* 世界地図とカーソルを赤い線で結ぶ。
+   ⚠️軽さの作り方：
+     ① pointermove では座標を控えるだけ（計算も描画もしない）
+     ② 描画は requestAnimationFrame 1本にまとめ、動きが止まったら自分で止まる
+     ③ 毎フレーム触るのは transform と opacity だけ（レイアウトを起こさない）
+     ④ 地図の位置はスクロール／リサイズのときだけ測り直して覚えておく
+        （getBoundingClientRect を毎フレーム呼ばない） */
+(function(){
+  if (!window.matchMedia) return;
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  /* タッチ機では意味がないので動かさない（イベントも張らない） */
+  if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+  var fv  = document.querySelector('.fv');
+  var map = document.querySelector('.fv .mapworld');
+  if (!fv || !map) return;
+  /* スクロール後は世界地図と入れ替わりで滋賀の地図が出る。線の起点はその草津のピン。
+     製品・技術（#products）に入ったら、この演出は終わり。 */
+  var wrapEl = document.querySelector('.fv .phil__map .mapwrap');
+  var cta    = document.querySelector('.phil__cta');      /* 近江度量衡についてバナー */
+  var svc    = document.getElementById('products');
+  /* 草津の位置は絵の中の割合で持つ。.mappin{left:31%;top:68%} と
+     .mapwrap{transform-origin:31% 68%} と同じ値。ピン自体は display:none なので使えない。
+     ⚠️.mapwrap は translate＋scale だけ（回転なし）なので、変形後の矩形でも割合は変わらない。 */
+  var KZ_X = 0.31, KZ_Y = 0.68;
+
+  var link = document.createElement('i'); link.className = 'wlink';
+  var pin  = document.createElement('i'); pin.className  = 'wpin';
+  var jpin = document.createElement('i'); jpin.className = 'wjp';
+  /* ⚠️.fv の中ではなく body 直下へ。.fv は重ね順の入れ物になっていて、
+       中に置くと後続セクションより上に出せない。 */
+  document.body.appendChild(link); document.body.appendChild(pin); document.body.appendChild(jpin);
+
+  /* ⚠️近江（滋賀）の位置は「絵（タイル）の中の割合」で持つ。実測値：
+       横 = 絵の左端から 0.423／縦 = 絵の上端から 0.424（world.svg にマーカーを重ねて確認）
+       ※0.423/0.400 だと東北を指すので注意（緯度で約4°ぶん南へ下げてある）
+     ⚠️絵の幅と横位置は画面幅で変わる（SPは画面幅の2.2倍で日本を中央に置いている）。
+       決め打ちにせず、::before の実際の width と background-position から毎回求める。 */
+  var JP_IN_TILE = 0.423, JPY = 0.424;
+
+  var mx = 0, my = 0, op = 0, running = false, has = false;
+  var geo = {cx:0, cy:0, h:0, dx0:0, dy0:0};
+
+  function measure(){
+    var cs = getComputedStyle(map), bs = getComputedStyle(map, '::before');
+    var w  = map.offsetWidth;
+    var tw = parseFloat(bs.width) || w;            /* 絵1枚ぶんの幅 */
+    var bx = parseFloat(bs.backgroundPosition) || 0;  /* 絵の左端が帯のどこから始まるか */
+    geo.h  = map.offsetHeight;
+    geo.cx = parseFloat(cs.left || 0) + w / 2;
+    geo.cy = window.innerHeight / 2;      /* top:50% + translateY(-50%) */
+    geo.dx0 = (bx + tw * JP_IN_TILE) - w / 2;      /* 中央から見た近江の横ずれ */
+    geo.dy0 = geo.h * (JPY - 0.5);                 /* 中央から見た近江の縦ずれ */
+  }
+
+  /* 起点＝いま出ている地図の「近江」。世界地図のときは絵の中の割合から、
+     滋賀の地図に入れ替わったあとは草津のピンの実位置から取る。
+     ⚠️ピンは position:sticky の中にいるのでスクロールで動く。毎フレームは測らず、
+       スクロール／リサイズで「測り直しが要る」印を付け、次に動いたときだけ測る。 */
+  var small = false, pinX = 0, pinY = 0, dirty = true;
+
+  function isSmall(){ return document.body.classList.contains('is-map-small'); }
+  function readPin(){
+    if (!wrapEl) return false;
+    var r = wrapEl.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    pinX = r.left + r.width * KZ_X; pinY = r.top + r.height * KZ_Y;
+    return true;
+  }
+  /* 「近江度量衡について」バナーが画面に出てきたら終了。
+     ⚠️バナーは白い面なので、そこへ赤い線が伸びると線だけが浮いて見える。
+       バナーは製品・技術の直前にあるので、これで「製品・技術に移ったら終わり」も満たす。 */
+  function done(){
+    var el = cta || svc;
+    if (!el) return false;
+    return el.getBoundingClientRect().top <= window.innerHeight * 0.6;
+  }
+  /* バナーの上にカーソルが乗っているあいだも結ばない（バナーが画面下端に少しだけ
+     見えている状態で、線がバナーに掛かるのを防ぐ） */
+  function onBanner(y){
+    if (!cta) return false;
+    var r = cta.getBoundingClientRect();
+    return y >= r.top && y <= r.bottom;
+  }
+
+  function tick(){
+    running = false;
+
+    var jx = small ? pinX : geo.cx + geo.dx0;
+    var jy = small ? pinY : geo.cy + geo.dy0;
+
+    var vx = mx - jx, vy = my - jy;
+    var len = Math.sqrt(vx * vx + vy * vy);
+    var ang = Math.atan2(vy, vx) * 180 / Math.PI;
+    link.style.transform = 'translate(' + jx.toFixed(1) + 'px,' + jy.toFixed(1) + 'px) rotate(' + ang.toFixed(2) + 'deg) scaleX(' + len.toFixed(1) + ')';
+    pin.style.transform  = 'translate(' + mx + 'px,' + my + 'px)';
+    jpin.style.transform = 'translate(' + jx.toFixed(1) + 'px,' + jy.toFixed(1) + 'px)';
+
+    op *= 0.86;                                   /* パッと出て、すっと消える */
+    if (op < 0.02) op = 0;
+    var o = op.toFixed(3);
+    link.style.opacity = o; pin.style.opacity = o; jpin.style.opacity = o;
+
+    /* 線が残っているあいだだけ回す。消えたら止める＝アイドル時は完全に無負荷 */
+    if (op > 0) start();
+  }
+  function start(){ if (!running){ running = true; requestAnimationFrame(tick); } }
+
+  function onMove(e){
+    if (done() || onBanner(e.clientY)) return;     /* バナーまで来たら結ばない */
+    small = isSmall();
+    if (small){
+      if (dirty){ if (!readPin()) return; dirty = false; }
+      else if (!pinX && !pinY) return;
+    } else {
+      if (!has || dirty){ has = true; dirty = false; measure(); }
+    }
+    mx = e.clientX; my = e.clientY;
+    op = 1;                                        /* 動くたびに線が「パッ」と点く */
+    start();
+  }
+
+  window.addEventListener('pointermove', onMove, {passive:true});
+  window.addEventListener('resize', function(){ dirty = true; measure(); }, {passive:true});
+  window.addEventListener('scroll', function(){
+    dirty = true;                                  /* 追従中の地図は動くので測り直す */
+    if (op && done()){ op = 0; start(); }          /* 範囲を出たら線を消す */
+  }, {passive:true});
+})();
+</script>
+
+<!-- ══ 企業理念：赤帯を手前で止めて、その下に横いっぱいのCTA ══ -->
+<style id="phil-cta-wide">
+/* ⚠️前段は「赤帯の末尾に、帯と同じ幅・同じ左端でバナーを載せる」作り
+     （.phil__cta{width:var(--band-w)} ＋ .gsec.phil::before{bottom:0}）。
+     ここでは帯をボタンの手前で止め、ボタンは横いっぱいに置き直す。
+   ⚠️帯の下端・すき間・ボタンの高さは連動させたいので、変数にまとめて1か所で持つ。
+     3つを別々の数字で書くと、片方だけ直したときに帯がボタンに食い込む。 */
+.gsec.phil{--phc-gap:clamp(100px,10.5vw,180px);   /* 締めコピーとボタンの間隔（帯の突き抜けぶんを含む） */
+           --phc-h:clamp(96px,9vw,124px);         /* ボタンの高さ */
+           --phc-bottom:clamp(90px,10vw,170px);   /* ボタンの下の余白（たっぷり） */
+           /* ⚠️赤帯は締めコピー「近江から、世界をはかる」を突き抜けて、その少し下で止める。
+                この値＝コピーの下端から何px下まで帯を伸ばすか。 */
+           --phc-over:clamp(20px,2.4vw,44px);
+           padding-bottom:var(--phc-bottom)}
+/* ⚠️帯の下端は「締めコピーの下端より少し下」で止めたい。
+     ただしコピーとボタンの間隔は行送りや文字サイズで実測とズレるため、
+     計算式で当てるとどうしても数十pxずれる。実測してJSが --band-bottom に入れる。
+     JSが動かない場合の控えとして、式でのおおよその値を残しておく。 */
+/* ⚠️控えの式はJSが動かないとき用。ボタンの下端より --phc-over ぶん下で止める。 */
+.gsec.phil::before{bottom:var(--band-bottom, calc(var(--phc-bottom) - var(--phc-over)))}
+
+/* ⚠️節の左パディングは赤帯を避けるぶん右より広い（--fvpad ＋ --frame）。
+     その差ぶんだけ左へ戻すと、左右とも --frame で揃う。 */
+/* ⚠️z-index:3 は赤帯（節の ::before）より前に出すため。下げると帯がボタンを覆う。 */
+.phil__cta{grid-column:1 / -1;position:relative;z-index:3;width:auto;
+  margin:var(--phc-gap) 0 0 calc(var(--fvpad) * -1)}
+.phil .phil__cta .btn{width:100%;height:auto;min-height:var(--phc-h);
+  padding:clamp(24px,2.4vw,34px) clamp(24px,2.6vw,38px);
+  align-items:center;justify-content:space-between}
+
+@media(max-width:900px){
+  .gsec.phil{--phc-gap:70px;--phc-h:88px;--phc-bottom:72px;--phc-over:16px}
+  .phil .phil__cta .btn{padding:18px 20px}
+}
+</style>
+
+<script>
+/* 赤帯の下端を「近江度量衡についてボタンの下端 ＋ 少し下」に合わせる。
+   ⚠️帯は .gsec.phil の ::before で、bottom は節の下端からの距離。
+     ボタンの位置は文字サイズや行送りで変わるので、実測して渡す。
+   ⚠️帯はボタンの裏を通って少し下で止める（＝ボタンを突き抜けて見える）。
+     節の下端まで伸ばさないこと（ボタンの下の余白は残す）。 */
+(function(){
+  var sec = document.querySelector('.gsec.phil');
+  var cta = sec && sec.querySelector('.phil__cta');
+  if (!sec || !cta) return;
+  function place(){
+    /* 突き抜けぶん（ボタンの下端から何px下まで帯を伸ばすか）。画面幅に応じて 20〜44px */
+    /* ⚠️以前は「ボタンの下端より少し下」まで伸ばして突き抜けさせていたが、
+         バナー化に伴い、帯はバナーの上端でぴたりと止める。 */
+    var sr = sec.getBoundingClientRect(), cr = cta.getBoundingClientRect();
+    var v = Math.max(0, sr.bottom - cr.top);
+    sec.style.setProperty('--band-bottom', Math.round(v) + 'px');
+  }
+  window.addEventListener('resize', place, {passive:true});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  setTimeout(place, 0); setTimeout(place, 600); place();
+})();
+</script>
+
+<!-- ══ 「近江度量衡について」ボタン：ホバーは白文字＋白矢印／文字を少し大きく ══ -->
+<style id="phil-cta-hover">
+/* ⚠️前段に .phil .phil__cta .btn:hover{color:var(--red)} がある（赤地に赤文字で消える）。
+     同じ詳細度で白に上書きする。矢印は background:currentColor なので文字色に追従する。 */
+.phil .phil__cta .btn:hover{color:#fff}
+/* 文字はひと回り大きく */
+.phil .phil__cta .btn{font-size:clamp(20px,2vw,30px)}
+@media(max-width:900px){.phil .phil__cta .btn{font-size:clamp(17px,4.6vw,22px)}}
+</style>
+
+<!-- ══ 主な納入先：見出しは和文のみ／社名を2倍に ══ -->
+<style id="clients-big">
+/* ⚠️ラベルは英字前提の指定（var(--en)・大文字化・広い字間）だった。
+     和文だけになるので、和文の書体と字間に直す。 */
+.stats__clients .cl-lbl{font-family:var(--jp);font-weight:700;
+  font-size:clamp(12px,1vw,14px);letter-spacing:.18em;text-transform:none}
+/* 社名は約2倍（17px → 34px）。区切りの中黒と流れる帯の余白も合わせて広げる。 */
+.clchip{font-size:clamp(26px,2.3vw,34px);letter-spacing:.02em}
+.clchip::after{width:7px;height:7px;margin:0 clamp(22px,2.4vw,40px)}
+/* ── 2段流し ──
+   ⚠️1段あたりの社名が10件＝帯の幅が半分になるので、同じ秒数だと速度は倍になる。
+     「もっと遅く」するには、元の46秒に対して倍以上の秒数が要る（1段=10件なら約23秒で元と同速）。
+   ⚠️上下で向きを変えて、2段が一枚の塊に見えないようにしている。 */
+.clients-marquee{margin-top:0}
+.clients-marquee--a{margin-top:clamp(14px,1.6vw,22px)}
+.clients-marquee--b{margin-top:clamp(2px,.35vw,6px)}   /* 段の間はぎゅっと詰める */
+.clients-marquee--a .clients-track{animation-duration:70s}
+.clients-marquee--b .clients-track{animation:clientsScrollBack 84s linear infinite}
+@keyframes clientsScrollBack{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.clients-marquee--b .clients-track{animation:none}}
+
+@media(max-width:900px){
+  .clchip{font-size:24px}
+  .clchip::after{width:6px;height:6px;margin:0 18px}
+  .clients-marquee--b{margin-top:2px}
+}
+</style>
+
+<!-- ══ ヒストリー：同じ大きさのカードを斜めに敷き、中央にコピー ══ -->
+<style id="hist-wall">
+/* ⚠️旧デザインは「大小まばらなカードを --x/--y で絶対配置」。同じ大きさの格子に置き換える。
+   ⚠️この節の高さは .hist__scatter（sticky・高さ --scatterH）が作っている。
+     面を absolute にすると節の高さが 0 になり、-100vh で重なる採用セクションに
+     丸ごと覆われて見えなくなる。面は必ず「流れの中」に置くこと。 */
+/* ⚠️前段（min-width:901px）が .gsec.hist .hist__stage{height:auto;position:static} で
+     グリッドを解いているので、display:grid を明示し直す。これが抜けると
+     3つの層が縦に積まれ、節が4画面ぶん（実測5051px）に伸びる。 */
+.gsec.hist .hist__stage{display:grid;grid-template-columns:minmax(0,1fr);padding:0;gap:0}
+.hist__type{display:none}   /* 背景の大型英字はカードの壁と競合するので伏せる */
+
+/* ⚠️面・中央コピー・白もや、そのほかの子も全部「同じマス」に重ねる。
+     1つでも別の行に落ちると、その高さぶん節が伸びてスクロールが間延びする
+     （実測で 5051px ＝4画面ぶんまで伸びていた）。
+   ⚠️::after（採用が重なるぶんの1画面）は擬似要素なので > * に当たらず、
+     2行目に残る。これは残すこと（消すと採用がこの面を丸ごと覆う）。 */
+.gsec.hist .hist__stage > *{grid-column:1;grid-row:1}
+
+/* 面：同じ大きさのカードを5列で並べ、面ごと右上へ傾ける */
+/* ⚠️列数＝カードの横幅。5列→4列にして1枚を広げ、枚数も16枚（4×4）にして
+     最終行が欠けないようにしている。枚数を増減するときは列数と揃えること。
+   ⚠️縦の余白は gap ひとつで横と同値にする。align-content:space-around だと
+     面の余った高さが行間に分配され、縦だけ間延びする（＝以前の状態）。 */
+.gsec.hist .hist__scatter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-rows:repeat(4,auto);align-content:center;
+  gap:clamp(12px,1.5vw,26px);padding:0 clamp(10px,1.4vw,26px);
+  transform:perspective(1100px) rotateZ(-5deg) scale(1.14);
+  transform-style:preserve-3d;transform-origin:50% 50%;
+  opacity:.6;pointer-events:none}
+/* ⚠️奥行きの出し方：面は画面と正対させたまま perspective だけ掛ける。
+     消失点は transform-origin（＝面の中央＝ほぼ画面中央）なので、
+     奥行きは中央を起点に左右へ均等に開く。面自体を rotateX/rotateY で振ると
+     手前が右上の隅に寄って「右上から始まる」見え方になるので振らない。
+   ⚠️カードの角度は全枚数そろえる（＝同じ向きの板の群れ）。
+     1枚ずつ角度やZを散らすと、遠近と噛み合わずガタついて見える。
+     位置による台形の付き方の差だけで奥行きは十分に出る。 */
+.gsec.hist .hist__scatter .hb{transform-style:preserve-3d;backface-visibility:hidden;
+  transform:rotateY(-16deg) rotateX(5deg)}
+/* 中央の2×2マスは写真を置かず、コピーとボタンの居場所として空ける。
+   ⚠️空マスは「位置を明示した子」を1つ置いて確保する。自動配置は
+     位置指定済みの子を避けて流れるので、残り12枚がきれいに周りを回る。
+     枚数＝4×4－4＝12。写真を足し引きするならこの数を合わせること。 */
+.gsec.hist .hist__scatter .hb-hole{grid-column:2/4;grid-row:2/4}
+.hist__scatter .hb{position:static;width:auto;margin:0;display:flex;flex-direction:column}
+.hist__scatter .hb__ph{width:100%;aspect-ratio:4/3;transform:none;flex:none}
+/* ⚠️ゆっくり寄る動き（ken burns）は15枚同時だとうるさいので止める */
+.hist__scatter .hb__img{animation:none;transform:none}
+.hist__scatter .hb figcaption{margin-top:7px;gap:.55em;align-items:baseline}
+.hist__scatter .hb figcaption b{font-size:clamp(12px,1.05vw,17px)}
+.hist__scatter .hb figcaption span{font-size:clamp(9.5px,.72vw,12px);line-height:1.5}
+
+/* ══ 文字は「面の中央マス」そのもの ══
+   ⚠️白もや（.hist__veil）と、別レイヤーで画面中央に追従させていた .hist__left は廃止。
+     文字を面の子にしたので、カードと同じ角度（同じ首振り）で描かれ、
+     スクロールもカードと完全に一緒になる。
+   ⚠️面に opacity を掛けると中の文字まで薄くなる。写真だけ薄くしたいので、
+     薄さは面ではなくカード1枚ずつに掛ける。
+   ⚠️面は pointer-events:none なので、ボタンを押せるようにここだけ auto に戻す。 */
+.gsec.hist .hist__scatter{opacity:1;top:calc(50vh - var(--scatterH)/2)}
+.gsec.hist .hist__scatter .hb{opacity:.6}
+.gsec.hist .hist__scatter .hb-hole{position:relative;pointer-events:auto;
+  --hole-pad:clamp(38px,3.8vw,64px);   /* 四隅の四角＋アキぶん。文字はこの内側 */
+  transform:rotateY(-16deg) rotateX(5deg);transform-style:preserve-3d}
+/* 四隅の赤い四角（各1個）。
+   ⚠️四隅固定なので、ここは兄弟要素で並べるより absolute が素直。
+     親（.hb-hole）が3D変換済みなので、四角も文字と同じ角度で一緒に傾く。 */
+.gsec.hist .hb-hole__c{position:absolute;pointer-events:none;
+  width:clamp(18px,1.8vw,30px);aspect-ratio:1;background:var(--red)}
+.gsec.hist .hb-hole__c--tl{left:0;top:0}
+.gsec.hist .hb-hole__c--tr{right:0;top:0}
+.gsec.hist .hb-hole__c--bl{left:0;bottom:0}
+.gsec.hist .hb-hole__c--br{right:0;bottom:0}
+
+/* 枠のなかは「計量ひとすじ、126年。」＋ボタンの2点だけ。
+   塊ごと枠のまんなかに置き、中身は左ぞろえ（コピーとボタンの左端を通す）。
+   ⚠️文字送り演出のJSが .disp-jp を .tr で包むので、要素自身に transform を持たせる
+     中央寄せ（translate(-50%,-50%)）は演出に上書きされる。入れ物を敷いて flex で寄せること。 */
+.gsec.hist .hb-hole__mid{position:absolute;inset:var(--hole-pad);
+  display:flex;align-items:center;justify-content:center;text-align:left}
+.gsec.hist .hb-hole__stack{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(18px,2vw,30px)}
+
+/* ⚠️見出しは通常の1.7倍指定（clamp(4.1rem,8.2vw,7.8rem)）のままだと
+     2マスぶんの幅（＝約700px）に8文字が収まらない。ここだけ内寸に合わせて詰める。 */
+/* 見出しは中央の枠から出して、他セクションと同じ「エリアの左上」へ。
+   ⚠️sticky にしない＝スクロールで流れる（追従なし）。写真の面の上に重ねてよい。
+   ⚠️.hist__stage は1マスに全部を重ねるグリッドなので、start/start で左上に寄せる。 */
+/* ⚠️左余白は節の padding-left（--frame）だけで足りている。ここにも --frame を足すと
+     二重になって、他セクション（実測40px）の倍の80pxになる。 */
+.gsec.hist .hist__hd2{align-self:start;justify-self:start;position:relative;z-index:4;
+  padding:0;text-align:left;pointer-events:none}
+.gsec.hist .hist__hd2 .sec-ttl{margin:0 0 6px}
+.gsec.hist .hist__hd2 .sec-jp{margin:0}
+/* ⚠️「計量ひとすじ、126年。」は1行。折り返すと枠の中心がずれるので nowrap で固定し、
+     入る大きさに合わせて字数ぶんの上限を決めている（12文字×字送りで枠内寸に収まる値）。 */
+.gsec.hist .hb-hole .disp-jp{margin:0;white-space:nowrap;
+  font-size:clamp(1.35rem,3vw,3.1rem)}
+.gsec.hist .hb-hole .hist__go{margin:0;
+  position:relative;overflow:hidden}   /* 幕をボタンの中に閉じ込める（全面が塗られるのを防ぐ） */
+
+@media(max-width:900px){
+  /* SPも同じ奥行き。画面が狭いぶん、首振りは浅め・寄りは強めに */
+  .gsec.hist .hist__scatter{grid-template-columns:repeat(3,minmax(0,1fr));
+    transform:perspective(820px) rotateX(6deg) rotateY(-12deg) rotateZ(-4deg) scale(1.26);gap:10px}
+  .hist__scatter .hb figcaption b{font-size:13px}
+  .hist__scatter .hb figcaption span{font-size:10.5px}
+  .gsec.hist .hist__scatter .hb-hole{grid-column:1/-1;grid-row:2/4}
+  .gsec.hist .hist__scatter .hb-hole{--hole-pad:clamp(26px,6vw,40px)}
+  .gsec.hist .hb-hole .disp-jp{font-size:clamp(1rem,4.2vw,1.5rem)}
+}
+</style>
+
+<!-- ══ 黒ボタン：ホバーで「真っ白」になるのを修正 ══ -->
+<style id="btn-dark-hover-fix">
+/* ⚠️.hist__go / .stats__cta / .news__all は黒地・白文字のボタン。
+     共通のワイプ幕 ::before は background:var(--bc) で、この3つは --bc:#fff（＝白帯）。
+     後段の #btn-red-wipe が文字色を #fff にするため、ホバーで「白帯＋白文字」＝真っ白になっていた。
+   ⚠️直し方は文字色ではなく帯の色。--bc を赤に差し替えれば、
+     他ボタンと同じ「赤帯が入って白文字」に揃う（枠線は border:0 なので影響なし）。 */
+/* ⚠️真犯人はここ：#hist-band の @media(min-width:901px) が .hist__go に position:static を
+     当てていたため、幕 ::before{position:absolute;inset:0} の基準が
+     ボタンではなく sticky な .hist__left になり、ホバーでセクション全面が塗り潰されていた。
+     ボタン自身を position:relative に戻して幕をボタンの中に閉じ込める。 */
+.gsec.hist .hist__go{position:relative;overflow:hidden}
+.hist__go,.stats__band .stats__cta,.news__all{--bc:var(--red)}
+.hist__go:hover,.stats__band .stats__cta:hover,.news__all:hover,
+.stats__band:hover .stats__cta,.foot__recruit:hover .go{color:#fff}
+.hist__go:hover .arrow-i,.news__all:hover .arrow-i{color:#fff!important}
+/* 同じ理由（position:static で幕が親いっぱいに広がる）を納入バンドのボタンでも塞ぐ。
+   left/top 等は auto のままなので、並びは今までと変わらない。 */
+@media(max-width:700px){
+  .stats__band .stats__cta{position:relative;left:auto;right:auto;top:auto;bottom:auto;transform:none}
+}
+</style>
+
+
+<!-- ══ ヒストリー：区切り線の前後を広げ、エリアに入ったら地を黒にする ══ -->
+<style id="hist-dark">
+/* ⚠️区切り線の上下アキは #secline-even の --secgap（上下同値）で決まっている。
+     ③だけは「線の下＝ヒストリーが始まるまでの間」をとくに広く取りたいので、
+     この線だけ倍率で足す。他の線は共通値のまま。 */
+.secline--3{margin-top:calc(var(--secgap) * 1.7);margin-bottom:0}
+/* ⚠️線の下のアキは「線の margin-bottom」ではなく「ヒストリー節の padding-top」で取る。
+     黒くなるのは節の背景なので、アキを節の中に入れておかないと
+     線のすぐ下に白い帯が残ってしまう（＝黒が始まるのが遅れて見える）。
+     見た目のアキの量は同じ（--secgap × 2.6）。 */
+.gsec.hist{padding-top:calc(var(--secgap) * 2.6)}
+@media(max-width:900px){
+  .secline--3{margin-top:calc(var(--secgap) * 1.4);margin-bottom:0}
+  .gsec.hist{padding-top:calc(var(--secgap) * 1.9)}
+}
+
+/* ── ヒストリーに入ったら地を黒に ──
+   ⚠️切り替えは「節の上端が画面の下55%まで上がってから、採用セクションが画面上端を
+     覆うまで」。節の高さだけで判定すると、白い採用セクションが画面を覆っている
+     間も黒のままになり、ロゴが白×白で消える。 */
+.gsec.hist{transition:background-color .6s ease}
+html.hist-dark .gsec.hist{background:#0d0d0d}
+/* 写真は黒地だと沈むので、薄さを少しだけ戻す */
+html.hist-dark .gsec.hist .hist__scatter .hb{opacity:.72}
+html.hist-dark .hist__scatter .hb figcaption,
+html.hist-dark .hist__scatter .hb figcaption b,
+html.hist-dark .hist__scatter .hb figcaption span{color:#fff}
+/* 中央の枠：文字は白、ボタンは白ボタン（ホバーは共通ルールどおり赤帯＋白文字） */
+html.hist-dark .gsec.hist .sec-ttl,
+html.hist-dark .hb-hole .disp-jp{color:#fff}
+html.hist-dark .hb-hole .hist__go{background-color:#fff;color:var(--ink);--bc:var(--red);--bg:#fff}
+html.hist-dark .hb-hole .hist__go:hover{background-color:#fff;color:#fff}
+/* 左上ロゴは黒地では白へ戻す（通常は「社名＝黒／3本線＝赤」に切り替わっている） */
+html.hist-dark body.is-logo-dark .site-logo .logo-name{filter:brightness(0) invert(1)}
+</style>
+<script>
+/* ヒストリーの黒地スイッチ。
+   ⚠️IntersectionObserver 1つでは「採用セクションが上を覆ったら解除」が書けない
+     （節そのものはまだ画面に掛かっている）。2つの矩形を見て決める。
+   ⚠️スクロールのたびに計算せず、rAFで1フレーム1回に間引く。 */
+(function(){
+  var root = document.documentElement;
+  var hist = document.querySelector('.gsec.hist');
+  var rec  = document.querySelector('.gsec.recjoin');
+  if(!hist) return;
+  var tick = false;
+  function upd(){
+    tick = false;
+    var h = hist.getBoundingClientRect();
+    /* ⚠️発火は「節の上端が画面の上に来たら」ではなく、かなり手前から。
+         節の上端＝ヒストリーの上の罫線のすぐ下。そこが画面の下4割ほどまで
+         上がった時点で黒へ移り始める（0.8＝早すぎ／0.55＝遅すぎの間を取った値）。 */
+    var on = h.top <= window.innerHeight * 0.62 && h.bottom > 0;
+    if(on && rec && rec.getBoundingClientRect().top <= window.innerHeight * 0.12) on = false;
+    root.classList.toggle('hist-dark', on);
+  }
+  function onScroll(){ if(!tick){ tick = true; requestAnimationFrame(upd); } }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll);
+  upd();
+})();
+</script>
+
+<!-- ══ 近江度量衡について：画面幅いっぱいのバナーにする ══ -->
+<style id="phil-cta-bleed">
+/* ⚠️このボタンは企業理念セクションの子。セクションには左右パディングがあるので、
+     そのぶんを負のマージンで打ち消さないと端まで届かない。
+     パディングの値は breakpoint で変わり、しかも左右で違う（実測 80px / 40px）。
+     CSS からは親のパディングを読めないので、下のスクリプトが実測して
+     --phc-bleed-l / --phc-bleed-r に入れる（変数が無いときの控えも書いてある）。
+   ⚠️50% - 50vw の定番技は使えない。この要素の親（セクションの内容ボックス）は
+     左右のパディングが違うぶん画面中央からずれていて、20px ほど寄ってしまう。 */
+.phil__cta{margin-left:calc(var(--phc-bleed-l, var(--fvpad)) * -1);
+  margin-right:calc(var(--phc-bleed-r, var(--frame)) * -1);width:auto;max-width:none}
+/* バナーとしてがっつり。左右の罫線は画面端の1本線になって邪魔なので落とす。 */
+.gsec.phil{--phc-h:clamp(150px,14vw,210px)}
+.phil .phil__cta .btn{min-height:var(--phc-h);
+  border-left:0;border-right:0;
+  padding:clamp(28px,3vw,44px) clamp(28px,3.4vw,56px);
+  font-size:clamp(24px,2.9vw,46px)}
+.phil .phil__cta .btn>span{width:clamp(40px,4.2vw,64px);height:clamp(40px,4.2vw,64px)}
+@media(max-width:900px){
+  .gsec.phil{--phc-h:clamp(104px,22vw,150px)}
+  .phil .phil__cta .btn{padding:20px 20px;font-size:clamp(18px,4.6vw,26px)}
+  .phil .phil__cta .btn>span{width:clamp(34px,7vw,44px);height:clamp(34px,7vw,44px)}
+}
+</style>
+<script>
+/* セクションの左右パディングを実測して、バナーの負マージンに渡す。
+   ⚠️#phil-cta-wide のスクリプト（赤帯の下端）と同じタイミングで呼びたいので、
+     こちらでも resize / フォント確定後に測り直す。 */
+(function(){
+  var sec = document.querySelector('.gsec.phil');
+  if (!sec) return;
+  function bleed(){
+    var cs = getComputedStyle(sec);
+    sec.style.setProperty('--phc-bleed-l', cs.paddingLeft);
+    sec.style.setProperty('--phc-bleed-r', cs.paddingRight);
+  }
+  window.addEventListener('resize', bleed, {passive:true});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(bleed);
+  bleed();
+})();
+</script>
+
+<!-- ══ 近江度量衡についてバナー：下の余白・赤帯・区切り罫線をなくす ══ -->
+<style id="phil-cta-flush">
+/* ⚠️バナーの下に見えていた黒い帯は、企業理念セクションの padding-bottom
+     （--phc-bottom）ぶんの背景写真。0 にすると節はバナーの下端で終わる。 */
+.gsec.phil{--phc-bottom:0}
+/* ⚠️赤い縦帯はバナーの上端で止める。下端の位置は下のスクリプトが実測して
+     --band-bottom に入れているので、式ではなくそちらを直す（このCSSは控え）。 */
+.gsec.phil::before{bottom:var(--band-bottom, var(--phc-h))}
+/* 企業理念 ↔ 製品・技術 の区切り罫線は引かない。
+   ⚠️display:none も height:0 もダメ。前者は上下マージンごと消え、後者は
+     「高さ0の箱」になって上下マージンが相殺され、アキが半分に潰れる（実測56px）。
+     高さ1pxのまま、線（背景）と両端の点だけ消すこと。 */
+.secline--1{background:none!important}
+.secline--1::before,.secline--1::after{display:none}
+</style>
+
+<!-- ══ 製品・技術：システム見出しを右下テキストの上へ ══ -->
+<style id="pf-head-right">
+/* ⚠️これまで .pf-head は左上、.pf-info は右下の別々の absolute だった。
+     2つを縦に積みたいので、入れ物（.pf-ui）を flex にして右下に寄せ、
+     子はどちらも通常フローに戻す。absolute のままだと互いの高さを知れず、
+     見出しの下端を情報パネルの上端に合わせられない。
+   ⚠️SP（900px以下）は「見出し＝左上／パネル＝下いっぱい」の別レイアウトなので触らない。 */
+@media(min-width:901px){
+  .pf-ui{display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;
+    padding:0 calc(var(--frame) + 32px) calc(5vh + 36px)}
+  .pf-head{position:static;left:auto;right:auto;top:auto;bottom:auto;
+    width:var(--pf-w);text-align:right;margin:0 0 clamp(12px,1.2vw,20px);
+    /* ⚠️横を詰める scaleX の起点は左のままだと右端がずれる。右基準に。 */
+    transform:scaleX(.8);transform-origin:right center}
+  .pf-head__ttl{font-size:clamp(26px,3.2vw,46px);line-height:1.62}
+  /* テキストエリアは少し横長に、行間は詰める（38%/440px・1.95 から） */
+  .pf-ui{--pf-w:min(46%,560px)}
+  .pf-info{position:static;right:auto;bottom:auto;width:var(--pf-w)}
+  .pf-info__txt{line-height:1.7}
+  /* 番号は本文の上ではなく、本文の左頭に添える。
+     ⚠️2カラムのグリッドにして、番号＝左／本文＝右の同じ行に置く。
+       ページ送り（.pf-nav）は下段いっぱい。 */
+  .pf-info{display:grid;grid-template-columns:auto minmax(0,1fr);
+    column-gap:clamp(12px,1.2vw,20px);row-gap:0}
+  .pf-info__no{grid-column:1;grid-row:1;align-self:start;margin:0;
+    /* 大きい数字と16pxの本文で、上端ではなく1行目の見た目に合わせて少し下げる */
+    padding-top:.08em}
+  .pf-info__txt{grid-column:2;grid-row:1;margin-top:0}
+  .pf-nav{grid-column:1 / -1}
+}
+</style>
+
+<!-- ══ 滋賀マップ：画面に収まるサイズへ・線を細く ══ -->
+<style id="fv-map-fit">
+/* ⚠️これまでPC幅では --ms:1／--mx:12% で、地図が上下も右も画面から見切れていた
+     （実測 高さ1278px＝109vh・右へ55pxはみ出し）。画面の中に収める。
+   ⚠️--ms / --mx は body.is-map-small 側（詳細度0,5,0）で上書きされるので、
+     素の状態と縮小状態の両方を同じ詳細度で書き直すこと。
+   ⚠️--mx は自分の幅に対する％の右寄せ。0% で右端が --fvpad にツラ付く（＝画面内）。
+   ⚠️草津を画面の縦中央に置く --mfy0 はJSが実測して入れているので、倍率を変えても
+     読み込み時に測り直されて中央のまま。 */
+@media(min-width:901px){
+  /* ⚠️縦は「草津を画面中央」ではなく「地図そのものを画面の上下中央」に。
+       --mfy（草津合わせのずらし）を 0 にすると、親の align-items:center だけが残る。
+       JSの --mfy0 の計算はそのまま動くが、この指定で使われなくなる。
+     ⚠️transform-origin が center になっていて、縮小したぶん右端が内側へ 159px 逃げていた。
+       right center に戻すと右端が --fvpad にツラ付く（＝いちばん右に寄る）。 */
+  .fv .phil__map .mapwrap,
+  body.is-map-small .fv .phil__map .mapwrap{--ms:.55;--mx:0%;--mfy:0px;
+    transform-origin:right center}
+}
+/* 県境の線は細く。SVGのユーザー単位なので、表示サイズに応じて拡大される
+   （縮小と合わせて実効 約1.8px → 約0.8px）。 */
+.phil__map .mapsvg .mp-line{stroke-width:.65}
+/* ⚠️SPは地図自体が .40〜.52 倍まで小さくなるので、同じ .65 だと線が消えかける。
+     表示サイズに合わせて戻す。 */
+@media(max-width:900px){.phil__map .mapsvg .mp-line{stroke-width:1}}
+</style>
+
+<!-- ══ 琵琶湖：斜線と塗りをさらに薄く ══ -->
+<style id="map-lake-light">
+/* ⚠️湖の見え方は3つの重ね：ベタ塗り(.mp-lake) ＋ 斜線(.mp-lake-h) ＋ 斜線パターンの線幅。
+     薄くするときは「出現アニメに使っている opacity」ではなく、
+     ベタ塗りは fill-opacity、斜線は表示後の opacity（.is-shown 側）で調整すること。
+   ⚠️パターンの線は SVG の <pattern> 内 <line>。viewBox 単位なので、
+     表示倍率（約0.8倍）が掛かって画面上はさらに細くなる。 */
+.phil__map .mapsvg .mp-lake{fill-opacity:.06}          /* ベタ塗り：ほぼ無し（0 にすれば完全に消える） */
+.phil__map .mapwrap.is-shown .mapsvg .mp-lake-h{opacity:.26}   /* 斜線：0.5 → 0.26 */
+.phil__map .mapsvg pattern line{stroke-width:.6}       /* 斜線じたいも細く（0.9 → 0.6） */
+</style>
+
+<!-- ══ TOP採用：キーアートのバナー＋新卒／中途の2ボタン ══ -->
+<style id="recruit-banner">
+/* ⚠️旧レイアウト（.rjb の写真2枚＋縦書きラベル）はマークアップごと廃止。CSSは残してあるが
+     どこからも呼ばれていない。戻すときは .recjoin__split のマークアップを復活させること。
+   ⚠️バナーは白地・赤罫。ヒストリーが黒面になったので、続く採用は白で抜くと締まる。
+     アート（黒＋赤の線画）はそのままの色で置く＝採用ページのFVと同じ見え方。 */
+.recjoin .rcb{position:relative;display:block;margin-top:clamp(34px,4vw,60px);
+  background:#fff;border:1px solid var(--red);color:var(--red);text-decoration:none;
+  padding:clamp(46px,5vw,78px) clamp(28px,3.4vw,56px) clamp(74px,6.4vw,104px);
+  overflow:hidden;transition:background .3s ease}
+/* 背景に社員写真をモノクロで敷く。
+   ⚠️アートは黒＋赤の線画なので、写真の上に白幕を1枚かませて可読性を確保する。
+     幕を薄くしすぎるとアートが写真に負ける（.72 前後が下限）。
+   ⚠️::before＝写真、::after＝白幕、中身は position:relative で上に載せる。 */
+.recjoin .rcb::before,.recjoin .rcb::after{content:"";position:absolute;inset:0;z-index:0}
+.recjoin .rcb::before{background:url(p_recruit_banner.jpg) center 42%/cover no-repeat;filter:grayscale(1)}
+.recjoin .rcb::after{background:rgba(255,255,255,.76)}
+.recjoin .rcb > *{position:relative;z-index:1}
+.recjoin .rcb:hover::after{background:rgba(255,255,255,.68)}
+.recjoin .rcb__lbl{position:absolute;left:clamp(20px,2.2vw,34px);top:clamp(18px,1.9vw,28px);
+  font-family:var(--en);font-weight:700;font-size:clamp(10px,.86vw,13px);letter-spacing:.2em;color:var(--red)}
+/* アートは中央に。SVGの中身は左に文字・右に「？」で、箱の中央だと左に寄って見えるため
+   採用ページと同じ 5.5% ぶん右へ逃がしている。 */
+.recjoin .rcb__art{display:block;width:min(72%,780px);margin:0 auto;transform:translateX(5.5%)}
+.recjoin .rcb__art svg{display:block;width:100%;height:auto;overflow:visible}
+.recjoin .rcb__go{position:absolute;right:clamp(20px,2.4vw,38px);bottom:clamp(18px,2vw,30px);
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--jp);font-weight:700;font-size:clamp(15px,1.35vw,20px);letter-spacing:.06em}
+.recjoin .rcb__go .arrow-i{transition:transform .3s ease}
+.recjoin .rcb:hover .rcb__go .arrow-i{transform:translateX(5px)}
+
+
+/* サブ：新卒／中途。ホバーは共通ルール（赤帯が左から入って白文字） */
+.recjoin .rcb-sub{display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(12px,1.4vw,22px);margin-top:clamp(12px,1.4vw,22px)}
+.recjoin .rcb-sub__b{position:relative;z-index:0;overflow:hidden;
+  display:flex;align-items:center;gap:clamp(14px,1.5vw,24px);
+  background:#fff;border:1px solid var(--red);color:var(--red);text-decoration:none;
+  padding:clamp(12px,1.1vw,16px);transition:color .3s ease}
+.recjoin .rcb-sub__b::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--red);
+  transform:scaleX(0);transform-origin:left center;transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.recjoin .rcb-sub__b:hover::before{transform:none}
+.recjoin .rcb-sub__b:hover{color:#fff}
+.recjoin .rcb-sub__ph{flex:none;width:clamp(110px,13vw,200px);aspect-ratio:16/9;
+  background-size:cover;background-position:center 38%}
+.recjoin .rcb-sub__jp{font-family:var(--jp);font-weight:700;
+  font-size:clamp(17px,1.7vw,26px);letter-spacing:.06em}
+.recjoin .rcb-sub__b .arrow-i{margin-left:auto;margin-right:clamp(6px,.8vw,14px);
+  font-style:normal;transition:transform .3s ease}
+.recjoin .rcb-sub__b:hover .arrow-i{transform:translateX(5px)}
+
+@media(max-width:700px){
+  .recjoin .rcb{padding:clamp(34px,9vw,52px) 18px clamp(58px,14vw,78px)}
+  .recjoin .rcb__art{width:88%}
+  .recjoin .rcb-sub{grid-template-columns:1fr}
+  .recjoin .rcb-sub__ph{width:34vw}
+}
 </style>
 
 </body>

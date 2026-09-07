@@ -10,7 +10,15 @@
        同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
      ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
      ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
-<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}
+/* ⚠️ロゴ隠し（ヴェール）の指定は _pt.js が注入しているが、あれは body の末尾で読まれる。
+     初回ロードで読み込みが遅いと、下の3秒の保険で pt-init（body丸ごと非表示）が外れた時点では
+     まだ届いておらず、タイルも敷かれていないので左上のロゴだけが一瞬見える。
+     同じ内容を head にも置いて、最初の1フレームから効かせる。
+   ⚠️退場（.pt-leave）には掛けないこと。リンクを押した瞬間にロゴだけ先に消える。 */
+html.pt-veil:not(.pt-leave) .site-logo,
+html.pt-veil:not(.pt-leave) .nav__mini,
+html.pt-veil:not(.pt-leave) .drawer__logo{opacity:0!important;visibility:hidden!important}</style>
 <script>
 (function(){
   /* ⚠️再読み込み時のスクロール位置復元を切る。
@@ -22,6 +30,9 @@
   var d = document.documentElement;
   d.className += ' pt-init pt-veil';
   setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+  /* ⚠️ヴェールを外すのは _pt.js の役目。ただしJSが届かない・こけた場合に
+       ロゴが永久に消えたままになるので、こちらにも保険を置く（pt-init より後）。 */
+  setTimeout(function(){ d.classList.remove('pt-veil'); }, 4500);
 })();
 </script>
 <title>会社案内｜近江度量衡株式会社</title>
@@ -1556,7 +1567,7 @@ html,body{overflow-x:clip;max-width:100%}
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">近江度量衡の歴史</a></div>
     <div class="nitem">
       <a class="nlink" href="recruit.html">採用情報</a>
       <div class="mega"><div class="mega__inner">
@@ -1583,7 +1594,7 @@ html,body{overflow-x:clip;max-width:100%}
       <a href="service.html">サービス案内<span>Service</span></a>
       <a href="delivery.html">納入実績<span>Track Record</span></a>
       <a href="company.html">会社案内<span>Company</span></a>
-      <a href="history.html">126年ヒストリー<span>History</span></a>
+      <a href="history.html">近江度量衡の歴史<span>History</span></a>
       <a href="recruit.html">採用情報<span>Recruit</span></a>
       <a href="contact.html">お問い合わせ<span>Contact</span></a>
     </nav>
@@ -1680,23 +1691,47 @@ html,body{overflow-x:clip;max-width:100%}
 
 <!-- 代表挨拶 -->
 <section class="section" id="message">
-  <div class="message rv">
-    <div class="message__photo"><img src="message-pres.jpg" alt="代表取締役社長 小谷 俊彦"></div>
-    <div class="message__inner">
-      <div class="sec-head sec-head--onphoto">
-        <h2 class="sec-jp">代表挨拶</h2>
-        <p class="sec-ttl">Message</p>
+  <!-- ⚠️旧レイアウト（.message__photo に写真1枚＋その上にテキスト）から作り直し。
+       kokuyo recruit の HR MESSAGE を参考に「KV → 導入 → 本文 → 写真ブレイク → 引用 → 署名」の
+       ブロック構成にしている。旧 .message* のCSSは残してあるが、ここでは使っていない。 -->
+  <div class="pmsg">
+    <!-- ① キービジュアル -->
+    <div class="pmsg__kv rv">
+      <div class="pmsg__kvph" style="background-image:url(p_pres_kv.jpg)"></div>
+      <div class="pmsg__kvtx">
+        <div class="sec-head"><h2 class="sec-jp">代表挨拶</h2><p class="sec-ttl">Message</p></div>
+        <p class="pmsg__catch">We Measure the Future.<br><span>未来を測り、未来を創る。</span></p>
+        <p class="pmsg__who"><span>代表取締役社長</span><b>小谷 俊彦</b></p>
       </div>
-      <div class="message__cols">
-        <div class="message__body">
-          <p class="disp-jp">We Measure the Future.<br>未来を測り、未来を創る。</p>
-          <p class="body-txt">私たち近江度量衡は、1900年の創業以来、125年以上にわたり「はかる」という技術を通じて社会を支えてきました。重さをはかる。量をはかる。品質をはかる。それが私たちの原点です。</p>
-          <p class="body-txt">しかし、私たちが本当に大切にしているのは、数字そのものではありません。その先にある、お客様の安心や喜び、そして未来です。私たちは、お客様一人ひとりの課題に真摯に向き合いながら、新しい価値づくりに挑戦し続けています。</p>
-          <p class="body-txt">創業から125年。先人たちが私たちに残してくれたのは、技術だけではありません。変化を恐れず挑戦する姿勢。人を大切にする心。その想いを受け継ぎながら、私たちは次の時代へ歩みを進めています。</p>
-          <p class="body-txt">未来は待つものではなく、創るもの。人を育てる。技術を磨く。挑戦を続ける。そして、お客様や地域社会、共に働く仲間とともに、より良い未来を創っていきたいと考えています。</p>
-          <p class="body-txt">We Measure the Future.<br>未来を測り、未来を創る。それが私たち近江度量衡の変わらぬ使命です。</p>
-        </div>
-        <p class="message__sign"><span class="sign__role">代表取締役社長</span><span class="sign__name">小谷 俊彦</span></p>
+    </div>
+
+    <!-- ② 導入 -->
+    <div class="pmsg__intro rv">
+      <p class="pmsg__lead">重さをはかる。量をはかる。品質をはかる。<br>それが私たちの原点です。</p>
+      <div class="pmsg__body">
+        <p>私たち近江度量衡は、1900年の創業以来、125年以上にわたり「はかる」という技術を通じて社会を支えてきました。</p>
+        <p>しかし、私たちが本当に大切にしているのは、数字そのものではありません。その先にある、お客様の安心や喜び、そして未来です。私たちは、お客様一人ひとりの課題に真摯に向き合いながら、新しい価値づくりに挑戦し続けています。</p>
+      </div>
+    </div>
+
+    <!-- ③ 写真ブレイク（2カラム） -->
+    <div class="pmsg__break rv">
+      <div class="pmsg__breakph" style="background-image:url(p_pres_sub.jpg)"></div>
+      <div class="pmsg__breaktx">
+        <p class="pmsg__sub">創業から125年。</p>
+        <p>先人たちが私たちに残してくれたのは、技術だけではありません。変化を恐れず挑戦する姿勢。人を大切にする心。その想いを受け継ぎながら、私たちは次の時代へ歩みを進めています。</p>
+      </div>
+    </div>
+
+    <!-- ④ 引用 -->
+    <p class="pmsg__quote rv">未来は待つものではなく、創るもの。</p>
+
+    <!-- ⑤ 締め＋署名 -->
+    <div class="pmsg__intro pmsg__intro--end rv">
+      <div class="pmsg__body">
+        <p>人を育てる。技術を磨く。挑戦を続ける。そして、お客様や地域社会、共に働く仲間とともに、より良い未来を創っていきたいと考えています。</p>
+        <p>We Measure the Future.<br>未来を測り、未来を創る。それが私たち近江度量衡の変わらぬ使命です。</p>
+        <p class="pmsg__sign"><span>代表取締役社長</span><b>小谷 俊彦</b></p>
       </div>
     </div>
   </div>
@@ -1897,7 +1932,7 @@ html,body{overflow-x:clip;max-width:100%}
       </div>
       <div>
         <a href="company.html">会社案内</a>
-        <a href="history.html">126年ヒストリー</a>
+        <a href="history.html">近江度量衡の歴史</a>
         <a href="news.html">新着情報</a>
         <a href="recruit.html">採用情報</a>
         <a href="contact.html">お問い合わせ</a>
@@ -2958,6 +2993,98 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 @media(max-width:900px){
   .creed__no{font-size:12.5px}
   .creed__txt{font-size:14.5px}
+}
+</style>
+
+<!-- ══ ボタン：白地・赤枠・赤文字／ホバーで赤帯が入って白文字（採用ページと共通ルール） ══ -->
+<style id="btn-red-common">
+/* ⚠️この動き（帯が左から入って文字色が反転）は共通CSSに既にある。
+     .btn{--bc: 枠と文字と帯の色 ／ --bg: 地の色} という変数で色を決める作りなので、
+     疑似要素を自作せず変数を差し替えるのが正しい直し方。
+   ⚠️セレクタを並べているのは詳細度をそろえるため。
+     .pmain .btn / .phil .btn のように、文脈ごとに色を直書きしている指定が先にある。 */
+.btn,.btn--outline,.pmain .btn,.pmain .btn--outline,.phil .btn,.svc__lead .btn{
+  --bc:var(--red);--bg:#fff;
+  background:var(--bg);color:var(--bc);border:1px solid var(--bc)}
+.btn:hover,.btn--outline:hover,.pmain .btn:hover,.pmain .btn--outline:hover,
+.phil .btn:hover,.svc__lead .btn:hover{background:var(--bg);color:var(--bg)}
+/* 矢印は文字色に追従させる（白を直書きしている箇所も打ち消す） */
+.btn .arrow-i,.btn i,.btn span{color:inherit!important}
+.btn .arrow-i{transition:transform .3s ease}
+.btn:hover .arrow-i{transform:translateX(4px)}
+</style>
+
+<!-- ══ 代表挨拶：KV＋段組みのリッチレイアウト ══ -->
+<style id="pmsg">
+/* ⚠️このセクションだけ全幅で見せたいので、節の左右パディングを打ち消している。
+     .section{padding:120px 7vw} が親なので、負のマージンで画面端まで伸ばす。 */
+#message.section{padding-left:0;padding-right:0}
+.pmsg{--pad:7vw}
+/* ── ① KV：写真の上に赤いグラデを重ね、左にコピー ── */
+.pmsg__kv{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;
+  padding:clamp(48px,7vw,110px) var(--pad);overflow:hidden}
+.pmsg__kvph{position:absolute;inset:0;background-size:cover;background-position:center 22%}
+/* ⚠️グラデでフェードさせない。左はベタの赤面、右は素の写真。境目はまっすぐ切る。 */
+.pmsg__kv::after{content:"";position:absolute;left:0;top:0;bottom:0;width:47%;
+  background:var(--red)}
+.pmsg__kvtx{position:relative;z-index:2;color:#fff;max-width:min(560px,46%)}
+/* ⚠️.sec-jp は「::before の帯が伸びて、その上に文字が乗る」作り。
+     background だけ白にしても ::before の赤帯が上に来て、赤地に赤文字＝消える。
+     写真の上に置くときは帯（::before）を白に、文字を赤にすること。 */
+.pmsg__kvtx .sec-jp{background:none;color:var(--red)}
+.pmsg__kvtx .sec-jp::before{background:#fff}
+.pmsg__kvtx .sec-ttl{color:rgba(255,255,255,.82)}
+.pmsg__catch{margin:clamp(22px,2.6vw,38px) 0 0;font-family:var(--jp);font-weight:700;
+  font-size:clamp(20px,1.9vw,30px);letter-spacing:.04em;line-height:1.6}
+.pmsg__catch span{font-family:var(--mincho);font-weight:600;
+  font-size:clamp(26px,2.8vw,44px);letter-spacing:.03em}
+.pmsg__who{margin:clamp(26px,3vw,44px) 0 0;display:flex;align-items:baseline;gap:14px;
+  font-family:var(--jp)}
+.pmsg__who span{font-size:clamp(12px,1vw,14px);letter-spacing:.08em;opacity:.86}
+.pmsg__who b{font-size:clamp(19px,1.7vw,26px);letter-spacing:.08em;font-weight:700}
+
+/* ── ② 本文ブロック：リード（左）＋段落（右）の2カラム ── */
+.pmsg__intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:clamp(26px,4vw,72px);align-items:start;
+  padding:clamp(56px,7vw,120px) var(--pad) 0}
+.pmsg__intro--end{padding-top:clamp(40px,5vw,80px);padding-bottom:clamp(56px,7vw,110px)}
+.pmsg__lead{margin:0;font-family:var(--mincho);font-weight:600;
+  font-size:clamp(1.5rem,2.5vw,2.4rem);line-height:1.7;letter-spacing:.02em}
+.pmsg__body p{margin:0 0 1.8em;font-size:clamp(14px,1.08vw,16px);line-height:2.15;
+  color:rgba(0,0,0,.78);text-wrap:pretty}
+.pmsg__body p:last-child{margin-bottom:0}
+
+/* ── ③ 写真ブレイク ── */
+.pmsg__break{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(26px,4vw,72px);align-items:center;
+  margin-top:clamp(56px,7vw,110px);padding-right:var(--pad)}
+/* 写真は左端まで裁ち落とし（＝KVと同じく画面いっぱい側へ抜く） */
+.pmsg__breakph{aspect-ratio:4/3;background-size:cover;background-position:center}
+.pmsg__sub{margin:0 0 1.2em;font-family:var(--mincho);font-weight:600;
+  font-size:clamp(1.35rem,2.2vw,2.1rem);line-height:1.6;letter-spacing:.02em}
+.pmsg__break p{font-size:clamp(14px,1.08vw,16px);line-height:2.15;color:rgba(0,0,0,.78)}
+
+/* ── ④ 引用 ── */
+.pmsg__quote{margin:clamp(56px,7vw,110px) 0 0;padding:0 var(--pad);
+  font-family:var(--mincho);font-weight:600;color:var(--red);
+  font-size:clamp(1.7rem,3.4vw,3.4rem);line-height:1.5;letter-spacing:.02em}
+
+/* ── ⑤ 署名 ── */
+.pmsg__sign{display:flex;align-items:baseline;gap:14px;margin-top:clamp(28px,3vw,46px)!important;
+  font-family:var(--jp)}
+.pmsg__sign span{font-size:clamp(12px,1vw,14px);letter-spacing:.08em;color:rgba(0,0,0,.6)}
+.pmsg__sign b{font-size:clamp(19px,1.7vw,26px);letter-spacing:.08em;font-weight:700;color:var(--ink)}
+
+@media(max-width:900px){
+  .pmsg{--pad:24px}
+  .pmsg__kv{min-height:0;padding:clamp(40px,12vw,72px) var(--pad) clamp(200px,58vw,340px)}
+  /* ⚠️SPは横に割れないので、上を赤のベタ面にして写真は下に見せる（こちらもグラデなし） */
+  .pmsg__kv::after{left:0;right:0;top:0;bottom:auto;width:auto;height:52%}
+  .pmsg__kvph{background-position:center 18%}
+  .pmsg__kvtx{max-width:none}
+  .pmsg__intro,.pmsg__break{grid-template-columns:1fr;gap:22px}
+  .pmsg__break{padding-right:0}
+  .pmsg__break .pmsg__breaktx{padding:0 var(--pad)}
 }
 </style>
 

@@ -10,7 +10,15 @@
        同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
      ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
      ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
-<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}
+/* ⚠️ロゴ隠し（ヴェール）の指定は _pt.js が注入しているが、あれは body の末尾で読まれる。
+     初回ロードで読み込みが遅いと、下の3秒の保険で pt-init（body丸ごと非表示）が外れた時点では
+     まだ届いておらず、タイルも敷かれていないので左上のロゴだけが一瞬見える。
+     同じ内容を head にも置いて、最初の1フレームから効かせる。
+   ⚠️退場（.pt-leave）には掛けないこと。リンクを押した瞬間にロゴだけ先に消える。 */
+html.pt-veil:not(.pt-leave) .site-logo,
+html.pt-veil:not(.pt-leave) .nav__mini,
+html.pt-veil:not(.pt-leave) .drawer__logo{opacity:0!important;visibility:hidden!important}</style>
 <script>
 (function(){
   /* ⚠️再読み込み時のスクロール位置復元を切る。
@@ -22,6 +30,9 @@
   var d = document.documentElement;
   d.className += ' pt-init pt-veil';
   setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+  /* ⚠️ヴェールを外すのは _pt.js の役目。ただしJSが届かない・こけた場合に
+       ロゴが永久に消えたままになるので、こちらにも保険を置く（pt-init より後）。 */
+  setTimeout(function(){ d.classList.remove('pt-veil'); }, 4500);
 })();
 </script>
 <title>採用情報｜近江度量衡株式会社</title>
@@ -1634,7 +1645,7 @@ html,body{overflow-x:clip;max-width:100%}
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">近江度量衡の歴史</a></div>
     <div class="nitem">
       <a class="nlink" href="recruit.html">採用情報</a>
       <div class="mega"><div class="mega__inner">
@@ -1661,7 +1672,7 @@ html,body{overflow-x:clip;max-width:100%}
       <a href="service.html">サービス案内<span>Service</span></a>
       <a href="delivery.html">納入実績<span>Track Record</span></a>
       <a href="company.html">会社案内<span>Company</span></a>
-      <a href="history.html">126年ヒストリー<span>History</span></a>
+      <a href="history.html">近江度量衡の歴史<span>History</span></a>
       <a href="recruit.html">採用情報<span>Recruit</span></a>
       <a href="contact.html">お問い合わせ<span>Contact</span></a>
     </nav>
@@ -1732,7 +1743,7 @@ html,body{overflow-x:clip;max-width:100%}
     <!-- ⚠️class="rct-fv__sub" は外さないこと。FVのスクリプトはこの要素を目印にして
          「地球の左の白地」へ移している。無いと初期化ごと止まる。 -->
     <div class="rct-fv__sub fv-vision">
-      <div class="sec-head"><h2 class="sec-jp">「いきる」をはかり、<br>豊かな世界へ。</h2><p class="sec-ttl">Vision</p></div>
+      <h2 class="fv-vision__catch">「いきる」をはかり、<br>豊かな世界へ。</h2>
       <p class="body-txt">「技術」と「誇り」を礎に、日本から世界へ、計量という仕事で社会を豊かにし続けること。それが、近江度量衡の使命です。採用においても「働く人を大切にする」という理念を核に、長く誇りを持って働ける環境を目指しています。</p>
       <p class="fv-vision__go"><a class="btn" href="history.html">126年ヒストリーを見る <i class="arrow-i">→</i></a></p>
     </div>
@@ -1766,15 +1777,19 @@ html,body{overflow-x:clip;max-width:100%}
 <section class="section" id="people" style="overflow:hidden;">
   <div class="container">
     <div class="sec-head rv"><h2 class="sec-jp">社員インタビュー</h2><p class="sec-ttl">People</p></div>
-    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;margin-top:clamp(18px,2vw,28px);">
-      <p class="body-txt rv" style="margin:0;">技術と誇りを持って働く、近江の現場のことば。</p>
-      <a class="btn btn--outline rv" href="interview.html" style="margin-left:auto;padding:12px 24px;">インタビューを読む</a>
-    </div>
-    <p class="body-txt rv" style="margin-top:14px;">現場・設計・営業——それぞれの視点で語る、近江度量衡の仕事。（実在社員に差し替え予定）</p>
+    <!-- ⚠️「インタビューを読む」ボタンは撤去。一覧ページが無いため行き先が作れない。
+         各カードから個別ページへ入る導線だけにしている。 -->
+    <p class="body-txt rv" style="margin-top:clamp(18px,2vw,28px);">技術と誇りを持って働く、近江の現場のことば。</p>
+    <p class="body-txt rv" style="margin-top:14px;">製造・設計・電装——それぞれの持ち場から語る、近江度量衡の仕事。</p>
+    <!-- ⚠️カードの文言はヒアリングシート（Q3「やりがい」）から抜粋。
+         写真は 260901 撮影分（人物ごとに r_<名前>_por.jpg）。
+         北海道営業所の2名（堀井・鈴木）は原稿はあるが撮影分が無いため未掲載。 -->
     <div class="rct-people rv rv-d1">
-      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(flow5.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">製造部 / 20代</div><div class="interview-card__name">社員 A</div><p class="interview-card__quote">毎回違う課題に向き合うから、技術者として本当に成長できる。</p></div></a>
-      <a class="interview-card" href="interview.html"><div class="ph ph--por rimg" style="background-image:url(flow3.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">設計部 / 2025年入社</div><div class="interview-card__name">前澤 雄介</div><p class="interview-card__quote">設計したものの、実物を見たとき。</p></div></a>
-      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(flow2.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">営業部 / 30代</div><div class="interview-card__name">社員 C</div><p class="interview-card__quote">お客様の現場を見て、何が必要か考える。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(r_uratani_por.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">製造部 / 2013年入社</div><div class="interview-card__name">浦谷 和裕</div><p class="interview-card__quote">自分の計画した通りに、工程が進むとき。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(r_kanamori_por.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">製造部 / 2014年入社</div><div class="interview-card__name">金森 和也</div><p class="interview-card__quote">人に頼られる、任せてもらえる時。</p></div></a>
+      <a class="interview-card" href="interview.html"><div class="ph ph--por rimg" style="background-image:url(r_maezawa_por.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">設計部 / 2025年入社</div><div class="interview-card__name">前澤 雄介</div><p class="interview-card__quote">設計したものの、実物を見たとき。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(r_kyou_por.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">設計部 / 2025年入社</div><div class="interview-card__name">キョウ</div><p class="interview-card__quote">図面が、動くカタチになる瞬間。</p></div></a>
+      <a class="interview-card" href="#people"><div class="ph ph--por rimg" style="background-image:url(r_kuno_por.jpg)"></div><div class="interview-card__body"><div class="interview-card__dept">電装部 / 2025年入社</div><div class="interview-card__name">久野</div><p class="interview-card__quote">自分が担当した製品が、現場で動く。</p></div></a>
     </div>
   </div>
 </section>
@@ -1783,19 +1798,77 @@ html,body{overflow-x:clip;max-width:100%}
 <section class="section section--gray" id="welfare" style="overflow:hidden;">
   <div class="container">
     <div class="sec-head rv"><h2 class="sec-jp">福利厚生・職場環境</h2><p class="sec-ttl">Welfare</p></div>
-    <div class="rct-welf">
-      <div class="rv rv-d1">
-        <p class="body-txt" style="margin-top:14px;">「働く人を大切にする」という理念を体現する制度・環境を整えています。</p>
-        <div class="ph rimg" style="margin-top:26px;aspect-ratio:4/3;background-image:url(photo-others.jpg)"></div>
-      </div>
-      <div class="rv rv-d1">
-        <div class="rct-welf__row"><span class="rct-welf__no">01</span><span class="rct-welf__ttl">各種社会保険完備</span><span class="rct-welf__desc">健康保険・厚生年金・雇用保険・労災保険</span></div>
-        <div class="rct-welf__row"><span class="rct-welf__no">02</span><span class="rct-welf__ttl">有給休暇・育児休暇</span><span class="rct-welf__desc">取得実績・取得率は掲載時に記載</span></div>
-        <div class="rct-welf__row"><span class="rct-welf__no">03</span><span class="rct-welf__ttl">住宅手当・通勤手当</span><span class="rct-welf__desc">支給条件の詳細は募集要項に記載</span></div>
-        <div class="rct-welf__row"><span class="rct-welf__no">04</span><span class="rct-welf__ttl">研修制度</span><span class="rct-welf__desc">入社時研修・OJT・資格取得支援</span></div>
-        <div class="rct-welf__row"><span class="rct-welf__no">05</span><span class="rct-welf__ttl">フレックス・リモート対応</span><span class="rct-welf__desc">実施状況を確認のうえ掲載</span></div>
-        <div class="rct-welf__row"><span class="rct-welf__no">06</span><span class="rct-welf__ttl">社内施設・福利厚生</span><span class="rct-welf__desc">食堂・保養施設など</span></div>
-      </div>
+    <!-- ① 2枚の大バナー（kokuyo recruit の HR STANCE 参考）。
+         左＝代表メッセージ → 会社案内の該当セクションへ。右＝福利厚生 → 同ページ内の一覧へ。
+         ⚠️下層ページは作らない方針なので、右は #benefits へのページ内リンク。 -->
+    <div class="wstance rv rv-d1">
+      <a class="wstance__card" href="company.html#message">
+        <span class="wstance__ph" style="background-image:url(p_president.jpg)"></span>
+        <span class="wstance__lbl">MESSAGE</span>
+        <span class="wstance__ttl">代表メッセージ</span>
+        <span class="wstance__lead">計量ひとすじ126年。これからの近江度量衡が目指すもの。<br>代表取締役社長 小谷 俊彦からのごあいさつ。</span>
+        <span class="wstance__go">会社案内で読む <i class="arrow-i" aria-hidden="true">→</i></span>
+      </a>
+      <a class="wstance__card" href="#benefits">
+        <span class="wstance__ph" style="background-image:url(p_welf_life.jpg)"></span>
+        <span class="wstance__lbl">EMPLOYEE BENEFITS</span>
+        <span class="wstance__ttl">福利厚生</span>
+        <span class="wstance__lead">働き方、暮らし、学び。長く働ける環境を、制度で支えます。<br>近江度量衡のしくみを紹介します。</span>
+        <span class="wstance__go">制度を見る <i class="arrow-i" aria-hidden="true">→</i></span>
+      </a>
+    </div>
+
+    <!-- ③ 福利厚生の中身。
+         ⚠️制度名・条件・実績値は未確定の暫定案（一般的な内容から起こしている）。
+           人事に確認のうえ確定すること（画面上の注記は出さない方針）。 -->
+    <div class="bene" id="benefits">
+      <article class="bene__grp rv">
+        <div class="bene__ph rimg" style="background-image:url(p_welf_work.jpg)"></div>
+        <div class="bene__body">
+          <p class="bene__no">WORK STYLE 01</p>
+          <h3 class="bene__ttl">働き方と休暇</h3>
+          <p class="bene__lead">つくる仕事は、続けられることが前提です。休みをきちんと取れることを、制度の側から支えます。</p>
+          <dl class="bene__list">
+            <div><dt>完全週休2日制</dt><dd>土・日・祝を基本とした年間休日カレンダー</dd></div>
+            <div><dt>年次有給休暇</dt><dd>入社半年後から付与。半日単位での取得も可能</dd></div>
+            <div><dt>夏季・年末年始休暇</dt><dd>会社カレンダーに準じて連続休暇を設定</dd></div>
+            <div><dt>特別休暇</dt><dd>慶弔など、ライフイベントに応じた休暇</dd></div>
+            <div><dt>育児休業・産前産後休暇</dt><dd>男女ともに取得可。復帰後の働き方も相談できます</dd></div>
+            <div><dt>介護休業・子の看護休暇</dt><dd>家族の事情に合わせて、働き方を調整できます</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="bene__grp rv">
+        <div class="bene__ph rimg" style="background-image:url(r_gaikan.jpg)"></div>
+        <div class="bene__body">
+          <p class="bene__no">WORK STYLE 02</p>
+          <h3 class="bene__ttl">暮らしと安心</h3>
+          <p class="bene__lead">毎日の生活と、その先の暮らしまで。安心して働き続けられる土台を整えています。</p>
+          <dl class="bene__list">
+            <div><dt>各種社会保険完備</dt><dd>健康保険・厚生年金・雇用保険・労災保険</dd></div>
+            <div><dt>通勤手当</dt><dd>規定に基づき支給。マイカー通勤可・駐車場あり</dd></div>
+            <div><dt>住宅手当・家族手当</dt><dd>支給条件の詳細は募集要項に記載</dd></div>
+            <div><dt>退職金制度</dt><dd>長く働くことが、そのまま将来の備えになります</dd></div>
+            <div><dt>定期健康診断</dt><dd>年1回。所定の年齢からは追加検診も</dd></div>
+            <div><dt>社内施設・保養施設</dt><dd>食堂・休憩スペースなど、日々を過ごす場所も整えています</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="bene__grp rv">
+        <div class="bene__ph rimg" style="background-image:url(r_kuno_work.jpg)"></div>
+        <div class="bene__body">
+          <p class="bene__no">WORK STYLE 03</p>
+          <h3 class="bene__ttl">学びと成長</h3>
+          <p class="bene__lead">一品一様のものづくりは、覚えることが尽きません。学び続けられることを、会社の側から後押しします。</p>
+          <dl class="bene__list">
+            <div><dt>入社時研修</dt><dd>安全教育・製品知識・現場の基礎から</dd></div>
+            <div><dt>OJT（先輩がつく育成）</dt><dd>近い距離で聞ける環境。わからないことはその場で</dd></div>
+            <div><dt>資格取得支援</dt><dd>業務に必要な資格の受験費用を会社が負担</dd></div>
+            <div><dt>外部研修・展示会派遣</dt><dd>社外の技術に触れる機会をつくります</dd></div>
+            <div><dt>表彰制度</dt><dd>改善提案や長年の貢献を評価するしくみ</dd></div>
+          </dl>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1805,13 +1878,50 @@ html,body{overflow-x:clip;max-width:100%}
   <div class="container">
     <div class="sec-head rv"><h2 class="sec-jp">研修・キャリアパス</h2><p class="sec-ttl">Career Path</p></div>
     <p class="body-txt rv" style="max-width:720px;">入社後の育成プログラム・OJT・キャリアパス事例をご紹介。技術者として誇りを持って成長できる環境を、具体的なロードマップで描きます。</p>
-    <div class="process rv rv-d1" style="margin-top:34px;">
-      <div class="process-step"><div class="process-step__num">STEP 01</div><div class="process-step__title">入社〜3ヶ月</div><div class="process-step__desc">入社時研修・OJT開始</div></div>
-      <div class="process-step"><div class="process-step__num">STEP 02</div><div class="process-step__title">〜1年</div><div class="process-step__desc">OJT・現場実務</div></div>
-      <div class="process-step"><div class="process-step__num">STEP 03</div><div class="process-step__title">〜3年</div><div class="process-step__desc">独立担当・専門性強化</div></div>
-      <div class="process-step"><div class="process-step__num">STEP 04</div><div class="process-step__title">5年〜</div><div class="process-step__desc">リーダー・専門職</div></div>
+    <!-- ⚠️STEPの文言はヒアリングシートの傾向（現場でのOJT／一品一様／資格取得支援）から
+         起こした暫定コピー。人事に確認のうえ差し替えること。
+         写真は 260901 撮影分を流用（新規書き出しなし）。 -->
+    <div class="cpath rv rv-d1">
+      <article class="cpath__row">
+        <div class="cpath__ph rimg" style="background-image:url(r_team_work.jpg)"></div>
+        <div class="cpath__tx">
+          <p class="cpath__no">STEP 01</p>
+          <h3 class="cpath__ttl">入社〜3ヶ月</h3>
+          <p class="cpath__sub">入社時研修・OJT開始</p>
+          <p class="cpath__desc">まずは会社と製品を知るところから。安全教育と基礎研修のあと、先輩について現場に入ります。図面の読み方、道具の使い方、計量機のしくみ。わからないことは、その場で聞ける距離で覚えていきます。</p>
+        </div>
+      </article>
+      <article class="cpath__row">
+        <div class="cpath__ph rimg" style="background-image:url(r_uratani_work.jpg)"></div>
+        <div class="cpath__tx">
+          <p class="cpath__no">STEP 02</p>
+          <h3 class="cpath__ttl">〜1年</h3>
+          <p class="cpath__sub">OJT・現場実務</p>
+          <p class="cpath__desc">先輩と組みながら、実際の案件を担当します。近江の仕事は一品一様。同じ装置は二つとないので、毎回が新しい学びです。少しずつ任される範囲が広がっていきます。</p>
+        </div>
+      </article>
+      <article class="cpath__row">
+        <div class="cpath__ph rimg" style="background-image:url(r_maezawa_work.jpg)"></div>
+        <div class="cpath__tx">
+          <p class="cpath__no">STEP 03</p>
+          <h3 class="cpath__ttl">〜3年</h3>
+          <p class="cpath__sub">独立担当・専門性強化</p>
+          <p class="cpath__desc">設計・製造・電装、それぞれの持ち場で自分の担当を持ちます。資格取得の支援制度を使いながら、専門性を深める時期。自分が引いた図面が、現場で動く瞬間に立ち会えます。</p>
+        </div>
+      </article>
+      <article class="cpath__row">
+        <div class="cpath__ph rimg" style="background-image:url(r_kanamori_work.jpg)"></div>
+        <div class="cpath__tx">
+          <p class="cpath__no">STEP 04</p>
+          <h3 class="cpath__ttl">5年〜</h3>
+          <p class="cpath__sub">リーダー・専門職</p>
+          <p class="cpath__desc">案件全体をまとめる立場へ。あるいは、ひとつの技術を突き詰める専門職へ。どちらの道も選べます。次の世代に技術を渡していくのも、この時期からの大切な仕事です。</p>
+        </div>
+      </article>
     </div>
-    <div class="grid-3 rv rv-d1" style="margin-top:24px;">
+
+    <p class="cpath__foot rv">その先のキャリア</p>
+    <div class="grid-3 rv rv-d1" style="margin-top:14px;">
       <div class="use-item">技術スペシャリスト</div><div class="use-item">プロジェクトマネジャー</div><div class="use-item">海外担当</div>
     </div>
   </div>
@@ -1916,7 +2026,6 @@ html,body{overflow-x:clip;max-width:100%}
       <a href="tel:0775627111">077-562-7111</a>　／　<a href="mailto:maruo.kengo@omiscale.co.jp">maruo.kengo@omiscale.co.jp</a></p>
     <p class="yoko-contact__btn"><a class="btn" href="contact.html">お問い合わせフォームへ <i class="arrow-i">→</i></a></p>
   </div>
-  <p class="yoko-note">※ 記載内容は2026年度のハローワーク求人票に基づくものです。最新の募集状況はお問い合わせください。</p>
 </section>
 </main>
 <section class="strip">
@@ -1954,7 +2063,7 @@ html,body{overflow-x:clip;max-width:100%}
       </div>
       <div>
         <a href="company.html">会社案内</a>
-        <a href="history.html">126年ヒストリー</a>
+        <a href="history.html">近江度量衡の歴史</a>
         <a href="news.html">新着情報</a>
         <a href="recruit.html">採用情報</a>
         <a href="contact.html">お問い合わせ</a>
@@ -3902,19 +4011,20 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* 見出しが入るぶん、白地の許す範囲でひと回り広げる */
 .fvcopy{width:min(560px,var(--fvcw,38vw))}
 
-/* ⚠️帯（.sec-jp の ::before）は他ページと同じものを使う。ここでは大きさだけ抑える。
-     白地の幅が限られるので、共通の巨大サイズのままだと球にかぶる。 */
-.fv-vision .sec-jp{font-size:clamp(1.4rem,2.3vw,2.1rem);line-height:1.5;margin:0}
-.fv-vision .sec-head{margin:0 0 clamp(16px,1.8vw,26px)}
-.fv-vision .body-txt{font-size:clamp(13px,1.05vw,15.5px);line-height:2.05;
-  margin-top:clamp(16px,1.8vw,24px);max-width:none}
+/* ⚠️赤帯見出しと（VISION）ラベルは廃止。コピーそのものを大きく置いて立たせる。
+     帯を使わないぶん、白地の中で明朝のサイズだけで見出しの役をさせている。 */
+.fv-vision__catch{margin:0;font-family:var(--mincho);font-weight:600;color:var(--ink);
+  font-size:clamp(2rem,3.4vw,3.2rem);line-height:1.45;letter-spacing:.02em;
+  font-feature-settings:"palt"}
+.fv-vision .body-txt{font-size:clamp(14px,1.2vw,17px);line-height:2;
+  margin-top:clamp(20px,2.2vw,30px);max-width:none}
 .fv-vision__go{margin:clamp(22px,2.4vw,34px) 0 0}
 
 @media(max-width:900px){
   /* 球の上端は画面高の42%。その上に収めるため、少し上げて詰める */
   .fvcopy{top:11%;width:min(88vw,520px)!important}
-  .fv-vision .sec-jp{font-size:clamp(1.35rem,6vw,1.9rem)}
-  .fv-vision .body-txt{font-size:13px;line-height:1.95}
+  .fv-vision__catch{font-size:clamp(1.6rem,7vw,2.4rem)}
+  .fv-vision .body-txt{font-size:13.5px;line-height:1.95}
   .fv-vision__go{margin-top:18px}
 }
 </style>
@@ -3947,6 +4057,224 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* 矢印は文字色に追従させる */
 .btn .arrow-i,.btn i{color:inherit!important;transition:transform .3s ease}
 .btn:hover .arrow-i{transform:translateX(4px)}
+</style>
+
+<!-- ══ 採用FV：コピーを「いきる→の→単位→とは、→なんだろう→？」の順に出す ══ -->
+<style id="fv-art-seq">
+/* ⚠️前段は .fvart（絵の入れ物）ごと1回でフェードインさせていた。
+     パーツごとに出したいので、入れ物側の登場アニメは止めて出しっぱなしにする。
+     ※スクロール時の退場は #fvArtBody の --ao が持っているので、ここを1にしても影響しない。 */
+.fvart{opacity:1!important;animation:none!important}
+
+/* ⚠️FVには「7本の赤い帯が左右から伸びて画面を覆い、1.05秒後に消える」読み込み演出
+     （.rct-fv__bars）が別に入っていた。パーツを順々に出す演出と時間が重なって
+     二重に見えるので、帯のほうをやめる。要素ごと止める（下の .rct-fv__acc は
+     前段で既に display:none）。 */
+.rct-fv__bars{display:none!important}
+
+/* ⚠️下層共通の _intro.js が、本文の要素（.pmain > *）に
+     「左→右へマスクが抜ける」clip-path を掛けている。FVもその対象なので、
+     せっかくパーツを順に出しても、上から左→右のワイプで一斉に現れて見えていた。
+     FVだけこのマスクの対象から外す。 */
+html.intro .rct-fv,html.intro-run .rct-fv{
+  -webkit-clip-path:none!important;clip-path:none!important;transition:none!important}
+
+/* ⚠️動かすのは opacity だけ。位置や大きさ（transform）には触れないこと。
+     「？」の点(#fvDot)と地球(#fvGlobe)は、スクロール連動が transform を
+     使って動かしている最中なので、ここで transform を足すと取り合いになる。
+   ⚠️始まりは .fv-seq-go が付いてから。ページ遷移演出(_pt.js)の赤いタイルが
+     1秒ほど画面を覆うので、そのまま流すと前半がタイルの裏で終わってしまう。 */
+@keyframes fvSeqIn{from{opacity:0}to{opacity:1}}
+#fvart-svg [data-fvs],#fvart-svg #fvGlobe{opacity:0}
+#fvart-svg.fv-seq-go [data-fvs],
+#fvart-svg.fv-seq-go #fvGlobe{animation:fvSeqIn .34s ease-out forwards}
+#fvart-svg.fv-seq-go [data-fvs="1"]{animation-delay:.05s}   /* いきる */
+#fvart-svg.fv-seq-go [data-fvs="2"]{animation-delay:.29s}   /* の */
+#fvart-svg.fv-seq-go [data-fvs="3"]{animation-delay:.53s}   /* 単位 */
+#fvart-svg.fv-seq-go [data-fvs="4"]{animation-delay:.77s}   /* とは、 */
+#fvart-svg.fv-seq-go [data-fvs="5"]{animation-delay:1.01s}  /* なんだろう */
+#fvart-svg.fv-seq-go [data-fvs="6"],
+#fvart-svg.fv-seq-go #fvGlobe{animation-delay:1.25s}        /* ？ と 地球 */
+/* 最後が出終わるのが 1.25+0.34 ＝ 始まりから約1.5秒 */
+
+@media(prefers-reduced-motion:reduce){
+  #fvart-svg [data-fvs],#fvart-svg #fvGlobe{opacity:1;animation:none}
+}
+</style>
+<script>
+/* 絵のパーツを6つの段に振り分ける。
+   ⚠️前段のスクリプトが図形を <g id="fvArtBody"> へ詰め替え、点(#fvDot)を最後尾へ動かす。
+     そのあとに走るので、階層ではなく「図形を全部拾って書かれた順に見る」方法で仕分ける。 */
+(function(){
+  var svg = document.getElementById('fvart-svg');
+  var dot = document.getElementById('fvDot');
+  if (!svg || !dot) return;
+  var kids = [].slice.call(svg.querySelectorAll('text,path,polygon,polyline,rect'));
+  /* ⚠️「？」の本体は d が M569.91… で始まる1本のパス。
+       並び順で拾うと、点のうしろにある小さな飾りと取り違える（詰め替えで順番が変わる）。 */
+  var qmark = kids.filter(function(el){
+    return el.tagName === 'path' && (el.getAttribute('d') || '').indexOf('M569.91') === 0;
+  })[0];
+  kids.forEach(function(el){
+    var step;
+    if (el.matches('text.fvc-6'))                             step = 1;  /* いきる */
+    else if (el.matches('text.fvc-5'))                        step = 2;  /* の */
+    else if (el.matches('text.fvc-4') || el.matches('text.fvc-2')) step = 4;  /* とは、 */
+    else if (el.matches('text.fvc-3'))                        step = 5;  /* なんだろう */
+    else if (el === qmark || el === dot)                      step = 6;  /* ？ */
+    else                                                      step = 3;  /* 単位（図形の集まり） */
+    el.setAttribute('data-fvs', step);
+  });
+
+  /* ⚠️合図は _intro.js と同じ考え方でそろえる。
+       ページ遷移演出(_pt.js)の赤いタイルが剥がれきるまで画面は隠れているので、
+       その間に流すと前半が見えないまま終わる。タイルが無いときは待たない。 */
+  var root = document.documentElement;
+  var hasPT = !!(document.querySelector('.pt-grid') || root.classList.contains('pt-init'));
+  /* ⚠️ここで requestAnimationFrame を挟まないこと。裏に回ったタブでは
+       rAF が呼ばれず、合図が永久に付かないまま絵が出てこない。 */
+  setTimeout(function(){ svg.classList.add('fv-seq-go'); }, hasPT ? 1050 : 0);
+})();
+</script>
+
+<!-- ══ 社員インタビュー：5枚を1列に並べる ══ -->
+<style id="rct-people-5">
+/* ⚠️前段は3列固定。掲載が5名になったので 3+2 で割れて据わりが悪い。
+     幅に応じて列数が決まる形にして、広い画面では5枚が1列に並ぶようにする。 */
+.rct-people{grid-template-columns:repeat(5,1fr)}
+/* ⚠️前段に「2枚目だけ段差をつける」型がある（3枚並びの頃の名残）。
+     5枚並びだと1枚だけ落ちてガタつくので、ここでは揃える。 */
+.rct-people .interview-card:nth-child(n){margin-top:0!important}
+/* ⚠️5列は1枚あたり230px以上ほしいので、1280px未満は3列に落とす */
+@media(max-width:1279px){.rct-people{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.rct-people{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.rct-people{grid-template-columns:1fr}}
+/* 5列だと引用が窮屈になるので、文字を少しだけ詰める */
+.interview-card__quote{font-size:clamp(12.5px,1.05vw,15px);line-height:1.75}
+.interview-card__dept{font-size:clamp(10.5px,.86vw,12px)}
+</style>
+
+<!-- ══ コンテンツの左右余白をヒーローに合わせる ══ -->
+<style id="rct-gutter">
+/* ⚠️共通CSS（site.css）は .section{padding:120px 7vw} ＋ .container{max-width:1200px;margin:0 auto}。
+     この2つが重なって、実測で見出しの左が 178px（7vw=109px ＋ センタリングの余り69px）まで
+     入り込んでいた。ヒーローのコピーは left:6vw（実測93px）なので、線が揃わない。
+   ⚠️直し方は2つセット。padding を 6vw に合わせるだけだと、container のセンタリングぶんが
+     残って結局ずれる。上限幅を外して、余白は padding だけで決める。
+   ⚠️SP（900px以下）は共通CSSが 24px、ヒーローのコピーも 6vw＝約23px で元から揃っているので触らない。 */
+@media(min-width:901px){
+  .section{padding-left:6vw;padding-right:6vw}
+  .section > .container{max-width:none}
+  .yoko{padding-left:6vw;padding-right:6vw}
+}
+</style>
+
+<!-- ══ 写真のモノクロ処理 ══ -->
+<style id="rct-mono">
+/* 社員インタビュー：ふだんはモノクロ、カードにマウスが乗ったら色が戻る。
+   ⚠️filter はカード（リンク）側のホバーで切り替える。写真自身の :hover にすると
+     テキスト側にカーソルがあるときに色が戻らず、カード内で挙動が割れる。 */
+/* ⚠️要素そのものに filter:grayscale を掛けないこと。写真リビール(_simg.js)の
+     赤いカバー（.simg::after）まで灰色になり、赤が抜ける演出が死ぬ。
+     背景だけを白黒にしたいので、写真の上に敷いた擬似要素の backdrop-filter で処理する。
+   ⚠️.rimg::before{display:none}（前段）を打ち消す必要がある。 */
+/* ⚠️前段の .ph::before は「写真が入る前の45度斜線プレースホルダ」。display:none で
+     伏せられていたのを、ここで復活させると斜線まで出てしまう。background:none で消すこと。 */
+.rct-people .interview-card .ph::before,
+#welfare .ph::before{content:"";display:block;position:absolute;inset:0;z-index:1;
+  background:none;pointer-events:none;
+  -webkit-backdrop-filter:grayscale(1);backdrop-filter:grayscale(1)}
+.rct-people .interview-card .ph::before{transition:opacity .45s ease}
+.rct-people .interview-card:hover .ph::before,
+.rct-people .interview-card:focus-visible .ph::before{opacity:0}
+@media(prefers-reduced-motion:reduce){
+  .rct-people .interview-card .ph::before{transition:none}
+}
+
+/* ⚠️現在このスタイルを使うマークアップは無い（職場の風景ブロックは削除済み）。
+     戻すときは .welf-ph（背景 p_welf_bg.jpg）＋ .welf-ph__fg の2枚重ねで復活させること。
+   職場環境：人物の切り抜きをカラーのまま上に重ねる。
+   ⚠️モノクロ化は backdrop-filter（z-index:1）＝その下に描かれたものだけに効く。
+     切り抜きは z-index:2 で上に置くので、色はそのまま残る。
+   ⚠️画像URLはCSS側に書くこと。インラインの background-image にすると
+     _simg.js が「写真」と見なして赤いリビールカバーを付け、人物の上に赤い面が乗る。 */
+#welfare .welf-ph__fg{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:url(p_welf_fg.webp) center/cover no-repeat}
+</style>
+
+<!-- ══ 研修・キャリアパス：写真つきの縦タイムライン ══ -->
+<style id="rct-cpath">
+/* ⚠️旧 .process（4つの小箱）は廃止。1ステップ＝写真＋テキストの1行にして、
+     縦にたっぷり見せる。CSSの .process は他ページでも使うので消していない。 */
+.cpath{margin-top:clamp(34px,4vw,56px);border-top:0.5px solid var(--line)}
+.cpath__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(28px,4vw,72px);align-items:center;
+  padding:clamp(38px,5vw,80px) 0;border-bottom:0.5px solid var(--line)}
+/* 偶数行は写真を右へ。⚠️order だけだと読み上げ順は変わらない（＝文章の順は保たれる） */
+.cpath__row:nth-child(even) .cpath__ph{order:2}
+.cpath__ph{aspect-ratio:4/3;background-size:cover;background-position:center;position:relative}
+.cpath__no{margin:0;font-family:var(--en);font-weight:700;letter-spacing:.18em;
+  font-size:clamp(11px,.95vw,14px);color:var(--red)}
+.cpath__ttl{margin:.5em 0 0;font-family:var(--mincho);font-weight:600;line-height:1.3;
+  font-size:clamp(1.6rem,2.8vw,2.6rem);letter-spacing:.02em}
+.cpath__sub{margin:.7em 0 0;font-family:var(--jp);font-weight:700;
+  font-size:clamp(14px,1.15vw,17px);letter-spacing:.06em;color:var(--ink)}
+.cpath__desc{margin:1.1em 0 0;font-size:clamp(13.5px,1.05vw,15.5px);line-height:2.05;
+  color:rgba(0,0,0,.72);text-wrap:pretty}
+.cpath__foot{margin:clamp(34px,4vw,58px) 0 0;font-family:var(--jp);font-weight:700;
+  font-size:clamp(15px,1.25vw,19px);letter-spacing:.06em}
+
+@media(max-width:900px){
+  .cpath__row{grid-template-columns:1fr;gap:20px;padding:34px 0}
+  .cpath__row:nth-child(even) .cpath__ph{order:0}   /* SPは写真が先で統一 */
+}
+</style>
+
+<!-- ══ 福利厚生・職場環境：2枚の大バナー＋制度一覧 ══ -->
+<style id="rct-welfare">
+/* ── ① 大バナー2枚（kokuyo recruit の HR STANCE 参考） ── */
+.wstance{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.6vw,44px);
+  margin-top:clamp(30px,3.4vw,52px)}
+.wstance__card{display:block;text-decoration:none;color:inherit;position:relative}
+.wstance__ph{display:block;aspect-ratio:16/9;background-size:cover;background-position:center 32%;
+  filter:grayscale(1);transition:filter .5s ease}
+.wstance__card:hover .wstance__ph{filter:grayscale(0)}
+.wstance__lbl{display:block;margin-top:clamp(14px,1.5vw,22px);
+  font-family:var(--en);font-weight:700;letter-spacing:.18em;color:var(--red);
+  font-size:clamp(10px,.86vw,13px)}
+.wstance__ttl{display:block;margin-top:.5em;font-family:var(--mincho);font-weight:600;
+  font-size:clamp(1.5rem,2.4vw,2.2rem);letter-spacing:.02em;line-height:1.35}
+.wstance__lead{display:block;margin-top:.9em;font-size:clamp(13px,1.02vw,15px);
+  line-height:1.95;color:rgba(0,0,0,.72)}
+.wstance__go{display:inline-flex;align-items:center;gap:10px;margin-top:1.1em;
+  font-family:var(--jp);font-weight:700;font-size:clamp(13px,1.05vw,15px);color:var(--red)}
+.wstance__go .arrow-i{transition:transform .3s ease}
+.wstance__card:hover .wstance__go .arrow-i{transform:translateX(5px)}
+
+/* ── ③ 制度一覧 ── */
+.bene{margin-top:clamp(52px,6vw,96px);border-top:0.5px solid var(--line)}
+.bene__grp{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(26px,3.6vw,64px);align-items:start;
+  padding:clamp(38px,5vw,76px) 0;border-bottom:0.5px solid var(--line)}
+.bene__ph{aspect-ratio:4/3;background-size:cover;background-position:center;position:relative}
+.bene__no{margin:0;font-family:var(--en);font-weight:700;letter-spacing:.18em;color:var(--red);
+  font-size:clamp(10px,.86vw,13px)}
+.bene__ttl{margin:.5em 0 0;font-family:var(--mincho);font-weight:600;line-height:1.3;
+  font-size:clamp(1.5rem,2.4vw,2.2rem);letter-spacing:.02em}
+.bene__lead{margin:.9em 0 0;font-size:clamp(13px,1.02vw,15px);line-height:1.95;color:rgba(0,0,0,.72)}
+/* 制度リスト：名称＋一行説明。⚠️dl 直下の div で1項目＝1行にしている */
+.bene__list{margin:clamp(18px,2vw,28px) 0 0;border-top:0.5px solid var(--line)}
+.bene__list > div{display:grid;grid-template-columns:minmax(150px,.7fr) minmax(0,1fr);
+  gap:clamp(10px,1.4vw,24px);padding:clamp(11px,1.1vw,15px) 0;border-bottom:0.5px solid var(--line)}
+.bene__list dt{font-family:var(--jp);font-weight:700;font-size:clamp(13px,1.05vw,15.5px);letter-spacing:.03em}
+.bene__list dd{margin:0;font-size:clamp(12.5px,.98vw,14.5px);line-height:1.85;color:rgba(0,0,0,.66)}
+.bene__note{margin:clamp(20px,2.2vw,32px) 0 0;font-size:clamp(11.5px,.9vw,13px);color:rgba(0,0,0,.5)}
+
+@media(max-width:900px){
+  .wstance{grid-template-columns:1fr;gap:34px}
+  .bene__grp{grid-template-columns:1fr;gap:20px;padding:32px 0}
+  .bene__list > div{grid-template-columns:1fr;gap:2px;padding:10px 0}
+}
 </style>
 
 </body>

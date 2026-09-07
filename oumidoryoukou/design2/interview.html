@@ -10,7 +10,15 @@
        同じ pt-init を head の時点で付けて、最初の1フレームから赤で塗っておく。
      ⚠️動きを止める設定では _pt.js が何もしないので、ここでも付けない。
      ⚠️JSがこけても白紙／赤紙のまま残らないよう、保険で必ず解除する。 -->
-<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}</style>
+<style id="pt-flash">html.pt-init{background:#cc0700}html.pt-init body{visibility:hidden}
+/* ⚠️ロゴ隠し（ヴェール）の指定は _pt.js が注入しているが、あれは body の末尾で読まれる。
+     初回ロードで読み込みが遅いと、下の3秒の保険で pt-init（body丸ごと非表示）が外れた時点では
+     まだ届いておらず、タイルも敷かれていないので左上のロゴだけが一瞬見える。
+     同じ内容を head にも置いて、最初の1フレームから効かせる。
+   ⚠️退場（.pt-leave）には掛けないこと。リンクを押した瞬間にロゴだけ先に消える。 */
+html.pt-veil:not(.pt-leave) .site-logo,
+html.pt-veil:not(.pt-leave) .nav__mini,
+html.pt-veil:not(.pt-leave) .drawer__logo{opacity:0!important;visibility:hidden!important}</style>
 <script>
 (function(){
   /* ⚠️再読み込み時のスクロール位置復元を切る。
@@ -22,6 +30,9 @@
   var d = document.documentElement;
   d.className += ' pt-init pt-veil';
   setTimeout(function(){ d.classList.remove('pt-init'); }, 3000);
+  /* ⚠️ヴェールを外すのは _pt.js の役目。ただしJSが届かない・こけた場合に
+       ロゴが永久に消えたままになるので、こちらにも保険を置く（pt-init より後）。 */
+  setTimeout(function(){ d.classList.remove('pt-veil'); }, 4500);
 })();
 </script>
 <title>社員インタビュー 設計部 前澤 雄介｜近江度量衡株式会社 採用情報</title>
@@ -1628,7 +1639,7 @@ html,body{overflow-x:clip;max-width:100%}
         </div>
       </div></div>
     </div>
-    <div class="nitem"><a class="nlink" href="history.html">126年ヒストリー</a></div>
+    <div class="nitem"><a class="nlink" href="history.html">近江度量衡の歴史</a></div>
     <div class="nitem">
       <a class="nlink" href="recruit.html">採用情報</a>
       <div class="mega"><div class="mega__inner">
@@ -1655,7 +1666,7 @@ html,body{overflow-x:clip;max-width:100%}
       <a href="service.html">サービス案内<span>Service</span></a>
       <a href="delivery.html">納入実績<span>Track Record</span></a>
       <a href="company.html">会社案内<span>Company</span></a>
-      <a href="history.html">126年ヒストリー<span>History</span></a>
+      <a href="history.html">近江度量衡の歴史<span>History</span></a>
       <a href="recruit.html">採用情報<span>Recruit</span></a>
       <a href="contact.html">お問い合わせ<span>Contact</span></a>
     </nav>
@@ -1729,7 +1740,7 @@ html,body{overflow-x:clip;max-width:100%}
       <span class="iv-hero__year">2025年入社 ／ 中途</span>
     </div>
   </div>
-  <div class="iv-hero__ph" style="background-image:url(flow3.jpg)"></div>
+  <div class="iv-hero__ph" style="background-image:url(r_maezawa_work.jpg)"></div>
 </section>
 
 <!-- ══ MEMBER STATUS ══ -->
@@ -1757,8 +1768,8 @@ html,body{overflow-x:clip;max-width:100%}
     <p>ほぼ未経験でしたが、「CADをさわらせてくれるらしい」と聞いて入社を決めました。今思えばずいぶん単純な理由ですが、その一点に賭けてよかったと思っています。</p>
   </div>
   <figure class="iv-fig iv-fig--right">
-    <i style="background-image:url(flow6.jpg)"></i>
-    <figcaption>設計から制御まで、社内で一貫して手がける</figcaption>
+    <i style="background-image:url(r_maezawa_por.jpg)"></i>
+    <figcaption>設計部のデスクにて</figcaption>
   </figure>
 </section>
 
@@ -1781,8 +1792,8 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
   </div>
   <div class="iv-figs">
-    <figure class="iv-fig"><i style="background-image:url(ind-hopper.jpg)"></i><figcaption>設計したホッパースケールの実機</figcaption></figure>
-    <figure class="iv-fig"><i style="background-image:url(flow5.jpg)"></i><figcaption>製造部と連携しながら形にしていく</figcaption></figure>
+    <figure class="iv-fig"><i style="background-image:url(r_maezawa_dtl.jpg)"></i><figcaption>図面はCADで一から起こす</figcaption></figure>
+    <figure class="iv-fig"><i style="background-image:url(r_team_work.jpg)"></i><figcaption>製造部と連携しながら形にしていく</figcaption></figure>
   </div>
 </section>
 
@@ -1793,6 +1804,10 @@ html,body{overflow-x:clip;max-width:100%}
   <div class="iv-body">
     <p>今はまだ、周りに聞きながら知識を身につけている段階です。まずは一人で対応できるようになること。そこを越えたら、もっと大きな設備を任せてもらえるようになりたいと思っています。</p>
   </div>
+  <figure class="iv-fig iv-fig--right iv-fig--tall">
+    <i style="background-image:url(r_maezawa_02.jpg)"></i>
+    <figcaption>3D CADで機械の形をつくる</figcaption>
+  </figure>
 </section>
 
 <!-- ══ 一問一答 ══ -->
@@ -1821,6 +1836,10 @@ html,body{overflow-x:clip;max-width:100%}
       <p class="a">自分の成長に合わせて、徐々に仕事のレベルを上げてもらえるところです。</p>
     </div>
   </div>
+  <figure class="iv-fig iv-fig--right iv-fig--tall">
+    <i style="background-image:url(r_maezawa_03.jpg)"></i>
+    <figcaption>手元で寸法を確かめながら</figcaption>
+  </figure>
 </section>
 
 <!-- ══ SCHEDULE ══ -->
@@ -1847,6 +1866,10 @@ html,body{overflow-x:clip;max-width:100%}
       <li><span class="t">24:00</span><span class="c">就寝</span></li>
     </ol>
   </div>
+  <figure class="iv-fig iv-fig--right iv-fig--tall">
+    <i style="background-image:url(r_maezawa_04.jpg)"></i>
+    <figcaption>設計部のフロア</figcaption>
+  </figure>
 </section>
 
 <!-- ══ MESSAGE ══ -->
@@ -1861,9 +1884,9 @@ html,body{overflow-x:clip;max-width:100%}
   <p class="iv-label">Other Members</p>
   <h2 class="iv-h2">ほかのメンバー</h2>
   <div class="iv-others__grid">
-    <a class="ivcard" href="#"><i style="background-image:url(flow5.jpg)"></i><span class="d">製造部</span><span class="n">社員 A</span><span class="q">毎回違う課題に向き合うから、成長できる。</span></a>
-    <a class="ivcard" href="#"><i style="background-image:url(flow2.jpg)"></i><span class="d">営業部</span><span class="n">社員 B</span><span class="q">お客様の現場を見て、何が必要かを考える。</span></a>
-    <a class="ivcard" href="#"><i style="background-image:url(flow1.jpg)"></i><span class="d">総務部</span><span class="n">社員 C</span><span class="q">働く人を支えるのが、私の仕事です。</span></a>
+    <a class="ivcard" href="recruit.html#people"><i style="background-image:url(r_uratani_por.jpg)"></i><span class="d">製造部</span><span class="n">浦谷 和裕</span><span class="q">自分の計画した通りに、工程が進むとき。</span></a>
+    <a class="ivcard" href="recruit.html#people"><i style="background-image:url(r_kyou_por.jpg)"></i><span class="d">設計部</span><span class="n">キョウ</span><span class="q">図面が、動くカタチになる瞬間。</span></a>
+    <a class="ivcard" href="recruit.html#people"><i style="background-image:url(r_kuno_por.jpg)"></i><span class="d">電装部</span><span class="n">久野</span><span class="q">自分が担当した製品が、現場で動く。</span></a>
   </div>
   <p class="iv-others__back"><a class="btn" href="recruit.html#people">採用情報トップへ <i class="arrow-i" style="color:#fff">→</i></a></p>
 </section>
@@ -1904,7 +1927,7 @@ html,body{overflow-x:clip;max-width:100%}
       </div>
       <div>
         <a href="company.html">会社案内</a>
-        <a href="history.html">126年ヒストリー</a>
+        <a href="history.html">近江度量衡の歴史</a>
         <a href="news.html">新着情報</a>
         <a href="recruit.html">採用情報</a>
         <a href="contact.html">お問い合わせ</a>
@@ -3108,6 +3131,80 @@ body.is-logo-dark .site-logo .logo-mark{filter:none}
 p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .case__lead,.case__flow,.case__note,.sf p,.sf-etc,.yoko-lead,.yoko-job__txt{text-wrap:pretty}
 .tfd-in__tx,.yoko-lead,.yoko-job__txt,.kstep__tx{max-width:none}
+</style>
+
+<!-- ══ ボタン：白地・赤枠・赤文字／ホバーで赤帯が入って白文字（採用ページと共通ルール） ══ -->
+<style id="btn-red-common">
+/* ⚠️この動き（帯が左から入って文字色が反転）は共通CSSに既にある。
+     .btn{--bc: 枠と文字と帯の色 ／ --bg: 地の色} という変数で色を決める作りなので、
+     疑似要素を自作せず変数を差し替えるのが正しい直し方。
+   ⚠️セレクタを並べているのは詳細度をそろえるため。
+     .pmain .btn / .phil .btn のように、文脈ごとに色を直書きしている指定が先にある。 */
+.btn,.btn--outline,.pmain .btn,.pmain .btn--outline,.phil .btn,.svc__lead .btn{
+  --bc:var(--red);--bg:#fff;
+  background:var(--bg);color:var(--bc);border:1px solid var(--bc)}
+.btn:hover,.btn--outline:hover,.pmain .btn:hover,.pmain .btn--outline:hover,
+.phil .btn:hover,.svc__lead .btn:hover{background:var(--bg);color:var(--bg)}
+/* 矢印は文字色に追従させる（白を直書きしている箇所も打ち消す） */
+.btn .arrow-i,.btn i,.btn span{color:inherit!important}
+.btn .arrow-i{transition:transform .3s ease}
+.btn:hover .arrow-i{transform:translateX(4px)}
+</style>
+
+<!-- ══ インタビュー詳細：本文の横に縦写真を添える ══ -->
+<style id="iv-figs-tall">
+/* ⚠️.iv-fig--right は「セクション右上に絶対配置」。本文側に幅の上限が無い節に足すと
+     文字と写真が重なる。写真を置いた節は、本文の幅を右写真のぶんだけ絞ること。
+   ⚠️縦写真は 3:4。素材も同じ比率で書き出してある（900×1200）。 */
+.iv-fig--tall i{aspect-ratio:3/4}
+.iv-future .iv-body,
+.iv-oneon .iv-oneon__list,
+.iv-sche .iv-sche__body,
+.iv-sche .iv-sche__tabs{max-width:min(58%,760px)}
+/* 一問一答は2カラムの表なので、幅を絞ったぶん設問側の比率も詰める */
+.iv-oneon .iv-oneon__row{grid-template-columns:minmax(0,38%) minmax(0,1fr)}
+@media(max-width:900px){
+  .iv-future .iv-body,
+  .iv-oneon .iv-oneon__list,
+  .iv-sche .iv-sche__body,
+  .iv-sche .iv-sche__tabs{max-width:none}
+  .iv-oneon .iv-oneon__row{grid-template-columns:1fr}
+}
+</style>
+
+<!-- ══ ヒーローとメッセージ：写真を背景に敷く ══ -->
+<style id="iv-photo-bg">
+/* ── ヒーロー：本人の横位置カットを全面の背景に ──
+   ⚠️元は右46%だけに写真を置き、左をマスクでフェードさせていた。全面に伸ばすので
+     マスクは解除し、代わりに左が濃い黒幕を1枚重ねて白文字を読ませる。
+   ⚠️.iv-hero__ph はDOM上 .iv-hero__in より後ろ（＝上に来る）。z-index を明示して
+     写真→黒幕→文字の順に固定する。オープニングのバー(.iv-hero__bars)より上に出さない。 */
+.iv-hero__ph{left:0;right:0;top:0;bottom:0;width:auto;z-index:0;
+  -webkit-mask-image:none;mask-image:none;
+  background-position:center 38%;filter:grayscale(1) brightness(.72)}
+.iv-hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,rgba(10,11,10,.9) 0%,rgba(10,11,10,.78) 38%,
+    rgba(10,11,10,.42) 68%,rgba(10,11,10,.24) 100%)}
+/* ⚠️真犯人：このページには @keyframes fvIn / barIn の定義が無かった（recruit.html にしかない）。
+     .iv-hero__ph も .iv-hero__in も opacity:0 のまま動き出さず、ヒーローが真っ黒だった。
+     アニメーション名だけ他ページから持ってきたときは、キーフレームも一緒に運ぶこと。 */
+@keyframes fvIn{to{opacity:1;transform:none}}
+@keyframes barIn{to{transform:scaleX(1)}}
+/* ⚠️重ね順：黒バー（地）→ 写真 → 黒幕 → 文字。
+     バーを写真より上に置くと、開いたバーが写真を覆って真っ黒のままになる。 */
+.iv-hero__bars{z-index:0}
+.iv-hero__ph{z-index:1}
+.iv-hero__in{z-index:3}
+
+/* ── メッセージ：みんなで談笑しているカットを背景に ──
+   ⚠️白の明朝が主役なので、写真はモノクロ＋暗めに落として文字を最優先にする。 */
+.iv-msg{position:relative;overflow:hidden;background:#0a0b0a}
+.iv-msg::before{content:"";position:absolute;inset:0;z-index:0;
+  background:url(p_welf_life.jpg) center 42%/cover no-repeat;
+  filter:grayscale(1) brightness(.5)}
+.iv-msg::after{content:"";position:absolute;inset:0;z-index:1;
+  background:rgba(10,11,10,.52)}
+.iv-msg > *{position:relative;z-index:2}
 </style>
 
 </body>
