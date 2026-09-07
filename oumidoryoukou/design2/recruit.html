@@ -1748,7 +1748,7 @@ html,body{overflow-x:clip;max-width:100%}
       <p class="fv-vision__go"><a class="btn" href="history.html">126年ヒストリーを見る <i class="arrow-i">→</i></a></p>
     </div>
     <div class="rct-fv__btns">
-      <a class="btn" href="#entry">募集要項を見る <i class="arrow-i">→</i></a>
+      <a class="btn" href="#requirements">募集要項を見る <i class="arrow-i">→</i></a>
       <a class="btn btn--outline" href="#people">社員インタビュー</a>
     </div>
   </div>
@@ -1921,19 +1921,32 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
 
     <p class="cpath__foot rv">その先のキャリア</p>
-    <div class="grid-3 rv rv-d1" style="margin-top:14px;">
-      <div class="use-item">技術スペシャリスト</div><div class="use-item">プロジェクトマネジャー</div><div class="use-item">海外担当</div>
+    <!-- ⚠️アイコンは線画（stroke）のインラインSVG。色は currentColor なので、
+         ホバー時の色替えは親の color を変えるだけで追従する。 -->
+    <div class="cgoal rv rv-d1">
+      <div class="cgoal__it">
+        <i class="cgoal__ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="7"/><circle cx="24" cy="24" r="14"/><path d="M24 3v7M24 38v7M45 24h-7M10 24H3M38.8 9.2l-4.9 4.9M14.1 33.9l-4.9 4.9M38.8 38.8l-4.9-4.9M14.1 14.1L9.2 9.2"/></svg></i>
+        <p class="cgoal__jp">技術スペシャリスト</p>
+        <p class="cgoal__en">Technical Specialist</p>
+      </div>
+      <div class="cgoal__it">
+        <i class="cgoal__ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="17" y="4" width="14" height="10"/><rect x="4" y="34" width="14" height="10"/><rect x="30" y="34" width="14" height="10"/><path d="M24 14v10M11 34v-6h26v6M24 24v4"/></svg></i>
+        <p class="cgoal__jp">プロジェクトマネジャー</p>
+        <p class="cgoal__en">Project Manager</p>
+      </div>
+      <div class="cgoal__it">
+        <i class="cgoal__ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M6 24h36M24 6c4.6 5 7 11.3 7 18s-2.4 13-7 18c-4.6-5-7-11.3-7-18s2.4-13 7-18Z"/><path d="M9.5 13c4.2 2.6 9.2 4 14.5 4s10.3-1.4 14.5-4M9.5 35c4.2-2.6 9.2-4 14.5-4s10.3 1.4 14.5 4"/></svg></i>
+        <p class="cgoal__jp">海外担当</p>
+        <p class="cgoal__en">Global</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ⑧ ENTRY -->
-<section class="section section--ink section--tight" id="entry">
-  <div class="container" style="text-align:center;margin-bottom:40px;">
-    <p class="statement__lead rv" style="color:#fff;">あなたの「はかる」を、見つけてください。</p>
-    <p class="body-txt rv rv-d1" style="margin:18px auto 0;max-width:560px;">新卒・中途、いずれも募集中です。126年の技術と誇りを、次の世代へ。</p>
-  </div>
-</section>
+<!-- ⚠️ENTRY の導入ブロック（「あなたの「はかる」を、見つけてください。」＋リード）は削除。
+     新卒／中途のカードがそのまま募集要項への入口になる。
+     ⚠️アンカー #entry を参照している箇所があれば下のカード側（#new）に付け替えること。 -->
 <div class="entry-split rv" id="new">
   <a class="entry-card entry-card--new" href="#requirements">
     <span class="entry-card__en">New Graduate</span>
@@ -4274,6 +4287,34 @@ html.intro .rct-fv,html.intro-run .rct-fv{
   .wstance{grid-template-columns:1fr;gap:34px}
   .bene__grp{grid-template-columns:1fr;gap:20px;padding:32px 0}
   .bene__list > div{grid-template-columns:1fr;gap:2px;padding:10px 0}
+}
+</style>
+
+<!-- ══ その先のキャリア：線画アイコンつきの3枚 ══ -->
+<style id="rct-cgoal">
+/* ⚠️旧 .use-item（罫線だけの細い箱）は目立たなすぎたので置き換え。
+     枠は赤の細罫、アイコンは線画SVGで、キャリアパスの締めとして重さを出す。 */
+.cpath__foot{font-size:clamp(17px,1.5vw,23px)!important}
+.cgoal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(14px,1.6vw,26px);margin-top:clamp(16px,1.8vw,26px)}
+.cgoal__it{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(10px,1.1vw,16px);text-align:center;color:var(--red);
+  border:1px solid var(--red);background:#fff;
+  padding:clamp(26px,3vw,44px) clamp(14px,1.6vw,24px);
+  transition:background .3s ease,color .3s ease}
+.cgoal__ic{display:block;width:clamp(44px,4.4vw,64px);height:clamp(44px,4.4vw,64px)}
+.cgoal__ic svg{width:100%;height:100%;display:block}
+.cgoal__jp{margin:0;font-family:var(--jp);font-weight:700;letter-spacing:.06em;
+  font-size:clamp(15px,1.3vw,19px);color:var(--ink)}
+.cgoal__en{margin:0;font-family:var(--en);font-weight:600;letter-spacing:.16em;
+  font-size:clamp(9.5px,.82vw,12px);text-transform:uppercase;color:var(--red)}
+/* 触れるものではないのでホバーは軽く（リンクではない） */
+.cgoal__it:hover{background:#fdf6f5}
+@media(max-width:700px){
+  .cgoal{grid-template-columns:1fr}
+  .cgoal__it{flex-direction:row;justify-content:flex-start;text-align:left;gap:16px;padding:18px 20px}
+  .cgoal__ic{width:40px;height:40px;flex:none}
+  .cgoal__it > p{margin:0}
 }
 </style>
 
