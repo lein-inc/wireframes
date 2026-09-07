@@ -2030,12 +2030,10 @@ html,body{overflow-x:clip;max-width:100%}
     <a class="btn yoko-entry__b" data-entry="new" href="#" target="_blank" rel="noopener">
       <span class="yoko-entry__jp">新卒採用エントリー</span>
       <span class="yoko-entry__en">New Graduate</span>
-      <i class="arrow-i" aria-hidden="true">→</i>
     </a>
     <a class="btn yoko-entry__b" data-entry="mid" href="#" target="_blank" rel="noopener">
       <span class="yoko-entry__jp">中途採用エントリー</span>
       <span class="yoko-entry__en">Mid-Career</span>
-      <i class="arrow-i" aria-hidden="true">→</i>
     </a>
   </div>
 </section>
@@ -4334,7 +4332,10 @@ html.intro .rct-fv,html.intro-run .rct-fv{
   font-size:clamp(16px,1.5vw,22px);line-height:1.3}
 .yoko-entry__en{font-family:var(--en);font-weight:600;letter-spacing:.14em;
   font-size:clamp(9.5px,.82vw,12px);text-transform:uppercase;opacity:.72}
-.yoko-entry__b .arrow-i{margin-left:auto;font-style:normal}
+/* ⚠️共通ボタンは ::after に ↗ を持っている。マークアップにも .arrow-i を置くと
+     矢印が2つ重なる（小さい → と大きい ↗）。矢印は ::after 側だけにして、
+     右端寄せもそちらに掛ける。 */
+.yoko-entry__b::after{margin-left:auto}
 @media(max-width:700px){
   .yoko-entry{grid-template-columns:1fr}
   .yoko-entry__b{padding:18px 18px}
