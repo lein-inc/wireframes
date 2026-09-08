@@ -1695,22 +1695,26 @@ html,body{overflow-x:clip;max-width:100%}
        kokuyo recruit の HR MESSAGE を参考に「KV → 導入 → 本文 → 写真ブレイク → 引用 → 署名」の
        ブロック構成にしている。旧 .message* のCSSは残してあるが、ここでは使っていない。 -->
   <div class="pmsg">
+    <!-- ⚠️原稿は支給テキストをそのまま使うこと（1文字も変えない）。
+         見出し化・強調・改行の当て方だけがデザイン側の裁量。
+         原稿の順序も変えていない：導入 → 原点の4行 → 本文 → 創業から125年 → 本文
+         → 「未来は待つものではなく、創るもの。」 → 本文 → 締めの3行 → 署名 -->
     <!-- ① キービジュアル -->
     <div class="pmsg__kv rv">
       <div class="pmsg__kvph" style="background-image:url(p_pres_kv.jpg)"></div>
       <div class="pmsg__kvtx">
         <div class="sec-head"><h2 class="sec-jp">代表挨拶</h2><p class="sec-ttl">Message</p></div>
-        <p class="pmsg__catch">We Measure the Future.<br><span>未来を測り、未来を創る。</span></p>
+        <p class="pmsg__catch">We Measure the Future</p>
         <p class="pmsg__who"><span>代表取締役社長</span><b>小谷 俊彦</b></p>
       </div>
     </div>
 
     <!-- ② 導入 -->
     <div class="pmsg__intro rv">
-      <p class="pmsg__lead">重さをはかる。量をはかる。品質をはかる。<br>それが私たちの原点です。</p>
+      <p class="pmsg__lead">私たち近江度量衡は、1900年の創業以来、125年以上にわたり「はかる」という技術を通じて社会を支えてきました。</p>
       <div class="pmsg__body">
-        <p>私たち近江度量衡は、1900年の創業以来、125年以上にわたり「はかる」という技術を通じて社会を支えてきました。</p>
-        <p>しかし、私たちが本当に大切にしているのは、数字そのものではありません。その先にある、お客様の安心や喜び、そして未来です。私たちは、お客様一人ひとりの課題に真摯に向き合いながら、新しい価値づくりに挑戦し続けています。</p>
+        <p class="pmsg__lines">重さをはかる。<br>量をはかる。<br>品質をはかる。<br>それが私たちの原点です。</p>
+        <p>しかし、私たちが本当に大切にしているのは、数字そのものではありません。<br>その先にある、お客様の安心や喜び、そして未来です。<br>私たちは、お客様一人ひとりの課題に真摯に向き合いながら、新しい価値づくりに挑戦し続けています。</p>
       </div>
     </div>
 
@@ -1719,7 +1723,7 @@ html,body{overflow-x:clip;max-width:100%}
       <div class="pmsg__breakph" style="background-image:url(p_pres_sub.jpg)"></div>
       <div class="pmsg__breaktx">
         <p class="pmsg__sub">創業から125年。</p>
-        <p>先人たちが私たちに残してくれたのは、技術だけではありません。変化を恐れず挑戦する姿勢。人を大切にする心。その想いを受け継ぎながら、私たちは次の時代へ歩みを進めています。</p>
+        <p>先人たちが私たちに残してくれたのは、技術だけではありません。<br>変化を恐れず挑戦する姿勢。<br>人を大切にする心。<br>その想いを受け継ぎながら、私たちは次の時代へ歩みを進めています。</p>
       </div>
     </div>
 
@@ -1729,8 +1733,9 @@ html,body{overflow-x:clip;max-width:100%}
     <!-- ⑤ 締め＋署名 -->
     <div class="pmsg__intro pmsg__intro--end rv">
       <div class="pmsg__body">
-        <p>人を育てる。技術を磨く。挑戦を続ける。そして、お客様や地域社会、共に働く仲間とともに、より良い未来を創っていきたいと考えています。</p>
-        <p>We Measure the Future.<br>未来を測り、未来を創る。それが私たち近江度量衡の変わらぬ使命です。</p>
+        <p class="pmsg__lines">人を育てる。<br>技術を磨く。<br>挑戦を続ける。</p>
+        <p>そして、お客様や地域社会、共に働く仲間とともに、より良い未来を創っていきたいと考えています。</p>
+        <p class="pmsg__end">We Measure the Future.<br>未来を測り、未来を創る。<br>それが私たち近江度量衡の変わらぬ使命です。</p>
         <p class="pmsg__sign"><span>代表取締役社長</span><b>小谷 俊彦</b></p>
       </div>
     </div>
@@ -3023,7 +3028,7 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* ── ① KV：写真の上に赤いグラデを重ね、左にコピー ── */
 .pmsg__kv{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;
   padding:clamp(48px,7vw,110px) var(--pad);overflow:hidden}
-.pmsg__kvph{position:absolute;inset:0;background-size:cover;background-position:center 22%}
+.pmsg__kvph{position:absolute;inset:0;background-size:cover;background-position:55% 22%}  /* ⚠️左47%は赤面なので、見えるのは右側だけ。人物をその中央に置くため、切り出し（右側を落とす）＋背景位置30%で人物を右へ送っている */
 /* ⚠️グラデでフェードさせない。左はベタの赤面、右は素の写真。境目はまっすぐ切る。 */
 .pmsg__kv::after{content:"";position:absolute;left:0;top:0;bottom:0;width:47%;
   background:var(--red)}
@@ -3053,6 +3058,13 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .pmsg__body p{margin:0 0 1.8em;font-size:clamp(14px,1.08vw,16px);line-height:2.15;
   color:rgba(0,0,0,.78);text-wrap:pretty}
 .pmsg__body p:last-child{margin-bottom:0}
+/* 原稿の短い1行が続く箇所は、行を立てて見せる（文言はいじらない） */
+.pmsg__lines{font-family:var(--mincho);font-weight:600;color:var(--ink);
+  font-size:clamp(1.15rem,1.7vw,1.6rem)!important;line-height:1.9!important;letter-spacing:.02em;
+  margin-bottom:1.6em!important}
+.pmsg__end{font-family:var(--mincho);font-weight:600;color:var(--ink);
+  font-size:clamp(1.1rem,1.5vw,1.45rem)!important;line-height:1.95!important;
+  margin-top:2em!important}
 
 /* ── ③ 写真ブレイク ── */
 .pmsg__break{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
