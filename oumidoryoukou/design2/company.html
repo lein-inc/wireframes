@@ -3028,7 +3028,7 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* ── ① KV：写真の上に赤いグラデを重ね、左にコピー ── */
 .pmsg__kv{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;
   padding:clamp(48px,7vw,110px) var(--pad);overflow:hidden}
-.pmsg__kvph{position:absolute;inset:0;background-size:cover;background-position:55% 22%}  /* ⚠️左47%は赤面なので、見えるのは右側だけ。人物をその中央に置くため、切り出し（右側を落とす）＋背景位置30%で人物を右へ送っている */
+.pmsg__kvph{position:absolute;inset:0;background-size:cover;background-position:0% 22%}  /* ⚠️左47%は赤面なので見えるのは右側だけ。人物は切り抜きPNGのアルファから実測（x中心0.564）し、画角を広げて（切り出し幅0.92）倍率を約2割下げたうえで、この背景位置で見える範囲の中央に寄せている */
 /* ⚠️グラデでフェードさせない。左はベタの赤面、右は素の写真。境目はまっすぐ切る。 */
 .pmsg__kv::after{content:"";position:absolute;left:0;top:0;bottom:0;width:47%;
   background:var(--red)}
