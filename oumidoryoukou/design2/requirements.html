@@ -3054,8 +3054,10 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
    中身だけ2段組みにして、和文＋英字＋矢印を並べる。 */
 .yoko-entry__b{display:flex;align-items:center;gap:clamp(12px,1.4vw,22px);
   padding:clamp(20px,2.2vw,32px) clamp(18px,2vw,30px);width:100%}
-（旧矢印スパンを消すための指定）がある。
-     ラベルを span で書くとそれに巻き込まれて文字が消えるので、ここで戻す。 */
+/* ⚠️共通ボタンには「.btn の子 span を消す」指定（旧矢印スパン用）がある。
+     ラベルを span で書くとそれに巻き込まれて文字が消えるので、ここで戻す。
+     ⚠️recruit.html からCSSを機械的に抜き出したとき、この注記の書き出しが
+       欠けてコメントが閉じだけになり、直後の1行がまるごと無効化されていた。 */
 .yoko-entry__b > span{display:block}
 .yoko-entry__jp{font-family:var(--jp);font-weight:700;letter-spacing:.06em;
   font-size:clamp(16px,1.5vw,22px);line-height:1.3}
