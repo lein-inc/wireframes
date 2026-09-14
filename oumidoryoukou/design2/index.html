@@ -5793,10 +5793,9 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   function onMove(e){
     if (done() || onBanner(e.clientY)) return;     /* バナーまで来たら結ばない */
     small = isSmall();
-    if (small){
-      if (dirty){ if (!readPin()) return; dirty = false; }
-      else if (!pinX && !pinY) return;
-    } else {
+    /* 2026-09-14：滋賀の地図に切り替わったら線は結ばない（FVの世界地図のあいだだけ） */
+    if (small){ if (op){ op = 0; start(); } return; }
+    {
       if (!has || dirty){ has = true; dirty = false; measure(); }
     }
     mx = e.clientX; my = e.clientY;
@@ -5808,7 +5807,7 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   window.addEventListener('resize', function(){ dirty = true; measure(); }, {passive:true});
   window.addEventListener('scroll', function(){
     dirty = true;                                  /* 追従中の地図は動くので測り直す */
-    if (op && done()){ op = 0; start(); }          /* 範囲を出たら線を消す */
+    if (op && (done() || isSmall())){ op = 0; start(); }   /* 範囲を出た／滋賀に切り替わったら線を消す */
   }, {passive:true});
 })();
 </script>
@@ -6314,6 +6313,27 @@ html.hist-dark body.is-logo-dark .site-logo .logo-name{filter:brightness(0) inve
   opacity:1;pointer-events:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
 .fv .fv__lake.is-gone{opacity:0;transform:translateY(16px)}
 @media(max-width:700px){.fv .fv__lake{width:72px;bottom:14px;right:16px}}
+</style>
+<style id="map-label-type-0914">
+/* 「Mother Lake / BIWA」は地図が出たあと、1文字ずつパパッと出す（0.05s刻み） */
+.phil__map .mapsvg .mp-label{opacity:1;transition:none}
+.phil__map .mapsvg .mp-label path{opacity:0}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path{opacity:1;transition:opacity .01s steps(1,end)}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(1){transition-delay:2.100s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(2){transition-delay:2.155s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(3){transition-delay:2.210s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(4){transition-delay:2.265s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(5){transition-delay:2.320s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(6){transition-delay:2.375s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(7){transition-delay:2.430s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(8){transition-delay:2.485s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(9){transition-delay:2.540s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(10){transition-delay:2.595s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(11){transition-delay:2.650s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(12){transition-delay:2.705s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(13){transition-delay:2.760s}
+.phil__map .mapwrap.is-shown .mapsvg .mp-label path:nth-of-type(14){transition-delay:2.815s}
+@media(prefers-reduced-motion:reduce){.phil__map .mapsvg .mp-label path{opacity:1;transition:none}}
 </style>
 </body>
 </html>
