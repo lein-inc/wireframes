@@ -58,6 +58,14 @@
 
   /* ── 入場：赤カードがパラパラと消えていく ── */
   function reveal() {
+    /* TOPの初期ロード（世界地図イントロ）ではタイルのパラパラは出さない。
+       ⚠️イントロ側（index.html の #omi-intro）が window.OMI_NO_PT_REVEAL を立てる。
+         クラスだけ外して、ページはイントロのフェードで現れる。 */
+    if (window.OMI_NO_PT_REVEAL) {
+      document.documentElement.classList.remove('pt-init');
+      document.documentElement.classList.remove('pt-veil');
+      return;
+    }
     var o = makeGrid(1);
     document.documentElement.classList.remove('pt-init');
     requestAnimationFrame(function () { requestAnimationFrame(function () {

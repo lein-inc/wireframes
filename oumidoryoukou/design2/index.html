@@ -1572,6 +1572,7 @@ html{visibility:hidden}
   var box = document.getElementById('omi-intro');
   if (!box) return;
   if (matchMedia('(prefers-reduced-motion:reduce)').matches){ box.remove(); return; }
+  window.OMI_NO_PT_REVEAL = true;   /* _pt.js の赤タイルのパラパラ入場を止める（イントロのフェードで現れる） */
   var paths = [].slice.call(box.querySelectorAll('path'));
   var n = paths.length, DRAW = 900, SPREAD = 600;      /* 1本 0.9s、開始を 0.6s ぶん散らす＝約1.5s で描き切る */
   paths.forEach(function(p, i){
@@ -5503,7 +5504,7 @@ body.is-logo-dark .site-logo .logo-mark{filter:none}
      「白い座布団つきの赤ロゴ」など確定前の姿がパパッと見えてしまう。 */
 html{visibility:visible}
 </style>
-<script src="_pt.js?v=4"></script>
+<script src="_pt.js?v=5"></script>
 
 <!-- ══ 新着情報：ヒストリーの流れる背景タイポが透けるのを止める ══ -->
 <style id="news-opaque">
