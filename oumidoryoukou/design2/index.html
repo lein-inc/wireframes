@@ -5218,7 +5218,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 /* ⚠️薄さは opacity ではなく fill-opacity で付けること。
    .mp-fill の opacity は「線を引き終わってから塗りが乗る」出現アニメに使われていて、
    そこを上書きすると塗りの出るタイミングが壊れる。 */
-.phil__map .mapsvg .mp-fill{fill:#fff;fill-opacity:.6}
+.phil__map .mapsvg .mp-fill{fill:#fff;fill-opacity:.3}
 
 /* ══ 琵琶湖：半透明のグレーで塗る（草津の位置が掴めるように）══
    ⚠️元のSVGに湖単体のパスは無く、県の外周パスの“穴”として表現されていた。
@@ -6399,7 +6399,7 @@ html.hist-dark body.is-logo-dark .site-logo .logo-name{filter:brightness(0) inve
 </style>
 <style id="map-city-0917">
 /* 近江（草津）の塗りの下に「草津市」。塗りと同じタイミング（地図描画完了後）でふわっと出す */
-.phil__map .mapsvg .mp-city{font-family:var(--jp);font-weight:700;font-size:12px;letter-spacing:.02em;fill:#111;
+.phil__map .mapsvg .mp-city{font-family:var(--jp);font-weight:700;font-size:14px;letter-spacing:.02em;fill:#fff;
   opacity:0;transition:opacity .6s ease 2.1s}
 .phil__map .mapwrap.is-shown .mapsvg .mp-city{opacity:1}
 @media(prefers-reduced-motion:reduce){.phil__map .mapsvg .mp-city{opacity:1;transition:none}}
