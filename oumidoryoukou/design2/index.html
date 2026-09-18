@@ -1532,7 +1532,7 @@ html{visibility:hidden}
 </style>
 </head>
 <body>
-<!-- ══ TOP初期ロード（約3秒）：白地に世界地図が薄い赤の線で描かれる → 中央に近江ロゴがすっと現れる
+<!-- ══ TOP初期ロード（約4秒）：白地に世界地図が薄い赤の線で描かれる → 中央に近江ロゴがすっと現れる
      → ロゴは上へふわっと消え、地図はすっと消え、白地は滲みながらフェードしてページへ ══
      ⚠️地図の位置・大きさは FV の .fv .mapworld（#map-world / #fv-world-full / #world-inset）と同じ式で置く。
        式をここに複製しているのは、このブロックが body 先頭＝後段の :root 変数より先に描かれるため。
@@ -1566,10 +1566,10 @@ html.pt-init{background:#fff}
 #omi-intro .omi-intro__map path{vector-effect:non-scaling-stroke;opacity:0}
 #omi-intro.is-draw .omi-intro__map path{opacity:1}
 /* 近江ロゴ：中央に時間差で現れ、最後は上へふわっと消える */
-#omi-intro .omi-intro__logo{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:clamp(10px,1.2vw,16px);
+#omi-intro .omi-intro__logo{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:clamp(7px,.8vw,10px);
   transform:translate(-50%,-50%) translateY(10px);opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
-#omi-intro .omi-intro__mark{height:clamp(26px,3vw,40px);width:auto}
-#omi-intro .omi-intro__name{height:clamp(30px,3.6vw,48px);width:auto}
+#omi-intro .omi-intro__mark{height:clamp(16px,1.7vw,22px);width:auto}
+#omi-intro .omi-intro__name{height:clamp(18px,2vw,26px);width:auto}
 #omi-intro.is-logo .omi-intro__logo{opacity:1;transform:translate(-50%,-50%)}
 #omi-intro.is-out .omi-intro__logo{opacity:0;transform:translate(-50%,-50%) translateY(-36px);transition:opacity .5s ease,transform .6s cubic-bezier(.4,0,.2,1)}
 @media(max-width:900px){
@@ -1587,8 +1587,8 @@ html.pt-init{background:#fff}
   window.OMI_NO_PT_REVEAL = true;   /* _pt.js の赤タイルのパラパラ入場を止める（イントロのフェードで現れる） */
   var paths = [].slice.call(box.querySelectorAll('path'));
   var n = paths.length;
-  /* 時間割（合計 3.0s）：地図 0〜1.3s ／ ロゴ 0.9s〜 ／ 退場 2.2s〜3.0s */
-  var DRAW = 800, SPREAD = 500, LOGO_AT = 900, OUT_AT = 2200, END_AT = 3050;
+  /* 時間割（合計 4.0s）：地図 0〜1.6s ／ ロゴ 1.2s〜 ／ 退場 3.2s〜4.0s */
+  var DRAW = 1000, SPREAD = 600, LOGO_AT = 1200, OUT_AT = 3200, END_AT = 4050;
   paths.forEach(function(p, i){
     var L = 0; try { L = p.getTotalLength(); } catch(e){}
     if (!L) return;
