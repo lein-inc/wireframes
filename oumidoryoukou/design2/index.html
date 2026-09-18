@@ -2318,7 +2318,7 @@ html.pt-init{background:#fff}
     /* ⚠️コピー下端からの相対だけで決めると、コピーの大きさを変えるたびに
        赤帯がFVに覗く高さまで変わってしまう。覗く高さ(POKE)を基準にし、
        コピーに被らない範囲でだけコピー側を優先する。 */
-    var POKE = 118;  /* FV下端から上に覗く赤帯の高さ。コピー下端（padding-bottom 98px）に約20px掛かる。文字は .fv__head の z-index で帯より上 */
+    var POKE = 74;   /* FV下端から上に覗く赤帯の高さ。白フレーム(--fvgap)ぶんは隠れる */
     var bandTop = ttlBottom + GAP;
     if (fv){
       /* コピー側は padding-bottom で帯のぶんを空けてあるので被らない。
@@ -6437,8 +6437,39 @@ html.hist-dark body.is-logo-dark .site-logo .logo-name{filter:brightness(0) inve
 .fv .fv__lake{background:rgba(255,255,255,.32);padding:clamp(8px,.9vw,12px) clamp(10px,1.1vw,14px);border-radius:4px;box-sizing:content-box;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
 /* ヘッダーの近江ロゴを少しだけ小さく（transform は状態切替で使われているので zoom で） */
 .site-logo{zoom:.93}
-/* 赤帯がコピーの下に掛かるので、コピー（.fv__head）を帯より上のレイヤーに */
-.fv .fv__head{z-index:8}
 </style>
+<style id="fv-enter-0919">
+/* ⚠️イントロ（#omi-intro）が終わるまでコピーは左端のマスクで隠しておき、
+     body.is-fv-in が付いたら 1行ずつ左から右へ抜ける。赤帯はそのあと下からすっと上がって文字の下に着く。
+   ⚠️.ln1〜3 は transform:scaleX(.8) を持っているので、動きは transform ではなく clip-path で作る。 */
+body:not(.is-fv-in) .fv__head-title .ln1,
+body:not(.is-fv-in) .fv__head-title .ln2,
+body:not(.is-fv-in) .fv__head-title .ln3{clip-path:inset(0 100% 0 0)}
+.fv__head-title .ln1{transition:clip-path .75s cubic-bezier(.2,.7,.2,1) 0s}
+.fv__head-title .ln2{transition:clip-path .75s cubic-bezier(.2,.7,.2,1) .18s}
+.fv__head-title .ln3{transition:clip-path .75s cubic-bezier(.2,.7,.2,1) .36s}
+body.is-fv-in .fv__head-title .ln1,body.is-fv-in .fv__head-title .ln2,body.is-fv-in .fv__head-title .ln3{clip-path:inset(0 0 0 0)}
+/* 赤帯：FV下端の外（下）に隠しておき、最後に上へ */
+body:not(.is-fv-in) .gsec.phil::before{transform:translateY(140px)}
+html body.is-ready .gsec.phil::before{transition:width .8s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1) .7s}
+/* SCROLL DOWN と右下の Mother Lake も帯と同じタイミングで */
+body:not(.is-fv-in) .fv .fv__scroll,body:not(.is-fv-in) .fv .fv__lake{opacity:0}
+body.is-fv-in .fv .fv__scroll:not(.is-gone),body.is-fv-in .fv .fv__lake:not(.is-gone){transition:opacity .5s ease 1.1s}
+@media(prefers-reduced-motion:reduce){
+  .fv__head-title .ln1,.fv__head-title .ln2,.fv__head-title .ln3{clip-path:none!important;transition:none}
+  .gsec.phil::before{transform:none!important}
+}
+</style>
+<script>
+/* イントロ終了 → コピー登場 → 赤帯。イントロが無い環境（reduced-motion 等）は即時 */
+(function(){
+  function go(){ document.body.classList.add('is-fv-in'); }
+  var box = document.getElementById('omi-intro');
+  if (!box || matchMedia('(prefers-reduced-motion:reduce)').matches){ go(); return; }
+  var t = 4050 - 250;   /* END_AT より少し前（白地が抜けきる手前）で出し始める */
+  if (/introhold/.test(location.search)) return;
+  setTimeout(go, t);
+})();
+</script>
 </body>
 </html>
