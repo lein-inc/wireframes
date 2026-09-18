@@ -3126,5 +3126,14 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .card--env .card__sdg{position:absolute;right:30px;bottom:32px;width:90px;height:90px;display:block}
 @media(max-width:700px){.card--env .card__txt{padding-right:0}.card--env .card__sdg{position:static;margin-top:16px}}
 </style>
+<style id="sp-nobr-0920">
+/* SP：意味のない改行を解除（ヒーローのキャッチ・リード、見出し、CTA文など）。
+   ⚠️社是（.pmsg__lines）や住所など、1行1項目が意味を持つ箇所は対象外。 */
+@media(max-width:700px){
+  .phero__catch br,.phero__lead br,.iv-h2 br,.iv-msg__txt br,.pcta__in h2 br,.pcta__in p br,
+  .tfd__catch br,.tfd__ttl br,.sec-jp br,.yoko-lead br,.wstance__lead br,.dcta__foot p br,.form__foot br,
+  .fv-vision__catch br,.statement__lead br,.pmsg__intro br,.pmsg__breaktx br,.pmsg__end br,.rqentry__lead br{display:none}
+}
+</style>
 </body>
 </html>

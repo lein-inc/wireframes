@@ -2754,5 +2754,14 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 .foot__brand .foot__access-h{margin-top:12px!important;font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:8px}
 .foot__brand .foot__access-h .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red)}
 </style>
+<style id="sp-nobr-0920">
+/* SP：意味のない改行を解除（ヒーローのキャッチ・リード、見出し、CTA文など）。
+   ⚠️社是（.pmsg__lines）や住所など、1行1項目が意味を持つ箇所は対象外。 */
+@media(max-width:700px){
+  .phero__catch br,.phero__lead br,.iv-h2 br,.iv-msg__txt br,.pcta__in h2 br,.pcta__in p br,
+  .tfd__catch br,.tfd__ttl br,.sec-jp br,.yoko-lead br,.wstance__lead br,.dcta__foot p br,.form__foot br,
+  .fv-vision__catch br,.statement__lead br,.pmsg__intro br,.pmsg__breaktx br,.pmsg__end br,.rqentry__lead br{display:none}
+}
+</style>
 </body>
 </html>
