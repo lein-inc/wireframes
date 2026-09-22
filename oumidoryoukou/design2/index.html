@@ -1545,6 +1545,7 @@ html{visibility:hidden}
   </div>
   <div class="omi-intro__logo"><img class="omi-intro__mark" src="logo_mark_r.png" alt=""><img class="omi-intro__name" src="logo_name_k.png" alt="近江度量衡株式会社"></div>
 </div>
+<noscript><style>#omi-intro{display:none!important}</style></noscript>
 <style id="omi-intro-css">
 /* 最初の1フレーム（head の pt-flash は赤）を白に */
 html.pt-init{background:#fff}
@@ -1583,7 +1584,17 @@ html.pt-init{background:#fff}
 (function(){
   var box = document.getElementById('omi-intro');
   if (!box) return;
-  if (matchMedia('(prefers-reduced-motion:reduce)').matches){ box.remove(); return; }
+  /* ⚠️イントロはセッション中の初回だけ。戻るボタンでTOPへ帰ってくるたびに4秒待たせない。
+       （別タブ・翌日など、セッションが変われば再生される） */
+  var SEEN = 'omi_intro_seen';
+  var seen = false;
+  try { seen = sessionStorage.getItem(SEEN) === '1'; } catch (e) {}
+  if (seen || matchMedia('(prefers-reduced-motion:reduce)').matches){
+    box.remove();
+    document.body.classList.add('is-fv-in');   /* コピー・赤帯は最初から出した状態に */
+    return;
+  }
+  try { sessionStorage.setItem(SEEN, '1'); } catch (e) {}
   window.OMI_NO_PT_REVEAL = true;   /* _pt.js の赤タイルのパラパラ入場を止める（イントロのフェードで現れる） */
   var paths = [].slice.call(box.querySelectorAll('path'));
   var n = paths.length;
@@ -6442,6 +6453,7 @@ html.hist-dark body.is-logo-dark .site-logo .logo-name{filter:brightness(0) inve
 /* ヘッダーの近江ロゴを少しだけ小さく（transform は状態切替で使われているので zoom で） */
 .site-logo{zoom:.93}
 </style>
+<noscript><style>.fv__head-title .ln1,.fv__head-title .ln2,.fv__head-title .ln3{clip-path:none!important}.gsec.phil::before{transform:none!important}.fv .fv__scroll,.fv .fv__lake{opacity:1!important}</style></noscript>
 <style id="fv-enter-0919">
 /* ⚠️イントロ（#omi-intro）が終わるまでコピーは左端のマスクで隠しておき、
      body.is-fv-in が付いたら 1行ずつ左から右へ抜ける。赤帯はそのあと下からすっと上がって文字の下に着く。
@@ -6469,11 +6481,24 @@ body.is-fv-in .fv .fv__scroll:not(.is-gone),body.is-fv-in .fv .fv__lake:not(.is-
 (function(){
   function go(){ document.body.classList.add('is-fv-in'); }
   var box = document.getElementById('omi-intro');
+  /* ⚠️イントロを飛ばした回（セッション2回目・reduced-motion）は box が既に取り除かれている＝即表示 */
   if (!box || matchMedia('(prefers-reduced-motion:reduce)').matches){ go(); return; }
   var t = 4050 - 250;   /* END_AT より少し前（白地が抜けきる手前）で出し始める */
   if (/introhold/.test(location.search)) return;
   setTimeout(go, t);
 })();
 </script>
+<style id="a11y-focus-0922">
+/* キーボード操作時のフォーカス表示（マウス操作では出ない :focus-visible）。
+   ⚠️サイト全体で outline を消している指定があるため、ここで明示的に戻す。 */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,
+[tabindex]:focus-visible,summary:focus-visible{outline:2px solid var(--red,#cc0700);outline-offset:3px;border-radius:1px}
+.fv a:focus-visible,.strip a:focus-visible,.foot a:focus-visible,.drawer a:focus-visible,
+.iv-msg a:focus-visible,.section--ink a:focus-visible{outline-color:#fff}
+/* 本文へスキップ（キーボード／スクリーンリーダー向け） */
+.omi-skip{position:absolute;left:-9999px;top:0;z-index:2147483200;background:#000;color:#fff;
+  padding:12px 20px;font-size:14px;text-decoration:none}
+.omi-skip:focus{left:8px;top:8px}
+</style>
 </body>
 </html>

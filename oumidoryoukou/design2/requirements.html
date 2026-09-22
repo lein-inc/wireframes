@@ -3121,5 +3121,17 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   .fv-vision__catch br,.statement__lead br,.pmsg__intro br,.pmsg__breaktx br,.pmsg__end br,.rqentry__lead br{display:none}
 }
 </style>
+<style id="a11y-focus-0922">
+/* キーボード操作時のフォーカス表示（マウス操作では出ない :focus-visible）。
+   ⚠️サイト全体で outline を消している指定があるため、ここで明示的に戻す。 */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,
+[tabindex]:focus-visible,summary:focus-visible{outline:2px solid var(--red,#cc0700);outline-offset:3px;border-radius:1px}
+.fv a:focus-visible,.strip a:focus-visible,.foot a:focus-visible,.drawer a:focus-visible,
+.iv-msg a:focus-visible,.section--ink a:focus-visible{outline-color:#fff}
+/* 本文へスキップ（キーボード／スクリーンリーダー向け） */
+.omi-skip{position:absolute;left:-9999px;top:0;z-index:2147483200;background:#000;color:#fff;
+  padding:12px 20px;font-size:14px;text-decoration:none}
+.omi-skip:focus{left:8px;top:8px}
+</style>
 </body>
 </html>
