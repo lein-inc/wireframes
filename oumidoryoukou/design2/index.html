@@ -1606,6 +1606,10 @@ html.pt-init{background:#fff}
   if (/introhold/.test(location.search)) return;
   setTimeout(function(){ box.classList.add('is-out'); }, OUT_AT);
   setTimeout(function(){ if (box.parentNode) box.parentNode.removeChild(box); }, END_AT);
+  /* ⚠️戻るボタンで復帰したとき、イントロは再生し直さない（すでに見ている） */
+  window.addEventListener('pageshow', function(e){
+    if (e.persisted && box.parentNode) box.parentNode.removeChild(box);
+  });
 })();
 </script>
 
@@ -5525,7 +5529,7 @@ body.is-logo-dark .site-logo .logo-mark{filter:none}
      「白い座布団つきの赤ロゴ」など確定前の姿がパパッと見えてしまう。 */
 html{visibility:visible}
 </style>
-<script src="_pt.js?v=5"></script>
+<script src="_pt.js?v=6"></script>
 
 <!-- ══ 新着情報：ヒストリーの流れる背景タイポが透けるのを止める ══ -->
 <style id="news-opaque">

@@ -57,7 +57,18 @@
   }
 
   /* ── 入場：赤カードがパラパラと消えていく ── */
+  /* 画面に残っている赤タイルを全部片付ける。
+     ⚠️退場（クリック→赤で埋める）の途中でページを離れると、そのタイルが敷かれたまま
+       bfcache に入る。戻るボタンで復帰したとき、これを消さないと画面が真っ赤のまま残る。 */
+  function clearGrids() {
+    [].forEach.call(document.querySelectorAll('.pt-grid'), function (g) {
+      if (g.parentNode) g.parentNode.removeChild(g);
+    });
+    document.documentElement.classList.remove('pt-leave');
+  }
+
   function reveal() {
+    clearGrids();
     /* TOPの初期ロード（世界地図イントロ）ではタイルのパラパラは出さない。
        ⚠️イントロ側（index.html の #omi-intro）が window.OMI_NO_PT_REVEAL を立てる。
          クラスだけ外して、ページはイントロのフェードで現れる。 */
@@ -105,9 +116,15 @@
     }); });
   }, true);
 
+  /* ⚠️戻る／進むでの復帰（bfcache）。persisted でなくても（ブラウザによっては false で返る）
+       退場タイルが残っていることがあるので、いずれの場合も必ず片付ける。 */
   window.addEventListener('pageshow', function (e) {
-    if (e.persisted) { leaving = false; reveal(); }
+    leaving = false;
+    if (e.persisted) { reveal(); }
+    else { clearGrids(); }
   });
+  /* 保険：復帰直後に履歴の状態が変わったときも片付ける */
+  window.addEventListener('popstate', function () { leaving = false; clearGrids(); });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', reveal);
