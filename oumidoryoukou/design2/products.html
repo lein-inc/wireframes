@@ -2987,5 +2987,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   padding:12px 20px;font-size:14px;text-decoration:none}
 .omi-skip:focus{left:8px;top:8px}
 </style>
+<style id="jp-wrap-0924">
+/* 日本語の改行位置：末尾に1〜2文字だけ残る「取り残し」と、単語の途中での改行を防ぐ。
+   ⚠️word-break:auto-phrase は文節単位の折り返し。未対応ブラウザは text-wrap:pretty が効く。 */
+.phero__catch,.phero__lead,.sec-jp,.iv-h2,.iv-msg__txt,.pcta__in h2,
+.prow__ttl,.lcard__nm,.fitem h3,.sf h3,.tfd__ttl,.tfd__catch,.yoko-h2,.yoko-job,
+.bene__ttl,.wstance__ttl,.base-card__name,.card__ttl,.news-row__title,.news-article__ttl,
+.interview-card__quote,.ivcard .q,.chrono__t{word-break:auto-phrase;text-wrap:pretty}
+</style>
 </body>
 </html>

@@ -4109,5 +4109,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   padding:12px 20px;font-size:14px;text-decoration:none}
 .omi-skip:focus{left:8px;top:8px}
 </style>
+<style id="hist-wrap-0924">
+/* 年表の見出し・本文：日本語として不自然な位置での改行（末尾に2文字だけ残る等）を防ぐ。
+   ⚠️word-break:auto-phrase は文節単位で折り返す指定。未対応ブラウザでは text-wrap:pretty/balance が効く。
+   ⚠️「◯代社長 …（初代）」のように括弧付きの語が行頭に落ちるのも auto-phrase で解消する。 */
+.hc-panel__title,.hc-panel__desc,
+.tl-ttl,.tl-tx,
+.chrono__t,.chrono__d,
+.es__ttl,.es__tx,.hb__ttl{
+  word-break:auto-phrase;
+  line-break:strict;
+  text-wrap:pretty;
+  overflow-wrap:anywhere}
+/* 見出しは行数が少ないので、行の長さを均す（最終行に1語だけ残るのを防ぐ） */
+.hc-panel__title,.tl-ttl,.chrono__t{text-wrap:balance}
+/* 括弧や中点の前後で切らない（（初代）（2代）などが分断されないように） */
+.hc-panel__title,.tl-ttl,.chrono__t{hanging-punctuation:allow-end}
+</style>
 </body>
 </html>

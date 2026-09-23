@@ -1724,7 +1724,7 @@ html,body{overflow-x:clip;max-width:100%}
   <div class="lineup__grid">
     <div class="lcard"><div class="lcard__ph" style="background-image:url(grain-twin.jpg)"></div><div class="lcard__body"><p class="lcard__en">Twinscale</p><h3 class="lcard__nm">ツインスケール</h3><p class="lcard__tx">計量槽を2基内蔵した穀物用計量機。2つの槽で交互に計量することでロスをなくし、荷受などの処理を効率良く行います。非破壊水分測定センサーで、計量と同時に水分量も測定します。</p></div></div>
     <div class="lcard"><div class="lcard__ph" style="background-image:url(grain-checker.jpg)"></div><div class="lcard__body"><p class="lcard__en">Autochecker</p><h3 class="lcard__nm">オートチェッカー</h3><p class="lcard__tx">選別からパッキングまでを一台で行う検査装置。低コスト・省スペースを実現し、タッチパネルで簡単に操作できます。検査後のサンプルはシールパックで保存、大豆用の三段選別にも対応します。</p></div></div>
-    <div class="lcard"><div class="lcard__ph" style="background-image:url(dryer-3d-out.jpg)"></div><div class="lcard__body"><p class="lcard__en">Autodryer</p><h3 class="lcard__nm">オートドライヤー（CFD-120）</h3><p class="lcard__tx">米・麦・大豆のサンプル検査で120サンプルの同時乾燥が可能。従来のドライヤーから消費電力を半分に削減しました。標準扉サイズ以下のため、開口工事なしで設置できます。</p></div></div>
+    <div class="lcard"><div class="lcard__ph" style="background-image:url(dryer-3d-out.jpg)"></div><div class="lcard__body"><p class="lcard__en">Full Autodryer</p><h3 class="lcard__nm">フルオートドライヤー（CFD-120）</h3><p class="lcard__tx">米・麦・大豆のサンプル検査で120サンプルの同時乾燥が可能。従来のドライヤーから消費電力を半分に削減しました。標準扉サイズ以下のため、開口工事なしで設置できます。</p></div></div>
   </div>
 </section>
 
@@ -3253,6 +3253,17 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* 0909修正：機器詳細の番号付き写真を小さく（列幅いっぱい→最大400px） */
 .tfd-det__ph img{max-width:400px;margin:0 auto}
 .tfd-det__ph figcaption{max-width:400px;margin-left:auto;margin-right:auto}
+/* 0924修正：番号付き写真は全体が見えるよう大きく、操作盤は小さく。
+   ⚠️上の 0909 指定（max-width:400px）を打ち消すため、必ずこの後ろに置くこと。 */
+.tfd-det__grid{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr)}
+.tfd-det__ph img{max-width:none;width:100%;object-fit:contain}
+.tfd-det__ph figcaption{max-width:none}
+.tfd-det__panel img{max-width:200px}
+@media(max-width:900px){
+  .tfd-det__grid{grid-template-columns:minmax(0,1fr)}
+  .tfd-det__ph img{max-width:520px;margin:0 auto}
+  .tfd-det__panel img{max-width:240px}
+}
 </style>
 <style id="foot-access-0918">
 /* フッター：Google map の下にアクセス（お車／電車） */
@@ -3281,6 +3292,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .omi-skip{position:absolute;left:-9999px;top:0;z-index:2147483200;background:#000;color:#fff;
   padding:12px 20px;font-size:14px;text-decoration:none}
 .omi-skip:focus{left:8px;top:8px}
+</style>
+<style id="jp-wrap-0924">
+/* 日本語の改行位置：末尾に1〜2文字だけ残る「取り残し」と、単語の途中での改行を防ぐ。
+   ⚠️word-break:auto-phrase は文節単位の折り返し。未対応ブラウザは text-wrap:pretty が効く。 */
+.phero__catch,.phero__lead,.sec-jp,.iv-h2,.iv-msg__txt,.pcta__in h2,
+.prow__ttl,.lcard__nm,.fitem h3,.sf h3,.tfd__ttl,.tfd__catch,.yoko-h2,.yoko-job,
+.bene__ttl,.wstance__ttl,.base-card__name,.card__ttl,.news-row__title,.news-article__ttl,
+.interview-card__quote,.ivcard .q,.chrono__t{word-break:auto-phrase;text-wrap:pretty}
 </style>
 </body>
 </html>
