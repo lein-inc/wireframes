@@ -1822,7 +1822,7 @@ html,body{overflow-x:clip;max-width:100%}
       </ol>
     </div>
     <figure class="tfd-det__ph rv rv-d1"><img src="dryer-details-callout.jpg" alt="ドライヤー本体の各部（①サンプル投入口〜⑥搬入用キャスター）" loading="lazy">
-      <figcaption>図中の番号は左のリストに対応しています。</figcaption></figure>
+      <figcaption>図中の番号は右の説明に対応しています。</figcaption></figure>
     <figure class="tfd-det__panel rv rv-d1"><img src="dryer-panel.jpg" alt="集中盤（専用タッチパネル操作盤）" loading="lazy">
       <figcaption><b>集中盤</b>（専用タッチパネル操作盤）<br>検査結果を含む全情報を集約します。</figcaption></figure>
   </div>
@@ -3253,16 +3253,28 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
 /* 0909修正：機器詳細の番号付き写真を小さく（列幅いっぱい→最大400px） */
 .tfd-det__ph img{max-width:400px;margin:0 auto}
 .tfd-det__ph figcaption{max-width:400px;margin-left:auto;margin-right:auto}
-/* 0924修正：番号付き写真は全体が見えるよう大きく、操作盤は小さく。
-   ⚠️上の 0909 指定（max-width:400px）を打ち消すため、必ずこの後ろに置くこと。 */
-.tfd-det__grid{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr)}
+/* 0924修正：左＝番号付き写真（全体が見えるよう大きく）／右＝番号の説明、その下に集中盤を小さく。
+   ⚠️上の 0909 指定（max-width:400px）を打ち消すため、必ずこの後ろに置くこと。
+   ⚠️マークアップの順番は「リスト → 写真 → 集中盤」のまま。並べ替えは grid-area で行う
+     （HTMLの順＝読み上げ順は「何の説明か」が先に来るほうが分かりやすいため）。 */
+.tfd-det__grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  grid-template-areas:"photo list" "photo panel";align-items:start;
+  /* ⚠️1行目は説明リストの高さ・2行目は残り。これを指定しないと写真の高さが2行に按分され、
+       集中盤がリストから大きく離れて下に落ちる。 */
+  grid-template-rows:auto 1fr;gap:26px 40px}
+/* ⚠️grid-row:auto を付けると grid-area:photo の行指定（2行ぶん）が打ち消され、
+     写真が1行目だけを占めて集中盤が写真の下まで落ちる。書かないこと。 */
+.tfd-det__ph{grid-area:photo}
+.tfd-det__box{grid-area:list}
+.tfd-det__panel{grid-area:panel;align-self:start;margin-top:0}
 .tfd-det__ph img{max-width:none;width:100%;object-fit:contain}
 .tfd-det__ph figcaption{max-width:none}
-.tfd-det__panel img{max-width:200px}
+.tfd-det__panel img{max-width:150px}
+.tfd-det__panel figcaption{font-size:11.5px;line-height:1.85}
 @media(max-width:900px){
-  .tfd-det__grid{grid-template-columns:minmax(0,1fr)}
+  .tfd-det__grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"photo" "list" "panel"}
   .tfd-det__ph img{max-width:520px;margin:0 auto}
-  .tfd-det__panel img{max-width:240px}
+  .tfd-det__panel img{max-width:200px}
 }
 </style>
 <style id="foot-access-0918">
