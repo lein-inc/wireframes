@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ヒーロー［インフラ案］ | 株式会社第二開発技工（WF）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-primary: #015B9E;
+    --brand-accent: #57B0A2;
+    --brand-yellow: #FFD54F;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:#fff; color:#222;
+    font-family:"Noto Sans JP","Inter",sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  a, button { cursor: none; }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0;
+    width: 12px; height: 12px;
+    background: #ffffff; border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .18s ease, height .18s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot.hover { width: 32px; height: 32px; }
+  .cursor-ripple {
+    position: fixed; border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--brand-primary);
+    animation: rippleOut 0.6s cubic-bezier(.15,.7,.25,1) forwards;
+    mix-blend-mode: multiply;
+  }
+  @keyframes rippleOut {
+    0%   { width: 0;    height: 0;    opacity: 1;   border-width: 3px; }
+    60%  { opacity: .7; }
+    100% { width: 320px; height: 320px; opacity: 0; border-width: 1px; }
+  }
+  @media (hover: none) {
+    body, a, button { cursor: auto; }
+    .cursor-dot, .cursor-ripple { display: none; }
+  }
+
+  .wf-banner {
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    background:#222; color:#fff; padding:8px 16px;
+    font-size:12px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .wf-banner a { color:#fff; text-decoration:underline; }
+
+  /* サイトヘッダー：白帯、ロゴ左＋メニュー右 */
+  .site-header {
+    position:fixed; top:33px; left:0; right:0; z-index:900;
+    background:#ffffff;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:"Noto Sans JP", sans-serif;
+  }
+  .site-header .site-logo { display:flex; align-items:center; }
+  .site-header .site-logo img { height: 34px; display: block; }
+  .site-header .gnav ul { display:flex; gap:28px; list-style:none; padding:0; margin:0; }
+  .site-header .gnav a { color:#222; text-decoration:none; font-size:13px; font-weight:500; }
+  .site-header .gnav a:hover { color:var(--brand-primary); }
+
+  /* ====== ヒーローステージ：3Dワイヤー地形（iframe） ====== */
+  .stage {
+    position:relative;
+    width:100vw; height:100vh;
+    overflow:hidden;
+    background:#fff;
+  }
+  .terrain-iframe {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0; display:block;
+    pointer-events:none;
+  }
+  /* 左上コピー */
+  .hero-copy {
+    position:absolute; z-index:50;
+    top: 140px; left: 48px;
+    max-width: 720px;
+    pointer-events:none;
+  }
+  .hero-copy .en-label {
+    font-family:"Inter",monospace; font-size:12px;
+    letter-spacing:0.3em; color: var(--brand-accent);
+    text-transform:uppercase; margin-bottom:16px; display:block;
+  }
+  .hero-copy h1 {
+    font-weight:900; font-size:52px; line-height:1.45;
+    color: var(--brand-primary); letter-spacing:0.03em;
+    min-height: 1.45em;
+  }
+  .hero-copy .cursor {
+    display: inline-block; margin-left: 4px;
+    color: var(--brand-primary);
+    font-weight: 400;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ====== コピーセクション（ブルー背景） ====== */
+  .copy-section {
+    background: var(--brand-primary);
+    color: #fff;
+    padding: 160px 32px;
+    text-align: center;
+    position: relative;
+  }
+  .copy-section .en-label {
+    font-family:"Inter",monospace; font-size:12px;
+    letter-spacing:0.3em; color: var(--brand-accent);
+    text-transform: uppercase; margin-bottom: 32px;
+    display: inline-block;
+  }
+  .copy-section h2 {
+    font-size: 44px; font-weight: 900; line-height: 1.5;
+    letter-spacing: 0.03em;
+  }
+  .copy-section p {
+    margin-top: 32px; font-size: 15px; line-height: 2;
+    color: rgba(255,255,255,0.85);
+    max-width: 640px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ====== カラーパレット（Mondrian風、無テキスト） ====== */
+  .palette-section {
+    padding: 0;
+    height: 100vh;
+    min-height: 620px;
+    background: #fff;
+  }
+  .palette-grid {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 4fr 3fr 3fr 3fr;
+    grid-template-rows: 5fr 3fr 2fr;
+    gap: 0;
+  }
+  .palette-grid > div { min-width: 0; min-height: 0; }
+  .palette-grid > .pale-bordered { border: 1px solid #eaeaea; }
+
+  /* ====== 空の写真パララックス ====== */
+  .sky-section {
+    height: 70vh; min-height: 420px;
+    background-image: url("img/sky.jpg?v=drone");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #a9c8e2;
+  }
+
+  /* ====== ロゴセクション（白背景・中央ロゴ） ====== */
+  .logo-section {
+    background: #fff;
+    padding: 180px 32px;
+    text-align: center;
+  }
+  .logo-section img {
+    max-width: 400px; width: 80%;
+    height: auto; display: block; margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .copy-section { padding: 100px 24px; }
+    .copy-section h2 { font-size: 28px; }
+    .palette-section { min-height: 520px; }
+    .site-header .gnav { display: none; }
+    .hero-copy { top: 110px; left: 24px; right: 24px; }
+    .hero-copy h1 { font-size: 30px; }
+    .sky-section {
+      background-attachment: scroll;  /* iOS Safariのfixed非対応対策 */
+      height: 50vh;
+    }
+    .logo-section { padding: 100px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wf-banner">
+  <span>WIREFRAME | HERO ［インフラ案：3D地形 × 高速道路・都市・川・橋］ | /hero-infra.html</span>
+  <a href="index.html">← 一覧に戻る</a>
+</div>
+
+<header class="site-header">
+  <a href="#" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+  <nav class="gnav"><ul>
+    <li><a href="#">ホーム</a></li>
+    <li><a href="#">事業案内</a></li>
+    <li><a href="#">強み・技術</a></li>
+    <li><a href="#">社会活動</a></li>
+    <li><a href="#">会社案内</a></li>
+    <li><a href="#">採用情報</a></li>
+    <li><a href="#">ニュース</a></li>
+    <li><a href="#">お問い合わせ</a></li>
+  </ul></nav>
+</header>
+
+<!-- ============ ヒーロー：3Dワイヤー地形（Three.js） ============ -->
+<div class="stage">
+  <iframe class="terrain-iframe" src="terrain-infra-embed.html" title="3D wireframe terrain"></iframe>
+  <div class="hero-copy">
+    <span class="en-label">— DAINI KAIHATSU GIKO</span>
+    <h1><span class="typed"></span><span class="cursor">|</span></h1>
+  </div>
+</div>
+
+<script>
+/* タイプライター演出（日→英→日→英… ループ） */
+(function () {
+  var messages = [
+    { text: '測る技術で\n未来に残す', hold: 2800 },
+    { text: 'Surveying the ground.\nPreserving the future.',   hold: 2800 }
+  ];
+  var typed = document.querySelector('.hero-copy .typed');
+  if (!typed) return;
+  var idx = 0;
+
+  function render(str) { typed.innerHTML = str.replace(/\n/g, '<br>'); }
+
+  function typeMsg(cb) {
+    var msg = messages[idx].text;
+    var i = 0;
+    function step() {
+      i++;
+      render(msg.substring(0, i));
+      if (i >= msg.length) { cb(); return; }
+      var ch = msg[i - 1];
+      var delay = (ch === '、' || ch === '。' || ch === '.') ? 260 : 85;
+      setTimeout(step, delay);
+    }
+    step();
+  }
+  function deleteMsg(cb) {
+    var msg = messages[idx].text;
+    var i = msg.length;
+    function step() {
+      i--;
+      render(msg.substring(0, i));
+      if (i <= 0) { cb(); return; }
+      setTimeout(step, 22);
+    }
+    step();
+  }
+  function loop() {
+    typeMsg(function () {
+      setTimeout(function () {
+        deleteMsg(function () {
+          idx = (idx + 1) % messages.length;
+          setTimeout(loop, 300);
+        });
+      }, messages[idx].hold);
+    });
+  }
+  setTimeout(loop, 550);
+})();
+</script>
+
+<!-- ============ セクション1：ブルー背景のコピー ============ -->
+<section class="copy-section">
+  <span class="en-label">— OUR PROMISE</span>
+  <h2>測る技術で未来に残す</h2>
+  <p>どこへでも行く。未来へも行く。<br>1981年の創業から変わらないフットワークで、道路・橋・河川——日本の社会基盤を測り、未来に残していく。</p>
+</section>
+
+<!-- ============ セクション2：カラーパレット（Mondrian・無テキスト） ============ -->
+<section class="palette-section">
+  <div class="palette-grid">
+    <div style="background:#1A1A1A; grid-column:1;   grid-row:1/3;"></div>
+    <div style="background:#FFD54F; grid-column:2;   grid-row:1;"></div>
+    <div style="background:#013D6A; grid-column:3;   grid-row:1;"></div>
+    <div style="background:#555555; grid-column:4;   grid-row:1;"></div>
+    <div style="background:#57B0A2; grid-column:2;   grid-row:2;"></div>
+    <div style="background:#4C88BE; grid-column:3;   grid-row:2;"></div>
+    <div style="background:#888888; grid-column:4;   grid-row:2;"></div>
+    <div style="background:#E4EFF7; grid-column:1;   grid-row:3;"></div>
+    <div style="background:#E8F5F2; grid-column:2;   grid-row:3;"></div>
+    <div class="pale-bordered" style="background:#DCDCDC; grid-column:3;   grid-row:3;"></div>
+    <div class="pale-bordered" style="background:#F5F5F5; grid-column:4;   grid-row:3;"></div>
+  </div>
+</section>
+
+<!-- ============ セクション3：空のパララックス ============ -->
+<section class="sky-section" aria-hidden="true"></section>
+
+<!-- ============ セクション4：白背景に中央ロゴ ============ -->
+<section class="logo-section">
+  <img src="img/logo.png" alt="株式会社第二開発技工">
+</section>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<script>
+(function () {
+  var dot = document.querySelector('.cursor-dot');
+  if (!dot) return;
+  var x=0,y=0,tx=0,ty=0;
+  window.addEventListener('mousemove', function(e){ tx=e.clientX; ty=e.clientY; });
+  document.addEventListener('mouseover', function(e){ if(e.target.closest('a,button,iframe')) dot.classList.add('hover'); });
+  document.addEventListener('mouseout',  function(e){ if(e.target.closest('a,button,iframe')) dot.classList.remove('hover'); });
+  (function tick(){ x += (tx-x)*0.28; y += (ty-y)*0.28; dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; requestAnimationFrame(tick); })();
+  window.addEventListener('click', function(e){
+    var r=document.createElement('div'); r.className='cursor-ripple';
+    r.style.left=e.clientX+'px'; r.style.top=e.clientY+'px';
+    document.body.appendChild(r); setTimeout(function(){ r.remove(); }, 700);
+  });
+})();
+</script>
+
+</body>
+</html>

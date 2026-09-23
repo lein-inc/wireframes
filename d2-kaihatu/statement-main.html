@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>確定ステートメント ／ 測る技術で未来に残す | 第二開発技工（WF）</title>
+<link rel="stylesheet" href="css/wireframe.css?v=telbox">
+<style>
+  .decided-badge {
+    display:inline-block; background:#333; color:#fff;
+    font-size:11px; letter-spacing:0.2em; padding:6px 14px;
+    font-family:monospace; margin-bottom:16px;
+  }
+  .origin-box {
+    background:#f5f5f5; border-left:4px solid #333;
+    padding:28px 32px; margin:32px 0; font-size:14px; line-height:2;
+  }
+  .origin-box .q { font-size:18px; font-weight:700; line-height:1.9; margin-bottom:12px; }
+  .origin-box .src { font-size:11px; color:#888; font-family:monospace; }
+  .sub-section h3 {
+    font-size:20px; margin:56px 0 8px; padding-bottom:10px;
+    border-bottom:2px solid #333;
+  }
+  .sub-section .note { font-size:13px; color:#555; margin-bottom:20px; }
+  .sub-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .sub-card { border:1px solid #ccc; background:#fff; padding:24px; }
+  .sub-card .n { font-family:monospace; font-size:11px; color:#999; margin-bottom:10px; }
+  .sub-card .copy { font-size:19px; font-weight:700; line-height:1.7; margin-bottom:10px; }
+  .sub-card .why { font-size:12.5px; color:#555; line-height:1.8; }
+  .deploy-table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px; }
+  .deploy-table th, .deploy-table td { border:1px solid #ccc; padding:12px 16px; text-align:left; vertical-align:top; line-height:1.8; }
+  .deploy-table th { background:#f5f5f5; white-space:nowrap; }
+  @media (max-width:800px){ .sub-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wf-banner"><span>WIREFRAME | STATEMENT ／ 確定案「測る技術で未来に残す」（2026-08-26 定例決定）</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="site-logo">株式会社第二開発技工</div>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="home.html">ホーム</a></li><li><a href="service.html">事業案内</a></li><li><a href="strengths.html">強み・技術</a></li><li><a href="social.html">社会活動</a></li><li><a href="about.html">会社案内</a></li><li><a href="recruit.html">採用情報</a></li><li><a href="news.html">ニュース</a></li><li><a href="contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 確定ステートメント（本文3案） ============ -->
+<section class="slide">
+  <div class="wrap">
+    <span class="decided-badge">DECIDED ／ 2026-08-26 定例にて方向性確定 ／ 本文は以下3案から選定</span>
+    <span class="label"><b>案1</b>創業ビジョン継承 ／ 物語型</span>
+    <div class="tagline">測る技術で未来に残す</div>
+    <div class="body">「仕事があれば、一番に行こう。<br>仕事があれば、どこへでも行こう。月へでも行くぞ。」<br><br>1981年、創業のとき。先代はそう書き残しました。<br>どこへでも行く。そして、未来へも行く。<br><br>私たちが測ってきたのは、道路、橋、河川、まちの基盤。<br>高度成長のなかで、日本のインフラを測り、つくってきました。<br>そしてこれからは、つくる時代から、守り、残す時代へ。<br><br>今日測った一点が、100年先の暮らしを支える。<br><br><b>測る技術で未来に残す</b></div>
+    <div class="meta">STATEMENT 案1 ／ 創業者の言葉から始まり、時代の転換で締める。採用ページ「先代からのメッセージ」との連携が最も強い ／ D2 KAIHATSU GIKO ／ 2026</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="wrap">
+    <span class="label"><b>案2</b>生活者視点 ／ インフラのスケール型</span>
+    <div class="tagline">測る技術で未来に残す</div>
+    <div class="body">「あの高速道路、お父さんが測ったんだ。」<br>そう子どもに話せる仕事が、ここにあります。<br><br>道路、橋、河川、まちの基盤。<br>私たちが測っているのは、暮らしを支える社会インフラそのものです。<br><br>測った数字は、図面になり、構造物になり、<br>やがて誰かの通勤路になり、100年先の日常になる。<br><br>つくって終わりではありません。<br>守り、手入れをして、次の世代へ引き継いでいく。<br><br><b>測る技術で未来に残す</b></div>
+    <div class="meta">STATEMENT 案2 ／ 「自分が測った道路を子どもに話せる」の定例発言を核に、スケール感を生活者の言葉で表現 ／ D2 KAIHATSU GIKO ／ 2026</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="wrap">
+    <span class="label"><b>案3</b>歴史と技術 ／ 未来型</span>
+    <div class="tagline">測る技術で未来に残す</div>
+    <div class="body">地図をつくることは、未来をつくることでした。<br>伊能忠敬が日本を歩いて測った時代から、200年。<br><br>測る道具は、平板からGNSSへ、ドローンへ、3次元へ。<br>やがてAIやロボットが、現場の風景を変えていくのかもしれません。<br><br>それでも、変わらないものがあります。<br>現場に立ち、正確に測り、確かなものを残すという仕事の本質。<br><br>これからの測量は、まちを「つくる」ためだけでなく、<br>「残す」ためにあると、私たちは考えています。<br><br><b>測る技術で未来に残す</b></div>
+    <div class="meta">STATEMENT 案3 ／ 測量の歴史→先端技術→仕事の本質へ。強み・技術ページ（伊能忠敬イントロ）との連携が強い ／ D2 KAIHATSU GIKO ／ 2026</div>
+  </div>
+</section>
+
+<div class="wrap sub-section">
+
+  <h3>創業者ビジョン（原典）</h3>
+  <p class="note">先代が2012年頃に書き残した創業の想い（文字起こし資料より）。ステートメント・採用コンテンツの原典として使用。</p>
+  <div class="origin-box">
+    <div class="q">「仕事があれば、一番に行こう。<br>仕事があれば、どこへでも行こう。月でも行くぞ。」</div>
+    「どこへでも行く」は日本・世界を超えて、限りなく——という意思表示。求められたら一番に行く、という姿勢は現在も社内に受け継がれている。
+    <div class="src">SOURCE: 先代直筆資料（2012年頃）／ 2026-08-26 定例で共有 ／ データ化: 光田氏より共有予定</div>
+  </div>
+
+  <h3>ロゴの由来（原典）</h3>
+  <div class="origin-box">
+    <div class="q">21世紀を三角形にデザイン化し、マーク上部にパイオニアスピリットを込める。</div>
+    「絶えず先へ。他者の真似や、人の後についていかない。自分が先に行く」という想いを込めたもの。社名・ロゴは先代の代から変えずに継承している。
+    <div class="src">SOURCE: ロゴ由来資料（先代作成）／ 2026-08-26 定例で共有</div>
+  </div>
+
+  <h3>サブコピー案（5案）</h3>
+  <p class="note">メインコピー「測る技術で未来に残す」に添える一文。社長への提示用。</p>
+  <div class="sub-grid">
+    <div class="sub-card">
+      <div class="n">SUB-01 ／ 創業ビジョン直系</div>
+      <div class="copy">どこへでも行く。未来へも行く。</div>
+      <div class="why">先代の言葉をほぼそのまま継承。社内浸透済みの言葉なので、社員全員が同じメッセージを語れる。採用ページ・創業者メッセージとの連携が最も強い。</div>
+    </div>
+    <div class="sub-card">
+      <div class="n">SUB-02 ／ 月のエピソード</div>
+      <div class="copy">仕事があれば、月へでも。<br>1981年から変わらない合言葉。</div>
+      <div class="why">「月でも行くぞ」という原典の強いフレーズを活かした案。フットワークとスケール感を同時に伝える。ストーリー性が高く、インタビュー・採用記事の見出しにも展開可。</div>
+    </div>
+    <div class="sub-card">
+      <div class="n">SUB-03 ／ 時間スケール</div>
+      <div class="copy">今日測った一点が、<br>100年先の暮らしを支える。</div>
+      <div class="why">「未来に残す」の時間軸を具体化。測量の一点→社会インフラという事業のスケール感（自分が測った道路を子どもに話せる）を生活者目線で表現。</div>
+    </div>
+    <div class="sub-card">
+      <div class="n">SUB-04 ／ 時代の転換</div>
+      <div class="copy">つくる時代から、残す時代へ。</div>
+      <div class="why">インフラ整備→維持・更新へという業界の転換を端的に宣言。「残す」の意味（維持・補修も、新設もより良いものを残すため）を補強する。</div>
+    </div>
+    <div class="sub-card">
+      <div class="n">SUB-05 ／ インフラの具体列挙</div>
+      <div class="copy">道路も、橋も、まちの基盤も。<br>測ることから、残すことがはじまる。</div>
+      <div class="why">何屋なのかが一目で伝わる具体案。高速道路・大型構造物などスケールの大きい仕事のイメージをコピーだけで喚起できる。</div>
+    </div>
+  </div>
+
+  <h3>サイト内への展開マップ</h3>
+  <p class="note">決定事項「創業者の想い・ロゴの由来をWebサイトへ掲載」の反映先。</p>
+  <table class="deploy-table">
+    <tr><th>掲載場所</th><th>内容</th></tr>
+    <tr><td>TOP（ファーストビュー）</td><td>メインコピー「測る技術で未来に残す」＋サブコピー。インフラ感のあるビジュアルと組み合わせ。</td></tr>
+    <tr><td>TOP（ステートメントセクション）</td><td>本ページ上部のステートメント全文（短縮版）。創業ビジョン→現在→未来の流れ。</td></tr>
+    <tr><td>会社案内 ／ ロゴの由来</td><td>三角形＝21世紀、パイオニアスピリット、「他者の真似をしない」。会社概要の直前に配置し、キャッチコピーとの連携感を出す。</td></tr>
+    <tr><td>採用情報 ／ 先代からのメッセージ</td><td>創業者直筆資料（データ化後）＋「仕事があれば一番に行こう」のビジョン紹介。企業の信頼性向上と社内意識統一を兼ねる。</td></tr>
+    <tr><td>強み・技術</td><td>「未来」の中身を語る場所。ドローン・3Dスキャナー・GNSS〜将来の自動化まで、30年前から未来を予測してきた文脈で接続。</td></tr>
+  </table>
+
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="service.html">事業案内 トップ</a></li>
+      <li><a href="service-survey.html">測量</a></li>
+      <li><a href="service-design.html">調査・設計</a></li>
+      <li><a href="service-management.html">施工管理</a></li>
+      <li><a href="strengths.html">強み・技術</a></li>
+      <li><a href="social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="about.html#greeting">代表あいさつ</a></li>
+      <li><a href="about.html#company">会社概要</a></li>
+      <li><a href="about.html#history">沿革</a></li>
+      <li><a href="about.html#clients">主要取引先</a></li>
+      <li><a href="about.html#access">アクセス</a></li>
+    </ul></div>
+    <div><h4>採用・その他</h4><ul>
+      <li><a href="home.html">ホーム</a></li>
+      <li><a href="recruit.html">採用情報</a></li>
+      <li><a href="news.html">ニュース</a></li>
+      <li><a href="contact.html">お問い合わせ</a></li>
+      <li><a href="#">プライバシーポリシー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>

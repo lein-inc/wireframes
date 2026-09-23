@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOPデザイン案 ／ 測る技術で未来に残す | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #015B9E;
+    --blue-dark: #013D6A;
+    --blue-light: #4C88BE;
+    --blue-pale: #E4EFF7;
+    --aqua: #57B0A2;
+    --aqua-pale: #E8F5F2;
+    --yellow: #FFD54F;
+    --txt: #1A1A1A;
+    --txt-2: #555;
+    --muted: #888;
+    --border: #DCDCDC;
+    --bg-subtle: #F5F5F5;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:#fff; color:var(--txt);
+    font-family:"Noto Sans JP","Inter",sans-serif;
+    overflow-x:hidden;
+  }
+  img { max-width:100%; display:block; }
+  a { text-decoration:none; color:inherit; }
+  .en { font-family:"Inter",sans-serif; }
+
+  .wf-banner {
+    position:fixed; top:0; left:0; right:0; z-index:1200;
+    background:#222; color:#fff; padding:8px 16px;
+    font-size:12px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .wf-banner a { color:#fff; text-decoration:underline; }
+
+  /* ============ Header ============ */
+  .site-header {
+    position:fixed; top:33px; left:0; right:0; z-index:1000;
+    background:rgba(255,255,255,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid #ececec;
+    padding:0 0 0 32px; height:76px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .site-logo img { height:36px; }
+  .header-right { display:flex; align-items:center; height:100%; }
+  .gnav ul { display:flex; gap:26px; list-style:none; margin-right:28px; }
+  .gnav a { font-size:13.5px; font-weight:500; color:var(--txt); position:relative; padding:6px 0; }
+  .gnav a::after {
+    content:""; position:absolute; left:0; right:100%; bottom:0; height:2px;
+    background:var(--blue); transition:right .25s ease;
+  }
+  .gnav a:hover { color:var(--blue); }
+  .gnav a:hover::after { right:0; }
+  .tel-box {
+    height:100%; background:var(--blue); color:#fff;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:0 26px; transition:background .2s;
+  }
+  .tel-box:hover { background:var(--blue-dark); }
+  .tel-box .t-label { font-size:10px; letter-spacing:0.1em; opacity:0.85; }
+  .tel-box .t-num { font-family:"Inter",sans-serif; font-size:21px; font-weight:800; letter-spacing:0.02em; line-height:1.3; }
+  .tel-box .t-hours { font-size:10px; opacity:0.85; }
+
+  /* ============ Hero ============ */
+  .hero {
+    position:relative; width:100vw; height:100vh; min-height:640px;
+    overflow:hidden; background:#fff;
+  }
+  .terrain-iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
+  .hero-copy {
+    position:absolute; z-index:50; top:24%; left:min(6vw,72px);
+    max-width:760px; pointer-events:none;
+  }
+  .hero-copy .en-label {
+    font-family:"Inter",monospace; font-size:12px; letter-spacing:0.32em;
+    color:var(--aqua); text-transform:uppercase; display:block; margin-bottom:18px;
+  }
+  .hero-copy h1 {
+    font-weight:900; font-size:clamp(34px,4.6vw,58px); line-height:1.45;
+    color:var(--blue); letter-spacing:0.03em; min-height:2.9em;
+  }
+  .hero-copy .cursor { display:inline-block; margin-left:4px; font-weight:400; color:var(--blue); animation:blink .8s step-end infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+  .hero-copy .hero-sub {
+    margin-top:22px; font-size:14.5px; line-height:2.1; color:var(--txt-2);
+    background:rgba(255,255,255,0.72); display:inline-block; padding:4px 10px 4px 0;
+  }
+  .hero-btns { position:absolute; z-index:50; left:min(6vw,72px); bottom:96px; display:flex; gap:14px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 34px; font-size:14px; font-weight:700; letter-spacing:0.06em;
+    background:var(--blue); color:#fff; transition:all .22s ease;
+  }
+  .btn:hover { background:var(--blue-dark); transform:translateY(-2px); }
+  .btn.yellow { background:var(--yellow); color:var(--txt); }
+  .btn.yellow:hover { background:#f5c832; }
+  .btn.ghost { background:rgba(255,255,255,0.85); color:var(--blue); border:1px solid var(--blue); }
+  .btn.ghost:hover { background:var(--blue-pale); transform:translateY(-2px); }
+  .btn .arw { font-family:"Inter",sans-serif; }
+  .scroll-cue {
+    position:absolute; z-index:50; right:40px; bottom:32px;
+    font-family:"Inter",sans-serif; font-size:10px; letter-spacing:0.3em; color:var(--muted);
+    writing-mode:vertical-rl; display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue::after { content:""; width:1px; height:56px; background:var(--blue); animation:cue 1.8s ease-in-out infinite; }
+  @keyframes cue { 0%{transform:scaleY(0); transform-origin:top;} 45%{transform:scaleY(1); transform-origin:top;} 55%{transform:scaleY(1); transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;} }
+
+  /* ============ 共通 section ============ */
+  .wrap { max-width:1160px; margin:0 auto; padding:0 32px; }
+  section { position:relative; }
+  .sec-head { margin-bottom:48px; }
+  .sec-head .en-label {
+    font-family:"Inter",monospace; font-size:12px; letter-spacing:0.3em;
+    color:var(--aqua); text-transform:uppercase; display:block; margin-bottom:10px;
+  }
+  .sec-head h2 { font-size:34px; font-weight:900; letter-spacing:0.04em; line-height:1.5; }
+  .sec-head.center { text-align:center; }
+  .fade { opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease; }
+  .fade.in { opacity:1; transform:none; }
+
+  /* ============ Statement ============ */
+  .statement { background:var(--blue); color:#fff; padding:150px 32px; text-align:center; overflow:hidden; }
+  .statement .en-label { font-family:"Inter",monospace; font-size:12px; letter-spacing:0.3em; color:var(--aqua); text-transform:uppercase; display:inline-block; margin-bottom:32px; }
+  .statement h2 { font-size:clamp(30px,4vw,46px); font-weight:900; letter-spacing:0.04em; line-height:1.5; }
+  .statement p { margin:36px auto 0; max-width:660px; font-size:15px; line-height:2.2; color:rgba(255,255,255,0.88); }
+  .statement .st-link {
+    display:inline-flex; align-items:center; gap:10px; margin-top:44px;
+    color:#fff; font-size:13px; font-weight:700; letter-spacing:0.1em;
+    border-bottom:1px solid rgba(255,255,255,0.5); padding-bottom:6px; transition:border-color .2s;
+  }
+  .statement .st-link:hover { border-color:#fff; }
+  .statement .bg-grid {
+    position:absolute; inset:0; opacity:0.12; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse at center, #000 0%, transparent 75%);
+    -webkit-mask-image:radial-gradient(ellipse at center, #000 0%, transparent 75%);
+  }
+
+  /* ============ Service ============ */
+  .service { padding:130px 0; }
+  .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .svc-card { background:#fff; border:1px solid var(--border); transition:box-shadow .25s ease, transform .25s ease; display:flex; flex-direction:column; }
+  .svc-card:hover { box-shadow:0 16px 40px rgba(1,91,158,0.14); transform:translateY(-4px); }
+  .svc-ph { height:200px; position:relative; overflow:hidden; }
+  .svc-ph img { width:100%; height:100%; object-fit:cover; filter:saturate(0.9); transition:transform .5s ease; }
+  .svc-card:hover .svc-ph img { transform:scale(1.05); }
+  .svc-ph .num {
+    position:absolute; left:0; bottom:0; background:var(--blue); color:#fff;
+    font-family:"Inter",sans-serif; font-size:13px; font-weight:700; letter-spacing:0.15em;
+    padding:8px 18px;
+  }
+  .svc-body { padding:28px 26px 30px; display:flex; flex-direction:column; flex:1; }
+  .svc-body h3 { font-size:20px; font-weight:900; margin-bottom:12px; }
+  .svc-body p { font-size:13.5px; line-height:2; color:var(--txt-2); flex:1; }
+  .svc-more { margin-top:20px; font-size:12.5px; font-weight:700; color:var(--blue); letter-spacing:0.08em; }
+
+  /* ============ Strengths ============ */
+  .strengths { background:var(--blue-dark); color:#fff; padding:130px 0; overflow:hidden; }
+  .strengths .sec-head .en-label { color:var(--aqua); }
+  .str-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.16); }
+  .str-item { background:var(--blue-dark); padding:44px 34px; transition:background .25s; }
+  .str-item:hover { background:#02467c; }
+  .str-item .icon { font-family:"Inter",monospace; font-size:11px; letter-spacing:0.25em; color:var(--aqua); display:block; margin-bottom:18px; }
+  .str-item h3 { font-size:19px; font-weight:700; margin-bottom:14px; }
+  .str-item p { font-size:13px; line-height:2; color:rgba(255,255,255,0.75); }
+  .str-note { margin-top:36px; font-size:12px; color:rgba(255,255,255,0.55); }
+
+  /* ============ Founder ============ */
+  .founder { background:var(--blue-pale); padding:140px 0; overflow:hidden; }
+  .founder-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:center; }
+  .founder-quote { font-family:"Noto Serif JP",serif; font-size:clamp(22px,2.6vw,30px); font-weight:600; line-height:2; color:var(--blue-dark); }
+  .founder-src { margin-top:22px; font-size:12px; color:var(--muted); font-family:"Inter","Noto Sans JP",sans-serif; letter-spacing:0.08em; }
+  .founder-body { margin-top:28px; font-size:14px; line-height:2.2; color:var(--txt-2); }
+  .founder-logo { background:#fff; padding:56px 40px; text-align:center; box-shadow:0 12px 40px rgba(1,61,106,0.10); }
+  .founder-logo img { max-width:220px; margin:0 auto 24px; }
+  .founder-logo h4 { font-size:14px; font-weight:700; margin-bottom:10px; color:var(--blue-dark); }
+  .founder-logo p { font-size:12.5px; line-height:2; color:var(--txt-2); text-align:left; }
+
+  /* ============ Recruit ============ */
+  .recruit { position:relative; padding:150px 0; color:#fff; overflow:hidden; }
+  .recruit .bg { position:absolute; inset:0; }
+  .recruit .bg img { width:100%; height:100%; object-fit:cover; }
+  .recruit .bg::after { content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(1,61,106,0.92) 0%, rgba(1,91,158,0.82) 55%, rgba(1,91,158,0.45) 100%); }
+  .recruit .wrap { position:relative; z-index:2; }
+  .recruit .en-label { font-family:"Inter",monospace; font-size:12px; letter-spacing:0.3em; color:var(--yellow); text-transform:uppercase; display:block; margin-bottom:14px; }
+  .recruit h2 { font-size:clamp(26px,3.4vw,38px); font-weight:900; line-height:1.7; letter-spacing:0.03em; }
+  .recruit .lead { margin-top:24px; max-width:560px; font-size:14px; line-height:2.2; color:rgba(255,255,255,0.9); }
+  .rec-nums { display:flex; gap:1px; margin-top:44px; max-width:560px; background:rgba(255,255,255,0.25); border:1px solid rgba(255,255,255,0.25); }
+  .rec-num { flex:1; background:rgba(1,61,106,0.55); padding:22px 10px; text-align:center; }
+  .rec-num .v { font-family:"Inter","Noto Sans JP",sans-serif; font-size:24px; font-weight:800; color:var(--yellow); }
+  .rec-num .l { font-size:11px; margin-top:6px; color:rgba(255,255,255,0.85); }
+  .recruit .btns { margin-top:44px; display:flex; gap:14px; }
+
+  /* ============ News ============ */
+  .news { padding:120px 0; }
+  .news-flex { display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:start; }
+  .news-list { border-top:1px solid var(--border); }
+  .news-item { display:flex; align-items:center; gap:22px; padding:24px 8px; border-bottom:1px solid var(--border); transition:background .2s; }
+  .news-item:hover { background:var(--bg-subtle); }
+  .news-date { font-family:"Inter",sans-serif; font-size:13px; color:var(--muted); white-space:nowrap; }
+  .news-cat { font-size:10.5px; font-weight:700; color:var(--blue); border:1px solid var(--blue); padding:3px 12px; white-space:nowrap; }
+  .news-cat.tech { color:var(--aqua); border-color:var(--aqua); }
+  .news-title { font-size:14px; font-weight:500; }
+  .news-all { display:inline-flex; align-items:center; gap:8px; margin-top:26px; font-size:13px; font-weight:700; color:var(--blue); letter-spacing:0.06em; }
+
+  /* ============ CTA ============ */
+  .cta { background:var(--bg-subtle); padding:110px 0; }
+  .cta-box { background:#fff; border:1px solid var(--border); padding:64px 56px; display:flex; align-items:center; justify-content:space-between; gap:32px; }
+  .cta-box h2 { font-size:24px; font-weight:900; line-height:1.8; }
+  .cta-box .tel { font-family:"Inter","Noto Sans JP",sans-serif; font-size:13px; color:var(--txt-2); margin-top:10px; }
+  .cta-box .tel b { font-size:24px; font-weight:800; color:var(--blue); margin-left:8px; }
+
+  /* ============ Footer ============ */
+  .site-footer { background:var(--blue-dark); color:#fff; padding:72px 0 36px; }
+  .foot-grid { display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+  .foot-grid .f-logo { font-size:18px; font-weight:900; letter-spacing:0.06em; }
+  .foot-grid .addr { margin-top:18px; font-size:12.5px; line-height:2.1; color:rgba(255,255,255,0.75); }
+  .foot-nav { display:flex; gap:48px; }
+  .foot-nav ul { list-style:none; }
+  .foot-nav li { margin-bottom:12px; }
+  .foot-nav a { font-size:12.5px; color:rgba(255,255,255,0.8); }
+  .foot-nav a:hover { color:#fff; }
+  .copyright { margin-top:56px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.18); font-size:11px; color:rgba(255,255,255,0.55); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:900px) {
+    .gnav { display:none; }
+    .hero-btns { bottom:76px; flex-wrap:wrap; }
+    .scroll-cue { display:none; }
+    .svc-grid, .str-grid { grid-template-columns:1fr; }
+    .founder-grid, .news-flex { grid-template-columns:1fr; gap:40px; }
+    .cta-box { flex-direction:column; text-align:center; padding:44px 28px; }
+    .statement { padding:100px 24px; }
+    .service, .strengths, .founder, .recruit, .news { padding:88px 0; }
+    .rec-nums { flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wf-banner">
+  <span>DESIGN | TOPページ デザイン案（ヒーロー：インフラ案ベース） ／ 写真はダミー・本番は実写差替</span>
+  <a href="index.html">← 一覧に戻る</a>
+</div>
+
+<header class="site-header">
+  <a href="design-top.html" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+  <div class="header-right">
+    <nav class="gnav"><ul>
+      <li><a href="design-service.html">事業案内</a></li>
+      <li><a href="design-strengths.html">強み・技術</a></li>
+      <li><a href="design-social.html">社会活動</a></li>
+      <li><a href="design-about.html">会社案内</a></li>
+      <li><a href="design-recruit.html">採用情報</a></li>
+      <li><a href="design-news.html">ニュース</a></li>
+      <li><a href="design-contact.html">お問い合わせ</a></li>
+    </ul></nav>
+    <a href="tel:0864231899" class="tel-box">
+      <span class="t-label">お電話でのお問い合わせ</span>
+      <span class="t-num">086-423-1899</span>
+      <span class="t-hours">平日 9:00〜17:00</span>
+    </a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <iframe class="terrain-iframe" src="terrain-infra-embed.html" title="3D wireframe terrain with infrastructure"></iframe>
+  <div class="hero-copy">
+    <span class="en-label">— DAINI KAIHATSU GIKO</span>
+    <h1><span class="typed"></span><span class="cursor">|</span></h1>
+    <div class="hero-sub">測量・調査設計・施工管理。岡山・倉敷から、全国の社会基盤づくりを支える。</div>
+  </div>
+  <div class="hero-btns">
+    <a href="design-recruit.html" class="btn yellow">採用情報を見る <span class="arw">→</span></a>
+    <a href="design-contact.html" class="btn ghost">お問い合わせ <span class="arw">→</span></a>
+  </div>
+  <div class="scroll-cue">SCROLL</div>
+</div>
+
+<!-- ============ STATEMENT ============ -->
+<section class="statement">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <span class="en-label fade">— OUR PROMISE</span>
+  <h2 class="fade">測る技術で未来に残す</h2>
+  <p class="fade">どこへでも行く。未来へも行く。<br>1981年の創業から変わらないフットワークで、<br>道路・橋・河川——日本の社会基盤を測り、つくり、<br>これからは、未来に残していく。</p>
+  <a href="statement-main.html" class="st-link fade">私たちのステートメント <span class="en">→</span></a>
+</section>
+
+<!-- ============ SERVICE ============ -->
+<section class="service">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="en-label">— SERVICE</span>
+      <h2>3つの事業</h2>
+    </div>
+    <div class="svc-grid">
+      <a href="design-service-survey.html" class="svc-card fade">
+        <div class="svc-ph"><img src="img/eng2_mountain.jpg" alt=""><span class="num en">01 — SURVEY</span></div>
+        <div class="svc-body">
+          <h3>測量</h3>
+          <p>公共測量・工事測量・全国対応。TS・GNSS・ドローン・3Dスキャナーを駆使した、現場の"最初の一歩"。</p>
+          <span class="svc-more">詳しく見る <span class="en">→</span></span>
+        </div>
+      </a>
+      <a href="design-service-design.html" class="svc-card fade">
+        <div class="svc-ph"><img src="img/eng1_sky.jpg" alt=""><span class="num en">02 — DESIGN</span></div>
+        <div class="svc-body">
+          <h3>調査・設計</h3>
+          <p>土木設計（道路・河川・造成）、地質調査、環境調査。測量と地続きで現場を読み解きます。</p>
+          <span class="svc-more">詳しく見る <span class="en">→</span></span>
+        </div>
+      </a>
+      <a href="design-service-management.html" class="svc-card fade">
+        <div class="svc-ph"><img src="img/eng4_construction.jpg" alt=""><span class="num en">03 — MANAGEMENT</span></div>
+        <div class="svc-body">
+          <h3>施工管理</h3>
+          <p>測量会社ならではの現場支援。一般労働者派遣許可のもと、施工管理技術者を全国の現場へ派遣します。</p>
+          <span class="svc-more">詳しく見る <span class="en">→</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRENGTHS ============ -->
+<section class="strengths">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="en-label">— STRENGTHS</span>
+      <h2>技術・強み</h2>
+    </div>
+    <div class="str-grid">
+      <div class="str-item fade">
+        <span class="icon">DRONE SURVEY</span>
+        <h3>ドローン空撮測量</h3>
+        <p>広域を短時間で。3次元空撮地形構造物処理システムを導入し、災害時の迅速な状況把握にも活用しています。</p>
+      </div>
+      <div class="str-item fade">
+        <span class="icon">3D SCANNER</span>
+        <h3>3Dレーザースキャナー</h3>
+        <p>構造物・地形を高精度にデジタル化。BIM／CIMと連携し、設計から施工まで一気通貫でデータを活かします。</p>
+      </div>
+      <div class="str-item fade">
+        <span class="icon">GNSS</span>
+        <h3>GNSS測位</h3>
+        <p>ネットワーク型RTK-GNSSで、現場の位置基準を素早く正確に。全国どこの現場でも同じ品質を約束します。</p>
+      </div>
+    </div>
+    <p class="str-note fade">※ 伊能忠敬の時代から続く「測る」という仕事を、最新のテクノロジーで。<a href="design-strengths.html" style="color:var(--aqua); font-weight:700; margin-left:6px;">強み・技術ページへ <span class="en">→</span></a></p>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder">
+  <div class="wrap">
+    <div class="founder-grid">
+      <div class="fade">
+        <span class="en-label" style="font-family:'Inter',monospace; font-size:12px; letter-spacing:0.3em; color:var(--aqua); text-transform:uppercase; display:block; margin-bottom:22px;">— FOUNDER'S SPIRIT</span>
+        <div class="founder-quote">仕事があれば、一番に行こう。<br>仕事があれば、どこへでも行こう。<br>月へでも行くぞ。</div>
+        <div class="founder-src">— 創業者の言葉（1981年 創業時）</div>
+        <p class="founder-body">他者の真似をしない。人の後についていかない。創業のときに掲げたパイオニアスピリットは、ドローンや3Dスキャナーといった新しい技術へ真っ先に挑む、いまの私たちにそのまま受け継がれています。</p>
+      </div>
+      <div class="founder-logo fade">
+        <img src="img/logo.png" alt="第二開発技工 ロゴマーク">
+        <h4>ロゴの由来</h4>
+        <p>三角形は「21世紀」をデザイン化したもの。次の時代を切り拓くパイオニアスピリットを表しています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECRUIT ============ -->
+<section class="recruit" id="recruit">
+  <div class="bg"><img src="img/eng3_city.jpg" alt=""></div>
+  <div class="wrap">
+    <span class="en-label fade">— RECRUIT</span>
+    <h2 class="fade">「測量って、何をする仕事？」<br>その問いから、始めていい。</h2>
+    <p class="lead fade">学生時代の専攻も、それまでの職歴も関係ありません。約1年で基本業務を習得し、ドローン・3Dスキャナーなど先端技術に触れながら、施工管理技術者へキャリアアップできます。</p>
+    <div class="rec-nums fade">
+      <div class="rec-num"><div class="v">未経験</div><div class="l">歓迎</div></div>
+      <div class="rec-num"><div class="v en">1<span style="font-size:14px;">年</span></div><div class="l">で基本習得</div></div>
+      <div class="rec-num"><div class="v">資格</div><div class="l">取得支援</div></div>
+      <div class="rec-num"><div class="v">全国</div><div class="l">の現場</div></div>
+    </div>
+    <div class="btns fade">
+      <a href="design-recruit.html" class="btn yellow">採用情報を見る <span class="arw">→</span></a>
+      <a href="design-recruit.html#faq" class="btn ghost">よくある質問 <span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section class="news">
+  <div class="wrap">
+    <div class="news-flex">
+      <div class="sec-head fade" style="margin-bottom:0;">
+        <span class="en-label">— NEWS</span>
+        <h2>ニュース</h2>
+        <a href="design-news.html" class="news-all">ニュース一覧 <span class="en">→</span></a>
+      </div>
+      <div class="news-list fade">
+        <a href="design-news.html" class="news-item"><span class="news-date en">2027.01.XX</span><span class="news-cat">お知らせ</span><span class="news-title">コーポレートサイトをリニューアルしました</span></a>
+        <a href="design-news.html" class="news-item"><span class="news-date en">2023.11.14</span><span class="news-cat">お知らせ</span><span class="news-title">労働者派遣法に基づく情報公開</span></a>
+        <a href="design-news.html" class="news-item"><span class="news-date en">2021.07.09</span><span class="news-cat tech">技術</span><span class="news-title">3次元空撮地形構造物処理システムを導入しました</span></a>
+        <a href="design-news.html" class="news-item"><span class="news-date en">2015.01.XX</span><span class="news-cat">お知らせ</span><span class="news-title">代表者交代のご挨拶</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="cta-box fade">
+      <div>
+        <h2>測量・調査・施工管理のご相談<br>お気軽にお問い合わせください。</h2>
+        <div class="tel">TEL<b class="en">086-423-1899</b>（平日 9:00〜17:00）</div>
+      </div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="design-contact.html" class="btn">お問い合わせ <span class="arw">→</span></a>
+        <a href="design-recruit.html#jobs" class="btn yellow">採用エントリー <span class="arw">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="f-logo">株式会社第二開発技工</div>
+        <div class="addr">〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034<br>測量業登録 大臣(6)-18685号 ／ 労働者派遣事業許可 派33-300110号</div>
+      </div>
+      <nav class="foot-nav">
+        <ul>
+          <li><a href="design-service.html">事業案内</a></li>
+          <li><a href="design-strengths.html">強み・技術</a></li>
+          <li><a href="design-social.html">社会活動</a></li>
+        </ul>
+        <ul>
+          <li><a href="design-about.html">会社案内</a></li>
+          <li><a href="design-recruit.html">採用情報</a></li>
+          <li><a href="design-news.html">ニュース</a></li>
+        </ul>
+        <ul>
+          <li><a href="design-contact.html">お問い合わせ</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="copyright">
+      <span>© 株式会社第二開発技工 All Rights Reserved.</span>
+      <span class="en">Measuring the ground. Preserving the future.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* タイプライター演出（確定コピー 日→英ループ） */
+(function () {
+  var messages = [
+    { text: '測る技術で\n未来に残す', hold: 2800 },
+    { text: 'Surveying the ground.\nPreserving the future.', hold: 2800 }
+  ];
+  var typed = document.querySelector('.hero-copy .typed');
+  if (!typed) return;
+  var idx = 0;
+  function render(str) { typed.innerHTML = str.replace(/\n/g, '<br>'); }
+  function typeMsg(cb) {
+    var msg = messages[idx].text, i = 0;
+    (function step() {
+      i++;
+      render(msg.substring(0, i));
+      if (i >= msg.length) { cb(); return; }
+      var ch = msg[i - 1];
+      setTimeout(step, (ch === '、' || ch === '。' || ch === '.') ? 260 : 85);
+    })();
+  }
+  function deleteMsg(cb) {
+    var msg = messages[idx].text, i = msg.length;
+    (function step() {
+      i--;
+      render(msg.substring(0, i));
+      if (i <= 0) { cb(); return; }
+      setTimeout(step, 22);
+    })();
+  }
+  (function loop() {
+    typeMsg(function () {
+      setTimeout(function () {
+        deleteMsg(function () {
+          idx = (idx + 1) % messages.length;
+          setTimeout(loop, 300);
+        });
+      }, messages[idx].hold);
+    });
+  })();
+})();
+
+/* スクロール fade-in */
+(function () {
+  var els = document.querySelectorAll('.fade');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e, i) {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (e.target.dataset.d || 0) + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(function (el, i) { el.dataset.d = (i % 3) * 120; io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

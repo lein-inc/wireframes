@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ホーム | 第二開発技工（WF）</title>
+<link rel="stylesheet" href="css/wireframe.css?v=telbox">
+</head>
+<body>
+
+<div class="wf-banner"><span>WIREFRAME | ホーム | /</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="site-logo">株式会社第二開発技工</div>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="home.html">ホーム</a></li><li><a href="service.html">事業案内</a></li><li><a href="strengths.html">強み・技術</a></li><li><a href="social.html">社会活動</a></li><li><a href="about.html">会社案内</a></li><li><a href="recruit.html">採用情報</a></li><li><a href="news.html">ニュース</a></li><li><a href="contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="catch">測る技術で未来に残す</div>
+    <div class="sub">どこへでも行く。未来へも行く。公共測量・工事測量から3Dスキャナー・ドローンによる先端計測まで。岡山・倉敷から全国の現場を支える、測量・調査・施工管理のプロフェッショナル集団。<br><span style="font-size:11px; color:#888;">※キャッチコピーは 2026-08-26 定例で確定。サブコピーは5案から選定中（→ statement-main.html）</span></div>
+    <div style="display:flex; gap:12px;">
+      <a href="contact.html" class="btn">お問い合わせ</a>
+      <a href="recruit.html" class="btn outline">採用情報</a>
+    </div>
+    <div class="hero-visual">[ ヒーロービジュアル ／ 3Dワイヤー地形＋高速道路・都市・川・橋のインフラCG（社会インフラのスケール感） ／ 確定コピーのタイプライター演出 → hero-infra.html 参照 ]</div>
+  </div>
+</section>
+
+<!-- 3事業 -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>3つの事業</h2><span class="en">SERVICE</span></div>
+    <p class="section-lead">「測量」「調査・設計」「施工管理」——専門の異なる3つの分野を、一つの会社で受け止めます。</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="img-ph medium">測量 IMAGE</div>
+        <div class="card-title">01. 測量</div>
+        <p>公共測量／工事測量／全国対応。TS・GNSS・ドローン・3Dスキャナーを駆使した現場の"最初の一歩"。</p>
+        <a href="service-survey.html" class="btn outline" style="margin-top:12px; font-size:12px;">詳しく見る →</a>
+      </div>
+      <div class="card">
+        <div class="img-ph medium">調査・設計 IMAGE</div>
+        <div class="card-title">02. 調査・設計</div>
+        <p>土木設計（道路・河川・造成）／地質調査／環境調査。測量と地続きで現場を読み解きます。</p>
+        <a href="service-design.html" class="btn outline" style="margin-top:12px; font-size:12px;">詳しく見る →</a>
+      </div>
+      <div class="card">
+        <div class="img-ph medium">施工管理 IMAGE</div>
+        <div class="card-title">03. 施工管理</div>
+        <p>測量会社ならではの現場支援。一般労働者派遣許可のもと、施工管理技術者を派遣します。</p>
+        <a href="service-management.html" class="btn outline" style="margin-top:12px; font-size:12px;">詳しく見る →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 強み -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>技術・強み</h2><span class="en">STRENGTHS</span></div>
+    <div class="grid-3">
+      <div class="card"><div class="img-ph medium">DRONE</div><div class="card-title">ドローン空撮測量</div><p>広域を短時間で。3次元空撮地形構造物処理システム導入済み。</p></div>
+      <div class="card"><div class="img-ph medium">3D SCANNER</div><div class="card-title">3Dスキャナー</div><p>構造物・地形を高精度にデジタル化。BIM／CIMとの連携。</p></div>
+      <div class="card"><div class="img-ph medium">GNSS</div><div class="card-title">GNSS測位</div><p>ネットワーク型RTK-GNSSで、現場の位置基準を素早く。</p></div>
+    </div>
+    <div style="text-align:right; margin-top:24px;"><a href="strengths.html" class="btn outline">技術・強みを見る →</a></div>
+  </div>
+</section>
+
+<!-- 社会活動抜粋 -->
+<section style="background:#f5f5f5;">
+  <div class="wrap">
+    <div class="sec-h"><h2>社会活動</h2><span class="en">SOCIAL ACTIVITIES</span></div>
+    <div class="grid-2">
+      <div class="img-ph large">災害時のドローン測量／地域活動 IMAGE</div>
+      <div>
+        <h3 style="margin-bottom:12px; font-size:20px;">災害の前と、災害の後に立つ。</h3>
+        <p>岡山県測量設計業協会に加盟し、有事のときにすぐ動ける体制を維持しています。3次元空撮地形構造物処理システムを活用したドローン測量で、被災地の状況を短時間で把握します。</p>
+        <p style="margin-top:12px;">地域の技術を次世代へ手渡す活動にも取り組んでいます。</p>
+        <div style="display:flex; gap:12px; margin-top:24px;">
+          <a href="social.html" class="btn outline">社会活動 →</a>
+          <a href="about.html" class="btn outline">会社案内 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ニュース -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>ニュース</h2><span class="en">NEWS</span></div>
+    <div class="news-list">
+      <div class="news-item"><div class="news-date">2026.07.XX</div><div class="news-cat">お知らせ</div><div class="news-title">コーポレートサイトをリニューアルしました</div></div>
+      <div class="news-item"><div class="news-date">2023.11.14</div><div class="news-cat">お知らせ</div><div class="news-title">労働者派遣法に基づく情報公開</div></div>
+      <div class="news-item"><div class="news-date">2021.07.09</div><div class="news-cat">技術</div><div class="news-title">3次元空撮地形構造物処理システムを導入しました</div></div>
+      <div class="news-item"><div class="news-date">2015.01.XX</div><div class="news-cat">お知らせ</div><div class="news-title">代表者交代のご挨拶</div></div>
+    </div>
+    <div style="text-align:right; margin-top:16px;"><a href="news.html" class="btn outline">ニュース一覧 →</a></div>
+  </div>
+</section>
+
+<!-- 採用ハイライト -->
+<section style="background:#eee;">
+  <div class="wrap">
+    <div class="sec-h"><h2>採用情報</h2><span class="en">RECRUIT</span></div>
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-bottom:12px; font-size:22px;">仕事があれば、一番に行こう。<br>どこへでも行こう。月へでも行くぞ。</h3>
+        <p>創業のとき、先代が書き残した言葉です。「測量って何をする仕事？」から一緒にスタート。約1年で基本業務を習得し、ドローン・3Dスキャナーなど先端技術に触れながら、施工管理へキャリアアップできます。</p>
+        <div class="numbers" style="margin-top:24px; grid-template-columns:repeat(3,1fr);">
+          <div class="num-item"><div class="num-value">未経験</div><div class="num-label">歓迎</div></div>
+          <div class="num-item"><div class="num-value">1年</div><div class="num-label">で基本習得</div></div>
+          <div class="num-item"><div class="num-value">全国</div><div class="num-label">の現場</div></div>
+        </div>
+        <div style="margin-top:24px; display:flex; gap:12px;">
+          <a href="recruit.html" class="btn">採用情報を見る</a>
+          <a href="recruit.html#faq" class="btn outline">FAQ</a>
+        </div>
+      </div>
+      <div class="img-ph large">若手スタッフの現場カット IMAGE</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-txt">測量・調査・施工管理のご相談<br>お気軽にお問い合わせください。</div>
+      <div style="display:flex; gap:12px;">
+        <a href="contact.html" class="btn">お問い合わせ</a>
+        <a href="recruit.html" class="btn outline">採用エントリー</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="service.html">事業案内 トップ</a></li>
+      <li><a href="service-survey.html">測量</a></li>
+      <li><a href="service-design.html">調査・設計</a></li>
+      <li><a href="service-management.html">施工管理</a></li>
+      <li><a href="strengths.html">強み・技術</a></li>
+      <li><a href="social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="about.html#greeting">代表あいさつ</a></li>
+      <li><a href="about.html#company">会社概要</a></li>
+      <li><a href="about.html#history">沿革</a></li>
+      <li><a href="about.html#clients">主要取引先</a></li>
+      <li><a href="about.html#access">アクセス</a></li>
+    </ul></div>
+    <div><h4>採用・その他</h4><ul>
+      <li><a href="home.html">ホーム</a></li>
+      <li><a href="recruit.html">採用情報</a></li>
+      <li><a href="news.html">ニュース</a></li>
+      <li><a href="contact.html">お問い合わせ</a></li>
+      <li><a href="#">プライバシーポリシー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>

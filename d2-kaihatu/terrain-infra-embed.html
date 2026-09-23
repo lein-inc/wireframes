@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe Terrain + Highway (embed)</title>
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  #canvas-wrap { position: fixed; inset: 0; }
+</style>
+</head>
+<body>
+<div id="canvas-wrap"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============================================================
+   Simplex noise (3D)  — compact public-domain style
+============================================================ */
+const SimplexNoise = (function () {
+  const grad3 = [
+    [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],
+    [1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],
+    [0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]
+  ];
+  function Simplex(seed) {
+    const p = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) p[i] = i;
+    let s = seed >>> 0;
+    const rand = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+    for (let i = 255; i > 0; i--) {
+      const n = Math.floor(rand() * (i + 1));
+      const t = p[i]; p[i] = p[n]; p[n] = t;
+    }
+    this.perm = new Uint8Array(512);
+    this.permMod12 = new Uint8Array(512);
+    for (let i = 0; i < 512; i++) {
+      this.perm[i] = p[i & 255];
+      this.permMod12[i] = this.perm[i] % 12;
+    }
+  }
+  const F3 = 1 / 3, G3 = 1 / 6;
+  Simplex.prototype.noise3D = function (xin, yin, zin) {
+    const perm = this.perm, permMod12 = this.permMod12;
+    let n0, n1, n2, n3;
+    const s = (xin + yin + zin) * F3;
+    const i = Math.floor(xin + s), j = Math.floor(yin + s), k = Math.floor(zin + s);
+    const t = (i + j + k) * G3;
+    const x0 = xin - (i - t), y0 = yin - (j - t), z0 = zin - (k - t);
+    let i1, j1, k1, i2, j2, k2;
+    if (x0 >= y0) {
+      if (y0 >= z0)      { i1=1;j1=0;k1=0; i2=1;j2=1;k2=0; }
+      else if (x0 >= z0) { i1=1;j1=0;k1=0; i2=1;j2=0;k2=1; }
+      else               { i1=0;j1=0;k1=1; i2=1;j2=0;k2=1; }
+    } else {
+      if (y0 < z0)       { i1=0;j1=0;k1=1; i2=0;j2=1;k2=1; }
+      else if (x0 < z0)  { i1=0;j1=1;k1=0; i2=0;j2=1;k2=1; }
+      else               { i1=0;j1=1;k1=0; i2=1;j2=1;k2=0; }
+    }
+    const x1 = x0 - i1 + G3,     y1 = y0 - j1 + G3,     z1 = z0 - k1 + G3;
+    const x2 = x0 - i2 + 2*G3,   y2 = y0 - j2 + 2*G3,   z2 = z0 - k2 + 2*G3;
+    const x3 = x0 - 1 + 3*G3,    y3 = y0 - 1 + 3*G3,    z3 = z0 - 1 + 3*G3;
+    const ii = i & 255, jj = j & 255, kk = k & 255;
+    let t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
+    if (t0 < 0) n0 = 0; else {
+      const gi0 = permMod12[ii + perm[jj + perm[kk]]];
+      t0 *= t0;
+      n0 = t0 * t0 * (grad3[gi0][0]*x0 + grad3[gi0][1]*y0 + grad3[gi0][2]*z0);
+    }
+    let t1 = 0.6 - x1*x1 - y1*y1 - z1*z1;
+    if (t1 < 0) n1 = 0; else {
+      const gi1 = permMod12[ii + i1 + perm[jj + j1 + perm[kk + k1]]];
+      t1 *= t1;
+      n1 = t1 * t1 * (grad3[gi1][0]*x1 + grad3[gi1][1]*y1 + grad3[gi1][2]*z1);
+    }
+    let t2 = 0.6 - x2*x2 - y2*y2 - z2*z2;
+    if (t2 < 0) n2 = 0; else {
+      const gi2 = permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]]];
+      t2 *= t2;
+      n2 = t2 * t2 * (grad3[gi2][0]*x2 + grad3[gi2][1]*y2 + grad3[gi2][2]*z2);
+    }
+    let t3 = 0.6 - x3*x3 - y3*y3 - z3*z3;
+    if (t3 < 0) n3 = 0; else {
+      const gi3 = permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]]];
+      t3 *= t3;
+      n3 = t3 * t3 * (grad3[gi3][0]*x3 + grad3[gi3][1]*y3 + grad3[gi3][2]*z3);
+    }
+    return 32 * (n0 + n1 + n2 + n3);
+  };
+  return Simplex;
+})();
+
+/* ============================================================
+   Scene
+============================================================ */
+// URLハッシュから seed 指定可能: #seed=5678
+const urlSeed = parseInt((location.hash.match(/seed=(\d+)/) || [])[1], 10) || 1234;
+
+const wrap = document.getElementById('canvas-wrap');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+scene.fog = new THREE.Fog(0xffffff, 260, 760);
+
+const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 2000);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+wrap.appendChild(renderer.domElement);
+
+const SIZE = 760;
+const DIV  = 110;
+const noise = new SimplexNoise(urlSeed);
+
+const vertsPerSide = DIV + 1;
+const vertexCount  = vertsPerSide * vertsPerSide;
+const positions = new Float32Array(vertexCount * 3);
+
+const indices = [];
+for (let j = 0; j < vertsPerSide; j++) {
+  for (let i = 0; i < vertsPerSide; i++) {
+    const a = j * vertsPerSide + i;
+    if (i < DIV) indices.push(a, a + 1);
+    if (j < DIV) indices.push(a, a + vertsPerSide);
+  }
+}
+
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setIndex(indices);
+
+const material = new THREE.LineBasicMaterial({
+  vertexColors: true,    // 山並み=ブルー／平地=グレー
+  transparent: true,
+  opacity: 0.85
+});
+const terrain = new THREE.LineSegments(geometry, material);
+scene.add(terrain);
+
+/* 白塗りソリッド地形（隠面処理: ワイヤーの下に白い面を敷く） */
+const triIndices = [];
+for (let j = 0; j < DIV; j++) {
+  for (let i = 0; i < DIV; i++) {
+    const a = j * vertsPerSide + i, b = a + 1, c = a + vertsPerSide, d = c + 1;
+    triIndices.push(a, c, b, b, c, d);
+  }
+}
+const solidGeom = new THREE.BufferGeometry();
+solidGeom.setAttribute('position', geometry.attributes.position);
+solidGeom.setIndex(triIndices);
+const solidMesh = new THREE.Mesh(solidGeom, new THREE.MeshBasicMaterial({
+  color: 0xffffff, side: THREE.DoubleSide,
+  polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 2
+}));
+solidMesh.renderOrder = -1;
+scene.add(solidMesh);
+
+
+const smoothstep = (a, b, x) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
+function heightAt(x, z, time) {
+  let f = 0.0026, amp = 1, ridge = 0;
+  for (let o = 0; o < 4; o++) {
+    const n = noise.noise3D(x * f, z * f, 7.7 + o * 13.1);
+    ridge += (1 - Math.abs(n)) * amp;
+    f *= 2.02; amp *= 0.5;
+  }
+  ridge = Math.pow(ridge / 1.87, 2.6) * 150;
+
+  const mountainMask = smoothstep(-40, -270, z) * 0.9 +
+                       smoothstep(150, 330, Math.abs(x)) * 0.55;
+
+  const rolling =
+    noise.noise3D(x * 0.004, z * 0.004, 3.3) * 22 +
+    noise.noise3D(x * 0.012, z * 0.012, 9.1) * 6;
+
+  const wave =
+    noise.noise3D(x * 0.006 + time * 0.10, z * 0.006, time * 0.06) * 10 +
+    noise.noise3D(x * 0.017, z * 0.017 + time * 0.13, time * 0.09) * 4;
+
+  return ridge * Math.min(1, mountainMask) + rolling + wave;
+}
+
+/* 山並み度合いで頂点色を決定（静的） */
+(function paintTerrain() {
+  const cols = new Float32Array(vertexCount * 3);
+  const blue = [0x01/255, 0x5B/255, 0x9E/255];
+  const gray = [0.72, 0.74, 0.77];
+  let p = 0;
+  for (let j = 0; j < vertsPerSide; j++) {
+    const z = (j / DIV - 0.5) * SIZE;
+    for (let i = 0; i < vertsPerSide; i++) {
+      const x = (i / DIV - 0.5) * SIZE;
+      let f = 0.0026, amp = 1, ridge = 0;
+      for (let o = 0; o < 4; o++) {
+        const n = noise.noise3D(x * f, z * f, 7.7 + o * 13.1);
+        ridge += (1 - Math.abs(n)) * amp;
+        f *= 2.02; amp *= 0.5;
+      }
+      ridge = Math.pow(ridge / 1.87, 2.6) * 150;
+      const mask = smoothstep(-40, -270, z) * 0.9 + smoothstep(150, 330, Math.abs(x)) * 0.55;
+      const h0 = ridge * Math.min(1, mask);
+      const t = smoothstep(12, 60, h0);
+      cols[p++] = gray[0] + (blue[0] - gray[0]) * t;
+      cols[p++] = gray[1] + (blue[1] - gray[1]) * t;
+      cols[p++] = gray[2] + (blue[2] - gray[2]) * t;
+    }
+  }
+  geometry.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+})();
+
+
+/* ============================================================
+   Infra objects: 発生 → 描画 → 消滅 → 別の場所に再発生 のループ
+============================================================ */
+let rndS = 4242;
+const rnd = () => (rndS = (rndS * 1664525 + 1013904223) >>> 0) / 4294967296;
+function perp(dx, dz, w) { const l = Math.hypot(dx, dz) || 1; return [-dz / l * w, dx / l * w]; }
+
+/* --- 高速道路（毎回ランダムなルート・高さ） --- */
+function buildRoad(obj) {
+  const SEG = 140, HALF_W = 10, UP = 3.2;
+  const zBase = -30 + rnd() * 140;
+  const bow = (rnd() - 0.5) * 170;
+  const yLvl = 42 + rnd() * 18;
+  const wobA = 7 + rnd() * 11, wobF = 1.4 + rnd() * 1.8;
+  const C = [];
+  for (let i = 0; i <= SEG; i++) {
+    const t = i / SEG;
+    C.push([
+      (t - 0.5) * SIZE * 0.98,
+      yLvl + Math.sin(t * Math.PI * wobF) * wobA,
+      zBase + bow * (1 - Math.pow((t - 0.5) * 2, 2)) + Math.sin(t * Math.PI * 2) * 14
+    ]);
+  }
+  const pos = [];
+  const seg = (a, b) => pos.push(a[0], a[1], a[2], b[0], b[1], b[2]);
+  const L = [], R = [];
+  for (let i = 0; i <= SEG; i++) {
+    const c = C[i], q = C[Math.min(i + 1, SEG)], o = C[Math.max(i - 1, 0)];
+    const [px, pz] = perp(q[0] - o[0], q[2] - o[2], HALF_W);
+    L.push([c[0] + px, c[1], c[2] + pz]);
+    R.push([c[0] - px, c[1], c[2] - pz]);
+  }
+  obj.L = L; obj.R = R; obj.C = C; obj.HALF_W = HALF_W;
+  const up = a => [a[0], a[1] + UP, a[2]];
+  for (let i = 0; i < SEG; i++) {
+    seg(L[i], L[i + 1]); seg(R[i], R[i + 1]);
+    seg(up(L[i]), up(L[i + 1])); seg(up(R[i]), up(R[i + 1]));
+    if (i % 6 === 0) { seg(L[i], up(L[i])); seg(R[i], up(R[i])); }
+    if (i % 3 === 0) seg(L[i], R[i]);
+    if (i % 10 === 5) {
+      seg(L[i], [L[i][0], heightAt(L[i][0], L[i][2], 0) - 14, L[i][2]]);
+      seg(R[i], [R[i][0], heightAt(R[i][0], R[i][2], 0) - 14, R[i][2]]);
+    }
+  }
+  return new Float32Array(pos);
+}
+
+/* --- 都市（毎回ランダムな街区） --- */
+function buildCity(obj) {
+  const pos = [];
+  const seg = (x1,y1,z1,x2,y2,z2) => pos.push(x1,y1,z1,x2,y2,z2);
+  function box(cx, cz, w, d, h, yb) {
+    const x0 = cx - w/2, x1 = cx + w/2, z0 = cz - d/2, z1 = cz + d/2, yt = yb + h;
+    seg(x0,yb,z0, x1,yb,z0); seg(x1,yb,z0, x1,yb,z1); seg(x1,yb,z1, x0,yb,z1); seg(x0,yb,z1, x0,yb,z0);
+    seg(x0,yt,z0, x1,yt,z0); seg(x1,yt,z0, x1,yt,z1); seg(x1,yt,z1, x0,yt,z1); seg(x0,yt,z1, x0,yt,z0);
+    seg(x0,yb,z0, x0,yt,z0); seg(x1,yb,z0, x1,yt,z0); seg(x1,yb,z1, x1,yt,z1); seg(x0,yb,z1, x0,yt,z1);
+    if (h > 40) for (let fy = yb + 14; fy < yt - 6; fy += 14) { seg(x0,fy,z0, x1,fy,z0); seg(x0,fy,z1, x1,fy,z1); }
+  }
+  const ccx = -180 + rnd() * 360, ccz = 60 + rnd() * 220;
+  const n = 22 + Math.floor(rnd() * 14);
+  obj.boxes = [];
+  for (let b = 0; b < n; b++) {
+    const cx = ccx + (rnd() - 0.5) * 200;
+    const cz = ccz + (rnd() - 0.5) * 170;
+    const w = 9 + rnd() * 15, d = 9 + rnd() * 15;
+    const h = 22 + Math.pow(rnd(), 1.7) * 62;
+    const yb = heightAt(cx, cz, 0) - 6;
+    obj.boxes.push([cx, cz, w, d, h, yb]);
+    box(cx, cz, w, d, h, yb);
+  }
+  // ランドマークタワー＋アンテナ
+  const tyb = heightAt(ccx, ccz, 0) - 6;
+  const th = 90 + rnd() * 20;
+  obj.boxes.push([ccx, ccz, 16, 16, th, tyb]);
+  box(ccx, ccz, 16, 16, th, tyb);
+  seg(ccx, tyb + 92, ccz, ccx, tyb + 116, ccz);
+  return new Float32Array(pos);
+}
+
+/* --- 川（毎回ランダムな蛇行・毎フレーム地形追従） --- */
+const RIVER_SEG = 110, RIVER_HALF = 11;
+const riverSlots = [];
+for (let i = 0; i < RIVER_SEG; i++) { riverSlots.push(['L', i]); riverSlots.push(['R', i]); if (i % 6 === 3) riverSlots.push(['C', i]); }
+function buildRiver(obj) {
+  const x0 = -170 + rnd() * 340, a = 38 + rnd() * 48, ph = rnd() * Math.PI * 2, f = 0.005 + rnd() * 0.003;
+  obj.rx = z => x0 + Math.sin(z * f + ph) * a + Math.sin(z * 0.017) * 18;
+  return new Float32Array(riverSlots.length * 6);
+}
+function riverPoint(obj, i, side, time) {
+  const zc = (i / RIVER_SEG - 0.5) * SIZE * 0.98;
+  const x = obj.rx(zc), x2 = obj.rx(zc + 4);
+  const [px, pz] = perp(x2 - x, 4, RIVER_HALF);
+  const sx = side === 'L' ? x + px : side === 'R' ? x - px : x;
+  const sz = side === 'L' ? zc + pz : side === 'R' ? zc - pz : zc;
+  return [sx, heightAt(sx, sz, time) + 0.8, sz];
+}
+function riverTick(obj, time) {
+  if (obj.state === 'wait') return;
+  const arr = obj.geom.attributes.position.array;
+  let p = 0;
+  for (const [side, i] of riverSlots) {
+    let a, b;
+    if (side === 'C') { a = riverPoint(obj, i, 'L', time); b = riverPoint(obj, i, 'R', time); }
+    else { a = riverPoint(obj, i, side, time); b = riverPoint(obj, i + 1, side, time); }
+    arr[p++]=a[0]; arr[p++]=a[1]; arr[p++]=a[2];
+    arr[p++]=b[0]; arr[p++]=b[1]; arr[p++]=b[2];
+  }
+  obj.geom.attributes.position.needsUpdate = true;
+}
+
+/* --- トラス橋（発生中の川を渡る位置に架かる） --- */
+function buildBridge(obj) {
+  const pos = [];
+  const seg = (x1,y1,z1,x2,y2,z2) => pos.push(x1,y1,z1,x2,y2,z2);
+  const bz = -180 + rnd() * 420;
+  const bx = (riverObj && riverObj.rx) ? riverObj.rx(bz) : (rnd() - 0.5) * 300;
+  const halfSpan = 52 + rnd() * 16, deckHalfW = 6, trussH = 14 + rnd() * 5;
+  const deckY = Math.max(heightAt(bx - halfSpan, bz, 0), heightAt(bx + halfSpan, bz, 0)) + 9;
+  obj.deck = [bx, bz, halfSpan, deckHalfW, deckY];
+  const N = 8, step = (halfSpan * 2) / N;
+  for (const zoff of [-deckHalfW, deckHalfW]) {
+    const z = bz + zoff;
+    seg(bx - halfSpan, deckY, z, bx + halfSpan, deckY, z);
+    seg(bx - halfSpan, deckY, z, bx - halfSpan + step, deckY + trussH, z);
+    seg(bx + halfSpan, deckY, z, bx + halfSpan - step, deckY + trussH, z);
+    seg(bx - halfSpan + step, deckY + trussH, z, bx + halfSpan - step, deckY + trussH, z);
+    for (let i = 1; i < N; i++) {
+      const x = bx - halfSpan + i * step;
+      seg(x, deckY, z, x, deckY + trussH, z);
+      const nx = bx - halfSpan + (i + (i < N/2 ? 1 : -1)) * step;
+      if (i !== N/2) seg(x, deckY, z, nx, deckY + trussH, z);
+    }
+  }
+  for (let i = 1; i < N; i++) {
+    const x = bx - halfSpan + i * step;
+    seg(x, deckY + trussH, bz - deckHalfW, x, deckY + trussH, bz + deckHalfW);
+  }
+  for (const xe of [bx - halfSpan, bx + halfSpan])
+    for (const zoff of [-deckHalfW, deckHalfW])
+      seg(xe, deckY, bz + zoff, xe, heightAt(xe, bz + zoff, 0) - 12, bz + zoff);
+  return new Float32Array(pos);
+}
+
+/* --- 塗り（白/グレーの面）生成 --- */
+function roadFill(obj) {
+  const pos = [];
+  for (let i = 0; i < obj.L.length - 1; i++) {
+    const a = obj.L[i], b = obj.R[i], c = obj.L[i+1], d = obj.R[i+1];
+    pos.push(a[0],a[1],a[2], b[0],b[1],b[2], c[0],c[1],c[2]);
+    pos.push(b[0],b[1],b[2], d[0],d[1],d[2], c[0],c[1],c[2]);
+  }
+  return new Float32Array(pos);
+}
+function cityFill(obj) {
+  const pos = [];
+  const quad = (a,b,c,d) => { pos.push(...a,...b,...c, ...a,...c,...d); };
+  for (const [cx, cz, w, d0, h, yb] of obj.boxes) {
+    const x0 = cx-w/2, x1 = cx+w/2, z0 = cz-d0/2, z1 = cz+d0/2, yt = yb+h;
+    quad([x0,yb,z0],[x1,yb,z0],[x1,yt,z0],[x0,yt,z0]);
+    quad([x1,yb,z1],[x0,yb,z1],[x0,yt,z1],[x1,yt,z1]);
+    quad([x0,yb,z1],[x0,yb,z0],[x0,yt,z0],[x0,yt,z1]);
+    quad([x1,yb,z0],[x1,yb,z1],[x1,yt,z1],[x1,yt,z0]);
+    quad([x0,yt,z0],[x1,yt,z0],[x1,yt,z1],[x0,yt,z1]);
+  }
+  return new Float32Array(pos);
+}
+function bridgeFill(obj) {
+  const [bx, bz, hs, hw, y] = obj.deck;
+  return new Float32Array([
+    bx-hs,y,bz-hw, bx+hs,y,bz-hw, bx+hs,y,bz+hw,
+    bx-hs,y,bz-hw, bx+hs,y,bz+hw, bx-hs,y,bz+hw
+  ]);
+}
+
+/* --- ライフサイクル管理 --- */
+function makeInfra(cfg) {
+  const geom = new THREE.BufferGeometry();
+  const mat = new THREE.LineBasicMaterial({ color: cfg.color, transparent: true, opacity: 0 });
+  scene.add(new THREE.LineSegments(geom, mat));
+  let fillGeom = null, fillMat = null;
+  if (cfg.buildFill) {
+    fillGeom = new THREE.BufferGeometry();
+    fillMat = new THREE.MeshBasicMaterial({
+      color: cfg.fillColor, transparent: true, opacity: 0, side: THREE.DoubleSide,
+      polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
+    });
+    scene.add(new THREE.Mesh(fillGeom, fillMat));
+  }
+  const obj = {
+    geom, mat, cfg, state: 'wait', t: -cfg.delay, total: 0, vis: 0,
+    regen() {
+      const pos = cfg.build(this);
+      geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geom.setDrawRange(0, 0);
+      this.total = pos.length / 3;
+      if (fillGeom) fillGeom.setAttribute('position', new THREE.BufferAttribute(cfg.buildFill(this), 3));
+    },
+    setFill(v) { if (fillMat) fillMat.opacity = (cfg.fillOpacity || 0.95) * v; },
+    update(dt, time) {
+      this.t += dt;
+      if (this.state === 'wait') {
+        if (this.t >= 0) { this.state = 'draw'; this.t = 0; this.mat.opacity = cfg.opacity; }
+      } else if (this.state === 'draw') {
+        const k = Math.min(1, this.t / cfg.drawDur);
+        const e = 1 - Math.pow(1 - k, 3);
+        geom.setDrawRange(0, Math.floor(this.total * e / 2) * 2);
+        this.setFill(e); this.vis = e;
+        if (k >= 1) { this.state = 'hold'; this.t = 0; this.vis = 1; }
+      } else if (this.state === 'hold') {
+        if (this.t >= cfg.holdDur) { this.state = 'fade'; this.t = 0; }
+      } else if (this.state === 'fade') {
+        const k = Math.min(1, this.t / cfg.fadeDur);
+        this.mat.opacity = cfg.opacity * (1 - k);
+        this.setFill(1 - k); this.vis = 1 - k;
+        if (k >= 1) { this.state = 'wait'; this.t = -(0.4 + rnd() * 1.4); this.regen(); this.setFill(0); this.vis = 0; }
+      }
+      if (cfg.tick) cfg.tick(this, time);
+    }
+  };
+  obj.regen();
+  return obj;
+}
+
+const riverObj = makeInfra({ build: buildRiver, tick: riverTick, color: 0x8a8a8a, opacity: 1.0, drawDur: 2.0, holdDur: 3.6, fadeDur: 1.2, delay: 1.8 });
+const roadObj = makeInfra({ build: buildRoad,   buildFill: roadFill,   fillColor: 0xf2f2f2, color: 0x555555, opacity: 0.95, drawDur: 2.2, holdDur: 3.4, fadeDur: 1.1, delay: 0.6 });
+const infras = [
+  roadObj,
+  makeInfra({ build: buildCity,   buildFill: cityFill,   fillColor: 0xf7f7f7, color: 0x666666, opacity: 0.85, drawDur: 2.0, holdDur: 3.8, fadeDur: 1.2, delay: 1.2 }),
+  riverObj,
+  makeInfra({ build: buildBridge, buildFill: bridgeFill, fillColor: 0xf2f2f2, color: 0x555555, opacity: 0.95, drawDur: 1.4, holdDur: 3.2, fadeDur: 1.0, delay: 2.6 })
+];
+
+/* ============================================================
+   高速道路を走る3Dの車
+============================================================ */
+const cars = [];
+(function makeCars() {
+  const bodyGeo = new THREE.BoxGeometry(7, 2.4, 3.4);
+  const cabGeo  = new THREE.BoxGeometry(3.4, 1.7, 3.0);
+  const bodyEdge = new THREE.EdgesGeometry(bodyGeo);
+  const cabEdge  = new THREE.EdgesGeometry(cabGeo);
+  for (let i = 0; i < 8; i++) {
+    const isBlue = i % 3 === 0;
+    const mat  = new THREE.MeshBasicMaterial({ color: isBlue ? 0x015B9E : 0xffffff, transparent: true, opacity: 0 });
+    const lmat = new THREE.LineBasicMaterial({ color: isBlue ? 0x013D6A : 0x444444, transparent: true, opacity: 0 });
+    const body = new THREE.Mesh(bodyGeo, mat);
+    const cab  = new THREE.Mesh(cabGeo, mat);
+    cab.position.set(-0.4, 2.0, 0);
+    body.add(cab);
+    body.add(new THREE.LineSegments(bodyEdge, lmat));
+    const cabLines = new THREE.LineSegments(cabEdge, lmat);
+    cabLines.position.copy(cab.position);
+    body.add(cabLines);
+    body.visible = false;
+    scene.add(body);
+    cars.push({
+      mesh: body, mat, lmat,
+      s: rnd(),
+      speed: 0.045 + rnd() * 0.045,
+      dir: i % 2 === 0 ? 1 : -1        // 車線＝進行方向
+    });
+  }
+})();
+
+function updateCars(dt) {
+  const vis = roadObj.vis;
+  const C = roadObj.C, SEG = C ? C.length - 1 : 0;
+  for (const car of cars) {
+    if (!C || vis <= 0.02) { car.mesh.visible = false; continue; }
+    car.mesh.visible = true;
+    car.mat.opacity  = 0.95 * vis;
+    car.lmat.opacity = vis;
+    car.s = (car.s + dt * car.speed * car.dir + 1) % 1;
+    const ft = car.s * SEG;
+    const i0 = Math.min(SEG - 1, Math.floor(ft));
+    const fr = ft - i0;
+    const a = C[i0], b = C[i0 + 1];
+    const x = a[0] + (b[0] - a[0]) * fr;
+    const y = a[1] + (b[1] - a[1]) * fr;
+    const z = a[2] + (b[2] - a[2]) * fr;
+    const dx = (b[0] - a[0]) * car.dir, dz = (b[2] - a[2]) * car.dir;
+    const [px, pz] = perp(b[0] - a[0], b[2] - a[2], roadObj.HALF_W * 0.45);
+    // 進行方向で左側車線に寄せる
+    car.mesh.position.set(x - px * car.dir, y + 1.5, z - pz * car.dir);
+    car.mesh.rotation.y = Math.atan2(-dz, dx);
+  }
+}
+
+function updateTerrain(time) {
+  const pos = geometry.attributes.position.array;
+  let p = 0;
+  for (let j = 0; j < vertsPerSide; j++) {
+    const z = (j / DIV - 0.5) * SIZE;
+    for (let i = 0; i < vertsPerSide; i++) {
+      const x = (i / DIV - 0.5) * SIZE;
+      pos[p++] = x;
+      pos[p++] = heightAt(x, z, time);
+      pos[p++] = z;
+    }
+  }
+  geometry.attributes.position.needsUpdate = true;
+}
+
+/* ============================================================
+   Camera state (orbital)
+============================================================ */
+const target = new THREE.Vector3(0, 26, -40);
+let theta = Math.PI * 0.02;
+let phi   = Math.PI * 0.408;
+let radius = 430;
+const PHI_MIN = Math.PI * 0.14, PHI_MAX = Math.PI * 0.49;
+const R_MIN = 160, R_MAX = 900;
+
+function applyCamera() {
+  phi = Math.min(PHI_MAX, Math.max(PHI_MIN, phi));
+  radius = Math.min(R_MAX, Math.max(R_MIN, radius));
+  camera.position.set(
+    target.x + radius * Math.sin(phi) * Math.sin(theta),
+    target.y + radius * Math.cos(phi),
+    target.z + radius * Math.sin(phi) * Math.cos(theta)
+  );
+  camera.lookAt(target);
+}
+
+/* ============================================================
+   Auto animation: ショットタイプ別のカット割り
+   俯瞰(top)／真横(side)／引き全景(wide)／寄り(close) をランダムに
+   切り替え、カット時間・ホールド時間・回転速度にも強弱を付ける
+============================================================ */
+const SHOTS = ['top', 'side', 'wide', 'close'];
+let lastShot = '';
+
+let mode = 'hold';   // 'grit' | 'hold'
+let modeT = 0;
+let gritDur = 0.28, holdDur = 1.1, holdSpin = 0.16;
+
+let thetaStart, thetaEnd;
+let phiStart, phiEnd;
+let radiusStart, radiusEnd;
+
+function startGrit() {
+  mode = 'grit'; modeT = 0;
+  thetaStart = theta;
+  phiStart = phi;
+  radiusStart = radius;
+  const R = Math.random;
+  let shot;
+  do { shot = SHOTS[Math.floor(R() * SHOTS.length)]; } while (shot === lastShot);
+  lastShot = shot;
+  if (shot === 'top') {          // 俯瞰：ほぼ真上から
+    phiEnd    = Math.PI * (0.15 + R() * 0.09);
+    radiusEnd = 340 + R() * 200;
+  } else if (shot === 'side') {  // 真横：地平すれすれ
+    phiEnd    = Math.PI * (0.44 + R() * 0.05);
+    radiusEnd = 250 + R() * 180;
+  } else if (shot === 'wide') {  // 引き：全体を小さく
+    phiEnd    = Math.PI * (0.26 + R() * 0.16);
+    radiusEnd = 640 + R() * 240;
+  } else {                       // 寄り：ぐっと近く
+    phiEnd    = Math.PI * (0.30 + R() * 0.15);
+    radiusEnd = 175 + R() * 95;
+  }
+  thetaEnd = theta + (R() - 0.5) * Math.PI * 1.3;
+  // 強弱：速いカットとゆったりしたカットを混ぜる
+  gritDur  = 0.2 + R() * 0.35;
+  holdDur  = 0.7 + R() * 2.0;
+  holdSpin = (R() < 0.3 ? -1 : 1) * (0.06 + R() * 0.24);
+}
+function startHold() {
+  mode = 'hold'; modeT = 0;
+}
+
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+/* ============================================================
+   Loop
+============================================================ */
+let simTime = 0;
+let prev = performance.now();
+
+function animate(now) {
+  requestAnimationFrame(animate);
+  const dt = Math.min(0.05, (now - prev) / 1000);
+  prev = now;
+
+  simTime += dt;
+  updateTerrain(simTime);
+
+  for (const o of infras) o.update(dt, simTime);
+  updateCars(dt);
+
+  {
+    // Auto phase
+    modeT += dt;
+    if (mode === 'grit') {
+      const t = Math.min(1, modeT / gritDur);
+      const e = easeOutCubic(t);
+      theta  = thetaStart  + (thetaEnd  - thetaStart)  * e;
+      phi    = phiStart    + (phiEnd    - phiStart)    * e;
+      radius = radiusStart + (radiusEnd - radiusStart) * e;
+      if (modeT >= gritDur) startHold();
+    } else {
+      // hold：ショットごとに速度・向きの違う自動回転
+      theta += dt * holdSpin;
+      if (modeT >= holdDur) startGrit();
+    }
+  }
+
+  applyCamera();
+  renderer.render(scene, camera);
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+updateTerrain(0);
+applyCamera();
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

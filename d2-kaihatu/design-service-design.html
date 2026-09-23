@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>調査・設計（デザイン案） | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/design.css?v=1">
+</head>
+<body>
+
+<div class="wf-banner"><span>DESIGN | 事業案内 ／ 調査・設計 | /service/design/（写真はダミー・本番は実写差替）</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="design-top.html" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="design-top.html">ホーム</a></li><li><a href="design-service.html">事業案内</a></li><li><a href="design-strengths.html">強み・技術</a></li><li><a href="design-social.html">社会活動</a></li><li><a href="design-about.html">会社案内</a></li><li><a href="design-recruit.html">採用情報</a></li><li><a href="design-news.html">ニュース</a></li><li><a href="design-contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero"><div class="wrap"><div class="en">SERVICE / SURVEY & DESIGN</div><h1>調査・設計</h1></div></section>
+<div class="breadcrumb"><div class="wrap"><a href="design-top.html">ホーム</a> ／ <a href="design-service.html">事業案内</a> ／ 調査・設計</div></div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>測量と地続きで、現場を読み解く</h2></div>
+    <p class="section-lead">測量で得たデータを、そのまま設計・調査へ。同じ会社の中で連携できるため、精度と工程の双方でお客様の負担を減らします。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>土木設計</h2></div>
+    <div class="grid-3">
+      <div class="card"><div class="img-ph medium">道路設計</div><div class="card-title">道路設計</div><p>道路詳細設計・交差点設計・付属構造物設計。予備設計から詳細設計まで。</p></div>
+      <div class="card"><div class="img-ph medium">河川設計</div><div class="card-title">河川設計</div><p>護岸設計・排水設計・小規模河川構造物設計。</p></div>
+      <div class="card"><div class="img-ph medium">土地造成</div><div class="card-title">土地造成設計</div><p>宅地・工業用地・農地の造成計画、土量計算、切土・盛土。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>地質調査</h2></div>
+    <div class="grid-2">
+      <div class="img-ph large">ボーリング調査 IMAGE</div>
+      <div>
+        <p>ボーリング調査、標準貫入試験、地下水位観測など、工事の安全性を左右する地盤情報を取得・解析します。</p>
+        <p style="margin-top:12px;">測量と組み合わせることで、3次元地形＋地盤データを一体で把握することが可能です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>環境調査</h2></div>
+    <div class="grid-3">
+      <div class="card"><div class="img-ph medium">動植物調査</div><div class="card-title">動植物調査</div><p>事業予定地における動植物相の把握・保全対策検討。</p></div>
+      <div class="card"><div class="img-ph medium">水質・大気</div><div class="card-title">水質・大気調査</div><p>工事前後の環境モニタリング。</p></div>
+      <div class="card"><div class="img-ph medium">騒音・振動</div><div class="card-title">騒音・振動調査</div><p>工事・稼働時の周辺影響評価。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>設計照査</h2></div>
+    <p class="section-lead">設計内容の妥当性、施工可能性、コスト適正性を第三者視点でチェック。手戻りリスクを最小化します。</p>
+  </div>
+</section>
+
+<section style="background:#eee;"><div class="wrap"><div class="cta-box"><div class="cta-txt">調査・設計のご相談はお気軽に。</div><a href="design-contact.html" class="btn">お問い合わせ</a></div></div></section>
+
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="design-service.html">事業案内 トップ</a></li>
+      <li><a href="design-service-survey.html">測量</a></li>
+      <li><a href="design-service-design.html">調査・設計</a></li>
+      <li><a href="design-service-management.html">施工管理</a></li>
+      <li><a href="design-strengths.html">強み・技術</a></li>
+      <li><a href="design-social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="design-about.html#greeting">代表あいさつ</a></li>
+      <li><a href="design-about.html#company">会社概要</a></li>
+      <li><a href="design-about.html#history">沿革</a></li>
+      <li><a href="design-about.html#clients">主要取引先</a></li>
+      <li><a href="design-about.html#access">アクセス</a></li>
+    </ul></div>
+    <div><h4>採用・その他</h4><ul>
+      <li><a href="design-top.html">ホーム</a></li>
+      <li><a href="design-recruit.html">採用情報</a></li>
+      <li><a href="design-news.html">ニュース</a></li>
+      <li><a href="design-contact.html">お問い合わせ</a></li>
+      <li><a href="#">プライバシーポリシー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>

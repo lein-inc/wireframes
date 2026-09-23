@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOPデザイン案 v2 ／ 測る技術で未来に残す | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/design2.css?v=2">
+<style>
+  /* ===== TOP 固有（v2 / 構成はv1踏襲・演出のみ調整） ===== */
+
+  /* --- HERO: v1のまま（タイプライター／3D地形） --- */
+  .hero { position:relative; width:100%; height:100vh; min-height:640px; overflow:hidden; background:#fff; }
+  .terrain-iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
+  .hero-copy { position:absolute; z-index:50; top:24%; left:min(6vw,72px); max-width:760px; pointer-events:none; }
+  .hero-copy .en-label {
+    font-family:"Inter",monospace; font-size:12px; letter-spacing:.32em;
+    color:var(--aqua); text-transform:uppercase; display:block; margin-bottom:18px;
+  }
+  .hero-copy h1 {
+    font-weight:900; font-size:clamp(34px,4.6vw,58px); line-height:1.45;
+    color:var(--blue); letter-spacing:.03em; min-height:2.9em;
+  }
+  .hero-copy .cursor { display:inline-block; margin-left:4px; font-weight:400; color:var(--blue); animation:blink .8s step-end infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+  .hero-copy .hero-sub {
+    margin-top:22px; font-size:14.5px; line-height:2.1; color:var(--txt-2);
+    background:rgba(255,255,255,.72); display:inline-block; padding:4px 10px 4px 0;
+  }
+  .hero-btns { position:absolute; z-index:50; left:min(6vw,72px); bottom:96px; display:flex; gap:14px; flex-wrap:wrap; }
+  .scroll-cue {
+    position:absolute; z-index:50; right:40px; bottom:32px;
+    font-family:"Inter",sans-serif; font-size:10px; letter-spacing:.3em; color:var(--muted);
+    writing-mode:vertical-rl; display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue::after { content:""; width:1px; height:56px; background:var(--blue); animation:cue 1.8s ease-in-out infinite; }
+  @keyframes cue { 0%{transform:scaleY(0); transform-origin:top} 45%{transform:scaleY(1); transform-origin:top} 55%{transform:scaleY(1); transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom} }
+
+  /* --- 見出し（英小ラベル＋和文／巨大数字を混ぜる） --- */
+  .sec-head { margin-bottom:56px; }
+  .sec-head .en-label {
+    font-family:"Inter",sans-serif; font-size:12.5px; letter-spacing:.14em; font-weight:500;
+    color:var(--muted); display:block; margin-bottom:12px;
+  }
+  .sec-head h2 { font-size:clamp(26px,3.1vw,38px); font-weight:900; letter-spacing:.04em; line-height:1.45; }
+  .sec-head h2 .big {
+    font-family:"Inter",sans-serif; font-size:1.9em; font-weight:800; color:var(--blue);
+    line-height:0; vertical-align:-.06em; margin:0 .06em; letter-spacing:0;
+  }
+  .sec-head .sub { color:var(--txt-2); margin-top:20px; max-width:720px; font-size:15.5px; }
+
+  /* --- 丸矢印つきリンク／ピル型ボタン（参考サイトの見せ方） --- */
+  .arw-link { display:inline-flex; align-items:center; gap:14px; font-weight:700; font-size:15px; color:var(--txt); }
+  .arw-link .circ {
+    width:40px; height:40px; border-radius:50%; background:var(--blue); color:#fff;
+    display:grid; place-items:center; font-family:"Inter",sans-serif; font-size:15px;
+    transition:transform .3s var(--ease), background .3s;
+  }
+  .arw-link:hover .circ { transform:translateX(5px); background:var(--blue-dark); }
+  .pill {
+    display:inline-flex; align-items:center; gap:18px; padding:13px 16px 13px 34px;
+    border-radius:999px; background:var(--blue); color:#fff; font-weight:700; font-size:15px;
+    transition:transform .28s var(--ease), box-shadow .28s;
+  }
+  .pill .circ {
+    width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.22); color:#fff;
+    display:grid; place-items:center; font-family:"Inter",sans-serif; font-size:14px; transition:transform .3s var(--ease);
+  }
+  .pill:hover { transform:translateY(-3px); box-shadow:var(--shadow); color:#fff; }
+  .pill:hover .circ { transform:translateX(4px); }
+  .pill.ghost { background:#fff; color:var(--txt); border:1px solid var(--border-strong); }
+  .pill.ghost .circ { background:var(--blue); }
+  .pill.yellow { background:var(--yellow); color:#3A2B00; }
+  .pill.yellow .circ { background:rgba(0,0,0,.14); color:#3A2B00; }
+  .center-pill { display:flex; justify-content:center; margin-top:56px; }
+
+  /* --- STATEMENT: 行ごとの帯ハイライト（参考サイトの手法をブランド色で） --- */
+  .statement { position:relative; overflow:hidden; background:var(--blue-mist); padding:132px 0; }
+  .statement::before {
+    content:""; position:absolute; inset:0; opacity:.5; pointer-events:none;
+    background-image:repeating-radial-gradient(circle at 78% 110%, transparent 0 34px, rgba(1,91,158,.10) 34px 34.5px);
+  }
+  .statement .wrap { position:relative; z-index:2; }
+  .statement .en-label {
+    font-family:"Inter",sans-serif; font-size:12.5px; letter-spacing:.14em; color:var(--blue-light);
+    font-weight:500; display:block; margin-bottom:30px;
+  }
+  .st-lines { display:flex; flex-direction:column; align-items:flex-start; gap:14px; margin-bottom:44px; }
+  .st-lines span {
+    display:inline-block; background:var(--blue-dark); color:#fff;
+    font-size:clamp(19px,2.5vw,31px); font-weight:900; letter-spacing:.06em; line-height:1.5;
+    padding:7px 18px;
+  }
+  .st-lines span.lead { background:var(--blue); }
+  .statement p { font-size:clamp(14.5px,1.2vw,16.5px); color:var(--txt-2); line-height:2.4; max-width:760px; }
+  .statement .arw-link { margin-top:38px; }
+
+  /* --- SERVICE: 段差配置＋縦長写真＋巨大アウトライン数字でダイナミックに --- */
+  .service { position:relative; overflow:hidden; }
+  .service .bg-word {
+    position:absolute; right:24px; top:34px; pointer-events:none; user-select:none;
+    font-family:"Inter",sans-serif; font-weight:800; font-size:clamp(90px,14vw,210px);
+    line-height:.8; letter-spacing:-.02em; color:transparent;
+    -webkit-text-stroke:1px rgba(1,91,158,.10); z-index:0;
+  }
+  .service .wrap { position:relative; z-index:1; }
+
+  /* 3事業の連なり（測量→調査設計→施工管理） */
+  .svc-flow {
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    font-family:"Inter",sans-serif; font-size:12.5px; letter-spacing:.1em; color:var(--muted);
+    padding-bottom:22px; margin-bottom:56px; border-bottom:1px solid var(--border);
+  }
+  .svc-flow b { font-family:"Noto Sans JP",sans-serif; font-size:13.5px; font-weight:700; color:var(--blue); letter-spacing:.04em; }
+  .svc-flow i { font-style:normal; color:var(--blue-light); }
+
+  .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0 40px; align-items:start; }
+  .svc-card { position:relative; display:block; background:transparent; padding-top:clamp(46px,5.2vw,74px); }
+  .svc-card:nth-child(2) { margin-top:88px; }
+  .svc-card:nth-child(3) { margin-top:44px; }
+
+  /* 巨大アウトライン数字（写真からはみ出す） */
+  .svc-card .no {
+    position:absolute; left:-10px; top:0; z-index:3; pointer-events:none;
+    font-family:"Inter",sans-serif; font-weight:800; font-size:clamp(58px,6.2vw,92px); line-height:.82;
+    color:transparent; -webkit-text-stroke:1.5px var(--blue-light);
+    transition:transform .5s var(--ease), -webkit-text-stroke-color .4s;
+  }
+  .svc-card:hover .no { transform:translateY(-8px); -webkit-text-stroke-color:var(--blue); }
+
+  .svc-ph {
+    position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--blue-mist);
+    margin-bottom:28px; clip-path:polygon(0 0, 100% 0, 100% 93%, 0 100%);
+  }
+  .svc-ph img { width:100%; height:100%; object-fit:cover; transition:transform .9s var(--ease); }
+  .svc-card:hover .svc-ph img { transform:scale(1.09); }
+  /* ホバーで下からブルーのウェッジが立ち上がる */
+  .svc-ph .veil {
+    position:absolute; inset:0; z-index:2;
+    background:linear-gradient(0deg, rgba(1,61,106,.82) 0%, rgba(1,91,158,.30) 55%, rgba(1,91,158,0) 100%);
+    transform:translateY(101%); transition:transform .55s var(--ease);
+  }
+  .svc-card:hover .svc-ph .veil { transform:translateY(0); }
+  .svc-ph .en {
+    position:absolute; left:20px; bottom:18px; z-index:3; color:#fff;
+    font-family:"Inter",sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.2em;
+    opacity:0; transform:translateY(12px); transition:opacity .5s var(--ease) .1s, transform .5s var(--ease) .1s;
+  }
+  .svc-card:hover .svc-ph .en { opacity:1; transform:none; }
+  /* 写真下の細いブルーバー（ホバーで伸びる） */
+  .svc-ph::after {
+    content:""; position:absolute; left:0; bottom:0; z-index:4; height:4px; width:0; background:var(--blue);
+    transition:width .55s var(--ease);
+  }
+  .svc-card:hover .svc-ph::after { width:100%; }
+
+  .svc-card h3 {
+    font-size:24px; font-weight:900; letter-spacing:.04em; margin-bottom:14px;
+    transition:color .3s;
+  }
+  .svc-card:hover h3 { color:var(--blue); }
+  .svc-card p { font-size:15px; color:var(--txt-2); margin-bottom:24px; }
+  .svc-card .arw-link .circ { width:36px; height:36px; font-size:14px; }
+
+  /* --- STRENGTHS: 濃紺＋斜め境界でリズムをつくる --- */
+  .strengths {
+    position:relative; background:var(--blue-dark); color:#fff;
+    padding:170px 0 150px; margin-top:-1px;
+    clip-path:polygon(0 72px, 100% 0, 100% 100%, 0 calc(100% - 72px));
+  }
+  .strengths::before {
+    content:""; position:absolute; inset:0; opacity:.16; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);
+    background-size:58px 58px;
+    mask-image:radial-gradient(ellipse at 88% 10%,#000 0%,transparent 66%);
+    -webkit-mask-image:radial-gradient(ellipse at 88% 10%,#000 0%,transparent 66%);
+  }
+  .strengths .wrap { position:relative; z-index:2; }
+  .strengths .sec-head .en-label { color:var(--aqua); }
+  .strengths .sec-head h2 { color:#fff; }
+  .strengths .sec-head h2 .big { color:var(--aqua); }
+  .strengths .sec-head .sub { color:rgba(255,255,255,.8); }
+  .str-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid rgba(255,255,255,.2); }
+  .str-item { padding:44px 36px 44px 0; border-bottom:1px solid rgba(255,255,255,.2); }
+  .str-item + .str-item { padding-left:36px; border-left:1px solid rgba(255,255,255,.2); }
+  .str-item .icon { font-family:"Inter",sans-serif; font-size:11.5px; letter-spacing:.18em; color:var(--aqua); font-weight:700; display:block; margin-bottom:18px; }
+  .str-item h3 { font-size:21px; font-weight:900; margin-bottom:14px; letter-spacing:.03em; }
+  .str-item p { font-size:14.5px; color:rgba(255,255,255,.8); }
+  .str-note { margin-top:36px; font-size:14.5px; color:rgba(255,255,255,.7); }
+  .strengths .pill.ghost { background:transparent; color:#fff; border-color:rgba(255,255,255,.55); }
+  .strengths .pill.ghost .circ { background:var(--aqua); }
+
+  /* --- FOUNDER: 円形クロップ＋三角モチーフの非対称レイアウト --- */
+  .founder { position:relative; overflow:hidden; }
+  .founder-grid { display:grid; grid-template-columns:1.25fr .75fr; gap:72px; align-items:center; }
+  .founder .en-label { font-family:"Inter",sans-serif; font-size:12.5px; letter-spacing:.14em; color:var(--muted); font-weight:500; display:block; margin-bottom:26px; }
+  .founder-quote {
+    font-family:"Noto Serif JP","Noto Sans JP",serif; font-weight:600;
+    font-size:clamp(21px,2.4vw,32px); line-height:2; color:var(--blue-dark); letter-spacing:.05em; margin-bottom:24px;
+  }
+  .founder-src { font-size:13px; color:var(--muted); margin-bottom:28px; }
+  .founder-body { font-size:15.5px; color:var(--txt-2); line-height:2.1; max-width:620px; }
+  .founder-visual { position:relative; display:flex; flex-direction:column; align-items:center; gap:26px; }
+  .fv-circle {
+    width:min(100%,300px); aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+    background:var(--blue-mist); border:1px solid var(--border);
+  }
+  .fv-circle img { width:100%; height:100%; object-fit:cover; }
+  .fv-tri {
+    width:0; height:0; border-left:38px solid transparent; border-right:38px solid transparent;
+    border-bottom:66px solid var(--blue-pale); align-self:center;
+    margin:-58px 0 0 250px;
+  }
+  .fv-note { background:var(--bg-subtle); border-left:3px solid var(--aqua); padding:24px 26px; width:100%; }
+  .fv-note h4 { font-size:15px; font-weight:900; margin-bottom:10px; }
+  .fv-note p { font-size:13.5px; color:var(--txt-2); }
+
+  /* --- 社員写真マーキー（高さを互い違いに） --- */
+  .people-strip { padding:0 0 4px; background:#fff; overflow:hidden; }
+  .people-track { display:flex; gap:26px; width:max-content; animation:marquee 46s linear infinite; }
+  .people-track img {
+    width:clamp(190px,17vw,250px); aspect-ratio:3/4; object-fit:cover; background:var(--blue-mist);
+  }
+  .people-track img:nth-child(2n) { margin-top:46px; }
+  .people-track img:nth-child(3n) { margin-top:22px; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @media (prefers-reduced-motion: reduce) { .people-track { animation:none; } }
+
+  /* --- RECRUIT: 写真の非対称配置＋濃紺 --- */
+  .recruit { position:relative; overflow:hidden; background:var(--blue-dark); color:#fff; padding:0; }
+  .rec-grid { display:grid; grid-template-columns:1.05fr .95fr; align-items:stretch; }
+  .rec-txt { padding:clamp(56px,6vw,100px) clamp(28px,4vw,72px); }
+  .rec-photo { position:relative; min-height:460px; }
+  .rec-photo img.main { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .rec-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,var(--blue-dark) 0%,rgba(1,61,106,0) 46%); }
+  .rec-photo .circ-photo {
+    position:absolute; left:-72px; bottom:56px; z-index:3;
+    width:190px; height:190px; border-radius:50%; overflow:hidden; border:6px solid var(--blue-dark);
+  }
+  .rec-photo .circ-photo img { width:100%; height:100%; object-fit:cover; }
+  .recruit .en-label { font-family:"Inter",sans-serif; font-size:12.5px; letter-spacing:.14em; color:var(--yellow); font-weight:500; display:block; margin-bottom:22px; }
+  .recruit h2 { font-size:clamp(25px,2.9vw,38px); font-weight:900; line-height:1.55; letter-spacing:.03em; margin-bottom:26px; }
+  .recruit .lead { color:rgba(255,255,255,.86); font-size:15.5px; line-height:2.1; margin-bottom:38px; max-width:560px; }
+  .rec-nums { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid rgba(255,255,255,.22); margin-bottom:40px; }
+  .rec-num { padding:22px 10px 20px; border-bottom:1px solid rgba(255,255,255,.22); border-right:1px solid rgba(255,255,255,.22); }
+  .rec-num:last-child { border-right:none; }
+  .rec-num .v { font-size:22px; font-weight:900; color:var(--yellow); line-height:1.3; }
+  .rec-num .l { font-size:12px; color:rgba(255,255,255,.72); margin-top:4px; }
+  .recruit .btns { display:flex; gap:14px; flex-wrap:wrap; }
+  .recruit .pill.ghost { background:transparent; color:#fff; border-color:rgba(255,255,255,.55); }
+  .recruit .pill.ghost .circ { background:rgba(255,255,255,.22); }
+
+  /* --- NEWS --- */
+  .news { background:var(--bg-subtle); }
+  .news-flex { display:grid; grid-template-columns:300px 1fr; gap:64px; align-items:start; }
+  .top-news { border-top:1px solid var(--border); }
+  .top-news-item {
+    display:grid; grid-template-columns:112px 96px 1fr auto; gap:22px; align-items:center;
+    padding:24px 8px; border-bottom:1px solid var(--border); transition:background .2s, padding-left .25s;
+  }
+  .top-news-item:hover { background:#fff; padding-left:16px; }
+  .top-news-item .d { font-family:"Inter",sans-serif; font-size:13.5px; color:var(--muted); }
+  .top-news-item .c { font-size:11px; font-weight:700; background:var(--blue-pale); color:var(--blue-dark); padding:5px 12px; text-align:center; border-radius:999px; }
+  .top-news-item .c.tech { background:var(--aqua-pale); color:#2E6F63; }
+  .top-news-item .t { font-size:15.5px; }
+  .top-news-item .go { font-family:"Inter",sans-serif; color:var(--blue); font-size:14px; }
+
+  /* --- CTA --- */
+  .cta { background:#fff; }
+  .cta-panel {
+    position:relative; overflow:hidden; background:var(--blue-mist);
+    padding:64px clamp(28px,5vw,72px); display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+  }
+  .cta-panel::before {
+    content:""; position:absolute; inset:0; opacity:.55; pointer-events:none;
+    background-image:repeating-radial-gradient(circle at 96% 120%, transparent 0 30px, rgba(1,91,158,.12) 30px 30.5px);
+  }
+  .cta-panel > * { position:relative; z-index:2; }
+  .cta-panel h2 { font-size:clamp(20px,2.1vw,27px); font-weight:900; line-height:1.75; margin-bottom:16px; }
+  .cta-panel .tel { font-size:14px; color:var(--txt-2); }
+  .cta-panel .tel b { font-family:"Inter",sans-serif; font-size:27px; color:var(--blue); margin:0 10px; }
+
+  /* --- レスポンシブ --- */
+  @media (max-width:1080px){
+    .svc-grid { grid-template-columns:1fr 1fr; gap:56px 32px; }
+    .svc-card:nth-child(2) { margin-top:56px; }
+    .svc-card:nth-child(3) { margin-top:0; }
+    .str-grid { grid-template-columns:1fr; }
+    .str-item { padding:32px 0; }
+    .str-item + .str-item { padding-left:0; border-left:none; }
+    .founder-grid, .news-flex { grid-template-columns:1fr; gap:44px; }
+    .rec-grid { grid-template-columns:1fr; }
+    .rec-photo { min-height:280px; order:-1; }
+    .rec-photo::after { background:linear-gradient(180deg,rgba(1,61,106,.08) 0%,var(--blue-dark) 100%); }
+    .rec-photo .circ-photo { left:auto; right:24px; bottom:-58px; width:140px; height:140px; }
+  }
+  @media (max-width:900px){
+    .hero { height:auto; min-height:0; padding:56px 0 36px; }
+    .terrain-iframe { position:relative; height:44vh; min-height:230px; }
+    .hero-copy { position:static; padding:0 20px; max-width:none; }
+    .hero-copy h1 { min-height:0; }
+    .hero-btns { position:static; padding:0 20px; margin-top:26px; }
+    .hero-btns .pill { flex:1 1 auto; justify-content:space-between; }
+    .scroll-cue { display:none; }
+    .statement { padding:72px 0; }
+    .st-lines span { padding:6px 12px; }
+    .svc-grid { grid-template-columns:1fr; gap:48px; }
+    .svc-card:nth-child(2), .svc-card:nth-child(3) { margin-top:0; }
+    .svc-ph { aspect-ratio:4/3; }
+    .service .bg-word { font-size:78px; top:20px; }
+    .svc-flow { margin-bottom:40px; font-size:11.5px; gap:10px; }
+    .svc-flow span { display:none; }
+    .strengths { padding:110px 0 100px; clip-path:polygon(0 40px,100% 0,100% 100%,0 calc(100% - 40px)); }
+    .rec-nums { grid-template-columns:1fr 1fr; }
+    .rec-num:nth-child(2n) { border-right:none; }
+    .top-news-item { grid-template-columns:1fr; gap:6px; }
+    .top-news-item .c { justify-self:start; }
+    .top-news-item .go { display:none; }
+    .founder-quote { font-size:20px; }
+    .people-track img { width:150px; }
+    .people-track img:nth-child(2n) { margin-top:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wf-banner">
+  <span>DESIGN v2 | TOPページ ブラッシュアップ案（構成・FVはv1踏襲／演出・画像・レイアウトを調整） ／ 写真はダミー・本番は実写差替</span>
+  <a href="index.html">← 一覧に戻る</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="design2-top.html" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+    <div class="header-right">
+      <nav class="gnav"><ul>
+        <li><a href="design2-service.html">事業案内</a></li>
+        <li><a href="design2-strengths.html">強み・技術</a></li>
+        <li><a href="design2-social.html">社会活動</a></li>
+        <li><a href="design2-about.html">会社案内</a></li>
+        <li><a href="design2-news.html">ニュース</a></li>
+        <li><a href="design2-contact.html">お問い合わせ</a></li>
+      </ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+      <a href="design2-recruit.html" class="header-cta">採用情報</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO（v1のまま） ============ -->
+<div class="hero">
+  <iframe class="terrain-iframe" src="terrain-infra-embed.html" title="3D wireframe terrain with infrastructure"></iframe>
+  <div class="hero-copy">
+    <span class="en-label">— DAINI KAIHATSU GIKO</span>
+    <h1><span class="typed"></span><span class="cursor">|</span></h1>
+    <div class="hero-sub">測量・調査設計・施工管理。岡山・倉敷から、全国の社会基盤づくりを支える。</div>
+  </div>
+  <div class="hero-btns">
+    <a href="design2-recruit.html" class="pill yellow">採用情報を見る <span class="circ">→</span></a>
+    <a href="design2-contact.html" class="pill ghost">お問い合わせ <span class="circ">→</span></a>
+  </div>
+  <div class="scroll-cue">SCROLL</div>
+</div>
+
+<!-- ============ STATEMENT ============ -->
+<section class="statement">
+  <div class="wrap">
+    <span class="en-label fade-target">Our Promise</span>
+    <div class="st-lines">
+      <span class="lead fade-target">測る技術で未来に残す</span>
+      <span class="fade-target d-1">どこへでも行く。未来へも行く。</span>
+      <span class="fade-target d-2">1981年の創業から変わらないフットワークで、</span>
+      <span class="fade-target d-3">道路・橋・河川——日本の社会基盤を測り、つくり、</span>
+      <span class="fade-target d-4">これからは、未来に残していく。</span>
+    </div>
+    <p class="fade-target d-4">「はかる」という仕事は、200年以上ずっと続いてきました。道具が変わっても、そこにある責任だけは、まったく同じです。私たちは、まちの形を正しく次の世代に手渡すために、今日も現場に立っています。</p>
+    <a href="statement-main.html" class="arw-link fade-target d-4">私たちのステートメント <span class="circ">→</span></a>
+  </div>
+</section>
+
+<!-- ============ SERVICE ============ -->
+<section class="service">
+  <div class="bg-word" aria-hidden="true">SERVICE</div>
+  <div class="wrap">
+    <div class="sec-head fade-target">
+      <span class="en-label">Service</span>
+      <h2><span class="big">3</span>つの事業</h2>
+      <p class="sub">「測量」「調査・設計」「施工管理」——専門の異なる3つの分野を、一つの会社で受け止めます。同じ会社の中で連携できるから、精度と工程の両面でお客様の負担を減らせます。</p>
+    </div>
+    <div class="svc-flow fade-target">
+      <b>測量</b><i>→</i><b>調査・設計</b><i>→</i><b>施工管理</b>
+      <span style="margin-left:8px;">Surveying → Design → Construction Management</span>
+    </div>
+    <div class="svc-grid">
+      <a href="design2-service-survey.html" class="svc-card fade-target">
+        <span class="no">01</span>
+        <div class="svc-ph"><img src="img/eng2_mountain.jpg" alt=""><span class="veil"></span><span class="en">SURVEY</span></div>
+        <h3>測量</h3>
+        <p>公共測量・工事測量・全国対応。TS・GNSS・ドローン・3Dスキャナーを駆使した、現場の"最初の一歩"。</p>
+        <span class="arw-link">詳しく見る <span class="circ">→</span></span>
+      </a>
+      <a href="design2-service-design.html" class="svc-card fade-target d-1">
+        <span class="no">02</span>
+        <div class="svc-ph"><img src="img/eng1_sky.jpg" alt=""><span class="veil"></span><span class="en">DESIGN</span></div>
+        <h3>調査・設計</h3>
+        <p>土木設計（道路・河川・造成）、地質調査、環境調査。測量と地続きで現場を読み解きます。</p>
+        <span class="arw-link">詳しく見る <span class="circ">→</span></span>
+      </a>
+      <a href="design2-service-management.html" class="svc-card fade-target d-2">
+        <span class="no">03</span>
+        <div class="svc-ph"><img src="img/eng4_construction.jpg" alt=""><span class="veil"></span><span class="en">MANAGEMENT</span></div>
+        <h3>施工管理</h3>
+        <p>測量会社ならではの現場支援。一般労働者派遣許可のもと、施工管理技術者を全国の現場へ派遣します。</p>
+        <span class="arw-link">詳しく見る <span class="circ">→</span></span>
+      </a>
+    </div>
+    <div class="center-pill fade-target d-2">
+      <a href="design2-service.html" class="pill">事業案内を見る <span class="circ">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRENGTHS（濃紺＋斜め境界） ============ -->
+<section class="strengths">
+  <div class="wrap">
+    <div class="sec-head fade-target">
+      <span class="en-label">Strengths</span>
+      <h2><span class="big">200</span>年前の一歩と、今日の点群。</h2>
+      <p class="sub">伊能忠敬が歩いた一歩と、私たちの今日の一歩は、まっすぐつながっています。ドローン・3Dスキャナー・GNSS——道具は変わっても、まちの形を正しく測る責任は同じです。</p>
+    </div>
+    <div class="str-grid fade-target">
+      <div class="str-item">
+        <span class="icon">DRONE SURVEY</span>
+        <h3>ドローン空撮測量</h3>
+        <p>広域を短時間で。3次元空撮地形構造物処理システムを導入し、災害時の迅速な状況把握にも活用しています。</p>
+      </div>
+      <div class="str-item">
+        <span class="icon">3D SCANNER</span>
+        <h3>3Dレーザースキャナー</h3>
+        <p>構造物・地形を高精度にデジタル化。BIM／CIMと連携し、設計から施工まで一気通貫でデータを活かします。</p>
+      </div>
+      <div class="str-item">
+        <span class="icon">GNSS</span>
+        <h3>GNSS測位</h3>
+        <p>ネットワーク型RTK-GNSSで、現場の位置基準を素早く正確に。全国どこの現場でも同じ品質を約束します。</p>
+      </div>
+    </div>
+    <p class="str-note fade-target d-1">※ i-Construction／BIM・CIMにも対応済み。</p>
+    <div class="center-pill fade-target d-1">
+      <a href="design2-strengths.html" class="pill ghost">強み・技術を知る <span class="circ">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder">
+  <div class="wrap">
+    <div class="founder-grid">
+      <div class="fade-target">
+        <span class="en-label">Founder's Spirit</span>
+        <div class="founder-quote">仕事があれば、一番に行こう。<br>仕事があれば、どこへでも行こう。<br>月へでも行くぞ。</div>
+        <div class="founder-src">— 創業者の言葉（1981年 創業時）</div>
+        <p class="founder-body">他者の真似をしない。人の後についていかない。創業のときに掲げたパイオニアスピリットは、ドローンや3Dスキャナーといった新しい技術へ真っ先に挑む、いまの私たちにそのまま受け継がれています。</p>
+        <div style="margin-top:34px;"><a href="design2-about.html#founder" class="arw-link">創業者の想い・ロゴの由来 <span class="circ">→</span></a></div>
+      </div>
+      <div class="founder-visual fade-target d-1">
+        <div class="fv-circle"><img src="img/eng2_mountain.jpg" alt=""></div>
+        <div class="fv-tri" aria-hidden="true"></div>
+        <div class="fv-note">
+          <h4>ロゴの由来</h4>
+          <p>三角形は「21世紀」をデザイン化したもの。次の時代を切り拓くパイオニアスピリットを表しています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 社員写真マーキー ============ -->
+<div class="people-strip" aria-hidden="true">
+  <div class="people-track">
+    <img src="img/eng1_sky.jpg" alt=""><img src="img/eng2_mountain.jpg" alt=""><img src="img/eng3_city.jpg" alt=""><img src="img/eng4_construction.jpg" alt="">
+    <img src="img/eng2_mountain.jpg" alt=""><img src="img/eng4_construction.jpg" alt=""><img src="img/eng1_sky.jpg" alt=""><img src="img/eng3_city.jpg" alt="">
+    <img src="img/eng1_sky.jpg" alt=""><img src="img/eng2_mountain.jpg" alt=""><img src="img/eng3_city.jpg" alt=""><img src="img/eng4_construction.jpg" alt="">
+    <img src="img/eng2_mountain.jpg" alt=""><img src="img/eng4_construction.jpg" alt=""><img src="img/eng1_sky.jpg" alt=""><img src="img/eng3_city.jpg" alt="">
+  </div>
+</div>
+
+<!-- ============ RECRUIT ============ -->
+<section class="recruit" id="recruit">
+  <div class="rec-grid">
+    <div class="rec-txt">
+      <span class="en-label fade-target">Recruit</span>
+      <h2 class="fade-target d-1">「測量って、何をする仕事？」<br>その問いから、始めていい。</h2>
+      <p class="lead fade-target d-2">学生時代の専攻も、それまでの職歴も関係ありません。約1年で基本業務を習得し、ドローン・3Dスキャナーなど先端技術に触れながら、施工管理技術者へキャリアアップできます。</p>
+      <div class="rec-nums fade-target d-2">
+        <div class="rec-num"><div class="v">未経験</div><div class="l">歓迎</div></div>
+        <div class="rec-num"><div class="v">1年</div><div class="l">で基本習得</div></div>
+        <div class="rec-num"><div class="v">資格</div><div class="l">取得支援</div></div>
+        <div class="rec-num"><div class="v">全国</div><div class="l">の現場</div></div>
+      </div>
+      <div class="btns fade-target d-3">
+        <a href="design2-recruit.html" class="pill yellow">採用情報を見る <span class="circ">→</span></a>
+        <a href="design2-recruit.html#faq" class="pill ghost">よくある質問 <span class="circ">→</span></a>
+      </div>
+    </div>
+    <div class="rec-photo">
+      <img class="main" src="img/eng3_city.jpg" alt="">
+      <div class="circ-photo"><img src="img/eng4_construction.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section class="news">
+  <div class="wrap">
+    <div class="news-flex">
+      <div class="sec-head fade-target" style="margin-bottom:0;">
+        <span class="en-label">News</span>
+        <h2>ニュース</h2>
+        <div style="margin-top:26px;"><a href="design2-news.html" class="arw-link">ニュース一覧 <span class="circ">→</span></a></div>
+      </div>
+      <div class="top-news fade-target d-1">
+        <a href="design2-news.html" class="top-news-item"><span class="d">2027.01.XX</span><span class="c">お知らせ</span><span class="t">コーポレートサイトをリニューアルしました</span><span class="go">→</span></a>
+        <a href="design2-news.html" class="top-news-item"><span class="d">2023.11.14</span><span class="c">お知らせ</span><span class="t">労働者派遣法に基づく情報公開</span><span class="go">→</span></a>
+        <a href="design2-news.html" class="top-news-item"><span class="d">2021.07.09</span><span class="c tech">技術</span><span class="t">3次元空撮地形構造物処理システムを導入しました</span><span class="go">→</span></a>
+        <a href="design2-news.html" class="top-news-item"><span class="d">2015.01.XX</span><span class="c">お知らせ</span><span class="t">代表者交代のご挨拶</span><span class="go">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-panel fade-target">
+      <div>
+        <h2>測量・調査・施工管理のご相談<br>お気軽にお問い合わせください。</h2>
+        <div class="tel">TEL<b>086-423-1899</b>（平日 9:00〜17:00）</div>
+      </div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="design2-contact.html" class="pill">お問い合わせ <span class="circ">→</span></a>
+        <a href="design2-recruit.html#jobs" class="pill yellow">採用エントリー <span class="circ">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <span class="footer-logo">株式会社第二開発技工</span>
+      <div class="addr">〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034<br>測量業登録 大臣(6)-18685号<br>労働者派遣事業許可 派33-300110号</div>
+    </div>
+    <div>
+      <h4>事業案内</h4>
+      <ul>
+        <li><a href="design2-service.html">事業案内 トップ</a></li>
+        <li><a href="design2-service-survey.html">測量</a></li>
+        <li><a href="design2-service-design.html">調査・設計</a></li>
+        <li><a href="design2-service-management.html">施工管理</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>会社案内</h4>
+      <ul>
+        <li><a href="design2-strengths.html">強み・技術</a></li>
+        <li><a href="design2-social.html">社会活動</a></li>
+        <li><a href="design2-about.html">会社案内</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>採用・その他</h4>
+      <ul>
+        <li><a href="design2-recruit.html">採用情報</a></li>
+        <li><a href="design2-news.html">ニュース</a></li>
+        <li><a href="design2-contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+
+<div class="sp-cta">
+  <a href="tel:0864231899" class="c-tel">電話する</a>
+  <a href="design2-recruit.html#jobs" class="c-entry">採用エントリー</a>
+</div>
+
+<script>
+/* ヒーローのタイプライター（v1と同仕様） */
+(function () {
+  var messages = [
+    { text: '測る技術で\n未来に残す', hold: 2800 },
+    { text: 'Surveying the ground.\nPreserving the future.', hold: 2800 }
+  ];
+  var typed = document.querySelector('.hero-copy .typed');
+  if (!typed) return;
+  var idx = 0;
+  function render(str) { typed.innerHTML = str.replace(/\n/g, '<br>'); }
+  function typeMsg(cb) {
+    var msg = messages[idx].text, i = 0;
+    (function step() {
+      i++;
+      render(msg.substring(0, i));
+      if (i >= msg.length) { cb(); return; }
+      var ch = msg[i - 1];
+      setTimeout(step, (ch === '、' || ch === '。' || ch === '.') ? 260 : 85);
+    })();
+  }
+  function deleteMsg(cb) {
+    var msg = messages[idx].text, i = msg.length;
+    (function step() {
+      i--;
+      render(msg.substring(0, i));
+      if (i <= 0) { cb(); return; }
+      setTimeout(step, 22);
+    })();
+  }
+  (function loop() {
+    typeMsg(function () {
+      setTimeout(function () {
+        deleteMsg(function () {
+          idx = (idx + 1) % messages.length;
+          setTimeout(loop, 300);
+        });
+      }, messages[idx].hold);
+    });
+  })();
+})();
+
+/* スクロール fade-in */
+(function(){
+  var t=document.querySelectorAll('.fade-target');
+  if(!('IntersectionObserver' in window)){t.forEach(function(e){e.classList.add('is-visible');});return;}
+  var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');o.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  t.forEach(function(e){o.observe(e);});
+})();
+</script>
+</body>
+</html>

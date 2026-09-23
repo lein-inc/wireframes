@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会社案内（デザイン案） | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/design.css?v=1">
+</head>
+<body>
+
+<div class="wf-banner"><span>DESIGN | 会社案内 | /about/（写真はダミー・本番は実写差替）</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="design-top.html" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="design-top.html">ホーム</a></li><li><a href="design-service.html">事業案内</a></li><li><a href="design-strengths.html">強み・技術</a></li><li><a href="design-social.html">社会活動</a></li><li><a href="design-about.html">会社案内</a></li><li><a href="design-recruit.html">採用情報</a></li><li><a href="design-news.html">ニュース</a></li><li><a href="design-contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero"><div class="wrap"><div class="en">ABOUT</div><h1>会社案内</h1></div></section>
+<div class="breadcrumb"><div class="wrap"><a href="design-top.html">ホーム</a> ／ 会社案内</div></div>
+
+<nav class="section-nav"><div class="wrap"><ul>
+  <li><a href="#greeting">代表あいさつ</a></li>
+  <li><a href="#founder">創業者の想い</a></li>
+  <li><a href="#company">会社概要</a></li>
+  <li><a href="#history">沿革</a></li>
+  <li><a href="#clients">主要取引先</a></li>
+  <li><a href="#access">アクセス</a></li>
+</ul></div></nav>
+
+<!-- 代表あいさつ -->
+<section id="greeting">
+  <div class="wrap">
+    <div class="sec-h"><h2>代表あいさつ</h2><span class="en anchor-tag">#greeting</span></div>
+    <div class="grid-2">
+      <div class="img-ph large">代表 ポートレート IMAGE</div>
+      <div>
+        <h3 style="margin-bottom:12px; font-size:20px;">「はかる」技術を、「ものづくり」の現場へ。</h3>
+        <p>当社は、公共測量・工事測量で培った「はかる」技術を「ものづくり」の現場で活かすことをコンセプトに、「建設工事の施工管理及び工事測量のパイオニア」として1981年（昭和56年）に設立いたしました。創業以来、顧客企業様をはじめ様々な方のご理解・ご支援を賜り、心より感謝申し上げます。</p>
+        <p style="margin-top:12px;">私共は今後も顧客の皆様の立場に立ち、早く・安く・良く（技術屋の良心）、安心・安全をモットーに、技術力を提供し、社会に貢献したいと考えておりますので、いっそうのお引立てをお願い申し上げます。</p>
+        <p style="margin-top:24px; font-size:13px; color:#666;">代表取締役社長　灰佐 計祐</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 創業者の想い・ロゴの由来（2026-08-26 定例で掲載決定） -->
+<section id="founder" style="background:#f5f5f5;">
+  <div class="wrap">
+    <div class="sec-h"><h2>創業者の想い ／ ロゴの由来</h2><span class="en anchor-tag">#founder</span></div>
+    <div class="grid-2">
+      <div>
+        <div style="border-left:4px solid #333; background:#fff; padding:28px 32px; line-height:2;">
+          <div style="font-size:19px; font-weight:700; line-height:1.9;">仕事があれば、一番に行こう。<br>仕事があれば、どこへでも行こう。<br>月へでも行くぞ。</div>
+          <div style="font-size:11px; color:#888; font-family:monospace; margin-top:12px;">— 創業者・灰佐 英児（現会長）／ 2012年 社内資料より</div>
+        </div>
+        <p style="margin-top:16px;">1981年の創業以来、変わらない当社の原点です。フットワークと開拓者精神で、岡山・倉敷から全国の現場へ。この言葉は、いまも私たちの行動指針として受け継がれています。</p>
+      </div>
+      <div>
+        <div class="img-ph medium">ロゴマーク IMAGE</div>
+        <p style="margin-top:16px;"><b>ロゴの由来</b><br>三角形は「21世紀」をデザイン化したもの。他者の真似をせず、人の後についていかない——パイオニアスピリットを表しています。</p>
+        <p style="margin-top:12px; font-size:12px; color:#888;">※ 原典資料は光田氏よりデータ化共有予定（9月中）。文言は共有後に確定。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 会社概要 -->
+<section id="company">
+  <div class="wrap">
+    <div class="sec-h"><h2>会社概要</h2><span class="en anchor-tag">#company</span></div>
+    <table class="info-table">
+      <tr><th>商号</th><td>株式会社 第二開発技工</td></tr>
+      <tr><th>本社所在地</th><td>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</td></tr>
+      <tr><th>代表者</th><td>代表取締役社長　灰佐 計祐</td></tr>
+      <tr><th>創業・設立</th><td>昭和56年（1981年）12月</td></tr>
+      <tr><th>資本金</th><td>1,000万円</td></tr>
+      <tr><th>加盟団体</th><td>社団法人 日本測量協会<br>社団法人 岡山県測量設計業協会<br>倉敷測量設計業協会<br>倉敷地区測量設計事業協同組合</td></tr>
+      <tr><th>営業種目</th><td>測量・土木設計・地質調査<br>施工管理（労働者派遣事業）<br>各種許認可申請</td></tr>
+      <tr><th>許可・登録</th><td>測量業登録　大臣(6)-18685号<br>労働者派遣事業許可　派33-300110号<br>補償コンサルタント業登録　補29-4015号</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 沿革 -->
+<section id="history">
+  <div class="wrap">
+    <div class="sec-h"><h2>沿革</h2><span class="en anchor-tag">#history</span></div>
+    <table class="info-table">
+      <tr><th>昭和56年12月<br><span style="font-weight:400; color:#666; font-size:12px;">1981年</span></th><td>有限会社 第二開発技工として設立<br>測量業登録</td></tr>
+      <tr><th>昭和58年6月<br><span style="font-weight:400; color:#666; font-size:12px;">1983年</span></th><td>資本金500万円に増額</td></tr>
+      <tr><th>昭和61年8月<br><span style="font-weight:400; color:#666; font-size:12px;">1986年</span></th><td>倉敷市西富井に本社移転</td></tr>
+      <tr><th>平成元年7月<br><span style="font-weight:400; color:#666; font-size:12px;">1989年</span></th><td>株式会社 第二開発技工に組織変更<br>資本金1,000万円に増額</td></tr>
+      <tr><th>平成13年11月<br><span style="font-weight:400; color:#666; font-size:12px;">2001年</span></th><td>建設業許可</td></tr>
+      <tr><th>平成14年1月<br><span style="font-weight:400; color:#666; font-size:12px;">2002年</span></th><td>補償コンサルタント業登録</td></tr>
+      <tr><th>平成18年5月<br><span style="font-weight:400; color:#666; font-size:12px;">2006年</span></th><td>労働者派遣事業許可</td></tr>
+      <tr><th>平成27年4月<br><span style="font-weight:400; color:#666; font-size:12px;">2015年</span></th><td>代表者交代<br>　代表取締役社長　灰佐 英児　代表取締役会長に就任<br>　取締役専務　　　灰佐 計祐　代表取締役社長に就任</td></tr>
+      <tr><th>令和3年7月<br><span style="font-weight:400; color:#666; font-size:12px;">2021年</span></th><td>3次元空撮地形構造物処理システム導入</td></tr>
+      <tr><th>令和8年<br><span style="font-weight:400; color:#666; font-size:12px;">2026年</span></th><td>コーポレートサイトリニューアル</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 主要取引先 -->
+<section id="clients">
+  <div class="wrap">
+    <div class="sec-h"><h2>主要取引先</h2><span class="en anchor-tag">#clients</span></div>
+    <p class="section-lead">官公庁・ゼネコン・地域建設会社まで、全国規模でお取引をいただいております（五十音順・敬称略）。</p>
+    <div class="grid-3" style="gap:0; border-top:1px solid #ccc; border-left:1px solid #ccc;">
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">天野産業株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">株式会社 荒木組</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">宇部興産機械株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">株式会社 大本組</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">岡山県</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">鹿島建設株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">極東興和株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">倉敷市</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">株式会社 三幸工務店</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">世紀東急工業株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">瀧上工業株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">東急建設株式会社</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">株式会社 ピーエス三菱</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">株式会社 富士ピー・エス</div>
+      <div style="padding:14px 20px; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">前田建設工業株式会社</div>
+    </div>
+  </div>
+</section>
+
+<!-- アクセス -->
+<section id="access">
+  <div class="wrap">
+    <div class="sec-h"><h2>アクセス</h2><span class="en anchor-tag">#access</span></div>
+    <div class="grid-2">
+      <div>
+        <table class="info-table">
+          <tr><th>所在地</th><td>〒710-0845 岡山県倉敷市西富井446-2</td></tr>
+          <tr><th>TEL</th><td>086-423-1899</td></tr>
+          <tr><th>FAX</th><td>086-423-2034</td></tr>
+        </table>
+      </div>
+      <div class="img-ph large">GOOGLE MAP EMBED</div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#eee;"><div class="wrap"><div class="cta-box"><div class="cta-txt">お問い合わせはこちらから</div><a href="design-contact.html" class="btn">お問い合わせ</a></div></div></section>
+
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="design-service.html">事業案内 トップ</a></li>
+      <li><a href="design-service-survey.html">測量</a></li>
+      <li><a href="design-service-design.html">調査・設計</a></li>
+      <li><a href="design-service-management.html">施工管理</a></li>
+      <li><a href="design-strengths.html">強み・技術</a></li>
+      <li><a href="design-social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="design-about.html#greeting">代表あいさつ</a></li>
+      <li><a href="design-about.html#company">会社概要</a></li>
+      <li><a href="design-about.html#history">沿革</a></li>
+      <li><a href="design-about.html#clients">主要取引先</a></li>
+      <li><a href="design-about.html#access">アクセス</a></li>
+    </ul></div>
+    <div><h4>採用・その他</h4><ul>
+      <li><a href="design-top.html">ホーム</a></li>
+      <li><a href="design-recruit.html">採用情報</a></li>
+      <li><a href="design-news.html">ニュース</a></li>
+      <li><a href="design-contact.html">お問い合わせ</a></li>
+      <li><a href="#">プライバシーポリシー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>

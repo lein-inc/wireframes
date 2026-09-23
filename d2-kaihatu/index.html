@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第二開発技工 リニューアル ワイヤーフレーム 一覧</title>
+<link rel="stylesheet" href="css/wireframe.css?v=telbox">
+<style>
+  .index-hero { background:#f5f5f5; padding:64px 24px; border-bottom:1px solid #ccc; }
+  .index-hero h1 { font-size:32px; margin-bottom:8px; }
+  .index-hero p { color:#555; }
+  .index-hero .meta { font-size:12px; color:#999; margin-top:16px; font-family:monospace; }
+  .page-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; padding:48px 0; }
+  .page-card { border:1px solid #ccc; padding:24px; background:#fff; display:flex; flex-direction:column; gap:12px; }
+  .page-card .n { font-family:monospace; color:#999; font-size:12px; }
+  .page-card h2 { font-size:18px; }
+  .page-card p { font-size:13px; color:#555; flex-grow:1; }
+  .page-card .anchors { font-size:11px; color:#666; font-family:monospace; border-top:1px solid #eee; padding-top:8px; }
+  .page-card a.link { display:inline-block; margin-top:8px; padding:8px 16px; background:#222; color:#fff; text-align:center; font-size:13px; letter-spacing:0.05em; }
+  .page-card a.link:hover { background:#555; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<section class="index-hero">
+  <div class="wrap">
+    <h1>第二開発技工 リニューアル ワイヤーフレーム</h1>
+    <p>コンパクトサイトマップに基づくグレースケール構成案。角丸なし・装飾なしのレイアウト骨格のみ。</p>
+    <div class="meta">Grayscale wireframe / v0.3 / 2026-09-23 デザインブラッシュアップ版</div>
+  </div>
+</section>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:48px; padding-bottom:12px; border-bottom:2px solid #333;">
+    新デザイン案 v2（9/23 ブラッシュアップ）<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— TOP＋下層11ページ／構成・FVはv1踏襲、演出・画像・レイアウトを調整</span>
+  </h2>
+  <p style="color:#555; margin-top:12px; font-size:13px;">
+    9/8提示のデザイン案（下段）の<b>ページ構成とファーストビューはそのまま踏襲</b>し、見せ方・画像の使い方・レイアウトだけを調整した第2案。
+    <b>①セクション見出しに巨大数字</b>（3つの事業／200年前の一歩）を採用／<b>②事業案内カードの囲み罫を外し</b>、写真と余白で見せる構成へ／
+    <b>③強み・技術を濃紺＋斜めの境界で挟み</b>ページ全体にリズムをつける／<b>④創業者パートを円形クロップ写真＋三角（ロゴ＝21世紀）モチーフの非対称レイアウト</b>に／
+    <b>⑤社員写真の横スクロール帯</b>（高さ互い違い）を採用パートの導入に追加／<b>⑥採用パートは大判写真＋円形写真の重ね</b>で人を主役に／
+    <b>⑦ボタンをピル型＋丸矢印に統一</b>、英字ラベルはグレーで控えめに／<b>⑧ステートメントを行ごとの帯ハイライト</b>で提示。
+    加えて下層ページは<b>ページヒーローを白地＋等高線</b>に、<b>基準文字を15→16px</b>、<b>SPに追従CTAバー（電話／採用エントリー）</b>を追加。
+  </p>
+  <p style="color:#888; margin-top:8px; font-size:12px;">※ 演出の参考: 採用サイトの見せ方（大きな余白／写真の非対称配置／丸矢印つきピルボタン／斜めのセクション境界）。FVは参考にせず v1 の3D地形＋タイプライターを維持。</p>
+  <p style="color:#888; margin-top:8px; font-size:12px;">※ 写真はすべてダミー（本番は9〜10月撮影の実写に差し替え）。原稿は現行WFのまま＝原稿確認シートの反映は未実施。</p>
+</div>
+
+<div class="wrap">
+<div class="page-grid" style="grid-template-columns:1fr;">
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#888; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">DESIGN v2</div>
+      <div style="font-weight:700; font-size:14px;">TOP</div>
+    </div>
+    <div style="flex:1;">
+      <h2>TOPページ ブラッシュアップ案（v2）</h2>
+      <p>FV（3D地形＋タイプライター）とセクション構成はv1のまま。巨大数字の見出し／囲みを外した事業カード／濃紺＋斜め境界の強み／円形クロップと三角モチーフ／社員写真の横スクロール帯／ピル型ボタンで演出を刷新。</p>
+      <div class="anchors">/design2-top.html</div>
+    </div>
+    <a href="design2-top.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h3 style="font-size:16px; margin-top:32px; color:#333;">下層ページ v2（11ページ）</h3>
+  <p style="color:#555; margin-top:8px; font-size:13px;">
+    <b>★印の3ページ（事業案内／強み・技術／採用情報）はTOPと同じ演出仕様で個別に組んだ本デザイン</b>——段差配置・巨大アウトライン数字・斜めクリップ写真・ホバー演出・濃紺＋斜め境界の帯・連なり表記を適用。<br>
+    それ以外の8ページは、構成・原稿をWFのままにv2の基本スタイル（白基調ヒーロー／横罫テーブル／スティッキーアンカー／ピル型ボタン／追従CTA）を当てた簡易適用版です。
+  </p>
+</div>
+
+<div class="wrap">
+<div class="page-grid">
+        <div class="page-card" style="border-color:#333; border-width:2px;">
+          <div class="n">★ V2-01</div>
+          <h2>ホーム</h2>
+          <div class="anchors">/design2-top.html</div>
+          <a href="design2-top.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card" style="border-color:#333; border-width:2px;">
+          <div class="n">★ V2-02</div>
+          <h2>事業案内</h2>
+          <div class="anchors">/design2-service.html</div>
+          <a href="design2-service.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-03</div>
+          <h2>SERVICE ／ 測量</h2>
+          <div class="anchors">/design2-service-survey.html</div>
+          <a href="design2-service-survey.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-04</div>
+          <h2>SERVICE ／ 調査・設計</h2>
+          <div class="anchors">/design2-service-design.html</div>
+          <a href="design2-service-design.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-05</div>
+          <h2>SERVICE ／ 施工管理</h2>
+          <div class="anchors">/design2-service-management.html</div>
+          <a href="design2-service-management.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card" style="border-color:#333; border-width:2px;">
+          <div class="n">★ V2-06</div>
+          <h2>強み・技術</h2>
+          <div class="anchors">/design2-strengths.html</div>
+          <a href="design2-strengths.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-07</div>
+          <h2>社会活動</h2>
+          <div class="anchors">/design2-social.html</div>
+          <a href="design2-social.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-08</div>
+          <h2>会社案内（ABOUT）</h2>
+          <div class="anchors">/design2-about.html</div>
+          <a href="design2-about.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card" style="border-color:#333; border-width:2px;">
+          <div class="n">★ V2-09</div>
+          <h2>採用情報</h2>
+          <div class="anchors">/design2-recruit.html</div>
+          <a href="design2-recruit.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-10</div>
+          <h2>ニュース</h2>
+          <div class="anchors">/design2-news.html</div>
+          <a href="design2-news.html" class="link">v2を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">V2-11</div>
+          <h2>お問い合わせ</h2>
+          <div class="anchors">/design2-contact.html</div>
+          <a href="design2-contact.html" class="link">v2を開く</a>
+        </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:48px; padding-bottom:12px; border-bottom:2px solid #333;">
+    新規提案（9/8 定例用）<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— 2026-08-26 定例の決定事項を反映</span>
+  </h2>
+  <p style="color:#555; margin-top:12px; font-size:13px;">キャッチコピー「<b>測る技術で未来に残す</b>」確定を受けた、ステートメント展開・ファーストビュー新案・公開スケジュール。</p>
+</div>
+
+<div class="wrap">
+<div class="page-grid" style="grid-template-columns:1fr;">
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#888; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">DESIGN</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">TOPデザイン案</div>
+    </div>
+    <div style="flex:1;">
+      <h2>TOPページ デザイン案（ヒーロー：インフラ案ベース）</h2>
+      <p>確定コピー「測る技術で未来に残す」＋インフラ3D FVを軸に、ブランドカラー・フォントを適用したTOPの本デザイン案。ステートメント／3事業／強み／創業者の想い・ロゴ由来／採用／ニュース／CTAの全セクション構成。写真はダミー（本番は実写差替）。</p>
+      <div class="anchors">/design-top.html</div>
+    </div>
+    <a href="design-top.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#888; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">STATEMENT</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">確定コピー展開</div>
+    </div>
+    <div style="flex:1;">
+      <h2>ステートメント確定案「測る技術で未来に残す」（本文3案）</h2>
+      <p>確定コピーの本文3案（案1: 創業ビジョン継承 ／ 案2: 生活者・インフラスケール ／ 案3: 歴史と技術）＋サブコピー5案＋創業者資料・ロゴ由来の原典整理＋サイト内展開マップ。</p>
+      <div class="anchors">/statement-main.html</div>
+    </div>
+    <a href="statement-main.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#888; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">HERO ／ 新C案</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">インフラ案</div>
+    </div>
+    <div style="flex:1;">
+      <h2>ヒーロー：インフラ案（3D地形 × 高速道路・都市・川・橋）</h2>
+      <p>「技術者個人・抽象表現→社会インフラのスケール感へ」の決定を反映。白塗りの3Dワイヤー地形（山並みのみブルー）に、高速道路・ビル群・川・トラス橋が「発生→描画→消滅→別の場所に再発生」をループする演出＋確定コピーのタイプライター。</p>
+      <div class="anchors">/hero-infra.html + terrain-infra-embed.html</div>
+    </div>
+    <a href="hero-infra.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#888; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">SCHEDULE</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">公開スケジュール</div>
+    </div>
+    <div style="flex:1;">
+      <h2>公開スケジュール案（2026年11月末公開）</h2>
+      <p>11月末公開に向けた全体ガント＋マイルストーン。撮影（緑が残る9〜10月）がクリティカルパス。遅延時の2段階公開オプション付き。</p>
+      <div class="anchors">/schedule.html</div>
+    </div>
+    <a href="schedule.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:48px; padding-bottom:12px; border-bottom:2px solid #333;">
+    デザイン案（全ページ）<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— TOP＋下層10ページ。ブランドカラー・フォント適用（写真・画像はダミー）</span>
+  </h2>
+  <p style="color:#555; margin-top:12px; font-size:13px;">ワイヤーフレームと同じ構成のまま、ブランドガイドライン（ロゴブルー＋Noto Sans JP／Inter）のデザインを適用した全ページ一式。</p>
+</div>
+
+<div class="wrap">
+<div class="page-grid">
+        <div class="page-card">
+          <div class="n">D-01</div>
+          <h2>ホーム</h2>
+          <div class="anchors">/design-top.html</div>
+          <a href="design-top.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-02</div>
+          <h2>事業案内</h2>
+          <div class="anchors">/design-service.html</div>
+          <a href="design-service.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-03</div>
+          <h2>SERVICE ／ 測量</h2>
+          <div class="anchors">/design-service-survey.html</div>
+          <a href="design-service-survey.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-04</div>
+          <h2>SERVICE ／ 調査・設計</h2>
+          <div class="anchors">/design-service-design.html</div>
+          <a href="design-service-design.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-05</div>
+          <h2>SERVICE ／ 施工管理</h2>
+          <div class="anchors">/design-service-management.html</div>
+          <a href="design-service-management.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-06</div>
+          <h2>強み・技術</h2>
+          <div class="anchors">/design-strengths.html</div>
+          <a href="design-strengths.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-07</div>
+          <h2>社会活動</h2>
+          <div class="anchors">/design-social.html</div>
+          <a href="design-social.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-08</div>
+          <h2>会社案内（ABOUT）</h2>
+          <div class="anchors">/design-about.html</div>
+          <a href="design-about.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-09</div>
+          <h2>採用情報</h2>
+          <div class="anchors">/design-recruit.html</div>
+          <a href="design-recruit.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-10</div>
+          <h2>ニュース</h2>
+          <div class="anchors">/design-news.html</div>
+          <a href="design-news.html" class="link">デザイン案を開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">D-11</div>
+          <h2>お問い合わせ</h2>
+          <div class="anchors">/design-contact.html</div>
+          <a href="design-contact.html" class="link">デザイン案を開く</a>
+        </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:48px; padding-bottom:12px; border-bottom:2px solid #333;">
+    ステートメント案（A〜G・アーカイブ）<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— 8/26 定例で「測る技術で未来に残す」に確定。検討経緯として保存</span>
+  </h2>
+  <p style="color:#555; margin-top:12px; font-size:13px;">7つの角度から起こしたタグライン＋ステートメント。クリックでスライドを表示。</p>
+</div>
+<div class="wrap">
+<div class="st-grid">
+        <div class="st-card">
+          <div class="st-label">A</div>
+          <div class="st-angle">王道 ／ 未来を測る</div>
+          <div class="st-tagline">未来のかたちを、いま測る。</div>
+          <a href="statement-a.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">B</div>
+          <div class="st-angle">生活者視点 ／ 見えないインフラ</div>
+          <div class="st-tagline">まちの下に、私たちの仕事がある。</div>
+          <a href="statement-b.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">C</div>
+          <div class="st-angle">採用 ／ 未経験からの物語</div>
+          <div class="st-tagline">はかることから、はじまる。</div>
+          <a href="statement-c.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">D</div>
+          <div class="st-angle">技術 ／ 先端技術 × 測量</div>
+          <div class="st-tagline">地図の続きは、ドローンが描いていく。</div>
+          <a href="statement-d.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">E</div>
+          <div class="st-angle">歴史 ／ 伊能忠敬から現代へ</div>
+          <div class="st-tagline">200年ぶんの一歩を、この足で継ぐ。</div>
+          <a href="statement-e.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">F</div>
+          <div class="st-angle">社会性 ／ 地域と防災</div>
+          <div class="st-tagline">災害の前と、災害の後に立つ。</div>
+          <a href="statement-f.html" class="link">開く</a>
+        </div>
+        <div class="st-card">
+          <div class="st-label">G</div>
+          <div class="st-angle">問いかけ ／ 責任と誇り</div>
+          <div class="st-tagline">はかった数字は、誰の未来になりますか。</div>
+          <a href="statement-g.html" class="link">開く</a>
+        </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:32px; padding-bottom:12px; border-bottom:2px solid #333;">
+    サイトマップ 各ページ<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— コンパクトサイトマップ 11ページ</span>
+  </h2>
+</div>
+
+<div class="wrap">
+<div class="page-grid">
+        <div class="page-card">
+          <div class="n">01</div>
+          <h2>ホーム</h2>
+          <p>ヒーロー（スコープ／スカウター風演出）、3事業、強み、ブランド抜粋、ニュース、採用CTA。</p>
+          <div class="anchors">/</div>
+          <a href="home.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">02</div>
+          <h2>事業案内</h2>
+          <p>イントロ＋サービス3事業のインデックスページ。</p>
+          <div class="anchors">/service/</div>
+          <a href="service.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">03</div>
+          <h2>SERVICE ／ 測量</h2>
+          <p>公共測量／工事測量／全国対応／取扱機材／作業フロー。</p>
+          <div class="anchors">/service/survey/</div>
+          <a href="service-survey.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">04</div>
+          <h2>SERVICE ／ 調査・設計</h2>
+          <p>土木設計／地質調査／環境調査／設計照査。</p>
+          <div class="anchors">/service/design/</div>
+          <a href="service-design.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">05</div>
+          <h2>SERVICE ／ 施工管理</h2>
+          <p>測量会社ならではの強み／派遣スキーム／派遣実績。</p>
+          <div class="anchors">/service/management/</div>
+          <a href="service-management.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">06</div>
+          <h2>強み・技術</h2>
+          <p>伊能忠敬〜現代テックのイントロ＋ドローン／3Dスキャナー／GNSS／作業工程／全国対応。<br>アンカー: #drone #3d #gnss #workflow #allrounder</p>
+          <div class="anchors">/strengths/</div>
+          <a href="strengths.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">07</div>
+          <h2>社会活動</h2>
+          <p>災害時の測量支援／災害時におけるドローン測量／地域活動・貢献／次世代育成。</p>
+          <div class="anchors">/social/</div>
+          <a href="social.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">08</div>
+          <h2>会社案内（ABOUT）</h2>
+          <p>代表あいさつ／会社概要／沿革／主要取引先／アクセスの1ページ集約。<br>アンカー: #greeting #company #history #clients #access</p>
+          <div class="anchors">/about/</div>
+          <a href="about.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">09</div>
+          <h2>採用情報</h2>
+          <p>採用トップ／募集要項／未経験からの1年／資格支援／社員紹介／FAQ。<br>アンカー: #top #jobs #first-step #support #people #faq</p>
+          <div class="anchors">/recruit/</div>
+          <a href="recruit.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">10</div>
+          <h2>ニュース</h2>
+          <p>カテゴリ絞込＋一覧。既存9本の移行想定。</p>
+          <div class="anchors">/news/</div>
+          <a href="news.html" class="link">開く</a>
+        </div>
+        <div class="page-card">
+          <div class="n">11</div>
+          <h2>お問い合わせ</h2>
+          <p>業務／採用／取材の3種別＋フォーム＋電話案内。</p>
+          <div class="anchors">/contact/</div>
+          <a href="contact.html" class="link">開く</a>
+        </div>
+</div>
+</div>
+
+<div class="wrap">
+  <h2 style="font-size:22px; margin-top:32px; padding-bottom:12px; border-bottom:2px solid #333;">
+    参考資料・試作<span style="font-size:12px; color:#666; font-weight:400; margin-left:12px;">— カラー／フォント／ロゴ規定＋ヒーロー試作</span>
+  </h2>
+</div>
+
+<div class="wrap">
+<div class="page-grid" style="grid-template-columns:1fr;">
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#666; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">BRAND GUIDELINE</div>
+      <div style="color:#222; font-size:16px; font-weight:700;">v0.1</div>
+    </div>
+    <div style="flex:1;">
+      <h2>ブランドガイドライン</h2>
+      <p>ロゴブルー（#015B9E）をメイン、淡いアクア／イエローを差し色にした配色ルール／Noto Sans JP＋Inter＋Noto Serif JPのフォント選定／ボタン・見出し等の適用例。</p>
+      <div class="anchors">/guidelines.html + #logo #color #font #applications</div>
+    </div>
+    <a href="guidelines.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#666; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">HERO ／ A案</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">テクノロジー案</div>
+    </div>
+    <div style="flex:1;">
+      <h2>ヒーロー：テクノロジー案</h2>
+      <p>Three.js 製の3Dワイヤーメッシュ地形が呼吸のようにうねり、0.3秒のグリット回転＋2秒ホールドを繰返し。ドラッグで自由に回転できる。左上に日本語⇔英語のループタイプライター。下部にブランドカラー／空パララックス／中央ロゴのスクロールセクション付き。</p>
+      <div class="anchors">/hero-anim.html + terrain-embed.html</div>
+    </div>
+    <a href="hero-anim.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+  <div class="page-card" style="flex-direction:row; align-items:center; gap:32px;">
+    <div style="flex-shrink:0; width:160px; padding:20px; background:#f5f5f5; border:1px solid #ccc; text-align:center;">
+      <div style="color:#666; font-family:monospace; font-size:10px; letter-spacing:0.25em; margin-bottom:6px;">HERO ／ B案</div>
+      <div style="color:#222; font-size:15px; font-weight:700;">技術者案</div>
+    </div>
+    <div style="flex:1;">
+      <h2>ヒーロー：技術者案</h2>
+      <p>「人」を主役にした案。現場スタッフの4写真がブルー背景から丸ワイプで切り替わる（20秒ループ／空・山岳・都市・建設現場）。左上に白色のタイプライター（日⇔英）。</p>
+      <div class="anchors">/hero-engineer.html + eng1-4.jpg</div>
+    </div>
+    <a href="hero-engineer.html" class="link" style="align-self:stretch; display:flex; align-items:center; padding:12px 24px;">開く</a>
+  </div>
+</div>
+</div>
+
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>

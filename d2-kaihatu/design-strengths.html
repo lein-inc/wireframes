@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .mk:before{content:"";display:inline-block;width:10px;height:10px;background:#015B9E;margin-right:10px}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>強み・技術（デザイン案） | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/design.css?v=1">
+</head>
+<body>
+
+<div class="wf-banner"><span>DESIGN | 強み・技術 | /strengths/（写真はダミー・本番は実写差替）</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="design-top.html" class="site-logo"><img src="img/logo.png" alt="株式会社第二開発技工"></a>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="design-top.html">ホーム</a></li><li><a href="design-service.html">事業案内</a></li><li><a href="design-strengths.html">強み・技術</a></li><li><a href="design-social.html">社会活動</a></li><li><a href="design-about.html">会社案内</a></li><li><a href="design-recruit.html">採用情報</a></li><li><a href="design-news.html">ニュース</a></li><li><a href="design-contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-hero"><div class="wrap"><div class="en">STRENGTHS</div><h1>強み・技術</h1></div></section>
+<div class="breadcrumb"><div class="wrap"><a href="design-top.html">ホーム</a> ／ 強み・技術</div></div>
+
+<!-- イントロダクション：伊能忠敬から現代へ -->
+<section>
+  <div class="wrap">
+    <div class="sec-h"><h2>200年前の一歩と、今日の点群。</h2><span class="en">INTRODUCTION</span></div>
+    <p class="section-lead" style="font-size:16px; color:#333; max-width:820px;">
+      「はかる」という仕事は、200年以上ずっと続いてきました。<br>
+      道具が変わっても、そこにある責任だけは、まったく同じです。
+    </p>
+
+    <div class="grid-2" style="margin-top:32px;">
+      <div class="img-ph large">伊能忠敬モチーフ IMAGE ／ 古地図・量程車・天体観測</div>
+      <div>
+        <h3 style="font-size:18px; margin-bottom:12px;">1800年、日本地図をつくった男</h3>
+        <p>伊能忠敬は、55歳から日本地図の測量を始めました。歩いた距離、およそ4万キロ。地球一周分にも及ぶ道のりを、17年かけて歩き切った男です。</p>
+        <p style="margin-top:12px;">彼が持っていたのは、<b>量程車（歩数を測る道具）、間縄（距離を測る縄）、そして天体観測用の望遠鏡</b>だけ。それでも彼は、当時の世界水準に匹敵する精度で日本の輪郭を描き出しました。</p>
+        <p style="margin-top:12px;">「まちの形を、正しく次の世代に手渡す」——測量の仕事の本質は、この時代からずっと変わっていません。</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:64px; align-items:center;">
+      <div>
+        <h3 style="font-size:18px; margin-bottom:12px;">2026年、点群で現場を描く私たち</h3>
+        <p>200年経った今、私たちが持っているのは、<b>ドローン、3Dレーザースキャナー、GNSS受信機</b>。伊能忠敬が数日かけて歩いた範囲を、私たちは数時間で計測できるようになりました。</p>
+        <p style="margin-top:12px;">広域を空から撮り、地形を点群にする。構造物をミリ単位でデジタル化する。衛星電波で位置を数センチの精度で決める——工事のための"最初のデータ"のかたちが、いま更新され続けています。</p>
+        <p style="margin-top:12px;">i-Construction、BIM／CIM、3次元設計。国が進めるインフラのデジタル化にも、私たちは対応済みです。</p>
+      </div>
+      <div class="img-ph large">現代のテクノロジー IMAGE ／ ドローン・点群・GNSS</div>
+    </div>
+
+    <p style="margin-top:48px; padding:24px 28px; border-left:4px solid #333; background:#f5f5f5; font-size:15px; line-height:1.9;">
+      それでも、私たちが大切にしているのは、<b>「現場に立つこと」</b>です。<br>
+      どんなに機材が進化しても、地面に立ち、風を読み、目で確かめる感覚は絶対に手放さない。<br>
+      伊能忠敬が歩いた一歩と、私たちの今日の一歩は、まっすぐつながっています。
+    </p>
+  </div>
+</section>
+
+<nav class="section-nav"><div class="wrap"><ul>
+  <li><a href="#drone">ドローン測量</a></li>
+  <li><a href="#3d">3Dスキャナー</a></li>
+  <li><a href="#gnss">GNSS</a></li>
+  <li><a href="#workflow">作業工程</a></li>
+  <li><a href="#allrounder">全国対応・多分野</a></li>
+</ul></div></nav>
+
+<section id="drone">
+  <div class="wrap">
+    <div class="sec-h"><h2>ドローン測量・空撮</h2><span class="en anchor-tag">#drone</span></div>
+    <div class="grid-2">
+      <div class="img-ph large">ドローン空撮 IMAGE</div>
+      <div>
+        <p>2021年、3次元空撮地形構造物処理システムを導入。広域の地形を短時間で計測でき、精度・工期の両面でお客様に貢献します。</p>
+        <ul style="margin-top:12px; padding-left:20px; list-style:disc; font-size:14px;">
+          <li>広域地形の高速計測</li>
+          <li>危険箇所・立入困難地の非接触計測</li>
+          <li>点群・オルソ画像・DTM／DSM生成</li>
+          <li>i-Construction 対応</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="3d">
+  <div class="wrap">
+    <div class="sec-h"><h2>3Dレーザースキャナー</h2><span class="en anchor-tag">#3d</span></div>
+    <div class="grid-2">
+      <div>
+        <p>構造物・地形を高精度でデジタル化。既存構造物のBIM／CIMモデル化、災害調査、出来形管理などで威力を発揮します。</p>
+        <ul style="margin-top:12px; padding-left:20px; list-style:disc; font-size:14px;">
+          <li>点群データ取得・後処理</li>
+          <li>BIM／CIM連携</li>
+          <li>変位観測・出来形計測</li>
+        </ul>
+      </div>
+      <div class="img-ph large">3Dスキャナー IMAGE</div>
+    </div>
+  </div>
+</section>
+
+<section id="gnss">
+  <div class="wrap">
+    <div class="sec-h"><h2>GNSS 測位</h2><span class="en anchor-tag">#gnss</span></div>
+    <p class="section-lead">ネットワーク型RTK-GNSSの活用で、基準点の設置・観測を効率化。社内ではGNSS勉強会も継続的に実施し、技術者のスキル底上げを図っています。</p>
+    <div class="img-ph wide">GNSS 現場カット IMAGE</div>
+  </div>
+</section>
+
+<section id="workflow" style="background:#f5f5f5;">
+  <div class="wrap">
+    <div class="sec-h"><h2>作業工程の可視化</h2><span class="en anchor-tag">#workflow</span></div>
+    <p class="section-lead">「測量って何をしているの？」を、動画・アニメーションでわかりやすく紹介。若手・未経験者にも仕事の中身が伝わる構成です。</p>
+    <div class="img-ph wide">作業工程アニメ／動画 プレースホルダー</div>
+  </div>
+</section>
+
+<section id="allrounder">
+  <div class="wrap">
+    <div class="sec-h"><h2>全国対応・多分野の実績</h2><span class="en anchor-tag">#allrounder</span></div>
+    <p class="section-lead">担当者様の異動先までお声がけいただくケースが多く、結果として全国規模で実績を重ねてきました。分野も、道路・橋梁・河川・造成・トンネルと幅広くカバーしています。</p>
+    <div class="numbers">
+      <div class="num-item"><div class="num-value">全国</div><div class="num-label">対応エリア</div></div>
+      <div class="num-item"><div class="num-value">5+</div><div class="num-label">工事分野</div></div>
+      <div class="num-item"><div class="num-value">2007年〜</div><div class="num-label">派遣実績</div></div>
+      <div class="num-item"><div class="num-value">3事業</div><div class="num-label">一貫対応</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#eee;"><div class="wrap"><div class="cta-box"><div class="cta-txt">技術のご相談はお気軽に。</div><a href="design-contact.html" class="btn">お問い合わせ</a></div></div></section>
+
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="design-service.html">事業案内 トップ</a></li>
+      <li><a href="design-service-survey.html">測量</a></li>
+      <li><a href="design-service-design.html">調査・設計</a></li>
+      <li><a href="design-service-management.html">施工管理</a></li>
+      <li><a href="design-strengths.html">強み・技術</a></li>
+      <li><a href="design-social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="design-about.html#greeting">代表あいさつ</a></li>
+      <li><a href="design-about.html#company">会社概要</a></li>
+      <li><a href="design-about.html#history">沿革</a></li>
+      <li><a href="design-about.html#clients">主要取引先</a></li>
+      <li><a href="design-about.html#access">アクセス</a></li>
+    </ul></div>
+    <div><h4>採用・その他</h4><ul>
+      <li><a href="design-top.html">ホーム</a></li>
+      <li><a href="design-recruit.html">採用情報</a></li>
+      <li><a href="design-news.html">ニュース</a></li>
+      <li><a href="design-contact.html">お問い合わせ</a></li>
+      <li><a href="#">プライバシーポリシー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+</body>
+</html>
