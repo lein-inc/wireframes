@@ -96,9 +96,9 @@ section.tone { background: var(--bg-subtle); }
 }
 .site-header .wrap {
   position: relative; overflow: hidden; pointer-events: auto;
-  max-width: none; padding: 0 0 0 30px; height: 76px;
+  max-width: none; padding: 0 0 0 40px; height: 76px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  border-radius: 22px; /* 角丸強め・枠線なし */
+  border-radius: 999px; /* 四隅は完全な丸（ピル型）・枠線なし */
   /* 白透過＋背景ぼかし。ぼかしは角丸の内側だけに効き、端はシャープに切れる */
   background: rgba(255,255,255,0.42);
   -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
@@ -128,7 +128,7 @@ section.tone { background: var(--bg-subtle); }
 .tel-box .tel-num { font-family: "Inter", sans-serif; font-size: 22px; font-weight: 800; color: var(--blue); letter-spacing: 0.01em; }
 .tel-box .tel-hours { font-size: 10px; color: var(--muted); margin-top: 1px; }
 .header-cta {
-  height: 100%; display: flex; align-items: center; padding: 0 30px;
+  height: 100%; display: flex; align-items: center; padding: 0 40px 0 32px;
   background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
   transition: background .2s;
 }
@@ -399,10 +399,10 @@ section.tone { background: var(--bg-subtle); }
   .numbers .num-value { font-size: 34px; }
   .gnav ul, .header-cta { display: none; }
   .site-header { top: 0; padding: 10px 10px 0; }
-  .site-header .wrap { height: 60px; padding-left: 18px; border-radius: 16px; }
+  .site-header .wrap { height: 60px; padding-left: 26px; border-radius: 999px; }
   .site-logo img { height: 30px; }
-  .tel-box { padding: 0 16px; border-left: none; }
-  .tel-box .tel-num { font-size: 17px; }
+  .tel-box { padding: 0 26px 0 16px; border-left: none; }
+  .tel-box .tel-num { font-size: 17px; white-space: nowrap; }
   .tel-box .tel-label, .tel-box .tel-hours { display: none; }
   .page-hero { padding: 52px 0 44px; }
   .page-hero h1 { font-size: 28px; padding-left: 16px; }
