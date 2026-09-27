@@ -676,3 +676,17 @@ ul.ticks li::before {
 /* 濃紺帯の中の写真プレースホルダ（白箱に見えないように） */
 .dark .ph-clip { background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
 .dark .ph-clip .ph-label { color: rgba(255,255,255,.5); }
+
+/* ============ ニュース: ホバーでアイキャッチをマウス位置に表示（js/d2-news-hover.js） ============ */
+.news-float {
+  position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none;
+  width: 280px; aspect-ratio: 3 / 2; margin: calc(-186px - 18px) 0 0 -140px; /* カーソルの真上に浮かせる */
+  will-change: transform;
+}
+.news-float img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  border-radius: 6px; box-shadow: 0 18px 40px rgba(1,61,106,.22);
+  opacity: 0; transform: scale(.86); transition: opacity .3s var(--ease), transform .4s var(--ease);
+}
+.news-float.is-show img.on { opacity: 1; transform: scale(1); }
+.news-list .news-item, .top-news .top-news-item { cursor: pointer; }
