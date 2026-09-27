@@ -18,7 +18,7 @@ rsync -a --delete --exclude='.DS_Store' \
 #   ビルド用スクリプト・社内メモ・キャプチャ(13MB・未参照)は公開対象外
 rsync -a --delete \
   --exclude='.git/' --exclude='captures/' --exclude='_build.py' --exclude='_inject_gate.py' \
-  --exclude='_auth_gate.html' --exclude='CHANGELOG.md' --exclude='.gitignore' \
+  --exclude='_auth_gate.html' --exclude='_d2_*.py' --exclude='__pycache__/' --exclude='CHANGELOG.md' --exclude='.gitignore' \
   --exclude='引き継ぎ_*.md' --exclude='.DS_Store' \
   /Users/apple/site/dainigikou/wf/ ./d2-kaihatu/
 
