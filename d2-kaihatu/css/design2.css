@@ -90,15 +90,19 @@ section.tone { background: var(--bg-subtle); }
 
 /* ============ Header ============ */
 .site-header {
+  /* 上にベタ付けせず余白を空けて浮かせる。外側は透明・クリックは中身だけ拾う */
   position: sticky; top: 35px; z-index: 1000;
-  /* 抜け感重視: ベタ地を敷かず、薄い白＋薄いぼかしの帯 */
-  background: rgba(255,255,255,0.32);
-  -webkit-backdrop-filter: blur(4px) saturate(1.1); backdrop-filter: blur(4px) saturate(1.1);
-  border-bottom: 1px solid rgba(255,255,255,0.5);
+  padding: 14px 18px 0; pointer-events: none;
 }
 .site-header .wrap {
-  max-width: none; padding: 0 0 0 32px; height: 82px;
+  position: relative; overflow: hidden; pointer-events: auto;
+  max-width: none; padding: 0 0 0 30px; height: 76px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  border-radius: 22px; /* 角丸強め・枠線なし */
+  /* 白透過＋背景ぼかし。ぼかしは角丸の内側だけに効き、端はシャープに切れる */
+  background: rgba(255,255,255,0.42);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 10px 30px rgba(1,61,106,0.08);
 }
 .site-logo { border: none; padding: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.06em; color: var(--txt); }
 .site-logo img { height: 38px; mix-blend-mode: multiply; } /* ロゴPNGの白地を透過帯になじませる */
@@ -394,8 +398,8 @@ section.tone { background: var(--bg-subtle); }
   .numbers .num-item:nth-child(2n) { border-right: none; }
   .numbers .num-value { font-size: 34px; }
   .gnav ul, .header-cta { display: none; }
-  .site-header { top: 0; }
-  .site-header .wrap { height: 64px; padding-left: 20px; }
+  .site-header { top: 0; padding: 10px 10px 0; }
+  .site-header .wrap { height: 60px; padding-left: 18px; border-radius: 16px; }
   .site-logo img { height: 30px; }
   .tel-box { padding: 0 16px; border-left: none; }
   .tel-box .tel-num { font-size: 17px; }

@@ -40,7 +40,7 @@
   .fv-bg { position:fixed; inset:0; z-index:0; background:#fff; pointer-events:none; }
   .fv-bg.is-off { visibility:hidden; }
   .terrain-iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
-  .hero { position:relative; z-index:1; width:100%; height:calc(100vh - 117px); min-height:560px; overflow:hidden; background:transparent; }
+  .hero { position:relative; z-index:1; width:100%; height:calc(100vh - 125px); min-height:560px; overflow:hidden; background:transparent; }
   .service { z-index:2; background:#fff; box-shadow:0 -24px 48px rgba(1,61,106,.07); }
   .service ~ section, .service ~ footer, .service ~ .site-footer { position:relative; z-index:2; }
   .hero-copy { position:absolute; z-index:50; top:24%; left:min(6vw,72px); max-width:760px; pointer-events:none; }
@@ -246,14 +246,21 @@
   .fv-note h4 { font-size:15px; font-weight:900; margin-bottom:10px; }
   .fv-note p { font-size:13.5px; color:var(--txt-2); }
 
-  /* --- 社員写真マーキー（高さを互い違いに） --- */
-  .people-strip { padding:0 0 4px; background:#fff; overflow:hidden; }
-  .people-track { display:flex; gap:26px; width:max-content; animation:marquee 46s linear infinite; }
-  .people-track img {
-    width:clamp(190px,17vw,250px); aspect-ratio:3/4; object-fit:cover; background:var(--blue-mist);
+  /* --- 社員写真マーキー（横長・統一サイズ／下の RECRUIT に被せる） --- */
+  :root {
+    --pp-w: clamp(300px,27vw,420px);            /* 写真1枚の幅（3:2） */
+    --pp-ov: calc(var(--pp-w) * 2 / 3 * .42);   /* RECRUIT に被せる量（= RECRUIT 上余白の追加分） */
   }
-  .people-track img:nth-child(2n) { margin-top:46px; }
-  .people-track img:nth-child(3n) { margin-top:22px; }
+  .people-strip {
+    position:relative; z-index:3; overflow:hidden;
+    padding:0; margin-bottom:calc(var(--pp-ov) * -1);
+  }
+  .people-track { display:flex; gap:26px; width:max-content; animation:marquee 52s linear infinite; }
+  .people-track img {
+    width:var(--pp-w); aspect-ratio:3/2; object-fit:cover; background:var(--blue-mist); display:block;
+    box-shadow:0 16px 36px rgba(1,61,106,.16);
+  }
+  .people-strip + .recruit { padding-top:var(--pp-ov); }
   @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
   @media (prefers-reduced-motion: reduce) { .people-track { animation:none; } }
 
@@ -348,8 +355,8 @@
     .top-news-item .c { justify-self:start; }
     .top-news-item .go { display:none; }
     .founder-quote { font-size:20px; }
-    .people-track img { width:150px; }
-    .people-track img:nth-child(2n) { margin-top:24px; }
+    :root { --pp-w:240px; }
+    .people-track { gap:14px; }
   }
 </style>
 </head>
