@@ -105,7 +105,7 @@ section.tone { background: var(--bg-subtle); }
   box-shadow: 0 10px 30px rgba(1,61,106,0.08);
 }
 .site-logo { border: none; padding: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.06em; color: var(--txt); }
-.site-logo img { height: 38px; mix-blend-mode: multiply; } /* ロゴPNGの白地を透過帯になじませる */
+.site-logo img { height: 38px; } /* img/logo-clear.png = 外側の白を抜いた透過版 */
 .header-right { display: flex; align-items: center; height: 100%; }
 .gnav ul { display: flex; gap: 28px; font-size: 14px; margin-right: 26px; }
 .gnav a { color: var(--txt); font-weight: 500; position: relative; padding: 8px 0; display: block; }
