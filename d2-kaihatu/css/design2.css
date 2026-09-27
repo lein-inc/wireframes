@@ -777,18 +777,33 @@ html :is(.news-list .news-cat, .top-news-item .c) { border-radius: 0; }
 .d2-sub section.phero { padding-bottom: 0; }
 .d2-sub section p { line-height: 2.05; }
 
-/* --- 見出し: 塗り箱＋( EN ) --- */
-.d2-sub .sec-h { gap: 14px; margin-bottom: clamp(40px, 4.4vw, 60px); align-items: flex-start; }
-.d2-sub .sec-h h2 {
-  display: inline-block; font-size: clamp(22px, 2.3vw, 30px); line-height: 1.45; letter-spacing: .06em;
-  background: var(--blue); color: #fff; padding: 8px 18px 9px; order: 1;
+/* --- 見出し: 塗り箱＋( EN )（.sec-h / 手書きページの .sec-head 共通）
+   .hbox は inline＋box-decoration-break で、複数行でも行ごとに箱が続く --- */
+.d2-sub .sec-h { display: block; margin-bottom: clamp(40px, 4.4vw, 60px); }
+.d2-sub :is(.sec-h, .sec-head) h2 {
+  display: block; padding: 0; background: none; font-size: clamp(22px, 2.3vw, 30px); line-height: 1.95; letter-spacing: .06em; color: var(--txt);
 }
 .d2-sub .sec-h h2::after { display: none; }
-.d2-sub .sec-h .en {
-  order: 2; display: block; font-size: 12px; letter-spacing: .24em; color: var(--muted); text-transform: uppercase;
+.d2-sub .hbox {
+  background: var(--blue); color: #fff; padding: .14em .55em .18em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
-.d2-sub .sec-h .en::before { content: "( "; }
-.d2-sub .sec-h .en::after { content: " )"; }
+.d2-sub .hbox .big { font-size: 1.3em; line-height: 1; vertical-align: baseline; margin: 0 .04em; color: #fff; }
+.d2-sub .dark :is(.sec-h, .sec-head) h2 { color: #fff; }
+.d2-sub .dark .hbox { background: #fff; color: var(--blue-dark); }
+.d2-sub .dark .hbox .big { color: var(--blue); }
+.d2-sub :is(.sec-h .en, .sec-head .en-label) {
+  display: block; margin: 14px 0 0; font-family: "Inter", sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: .24em; color: var(--muted); text-transform: uppercase;
+}
+.d2-sub .dark :is(.sec-h .en, .sec-head .en-label) { color: rgba(255,255,255,.86); }
+.d2-sub :is(.sec-h .en, .sec-head .en-label)::before { content: "( "; }
+.d2-sub :is(.sec-h .en, .sec-head .en-label)::after { content: " )"; }
+.d2-sub .sec-head .sub { margin-top: 28px; }
+
+/* --- 英字の透かし（.bg-word）: 見出しと同じ左端にそろえる --- */
+.d2-sub .bg-word { left: max(32px, calc((100% - 1180px) / 2 + 32px)); right: auto; white-space: nowrap; }
+
 .d2-sub .section-title { margin-bottom: clamp(36px, 4vw, 52px); }
 
 /* --- カード: 枠・浮き上がりをやめ、写真→見出し→本文／写真なしは上罫のみ --- */
@@ -807,4 +822,5 @@ html :is(.news-list .news-cat, .top-news-item .c) { border-radius: 0; }
   .phero__en { padding-bottom: 0; }
   .d2-sub section { padding: 76px 0; }
   .d2-sub .section-nav { margin-top: 28px; }
+  .d2-sub .bg-word { left: 20px; }
 }
