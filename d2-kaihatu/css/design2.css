@@ -91,15 +91,17 @@ section.tone { background: var(--bg-subtle); }
 /* ============ Header ============ */
 .site-header {
   position: sticky; top: 35px; z-index: 1000;
-  background: rgba(255,255,255,0.94); backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  /* 抜け感重視: ベタ地を敷かず、薄い白＋薄いぼかしの帯 */
+  background: rgba(255,255,255,0.32);
+  -webkit-backdrop-filter: blur(4px) saturate(1.1); backdrop-filter: blur(4px) saturate(1.1);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .site-header .wrap {
   max-width: none; padding: 0 0 0 32px; height: 82px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
 .site-logo { border: none; padding: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.06em; color: var(--txt); }
-.site-logo img { height: 38px; }
+.site-logo img { height: 38px; mix-blend-mode: multiply; } /* ロゴPNGの白地を透過帯になじませる */
 .header-right { display: flex; align-items: center; height: 100%; }
 .gnav ul { display: flex; gap: 28px; font-size: 14px; margin-right: 26px; }
 .gnav a { color: var(--txt); font-weight: 500; position: relative; padding: 8px 0; display: block; }
@@ -112,12 +114,12 @@ section.tone { background: var(--bg-subtle); }
 
 /* 電話ボックス: ベタ青 → 白地＋青文字で軽く */
 .tel-box {
-  border: none; border-left: 1px solid var(--border); min-width: 0; height: 100%;
-  text-align: left; background: #fff; color: var(--blue); line-height: 1.4;
+  border: none; border-left: 1px solid rgba(1,91,158,0.12); min-width: 0; height: 100%;
+  text-align: left; background: transparent; color: var(--blue); line-height: 1.4;
   display: flex; flex-direction: column; justify-content: center; padding: 0 24px;
   transition: background .2s;
 }
-.tel-box:hover { background: var(--blue-mist); }
+.tel-box:hover { background: rgba(255,255,255,0.45); }
 .tel-box .tel-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 1px; }
 .tel-box .tel-num { font-family: "Inter", sans-serif; font-size: 22px; font-weight: 800; color: var(--blue); letter-spacing: 0.01em; }
 .tel-box .tel-hours { font-size: 10px; color: var(--muted); margin-top: 1px; }

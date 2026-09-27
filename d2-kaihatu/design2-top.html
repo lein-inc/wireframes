@@ -36,8 +36,13 @@
   /* ===== TOP 固有（v2 / 構成はv1踏襲・演出のみ調整） ===== */
 
   /* --- HERO: v1のまま（タイプライター／3D地形） --- */
-  .hero { position:relative; width:100%; height:100vh; min-height:640px; overflow:hidden; background:#fff; }
+  /* FVの線画を固定背景に: Our Promise まで追従 → Service が上に被さって下にもぐる */
+  .fv-bg { position:fixed; inset:0; z-index:0; background:#fff; pointer-events:none; }
+  .fv-bg.is-off { visibility:hidden; }
   .terrain-iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
+  .hero { position:relative; z-index:1; width:100%; height:calc(100vh - 117px); min-height:560px; overflow:hidden; background:transparent; }
+  .service { z-index:2; background:#fff; box-shadow:0 -24px 48px rgba(1,61,106,.07); }
+  .service ~ section, .service ~ footer, .service ~ .site-footer { position:relative; z-index:2; }
   .hero-copy { position:absolute; z-index:50; top:24%; left:min(6vw,72px); max-width:760px; pointer-events:none; }
   .hero-copy .en-label {
     font-family:"Inter",monospace; font-size:12px; letter-spacing:.32em;
@@ -101,7 +106,7 @@
   .center-pill { display:flex; justify-content:center; margin-top:56px; }
 
   /* --- STATEMENT: 行ごとの帯ハイライト（参考サイトの手法をブランド色で） --- */
-  .statement { position:relative; overflow:hidden; background:var(--blue-mist); padding:132px 0; }
+  .statement { position:relative; z-index:1; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(228,239,247,.55) 22%, rgba(228,239,247,.7) 100%); padding:132px 0; }
   .statement::before {
     content:""; position:absolute; inset:0; opacity:.5; pointer-events:none;
     background-image:repeating-radial-gradient(circle at 78% 110%, transparent 0 34px, rgba(1,91,158,.10) 34px 34.5px);
@@ -321,8 +326,8 @@
     .rec-photo .circ-photo { left:auto; right:24px; bottom:-58px; width:140px; height:140px; }
   }
   @media (max-width:900px){
-    .hero { height:auto; min-height:0; padding:56px 0 36px; }
-    .terrain-iframe { position:relative; height:44vh; min-height:230px; }
+    .hero { height:auto; min-height:calc(100svh - 99px); padding:56px 0 36px; display:flex; flex-direction:column; justify-content:flex-end; }
+    .hero-copy h1, .hero-copy .en-label { text-shadow:0 0 12px #fff, 0 0 4px #fff; }
     .hero-copy { position:static; padding:0 20px; max-width:none; }
     .hero-copy h1 { min-height:0; }
     .hero-btns { position:static; padding:0 20px; margin-top:26px; }
@@ -378,8 +383,10 @@
 </header>
 
 <!-- ============ HERO（v1のまま） ============ -->
+<div class="fv-bg" aria-hidden="true">
+  <iframe class="terrain-iframe" src="terrain-infra-embed.html" title="3D wireframe terrain with infrastructure" tabindex="-1"></iframe>
+</div>
 <div class="hero">
-  <iframe class="terrain-iframe" src="terrain-infra-embed.html" title="3D wireframe terrain with infrastructure"></iframe>
   <div class="hero-copy">
     <span class="en-label">— DAINI KAIHATSU GIKO</span>
     <h1><span class="typed"></span><span class="cursor">|</span></h1>
@@ -663,6 +670,15 @@
   if(!('IntersectionObserver' in window)){t.forEach(function(e){e.classList.add('is-visible');});return;}
   var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');o.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
   t.forEach(function(e){o.observe(e);});
+})();
+</script>
+<script>
+/* 固定背景は Our Promise を抜けたら非表示（Service 以降に透けないように） */
+(function(){
+  var bg=document.querySelector('.fv-bg'), st=document.querySelector('.statement');
+  if(!bg||!st) return;
+  function f(){ bg.classList.toggle('is-off', st.getBoundingClientRect().bottom < 0); }
+  window.addEventListener('scroll', f, {passive:true}); window.addEventListener('resize', f); f();
 })();
 </script>
 </body>
