@@ -41,7 +41,7 @@
   .fv-bg.is-off { visibility:hidden; }
   .terrain-iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
   .hero { position:relative; z-index:1; width:100%; height:calc(100vh - 125px); min-height:560px; overflow:hidden; background:transparent; }
-  .service { z-index:2; background:#fff; box-shadow:0 -24px 48px rgba(1,61,106,.07); }
+  .service { z-index:2; background:#fff; }
   .service ~ section, .service ~ footer, .service ~ .site-footer { position:relative; z-index:2; }
   .hero-copy { position:absolute; z-index:50; top:24%; left:min(6vw,72px); max-width:760px; pointer-events:none; }
   .hero-copy .en-label {
@@ -258,7 +258,6 @@
   .people-track { display:flex; gap:26px; width:max-content; animation:marquee 52s linear infinite; }
   .people-track img {
     width:var(--pp-w); aspect-ratio:3/2; object-fit:cover; background:var(--blue-mist); display:block;
-    box-shadow:0 16px 36px rgba(1,61,106,.16);
   }
   .people-strip + .recruit { padding-top:var(--pp-ov); }
   @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }

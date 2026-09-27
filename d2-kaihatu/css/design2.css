@@ -23,8 +23,9 @@
   --border: #E3E8ED;
   --border-strong: #C9D4DE;
   --bg-subtle: #F7F9FB;
-  --shadow: 0 18px 44px rgba(1, 61, 106, 0.10);
-  --shadow-sm: 0 6px 18px rgba(1, 61, 106, 0.06);
+  /* ぼかし影は使わない（2026-09-27 全削除）。参照箇所を残すため none で定義 */
+  --shadow: none;
+  --shadow-sm: none;
   --ease: cubic-bezier(.2,.7,.2,1);
 }
 
@@ -96,13 +97,12 @@ section.tone { background: var(--bg-subtle); }
 }
 .site-header .wrap {
   position: relative; overflow: hidden; pointer-events: auto;
-  max-width: none; padding: 0 0 0 40px; height: 76px;
+  max-width: none; padding: 0 0 0 32px; height: 76px;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  border-radius: 999px; /* 四隅は完全な丸（ピル型）・枠線なし */
+  border-radius: 0; /* 角丸なし（四角）・枠線なし */
   /* 白透過＋背景ぼかし。ぼかしは角丸の内側だけに効き、端はシャープに切れる */
   background: rgba(255,255,255,0.42);
   -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
-  box-shadow: 0 10px 30px rgba(1,61,106,0.08);
 }
 .site-logo { border: none; padding: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.06em; color: var(--txt); }
 .site-logo { flex-shrink: 0; }
@@ -129,7 +129,7 @@ section.tone { background: var(--bg-subtle); }
 .tel-box .tel-num { font-family: "Inter", sans-serif; font-size: 22px; font-weight: 800; color: var(--blue); letter-spacing: 0.01em; }
 .tel-box .tel-hours { font-size: 10px; color: var(--muted); margin-top: 1px; }
 .header-cta {
-  height: 100%; display: flex; align-items: center; padding: 0 40px 0 32px;
+  height: 100%; display: flex; align-items: center; padding: 0 30px;
   background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
   transition: background .2s;
 }
@@ -375,7 +375,6 @@ section.tone { background: var(--bg-subtle); }
   .sp-cta {
     display: grid; grid-template-columns: 1fr 1fr;
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 1100;
-    box-shadow: 0 -6px 20px rgba(1,61,106,.14);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .sp-cta a {
@@ -392,7 +391,7 @@ section.tone { background: var(--bg-subtle); }
   .gnav ul { gap: 20px; font-size: 13.5px; margin-right: 20px; }
   .tel-box { padding: 0 18px; }
   .tel-box .tel-num { font-size: 19px; }
-  .header-cta { padding: 0 32px 0 24px; }
+  .header-cta { padding: 0 24px; }
 }
 .tel-box .tel-num, .header-cta { white-space: nowrap; }
 @media (max-width: 1180px) and (min-width: 901px) {
@@ -403,7 +402,7 @@ section.tone { background: var(--bg-subtle); }
   .site-header .wrap { padding-left: 28px; gap: 12px; }
   .site-logo img { height: 32px; }
   .gnav ul { gap: 9px; font-size: 12px; margin-right: 12px; }
-  .header-cta { padding: 0 26px 0 20px; }
+  .header-cta { padding: 0 20px; }
 }
 @media (max-width: 1080px) {
   .gnav ul { gap: 14px; font-size: 12.5px; }
@@ -418,9 +417,9 @@ section.tone { background: var(--bg-subtle); }
   .numbers .num-value { font-size: 34px; }
   .gnav ul, .header-cta { display: none; }
   .site-header { top: 0; padding: 10px 10px 0; }
-  .site-header .wrap { height: 60px; padding-left: 26px; border-radius: 999px; }
+  .site-header .wrap { height: 60px; padding-left: 20px; }
   .site-logo img { height: 30px; }
-  .tel-box { padding: 0 26px 0 16px; border-left: none; }
+  .tel-box { padding: 0 16px; border-left: none; }
   .tel-box .tel-num { font-size: 17px; white-space: nowrap; }
   .tel-box .tel-label, .tel-box .tel-hours { display: none; }
   .page-hero { padding: 52px 0 44px; }
@@ -708,7 +707,7 @@ ul.ticks li::before {
 }
 .news-float img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  border-radius: 6px; box-shadow: 0 18px 40px rgba(1,61,106,.22);
+  border-radius: 6px;
   opacity: 0; transform: scale(.86); transition: opacity .3s var(--ease), transform .4s var(--ease);
 }
 .news-float.is-show img.on { opacity: 1; transform: scale(1); }
