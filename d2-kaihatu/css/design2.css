@@ -105,10 +105,11 @@ section.tone { background: var(--bg-subtle); }
   box-shadow: 0 10px 30px rgba(1,61,106,0.08);
 }
 .site-logo { border: none; padding: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.06em; color: var(--txt); }
+.site-logo { flex-shrink: 0; }
 .site-logo img { height: 38px; } /* img/logo-clear.png = 外側の白を抜いた透過版 */
 .header-right { display: flex; align-items: center; height: 100%; }
 .gnav ul { display: flex; gap: 28px; font-size: 14px; margin-right: 26px; }
-.gnav a { color: var(--txt); font-weight: 500; position: relative; padding: 8px 0; display: block; }
+.gnav a { color: var(--txt); font-weight: 500; position: relative; padding: 8px 0; display: block; white-space: nowrap; }
 .gnav a::after {
   content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 2px;
   background: var(--blue); transition: right .28s var(--ease);
@@ -386,8 +387,26 @@ section.tone { background: var(--bg-subtle); }
 }
 
 /* ============ Responsive ============ */
+@media (max-width: 1360px) {
+  /* ピル型ヘッダーの内余白ぶん、ナビ8項目が1行に収まるよう詰める */
+  .gnav ul { gap: 20px; font-size: 13.5px; margin-right: 20px; }
+  .tel-box { padding: 0 18px; }
+  .tel-box .tel-num { font-size: 19px; }
+  .header-cta { padding: 0 32px 0 24px; }
+}
+.tel-box .tel-num, .header-cta { white-space: nowrap; }
+@media (max-width: 1180px) and (min-width: 901px) {
+  /* 幅が足りない帯域は電話欄を畳む（SP追従バー／フッターに電話あり） */
+  .tel-box { display: none; }
+}
+@media (max-width: 1000px) and (min-width: 901px) {
+  .site-header .wrap { padding-left: 28px; gap: 12px; }
+  .site-logo img { height: 32px; }
+  .gnav ul { gap: 9px; font-size: 12px; margin-right: 12px; }
+  .header-cta { padding: 0 26px 0 20px; }
+}
 @media (max-width: 1080px) {
-  .gnav ul { gap: 20px; font-size: 13px; }
+  .gnav ul { gap: 14px; font-size: 12.5px; }
   .tel-box .tel-num { font-size: 19px; }
 }
 @media (max-width: 900px) {
@@ -694,3 +713,11 @@ ul.ticks li::before {
 }
 .news-float.is-show img.on { opacity: 1; transform: scale(1); }
 .news-list .news-item, .top-news .top-news-item { cursor: pointer; }
+
+/* ============ ダミー写真を入れた写真枠（_build.py d2_fill_photos） ============ */
+.img-ph.has-photo { padding: 0; border: none; background: var(--blue-mist); }
+.img-ph.has-photo::before { display: none; }
+.img-ph.has-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
+.grid-2:hover .img-ph.has-photo img, .card:hover .img-ph.has-photo img { transform: scale(1.04); }
+.img-ph.has-photo.is-logo { background: #fff; border: 1px solid var(--border); }
+.img-ph.has-photo.is-logo img { object-fit: contain; padding: 28px; }

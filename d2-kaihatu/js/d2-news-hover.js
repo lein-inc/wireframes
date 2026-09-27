@@ -5,7 +5,7 @@
   if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   var items = document.querySelectorAll('.news-item, .top-news-item');
   if (!items.length) return;
-  var DUMMY = ['img/eng3_city.jpg','img/eng2_mountain.jpg','img/eng1_sky.jpg','img/eng4_construction.jpg','img/terrain-a.jpg','img/sky.jpg','img/terrain-b.jpg'];
+  var DUMMY = ['img/dummy/27.jpg','img/dummy/45.jpg','img/dummy/13.jpg','img/dummy/50.jpg','img/dummy/44.jpg','img/dummy/39.jpg','img/dummy/16.jpg','img/dummy/51.jpg','img/dummy/47.jpg'];
   var box = document.createElement('div');
   box.className = 'news-float';
   box.setAttribute('aria-hidden','true');
