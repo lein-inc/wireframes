@@ -753,19 +753,14 @@ html :is(.news-list .news-cat, .top-news-item .c) { border-radius: 0; }
    2026-09-28 下層ページ（body.d2-sub）の組み替え
    参考: omiscale.co.jp 下層の余白・見出しの組み方（フォント・色は第二開発技工のまま）
    ================================================== */
-/* --- ヒーロー: 白地／パンくず → 特大見出し＋( EN ) → 端点つき細罫 --- */
+/* --- ヒーロー: 白地／パンくず → 特大見出し＋( EN ) --- */
 .phero { position: relative; background: #fff; padding: clamp(72px, 9vw, 128px) 0 0; }
 .pcrumb { font-size: 13px; letter-spacing: .08em; color: var(--muted); margin-bottom: clamp(28px, 3.4vw, 44px); }
 .pcrumb a:hover { color: var(--blue); }
 .phero__bar {
   position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 4vw;
-  padding-bottom: 28px; border-bottom: 1px solid var(--blue-dark);
+  padding-bottom: 28px; /* 端点つき罫線は不使用（2026-09-28 関指示で削除） */
 }
-.phero__bar::before, .phero__bar::after {
-  content: ""; position: absolute; bottom: -3px; width: 5px; height: 5px; background: var(--blue-dark);
-}
-.phero__bar::before { left: 0; }
-.phero__bar::after { right: 0; }
 .phero h1 {
   font-size: clamp(40px, 5.4vw, 76px); font-weight: 900; line-height: 1.2; letter-spacing: .04em; color: var(--txt);
 }
@@ -777,17 +772,9 @@ html :is(.news-list .news-cat, .top-news-item .c) { border-radius: 0; }
 .phero__en::after { content: " )"; }
 .d2-sub .section-nav { margin-top: 48px; }
 
-/* --- セクション: 広い余白＋境目に端点つき細罫 --- */
+/* --- セクション: 広い余白（境目の端点つき罫線は不使用） --- */
 .d2-sub section { position: relative; padding: clamp(96px, 10.5vw, 156px) 0; }
 .d2-sub section.phero { padding-bottom: 0; }
-.d2-sub section + section:not(.tone):not(.dark):not(.dark-band):not(.cta):not([style*="background"])::before {
-  content: ""; position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
-  width: min(1116px, calc(100% - 64px)); height: 5px; pointer-events: none;
-  background:
-    linear-gradient(var(--border-strong), var(--border-strong)) center / 100% 1px no-repeat,
-    linear-gradient(var(--blue-dark), var(--blue-dark)) left center / 5px 5px no-repeat,
-    linear-gradient(var(--blue-dark), var(--blue-dark)) right center / 5px 5px no-repeat;
-}
 .d2-sub section p { line-height: 2.05; }
 
 /* --- 見出し: 塗り箱＋( EN ) --- */
