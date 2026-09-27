@@ -18,8 +18,10 @@
   --aqua-pale: #E8F5F2;
   --yellow: #FFD54F;
   --txt: #12212E;
-  --txt-2: #4A5560;
-  --muted: #8A94A0;
+  --txt-2: #3A4550;   /* 可読性補正 2026-09-28（旧 #4A5560） */
+  --muted: #5E6873;   /* 可読性補正 2026-09-28（旧 #8A94A0・白地 3:1 → 5.6:1） */
+  --aqua-text: #2E7F72; /* アクアの文字用・白地（面・線は --aqua のまま） */
+  --aqua-on-dark: #86DCCD; /* アクアの文字用・濃紺地 */
   --border: #E3E8ED;
   --border-strong: #C9D4DE;
   --bg-subtle: #F7F9FB;
@@ -85,7 +87,7 @@ section.tone { background: var(--bg-subtle); }
 .wf-banner {
   position: sticky; top: 0; z-index: 1200;
   background: #12212E; color: #fff; padding: 9px 18px;
-  font-size: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
 }
 .wf-banner a { color: #fff; text-decoration: underline; white-space: nowrap; }
 
@@ -125,9 +127,9 @@ section.tone { background: var(--bg-subtle); }
   transition: background .2s;
 }
 .tel-box:hover { background: rgba(255,255,255,0.45); }
-.tel-box .tel-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 1px; }
+.tel-box .tel-label { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 1px; }
 .tel-box .tel-num { font-family: "Inter", sans-serif; font-size: 22px; font-weight: 800; color: var(--blue); letter-spacing: 0.01em; }
-.tel-box .tel-hours { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.tel-box .tel-hours { font-size: 12px; color: var(--muted); margin-top: 1px; }
 .header-cta {
   height: 100%; display: flex; align-items: center; padding: 0 30px;
   background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
@@ -155,18 +157,18 @@ section.tone { background: var(--bg-subtle); }
   margin: 0; padding-left: 22px; border-left: 3px solid var(--blue);
 }
 .page-hero .en {
-  font-family: "Inter", sans-serif; font-size: 12.5px; color: var(--muted);
+  font-family: "Inter", sans-serif; font-size: 13.5px; color: var(--muted);
   letter-spacing: 0.14em; text-transform: capitalize; font-weight: 500;
   display: block; margin-bottom: 16px; padding-left: 25px;
 }
-.breadcrumb { font-size: 12.5px; color: var(--muted); padding: 16px 0; border-bottom: 1px solid var(--border); background: #fff; }
+.breadcrumb { font-size: 13.5px; color: var(--muted); padding: 16px 0; border-bottom: 1px solid var(--border); background: #fff; }
 .breadcrumb a:hover { color: var(--blue); }
 
 /* ============ Placeholder image ============ */
 .img-ph {
   position: relative; background: var(--blue-mist);
-  color: #9BB0C2; display: flex; align-items: center; justify-content: center; text-align: center;
-  font-size: 12px; letter-spacing: 0.14em; border: 1px solid var(--border); padding: 12px;
+  color: #5F7890; display: flex; align-items: center; justify-content: center; text-align: center;
+  font-size: 13px; letter-spacing: 0.14em; border: 1px solid var(--border); padding: 12px;
   overflow: hidden;
 }
 .img-ph::before {
@@ -196,7 +198,7 @@ section.tone { background: var(--bg-subtle); }
 .card .card-title { font-size: 19px; font-weight: 900; margin: 14px 0 10px; letter-spacing: .02em; }
 .card p { font-size: 15px; color: var(--txt-2); }
 .card .card-meta {
-  font-family: "Inter", sans-serif; font-size: 12px; color: var(--muted);
+  font-family: "Inter", sans-serif; font-size: 13px; color: var(--muted);
   letter-spacing: 0.14em; text-transform: capitalize; font-weight: 500;
 }
 .card a { color: var(--blue); font-weight: 700; }
@@ -222,7 +224,7 @@ section.tone { background: var(--bg-subtle); }
   font-family: "Inter", "Noto Sans JP", sans-serif; font-size: 42px; font-weight: 800;
   color: var(--blue); line-height: 1.2; letter-spacing: .01em;
 }
-.numbers .num-label { font-size: 12.5px; color: var(--txt-2); margin-top: 10px; letter-spacing: .08em; }
+.numbers .num-label { font-size: 13.5px; color: var(--txt-2); margin-top: 10px; letter-spacing: .08em; }
 
 /* ============ Sticky in-page nav: 下線式 ============ */
 .section-nav {
@@ -231,7 +233,7 @@ section.tone { background: var(--bg-subtle); }
   position: sticky; top: 117px; z-index: 50;
 }
 .section-nav ul {
-  display: flex; gap: 0; font-size: 13.5px; overflow-x: auto; scrollbar-width: none;
+  display: flex; gap: 0; font-size: 14.5px; overflow-x: auto; scrollbar-width: none;
 }
 .section-nav ul::-webkit-scrollbar { display: none; }
 .section-nav a {
@@ -276,19 +278,19 @@ section.tone { background: var(--bg-subtle); }
 
 /* ============ Footer ============ */
 .site-footer {
-  background: var(--blue-dark); color: rgba(255,255,255,0.85);
+  background: var(--blue-dark); color: rgba(255,255,255,0.86);
   padding: 72px 0 30px; border-top: 4px solid var(--aqua);
 }
 .site-footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
-.site-footer h4 { font-size: 12px; margin-bottom: 16px; color: var(--aqua); letter-spacing: 0.16em; }
-.site-footer ul li { font-size: 13.5px; padding: 7px 0; }
-.site-footer a { color: rgba(255,255,255,0.82); }
+.site-footer h4 { font-size: 13px; margin-bottom: 16px; color: var(--aqua-on-dark); letter-spacing: 0.16em; }
+.site-footer ul li { font-size: 14.5px; padding: 7px 0; }
+.site-footer a { color: rgba(255,255,255,0.86); }
 .site-footer a:hover { color: #fff; }
 .site-footer .copyright {
   border-top: 1px solid rgba(255,255,255,0.16); margin-top: 48px; padding-top: 22px;
-  font-size: 11.5px; color: rgba(255,255,255,0.55); text-align: center; grid-column: 1 / -1;
+  font-size: 12.5px; color: rgba(255,255,255,0.86); text-align: center; grid-column: 1 / -1;
 }
-.site-footer .addr { font-size: 13.5px; line-height: 2.2; color: rgba(255,255,255,0.78); }
+.site-footer .addr { font-size: 14.5px; line-height: 2.2; color: rgba(255,255,255,0.86); }
 .site-footer .footer-logo { font-size: 18px; font-weight: 900; margin-bottom: 16px; color: #fff; display: block; letter-spacing: 0.06em; }
 
 /* ============ News list ============ */
@@ -300,7 +302,7 @@ section.tone { background: var(--bg-subtle); }
 .news-list .news-item:hover { background: var(--blue-mist); }
 .news-list .news-date { font-family: "Inter", monospace; font-size: 14px; color: var(--muted); }
 .news-list .news-cat {
-  font-size: 11px; font-weight: 700; border: none; background: var(--blue-pale);
+  font-size: 12px; font-weight: 700; border: none; background: var(--blue-pale);
   color: var(--blue-dark); padding: 5px 12px; text-align: center; border-radius: 999px;
 }
 .news-list .news-title { font-size: 15.5px; font-weight: 500; }
@@ -313,7 +315,7 @@ section.tone { background: var(--bg-subtle); }
 }
 .sec-h h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 56px; height: 1px; background: var(--blue); }
 .sec-h .en {
-  font-family: "Inter", sans-serif; font-size: 12.5px; color: var(--muted);
+  font-family: "Inter", sans-serif; font-size: 13.5px; color: var(--muted);
   letter-spacing: 0.14em; text-transform: capitalize; font-weight: 500; order: 1;
 }
 
@@ -329,36 +331,36 @@ section.tone { background: var(--bg-subtle); }
 .history-block .lead-sub { color: var(--txt-2); font-size: 15.5px; margin-bottom: 48px; max-width: 780px; }
 .hist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--border); }
 .hist-head {
-  padding: 16px 20px; font-weight: 700; font-size: 13.5px;
+  padding: 16px 20px; font-weight: 700; font-size: 14.5px;
   background: var(--blue-mist); color: var(--blue-dark); letter-spacing: 0.14em; text-align: center;
   border-bottom: 1px solid var(--border);
 }
 .hist-row { display: contents; }
 .hist-cell { padding: 26px 24px; border-bottom: 1px solid var(--border); background: #fff; }
 .hist-cell:nth-child(2n-1) { border-right: 1px solid var(--border); }
-.hist-cell .era { font-family: "Inter", monospace; font-size: 12.5px; letter-spacing: 0.15em; color: var(--blue); margin-bottom: 7px; font-weight: 700; }
+.hist-cell .era { font-family: "Inter", monospace; font-size: 13.5px; letter-spacing: 0.15em; color: var(--blue); margin-bottom: 7px; font-weight: 700; }
 .hist-cell .title { font-size: 16px; font-weight: 700; margin-bottom: 7px; }
 .hist-cell .desc { font-size: 14.5px; color: var(--txt-2); line-height: 1.9; }
 .hist-cell.empty {
   background: var(--bg-subtle); color: #C3CCD5;
-  display: flex; align-items: center; justify-content: center; font-size: 12px; font-family: "Inter", monospace;
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-family: "Inter", monospace;
 }
 .hist-cell.milestone { background: var(--blue-mist); }
 .hist-cell.milestone .title, .hist-cell.milestone .era { color: var(--blue-dark); }
-.hist-cell .note { font-size: 11.5px; color: var(--muted); margin-top: 7px; }
+.hist-cell .note { font-size: 12.5px; color: var(--muted); margin-top: 7px; }
 .hist-cell.future {
   grid-column: 1 / -1; background: var(--blue-dark); color: #fff;
   padding: 68px 48px; border-right: none; text-align: center;
 }
 .hist-cell.future .era {
-  color: var(--aqua); border: 1px solid var(--aqua); padding: 7px 16px; display: inline-block;
-  font-family: "Inter", monospace; letter-spacing: 0.25em; font-size: 12px; margin-bottom: 28px; font-weight: 400;
+  color: var(--aqua-on-dark); border: 1px solid var(--aqua); padding: 7px 16px; display: inline-block;
+  font-family: "Inter", monospace; letter-spacing: 0.25em; font-size: 13px; margin-bottom: 28px; font-weight: 400;
 }
 .hist-cell.future .title { color: #fff; font-size: 27px; margin-bottom: 34px; font-weight: 900; }
 .hist-cell.future .desc { color: rgba(255,255,255,0.9); font-size: 16px; line-height: 2.2; max-width: 780px; margin: 0 auto; text-align: left; }
 .hist-cell.future .desc b { color: #fff; font-size: 23px; letter-spacing: 0.05em; }
 .hist-cell.future .signature {
-  margin: 34px auto 0; font-size: 12.5px; color: rgba(255,255,255,0.62); letter-spacing: 0.15em;
+  margin: 34px auto 0; font-size: 13.5px; color: rgba(255,255,255,0.86); letter-spacing: 0.15em;
   border-top: 1px solid rgba(255,255,255,0.28); padding-top: 22px; max-width: 780px;
 }
 
@@ -388,7 +390,7 @@ section.tone { background: var(--bg-subtle); }
 /* ============ Responsive ============ */
 @media (max-width: 1360px) {
   /* ピル型ヘッダーの内余白ぶん、ナビ8項目が1行に収まるよう詰める */
-  .gnav ul { gap: 20px; font-size: 13.5px; margin-right: 20px; }
+  .gnav ul { gap: 20px; font-size: 14.5px; margin-right: 20px; }
   .tel-box { padding: 0 18px; }
   .tel-box .tel-num { font-size: 19px; }
   .header-cta { padding: 0 24px; }
@@ -401,11 +403,11 @@ section.tone { background: var(--bg-subtle); }
 @media (max-width: 1000px) and (min-width: 901px) {
   .site-header .wrap { padding-left: 28px; gap: 12px; }
   .site-logo img { height: 32px; }
-  .gnav ul { gap: 9px; font-size: 12px; margin-right: 12px; }
+  .gnav ul { gap: 9px; font-size: 13px; margin-right: 12px; }
   .header-cta { padding: 0 20px; }
 }
 @media (max-width: 1080px) {
-  .gnav ul { gap: 14px; font-size: 12.5px; }
+  .gnav ul { gap: 14px; font-size: 13.5px; }
   .tel-box .tel-num { font-size: 19px; }
 }
 @media (max-width: 900px) {
@@ -424,11 +426,11 @@ section.tone { background: var(--bg-subtle); }
   .tel-box .tel-label, .tel-box .tel-hours { display: none; }
   .page-hero { padding: 52px 0 44px; }
   .page-hero h1 { font-size: 28px; padding-left: 16px; }
-  .page-hero .en { padding-left: 19px; font-size: 11px; }
+  .page-hero .en { padding-left: 19px; font-size: 12px; }
   .section-title { font-size: 24px; }
   .sec-h h2 { font-size: 24px; }
   .section-nav { position: sticky; top: 64px; }
-  .section-nav a { padding: 14px 16px; font-size: 13px; }
+  .section-nav a { padding: 14px 16px; font-size: 14px; }
   .cta-box { flex-direction: column; text-align: center; padding: 34px 22px; align-items: stretch; }
   .cta-box .btn { justify-content: center; }
   .news-list .news-item { grid-template-columns: 1fr; gap: 6px; padding: 18px 4px; }
@@ -503,7 +505,7 @@ section.tone { background: var(--bg-subtle); }
 /* --- セクション見出し（英小ラベル＋和文／巨大数字） --- */
 .sec-head { margin-bottom: 56px; }
 .sec-head .en-label {
-  font-family: "Inter", sans-serif; font-size: 12.5px; letter-spacing: .14em; font-weight: 500;
+  font-family: "Inter", sans-serif; font-size: 13.5px; letter-spacing: .14em; font-weight: 500;
   color: var(--muted); display: block; margin-bottom: 12px;
 }
 .sec-head h2 { font-size: clamp(26px, 3.1vw, 38px); font-weight: 900; letter-spacing: .04em; line-height: 1.45; }
@@ -512,10 +514,10 @@ section.tone { background: var(--bg-subtle); }
   line-height: 0; vertical-align: -.06em; margin: 0 .06em; letter-spacing: 0;
 }
 .sec-head .sub { color: var(--txt-2); margin-top: 20px; max-width: 760px; font-size: 15.5px; }
-.dark .sec-head .en-label { color: var(--aqua); }
+.dark .sec-head .en-label { color: var(--aqua-on-dark); }
 .dark .sec-head h2, .dark .sec-head h2 .big { color: #fff; }
-.dark .sec-head h2 .big { color: var(--aqua); }
-.dark .sec-head .sub { color: rgba(255,255,255,.8); }
+.dark .sec-head h2 .big { color: var(--aqua-on-dark); }
+.dark .sec-head .sub { color: rgba(255,255,255,0.86); }
 
 /* --- 背景の巨大英字 --- */
 .has-bgword { position: relative; overflow: hidden; }
@@ -531,11 +533,11 @@ section.tone { background: var(--bg-subtle); }
 /* --- 連なり表記（測量→調査設計→施工管理 等） --- */
 .flow {
   display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  font-family: "Inter", sans-serif; font-size: 12.5px; letter-spacing: .1em; color: var(--muted);
+  font-family: "Inter", sans-serif; font-size: 13.5px; letter-spacing: .1em; color: var(--muted);
   padding-bottom: 22px; margin-bottom: 56px; border-bottom: 1px solid var(--border);
 }
-.flow b { font-family: "Noto Sans JP", sans-serif; font-size: 13.5px; font-weight: 700; color: var(--blue); letter-spacing: .04em; }
-.flow i { font-style: normal; color: var(--blue-light); }
+.flow b { font-family: "Noto Sans JP", sans-serif; font-size: 14.5px; font-weight: 700; color: var(--blue); letter-spacing: .04em; }
+.flow i { font-style: normal; color: var(--blue); }
 
 /* --- 段差グリッド＋巨大アウトライン数字カード --- */
 .stagger { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; align-items: start; }
@@ -564,7 +566,7 @@ section.tone { background: var(--bg-subtle); }
 .ph-clip img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
 .ph-clip .ph-label {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
-  color: #8FA6BA; font-size: 12.5px; letter-spacing: .14em; padding: 16px; z-index: 1;
+  color: #5F7890; font-size: 13.5px; letter-spacing: .14em; padding: 16px; z-index: 1;
 }
 .dcard:hover .ph-clip img, .hov:hover .ph-clip img { transform: scale(1.09); }
 .ph-clip .veil {
@@ -575,7 +577,7 @@ section.tone { background: var(--bg-subtle); }
 .dcard:hover .ph-clip .veil, .hov:hover .ph-clip .veil { transform: translateY(0); }
 .ph-clip .en {
   position: absolute; left: 20px; bottom: 18px; z-index: 3; color: #fff;
-  font-family: "Inter", sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: .2em;
+  font-family: "Inter", sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: .2em;
   opacity: 0; transform: translateY(12px); transition: opacity .5s var(--ease) .1s, transform .5s var(--ease) .1s;
 }
 .dcard:hover .ph-clip .en, .hov:hover .ph-clip .en { opacity: 1; transform: none; }
@@ -587,9 +589,9 @@ section.tone { background: var(--bg-subtle); }
 .dcard h3 { font-size: 24px; font-weight: 900; letter-spacing: .04em; margin-bottom: 14px; transition: color .3s; }
 .dcard:hover h3 { color: var(--blue); }
 .dark .dcard h3 { color: #fff; }
-.dark .dcard:hover h3 { color: var(--aqua); }
+.dark .dcard:hover h3 { color: var(--aqua-on-dark); }
 .dcard p { font-size: 15px; color: var(--txt-2); margin-bottom: 24px; }
-.dark .dcard p { color: rgba(255,255,255,.8); }
+.dark .dcard p { color: rgba(255,255,255,0.86); }
 .dcard .arw-link .circ { width: 36px; height: 36px; font-size: 14px; }
 
 /* --- 濃紺＋斜め境界の帯 --- */
@@ -612,7 +614,7 @@ section.dark-band, .dark-band {
 .duo + .duo { margin-top: 110px; }
 .duo.rev > *:first-child { order: 2; }
 .duo .duo-en {
-  font-family: "Inter", sans-serif; font-size: 12.5px; letter-spacing: .14em; color: var(--muted);
+  font-family: "Inter", sans-serif; font-size: 13.5px; letter-spacing: .14em; color: var(--muted);
   font-weight: 500; display: block; margin-bottom: 14px;
 }
 .duo h3 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 900; letter-spacing: .04em; line-height: 1.55; margin-bottom: 20px; }
@@ -624,7 +626,7 @@ ul.ticks li {
 ul.ticks li::before {
   content: ""; position: absolute; left: 0; top: .72em; width: 12px; height: 2px; background: var(--aqua);
 }
-.dark ul.ticks li { color: rgba(255,255,255,.8); }
+.dark ul.ticks li { color: rgba(255,255,255,0.86); }
 
 /* --- 数字を主役にしたファクト行 --- */
 .facts-row { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
@@ -637,11 +639,11 @@ ul.ticks li::before {
   color: var(--blue); line-height: 1.2;
 }
 .facts-row .v small { font-size: .38em; font-weight: 700; margin-left: 3px; }
-.facts-row .l { font-size: 12.5px; color: var(--txt-2); margin-top: 8px; letter-spacing: .06em; }
+.facts-row .l { font-size: 13.5px; color: var(--txt-2); margin-top: 8px; letter-spacing: .06em; }
 .dark .facts-row { border-color: rgba(255,255,255,.22); }
 .dark .facts-row .f { border-color: rgba(255,255,255,.22); }
 .dark .facts-row .v { color: var(--yellow); }
-.dark .facts-row .l { color: rgba(255,255,255,.72); }
+.dark .facts-row .l { color: rgba(255,255,255,0.86); }
 
 /* --- ステップ（年表・育成フロー） --- */
 .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -653,7 +655,7 @@ ul.ticks li::before {
 }
 .steps .step.is-visible::before { width: 100%; }
 .steps .step .term {
-  font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .16em; color: var(--blue); font-weight: 700;
+  font-family: "Inter", sans-serif; font-size: 13px; letter-spacing: .16em; color: var(--blue); font-weight: 700;
   display: block; margin-bottom: 12px;
 }
 .steps .step h4 { font-size: 19px; font-weight: 900; margin-bottom: 10px; }
@@ -665,7 +667,7 @@ ul.ticks li::before {
 .qa .q { font-size: 16.5px; font-weight: 900; display: flex; gap: 14px; align-items: flex-start; }
 .qa .q::before { content: "Q"; font-family: "Inter", sans-serif; color: var(--blue); font-size: 18px; line-height: 1.5; }
 .qa .a { font-size: 15px; color: var(--txt-2); display: flex; gap: 14px; align-items: flex-start; margin-top: 12px; }
-.qa .a::before { content: "A"; font-family: "Inter", sans-serif; color: var(--aqua); font-size: 18px; font-weight: 700; line-height: 1.5; }
+.qa .a::before { content: "A"; font-family: "Inter", sans-serif; color: var(--aqua-text); font-size: 18px; font-weight: 700; line-height: 1.5; }
 
 /* --- 共通レスポンシブ --- */
 @media (max-width: 1080px) {
@@ -684,7 +686,7 @@ ul.ticks li::before {
   .stagger > *:nth-child(2), .stagger > *:nth-child(3) { margin-top: 0; }
   .ph-clip { aspect-ratio: 4/3; }
   .bg-word { font-size: 78px; top: 20px; right: 12px; }
-  .flow { margin-bottom: 40px; font-size: 11.5px; gap: 10px; }
+  .flow { margin-bottom: 40px; font-size: 12.5px; gap: 10px; }
   .flow .en-tail { display: none; }
   .dark-band { padding: 96px 0 88px; clip-path: polygon(0 40px, 100% 0, 100% 100%, 0 calc(100% - 40px)); }
   .facts-row { grid-template-columns: 1fr 1fr; border-left: 1px solid var(--border); }
@@ -697,7 +699,7 @@ ul.ticks li::before {
 
 /* 濃紺帯の中の写真プレースホルダ（白箱に見えないように） */
 .dark .ph-clip { background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
-.dark .ph-clip .ph-label { color: rgba(255,255,255,.5); }
+.dark .ph-clip .ph-label { color: rgba(255,255,255,0.86); }
 
 /* ============ ニュース: ホバーでアイキャッチをマウス位置に表示（js/d2-news-hover.js） ============ */
 .news-float {
