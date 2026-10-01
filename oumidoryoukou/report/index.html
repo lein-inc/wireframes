@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<script src="_auth.js"></script>
+<title>近江度量衡 運用レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* 白地に黒の文字、近江レッドを一点。数字は計量器の表示窓のように大きく、目盛りの罫で区切る */
+:root{
+  --bg:#ffffff;
+  --ink:#111111;
+  --sub:#5c5a57;
+  --line:#e4e2df;
+  --soft:#f6f5f3;
+  --red:#cc0700;
+  --red-soft:#fdeceb;
+  --good:#1f6f4a;
+  --good-soft:#e8f4ee;
+  --f-body:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-num:"Barlow Condensed","Zen Kaku Gothic New",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.75;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:24px;padding-block:56px 80px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.35}
+p{margin:0}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.ruler{height:14px;background:
+  repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 10px) bottom/100% 6px no-repeat,
+  repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 50px) bottom/100% 14px no-repeat;
+  opacity:.85}
+
+/* ヘッダー */
+.eyebrow{font-size:15px;font-weight:700;letter-spacing:.12em;color:var(--red)}
+.hero{display:grid;gap:20px;padding-bottom:36px}
+.hero h1{font-size:clamp(34px,5.4vw,56px);font-weight:900;letter-spacing:.01em}
+.hero .lead{font-size:clamp(19px,2.2vw,23px);font-weight:500;max-width:34em}
+.hero .lead b{background:linear-gradient(transparent 62%,var(--red-soft) 62%);font-weight:900}
+.meta{font-size:15px;color:var(--sub)}
+
+/* 計量結果 4枚 */
+.readings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:3px solid var(--ink);border-bottom:1px solid var(--ink)}
+.reading{padding:22px 20px 24px;display:grid;gap:6px;align-content:start;border-right:1px solid var(--line);min-width:0}
+.reading:last-child{border-right:0}
+.reading .label{font-size:16px;font-weight:700}
+.reading .value{font-size:clamp(48px,6.2vw,76px);font-weight:700;line-height:1;white-space:nowrap}
+.reading .value small{font-family:var(--f-body);font-size:.32em;font-weight:900;margin-left:4px}
+.reading .note{font-size:15px;color:var(--sub);line-height:1.6}
+.reading.alert .value{color:var(--red)}
+.reading.alert{background:var(--red-soft)}
+
+section{padding-top:72px;display:grid;gap:28px}
+.sec-head{display:grid;gap:10px}
+.sec-head .tag{font-size:15px;font-weight:700;letter-spacing:.1em;color:var(--sub)}
+.sec-head h2{font-size:clamp(28px,3.6vw,38px);font-weight:900}
+.sec-head p{font-size:19px;color:var(--sub);max-width:36em}
+
+/* どこから来た */
+.split{display:flex;height:72px;border-radius:6px;overflow:hidden;font-weight:900}
+.split div{display:flex;align-items:center;padding-inline:18px;font-size:26px;min-width:0}
+.split .s1{background:var(--ink);color:#fff}
+.split .s2{background:#9a9893;color:#fff}
+.split .s3{background:var(--line);color:var(--ink)}
+.split-legend{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:16px;color:var(--sub)}
+.split-legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:8px;vertical-align:-1px;background:var(--c)}
+
+/* 人気ページ */
+.pages{display:grid;gap:12px}
+.prow{display:grid;grid-template-columns:11em minmax(0,1fr) 10em;gap:16px;align-items:center;font-size:17px}
+.prow .name{font-weight:700;text-align:right}
+.prow .bar{height:30px;background:var(--soft);border-radius:4px;position:relative}
+.prow .bar i{position:absolute;inset:0 auto 0 0;background:#c9c6c0;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-style:normal;font-family:var(--f-num);font-weight:600;font-size:19px;color:var(--ink);min-width:3.2em}
+.prow .time{white-space:nowrap;font-family:var(--f-num);font-size:20px;font-weight:600;color:var(--sub)}
+.prow.hot .bar i{background:var(--ink);color:#fff}
+.prow.hot .time{color:var(--red)}
+.prow.hot .time::after{content:"じっくり";font-family:var(--f-body);font-size:12px;font-weight:900;color:#fff;background:var(--red);border-radius:3px;padding:2px 6px;margin-left:8px;vertical-align:3px}
+.pages-head{display:grid;grid-template-columns:11em minmax(0,1fr) 10em;gap:16px;font-size:14px;color:var(--sub);font-weight:700}
+
+/* ファネル */
+.funnel{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) 9em;gap:20px;align-items:center}
+.step .shape{height:64px;background:#c9c6c0;border-radius:6px;display:flex;align-items:center;padding-inline:20px;font-weight:900;font-size:19px;color:var(--ink);margin-inline:auto;width:var(--w)}
+.step .count{font-family:var(--f-num);font-size:44px;font-weight:700;line-height:1}
+.step .count small{font-family:var(--f-body);font-size:16px;font-weight:900;margin-left:2px}
+.step.key .shape{background:var(--ink);color:#fff}
+.step.unknown .shape{background:transparent;border:2px dashed #9a9893;color:var(--sub)}
+.step.unknown .count{font-size:20px;font-family:var(--f-body);font-weight:900;color:var(--red);line-height:1.4}
+.callout{border-left:6px solid var(--red);background:var(--red-soft);padding:16px 20px;font-size:18px;font-weight:500}
+.callout b{font-weight:900}
+
+/* 改善 */
+.fixes{display:grid;gap:20px}
+.fix{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr) 40px minmax(0,1.15fr);align-items:stretch;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fix-title{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--line)}
+.fix-title .no{font-family:var(--f-num);font-size:34px;font-weight:700;line-height:1;color:var(--red)}
+.fix-title h3{font-size:22px;font-weight:900}
+.fix-title .pri{margin-left:auto;font-size:14px;font-weight:900;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.pri.high{background:var(--ink);color:#fff}
+.pri.mid{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.cell{padding:18px 20px;display:grid;gap:6px;align-content:start;min-width:0}
+.cell .k{font-size:13px;font-weight:900;letter-spacing:.1em;color:var(--sub)}
+.cell p{font-size:17px;line-height:1.65}
+.cell.now{background:#fffafa}
+.cell.now .k{color:var(--red)}
+.cell.exp{background:var(--good-soft)}
+.cell.exp .k{color:var(--good)}
+.cell.exp .big{font-family:var(--f-num);font-size:clamp(34px,4vw,46px);font-weight:700;line-height:1.05;color:var(--good)}
+.cell.exp .big small{font-family:var(--f-body);font-size:.42em;font-weight:900}
+.arrow{display:flex;align-items:center;justify-content:center;color:#b5b2ad;font-size:26px;font-weight:900}
+.footnote{font-size:15px;color:var(--sub)}
+
+/* 進め方 */
+.plan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:3px solid var(--ink)}
+.phase{padding:20px 22px 24px;display:grid;gap:10px;align-content:start;border-right:1px solid var(--line);min-width:0}
+.phase:last-child{border-right:0}
+.phase .when{font-family:var(--f-num);font-size:38px;font-weight:700;line-height:1}
+.phase .when small{font-family:var(--f-body);font-size:16px;font-weight:900;margin-left:4px}
+.phase h3{font-size:21px;font-weight:900}
+.phase ul{margin:0;padding-left:1.1em;font-size:17px;display:grid;gap:4px}
+.phase.now{background:var(--red-soft)}
+.phase.now .when{color:var(--red)}
+
+/* 確認 */
+.asks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.asks li{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;background:var(--soft);border-radius:8px;font-size:17px;font-weight:500;min-width:0}
+.asks li::before{content:"";flex:none;width:20px;height:20px;border:2px solid var(--ink);border-radius:4px;margin-top:4px}
+
+footer{margin-top:72px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--sub);display:flex;flex-wrap:wrap;gap:6px 24px}
+
+@media (max-width:760px){
+  body{font-size:17px}
+  .wrap{padding-inline:16px;padding-block:36px 56px}
+  .readings{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reading:nth-child(2){border-right:0}
+  .reading:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .prow,.pages-head{grid-template-columns:7.5em minmax(0,1fr) 5.2em;gap:10px;font-size:15px}
+  .prow.hot .time::after{display:none}
+  .split div{font-size:20px;padding-inline:10px}
+  .step{grid-template-columns:minmax(0,1fr) 6em;gap:12px}
+  .step .shape{font-size:15px;padding-inline:12px;height:56px}
+  .step .count{font-size:34px}
+  .fix{grid-template-columns:minmax(0,1fr)}
+  .arrow{transform:rotate(90deg);height:28px}
+  .plan{grid-template-columns:minmax(0,1fr)}
+  .phase{border-right:0;border-bottom:1px solid var(--line)}
+  .asks{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">新ホームページ 公開1週間の計量結果</div>
+    <h1>よく見られています。<br>次は「見つけてもらう」番です。</h1>
+    <p class="lead">来てくれる人の多くは、すでに社名を知っている人。<b>まだ近江度量衡を知らないお客様に届ける</b>のが、ここからの伸びしろです。</p>
+    <p class="meta">計測期間 2026年9月24日〜30日　／　株式会社レイン</p>
+  </header>
+
+  <div class="ruler" aria-hidden="true"></div>
+  <div class="readings">
+    <div class="reading">
+      <div class="label">来てくれた人</div>
+      <div class="value num">432<small>人</small></div>
+      <p class="note">ページは合計2,166回<br>見られました</p>
+    </div>
+    <div class="reading">
+      <div class="label">検索から来た割合</div>
+      <div class="value num">57<small>%</small></div>
+      <p class="note">ほとんどが「近江度量衡」<br>と社名で検索</p>
+    </div>
+    <div class="reading">
+      <div class="label">フォームに入力した人</div>
+      <div class="value num">34<small>人</small></div>
+      <p class="note">送信まで行った数は<br>10月から数えます</p>
+    </div>
+    <div class="reading alert">
+      <div class="label">行き止まりの旧ページ</div>
+      <div class="value num">4,727<small>回</small></div>
+      <p class="note">「生籾」で検索に出たのに<br>今は開けないページ</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">どこから来て、何を見た？</div>
+      <h2>検索で来て、会社と採用を<br>じっくり読んでいます</h2>
+    </div>
+    <div class="split" role="img" aria-label="検索57%、直接27%、その他16%">
+      <div class="s1 num" style="flex:57">57%</div>
+      <div class="s2 num" style="flex:27">27%</div>
+      <div class="s3 num" style="flex:16">16%</div>
+    </div>
+    <div class="split-legend">
+      <span style="--c:var(--ink)">検索（Google・Bing・Yahoo）</span>
+      <span style="--c:#9a9893">直接（ブックマーク・メールなど）</span>
+      <span style="--c:var(--line)">その他（広告・他サイト・AI）</span>
+    </div>
+
+    <div class="pages">
+      <div class="pages-head"><span style="text-align:right">ページ</span><span>見た人の数</span><span>1人の閲覧時間</span></div>
+      <div class="prow"><span class="name">トップ</span><span class="bar"><i class="num" style="width:100%">274</i></span><span class="time">39秒</span></div>
+      <div class="prow"><span class="name">会社案内</span><span class="bar"><i class="num" style="width:74%">203</i></span><span class="time">1分05秒</span></div>
+      <div class="prow"><span class="name">製品・技術</span><span class="bar"><i class="num" style="width:42%">115</i></span><span class="time">35秒</span></div>
+      <div class="prow hot"><span class="name">採用情報</span><span class="bar"><i class="num" style="width:35%">97</i></span><span class="time">2分07秒</span></div>
+      <div class="prow hot"><span class="name">近江度量衡の歴史</span><span class="bar"><i class="num" style="width:29%">79</i></span><span class="time">2分11秒</span></div>
+      <div class="prow"><span class="name">納入実績</span><span class="bar"><i class="num" style="width:25%">69</i></span><span class="time">49秒</span></div>
+      <div class="prow"><span class="name">お問い合わせ</span><span class="bar"><i class="num" style="width:24%">66</i></span><span class="time">24秒</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">お問い合わせまでの道のり</div>
+      <h2>34人が入力を始めました。<br>送信数は10月から数えます</h2>
+    </div>
+    <div class="funnel">
+      <div class="step"><div class="shape" style="--w:100%">サイトに来た</div><div class="count num">432<small>人</small></div></div>
+      <div class="step"><div class="shape" style="--w:62%">フォームのページを開いた</div><div class="count num">93<small>人</small></div></div>
+      <div class="step key"><div class="shape" style="--w:38%">入力を始めた</div><div class="count num">34<small>人</small></div></div>
+      <div class="step unknown"><div class="shape" style="--w:24%">送信した</div><div class="count">10月から<br>計測</div></div>
+    </div>
+    <p class="callout">公開週に<b>実際に何件届いたか</b>、受信メールの件数を教えてください。10月分のレポートと比べられるようになります。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">もったいない所と、直したらどうなるか</div>
+      <h2>5つの改善で、問い合わせと<br>応募の入口を広げます</h2>
+    </div>
+
+    <div class="fixes">
+      <article class="fix">
+        <div class="fix-title"><span class="no num">1</span><h3>行き止まりのページに道案内</h3><span class="pri high">優先度 高</span></div>
+        <div class="cell now"><span class="k">いま</span><p>「生籾」で週4,727回検索に出ていた旧ページが、引っ越しで開けなくなっている</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">やること</span><p>旧ページの住所から、新しい製品ページへ自動で案内する</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待できること</span><div class="big num">+50〜100<small>人／週</small></div><p>検索からの来訪が戻る</p></div>
+      </article>
+
+      <article class="fix">
+        <div class="fix-title"><span class="no num">2</span><h3>採用エントリーへの近道</h3><span class="pri high">優先度 高</span></div>
+        <div class="cell now"><span class="k">いま</span><p>採用ページを見た人のうち、エントリーページまで進むのは約3割</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">やること</span><p>社員インタビューの最後に、エントリーボタンを置く</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待できること</span><div class="big num">4〜5<small>割へ</small></div><p>いまの約3割から、エントリーまで進む人が増える</p></div>
+      </article>
+
+      <article class="fix">
+        <div class="fix-title"><span class="no num">3</span><h3>お問い合わせをしやすく</h3><span class="pri high">優先度 高</span></div>
+        <div class="cell now"><span class="k">いま</span><p>お問い合わせページの滞在は平均24秒。途中でやめている人がいる可能性</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">やること</span><p>製品名入りで問い合わせできるように。電話番号も並べ、入力項目を減らす</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待できること</span><div class="big num">送信数 UP</div><p>10月の送信数を基準に効果を確認</p></div>
+      </article>
+
+      <article class="fix">
+        <div class="fix-title"><span class="no num">4</span><h3>製品ごとの紹介ページ</h3><span class="pri mid">優先度 中</span></div>
+        <div class="cell now"><span class="k">いま</span><p>社名以外の言葉で検索されても、ほとんどクリックされていない</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">やること</span><p>オートチェッカー、ホッパースケールなど、製品ごとにページを作る</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待できること</span><div class="big num">3〜6<small>か月で効果</small></div><p>製品名で探す新しいお客様に届く</p></div>
+      </article>
+
+      <article class="fix">
+        <div class="fix-title"><span class="no num">5</span><h3>お知らせを続ける</h3><span class="pri mid">優先度 中</span></div>
+        <div class="cell now"><span class="k">いま</span><p>新着情報の閲覧は1週間で21回</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">やること</span><p>展示会・納入事例などを月1〜2本、御社で投稿</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待できること</span><div class="big num">再訪 UP</div><p>また見に来る人と、検索での評価が上がる</p></div>
+      </article>
+    </div>
+    <p class="footnote">※ 1の目安は「表示4,727回 × クリック率1〜2%」で計算。どの数字も公開1週間の実績からの見込みで、毎月のレポートで実際の効果を確かめます。</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">これからの進め方</div>
+      <h2>すぐ効くことから始めて、<br>数字で確かめながら進めます</h2>
+    </div>
+    <div class="plan">
+      <div class="phase now">
+        <div class="when num">10<small>月</small></div>
+        <h3>すぐ効くこと</h3>
+        <ul><li>1 行き止まりに道案内</li><li>2 エントリーへの近道</li><li>送信数の計測を開始（済）</li></ul>
+      </div>
+      <div class="phase">
+        <div class="when num">11<small>月上旬</small></div>
+        <h3>数字で確かめる</h3>
+        <ul><li>10月分のレポートをお届け</li><li>問い合わせ件数と送信率</li><li>1・2の効果を確認</li></ul>
+      </div>
+      <div class="phase">
+        <div class="when num">12<small>月〜</small></div>
+        <h3>追加の改善</h3>
+        <ul><li>3 お問い合わせ改善</li><li>4 製品ごとのページ</li><li>毎月レポートで効果確認</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="tag">打ち合わせで確認したいこと</div>
+      <h2>決めたいことは6つです</h2>
+    </div>
+    <ul class="asks">
+      <li>公開後に届いたお問い合わせ・応募の件数</li>
+      <li>1と2を10月中に進めてよいか</li>
+      <li>製品ページで特に力を入れたい製品</li>
+      <li>お知らせを投稿するご担当者</li>
+      <li>ネット広告を出しているか（広告経由らしき来訪が34回）</li>
+      <li>アクセス解析を共有するGoogleアカウント</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>出典：Googleアナリティクス4、Googleサーチコンソール</span>
+    <span>集計：2026年9月24日〜30日（公開日13時〜）</span>
+    <span>作成：株式会社レイン 関 直史</span>
+  </footer>
+</main>
+
+</body>
+</html>
