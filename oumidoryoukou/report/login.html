@@ -50,8 +50,8 @@
   });
   function check() {
     var pw = document.getElementById('pw').value;
-    if (pw === 'stgleinoumi') {
-      sessionStorage.setItem('oumi_auth', '1');
+    if (pw === 'leinoumi1002') {
+      sessionStorage.setItem('oumi_report_auth', '1');
       var p = new URLSearchParams(location.search).get('next');
       location.href = p || 'index.html';   /* 最新TOP */
     } else {
