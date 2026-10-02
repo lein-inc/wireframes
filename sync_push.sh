@@ -22,6 +22,10 @@ rsync -a --delete \
   --exclude='引き継ぎ_*.md' --exclude='.DS_Store' \
   /Users/apple/site/dainigikou/wf/ ./d2-kaihatu/
 
+# 手形山すずき動物病院（運用レポート）
+rsync -a --delete --exclude='.DS_Store' \
+  /Users/apple/site/tegatayama/ ./tegatayama/
+
 git add -A
 if git diff --cached --quiet; then echo "no changes"; exit 0; fi
 git -c user.name="seki" -c user.email="naofumi@le-in.net" commit -q -m "$MSG
