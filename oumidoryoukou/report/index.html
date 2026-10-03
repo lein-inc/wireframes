@@ -114,6 +114,20 @@ section.block{padding-top:64px;display:grid;gap:24px}
 .cell.exp .big small{font-size:.5em}
 .arrow{display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:20px}
 
+/* コンテンツ拡充 */
+.contents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}
+.ct{padding:20px 22px 22px;display:grid;gap:8px;align-content:start;border-bottom:1px solid var(--line);min-width:0}
+.ct:nth-child(even){border-right:1px solid var(--line)}
+.ct .tag{font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--sub)}
+.ct h3{font-size:19px;font-weight:700}
+.ct p{font-size:15.5px;line-height:1.75}
+.ct dl{margin:4px 0 0;display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:2px 10px;font-size:14px}
+.ct dt{color:var(--sub);font-weight:700}
+.ct dd{margin:0}
+.ct.main{grid-column:1/-1;border-right:0;background:var(--soft)}
+.topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.topics span{font-size:14px;border:1px solid var(--ink);background:var(--bg);padding:3px 10px}
+
 /* 進め方 */
 .plan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
 .phase{padding:18px 20px 22px;display:grid;gap:8px;align-content:start;border-right:1px solid var(--line);min-width:0}
@@ -153,6 +167,8 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   .plan{grid-template-columns:minmax(0,1fr)}
   .phase{border-right:0;border-bottom:1px solid var(--line)}
   .asks{grid-template-columns:minmax(0,1fr)}
+  .contents{grid-template-columns:minmax(0,1fr)}
+  .ct:nth-child(even){border-right:0}
   .asks li:nth-child(odd){padding-right:4px}
 }
 </style>
@@ -292,7 +308,58 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">04</span><h2>今後の進め方</h2></div>
+    <div class="sec-head"><span class="no num">04</span><h2>今後のコンテンツ拡充</h2></div>
+    <p class="text">製品を探している人だけでなく、計量・選別について調べている人にも届くよう、専門性を生かした読み物を増やします。検索だけでなく、ChatGPTなどのAIからの来訪（9日間で5回）も始まっており、正確な解説記事はAIに引用されやすくなります。</p>
+    <div class="contents">
+      <div class="ct main">
+        <span class="tag">柱となる施策</span>
+        <h3>専門コラム「計量の基礎知識」</h3>
+        <p>計量・選別の専門家として、業界の人が調べる言葉を解説する記事を月1〜2本掲載します。すでに検索で表示されている言葉から始めるため、早く結果が出やすいテーマです。</p>
+        <div class="topics"><span>生籾とは（9日間で439回表示）</span><span>度量衡とは（134回表示）</span><span>オートパッカーとは</span><span>計量法と検定の基本</span><span>選果の自動化とは</span><span>126年でみる計量の歴史</span></div>
+        <dl><dt>狙う人</dt><dd>JA・農業法人・食品工場の担当者、計量を学ぶ学生</dd><dt>体制</dt><dd>御社の技術者に30分ほど取材 → 当社が記事化 → 御社で内容確認</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">比較検討中の人へ</span>
+        <h3>導入事例の詳細ページ</h3>
+        <p>納入実績の一覧から、課題・導入した設備・効果がわかる事例ページへ。導入を検討している人の決め手になります。</p>
+        <dl><dt>根拠</dt><dd>納入実績は78人が閲覧、平均56秒</dd><dt>頻度</dt><dd>2〜3か月に1本</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">問い合わせの手前の人へ</span>
+        <h3>カタログ・技術資料のダウンロード</h3>
+        <p>製品カタログをメールアドレスと引き換えにダウンロードできるようにし、すぐには問い合わせない見込み客とつながります。</p>
+        <dl><dt>根拠</dt><dd>製品ページの閲覧は1人30秒〜1分台と短め</dd><dt>準備</dt><dd>既存カタログのPDF化と申込フォーム</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">疑問を持った人へ</span>
+        <h3>よくあるご質問</h3>
+        <p>保守・修理の対応地域、検定の時期、納期の目安など、問い合わせ前に知りたいことをまとめます。電話やメールの手間も減らせます。</p>
+        <dl><dt>準備</dt><dd>御社によく来る質問を10件ほど伺います</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">応募を考えている人へ</span>
+        <h3>社員インタビューの追加</h3>
+        <p>採用情報とインタビューはよく読まれています。職種や拠点を広げて本数を増やし、働く姿を具体的に伝えます。</p>
+        <dl><dt>根拠</dt><dd>インタビュー5ページで計177回閲覧</dd><dt>頻度</dt><dd>半年に1〜2名</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">現場を見たい人へ</span>
+        <h3>動画の活用</h3>
+        <p>撮影済みの工場・設備の映像を、短い動画にして製品ページや新着情報に載せます。動いている様子は写真より伝わります。</p>
+        <dl><dt>準備</dt><dd>撮影済みの素材を編集（新規撮影は不要）</dd></dl>
+      </div>
+      <div class="ct">
+        <span class="tag">業界の人へ</span>
+        <h3>展示会・イベントの告知とレポート</h3>
+        <p>出展する展示会の案内と、当日の様子のレポートを新着情報に載せます。会場で出会った人がサイトを訪れたときの受け皿になります。</p>
+        <dl><dt>頻度</dt><dd>出展のたびに告知とレポートを1本ずつ</dd></dl>
+      </div>
+    </div>
+    <p class="note-s">※ 専門コラムは、効果が出るまで3〜6か月が目安です。月次レポートで記事ごとの閲覧数と、そこからのお問い合わせを報告します。</p>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><span class="no num">05</span><h2>今後の進め方</h2></div>
     <div class="plan">
       <div class="phase now">
         <div class="when num">10<small>月</small></div>
@@ -307,18 +374,20 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="phase">
         <div class="when num">12<small>月〜</small></div>
         <h3>改善の実施</h3>
-        <ul><li>施策2　フォームの改善</li><li>施策3　製品別紹介ページの新設</li><li>月次レポートで効果を検証</li></ul>
+        <ul><li>施策2　フォームの改善</li><li>施策3　製品別紹介ページの新設</li><li>専門コラムの連載開始</li><li>月次レポートで効果を検証</li></ul>
       </div>
     </div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">05</span><h2>ご確認事項</h2></div>
+    <div class="sec-head"><span class="no num">06</span><h2>ご確認事項</h2></div>
     <ul class="asks">
       <li>17件の送信のうち、実際のお問い合わせの件数</li>
       <li>施策1・2を10月中に進めてよいか</li>
       <li>製品別ページで優先したい製品</li>
       <li>新着情報を投稿するご担当者</li>
+      <li>コラムの取材にご協力いただける技術者の方</li>
+      <li>コラム・導入事例で取り上げたいテーマ</li>
       <li>ネット広告の出稿状況</li>
       <li>アクセス解析を共有するGoogleアカウント</li>
     </ul>
