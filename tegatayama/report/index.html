@@ -176,7 +176,17 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
 .two h3{font-size:17px;font-weight:700;margin-bottom:12px}
 .rate .prow,.rate .phead{grid-template-columns:11em minmax(0,1fr) 4em}
 .rate .prow{font-size:15px}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.opt{padding:18px 20px 22px;display:grid;gap:8px;align-content:start;border-right:1px solid var(--line);min-width:0}
+.opt:last-child{border-right:0}
+.opt .k{font-size:12.5px;font-weight:700;letter-spacing:.1em;color:var(--sub)}
+.opt h3{font-size:18px;font-weight:700;line-height:1.5}
+.opt p{font-size:15px;line-height:1.7}
+.opt .who{font-size:13.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:8px}
+.opt.rec{background:var(--soft)}
 @media (max-width:760px){
+  .opts{grid-template-columns:minmax(0,1fr)}
+  .opt{border-right:0;border-bottom:1px solid var(--line)}
   .cv{grid-template-columns:minmax(0,1fr)}
   .cv>div{border-right:0;border-bottom:1px solid var(--line)}
   .cv>div:last-child{border-bottom:0}
@@ -194,7 +204,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   <header class="cover">
     <div class="kicker">運用レポート　2026年9月</div>
     <h1>ホームページの状況とご提案</h1>
-    <p class="lead">9月のアクセス状況と、ネット予約・お問い合わせにつながった数、Googleマップでの見え方をご報告します。</p>
+    <p class="lead">9月のアクセス状況と、ホームページを訪れた方が予約・お電話・お問い合わせへどう進んでいるか、Googleマップでの見え方をご報告します。</p>
     <p class="meta">集計期間　2026年9月1日〜30日　／　株式会社レイン</p>
   </header>
 
@@ -203,9 +213,9 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="issue-list">
       <div class="issue">
         <div class="no num">1</div>
-        <h3>予約・お電話の数が<br>正しく数えられていない</h3>
-        <p>ネット予約ボタンは<b>126人</b>が押していますが、予約完了までは追えていません。電話番号は<b>タップしても発信できない</b>ため、お電話の数も分かりません。</p>
-        <div class="to">→ 施策1　予約・電話の導線と計測</div>
+        <h3>予約・お電話への<br>入口が分かりにくい</h3>
+        <p>予約ページへ進んだのは来訪者の<b>約9%（126人）</b>です。予約ボタンはスマホではメニューの中にあり、電話番号は<b>タップしても発信できません</b>。</p>
+        <div class="to">→ 施策1　予約・電話への導線づくり</div>
       </div>
       <div class="issue">
         <div class="no num">2</div>
@@ -231,7 +241,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="kpi">
       <div class="label">ネット予約ボタン</div>
       <div class="value num">126<small>人</small></div>
-      <p class="note">予約ページへ進んだ人<br>（うち122人がスマホ）</p>
+      <p class="note">来訪者の約9%が予約ページへ<br>（うち122人がスマホ）</p>
     </div>
     <div class="kpi">
       <div class="label">秋田県からの来訪</div>
@@ -273,29 +283,41 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">02</span><h2>予約・お問い合わせにつながった数</h2></div>
-    <p class="text">動物病院のホームページの成果は「来院につながる行動」です。今後は次の3つを<b>成果（コンバージョン）</b>として毎月数えます。</p>
-    <div class="cv">
-      <div>
-        <span class="k">成果 1</span>
-        <div class="label">ネット予約ボタン</div>
-        <div class="value num">126<small>人</small></div>
-        <p class="note">「ネット当日受付・予約はこちら」から予約ページ（ペットパス）へ進んだ人。予約が完了した件数はペットパス側で確認します。</p>
-      </div>
-      <div>
-        <span class="k">成果 2</span>
-        <div class="label">お電話</div>
-        <div class="value na">計測できない</div>
-        <p class="note">電話番号が文字だけで、スマホでタップしても発信できません。タップで発信できる形にすれば、押された数を毎月数えられます。</p>
-      </div>
-      <div>
-        <span class="k">成果 3</span>
-        <div class="label">お問い合わせフォーム</div>
-        <div class="value num">11<small>件</small></div>
-        <p class="note">腹腔鏡手術受付・採用応募フォームの送信完了。フォームを開いた77人のうち、入力を始めたのは20人です。</p>
+    <div class="sec-head"><span class="no num">02</span><h2>来訪から予約・お問い合わせまでの流れ</h2></div>
+    <p class="text">ホームページの役割は、訪れた方を<b>予約・お電話・お問い合わせ</b>まで迷わずご案内することです。9月に来訪した1,410人が、どこまで進んだかをまとめました。</p>
+    <div class="rate">
+      <div class="pages">
+        <div class="phead"><span style="text-align:right">行動</span><span>人数</span><span>来訪比</span></div>
+        <div class="prow"><span class="name">来訪</span><span class="bar"><i class="num" style="width:100%">1,410</i></span><span class="time num">—</span></div>
+        <div class="prow hot"><span class="name">ネット予約ページへ</span><span class="bar"><i class="num" style="width:9%">126</i></span><span class="time num">8.9%</span></div>
+        <div class="prow"><span class="name">予約アプリを入手しに</span><span class="bar"><i class="num" style="width:7.3%">103</i></span><span class="time num">7.3%</span></div>
+        <div class="prow"><span class="name">フォームを開く</span><span class="bar"><i class="num" style="width:5.5%">77</i></span><span class="time num">5.5%</span></div>
+        <div class="prow"><span class="name">フォーム送信</span><span class="bar"><i class="num" style="width:0.8%">11</i></span><span class="time num">0.8%</span></div>
+        <div class="prow"><span class="name">お電話</span><span class="bar"><i style="width:0;background:none;justify-content:flex-start;padding-left:10px;font-weight:500;color:var(--sub);min-width:14em;white-space:nowrap">タップ発信できず数えられない</i></span><span class="time num">—</span></div>
       </div>
     </div>
-    <p class="callout">このほか、ペットパスのアプリを入れに行った人が<b>103人</b>（App Store 77人・Google Play 26人）、ホームページから地図を開いた人が<b>15人</b>いました。どちらも来院の一歩手前の行動として、あわせて見ていきます。</p>
+    <p class="note-s">※ 予約が完了した件数や実際のお電話の件数は、ホームページの外（予約システム・病院の電話）での出来事です。このレポートでは、ホームページから予約・お電話・お問い合わせへ<b>送り出した数</b>を成果として扱います。</p>
+    <div class="cv">
+      <div>
+        <span class="k">入口 1</span>
+        <div class="label">ネット予約</div>
+        <div class="value num">126<small>人</small></div>
+        <p class="note">予約ページへ直接進めるボタンは、スマホのメニューの中と「診察について」ページの2か所だけです。パソコンの予約ボタンとページ下の予約バナーは、いったんアプリ紹介ページ（ペットパス）へ案内され、そこからアプリを入手しに行った人が103人でした。</p>
+      </div>
+      <div>
+        <span class="k">入口 2</span>
+        <div class="label">お電話</div>
+        <div class="value na">タップで<br>かけられない</div>
+        <p class="note">「お電話でのご予約はこちらから」と書かれた番号も文字だけで、スマホでは番号を打ち直す必要があります。タップで発信できる形にすれば、押された数も毎月数えられます。</p>
+      </div>
+      <div>
+        <span class="k">入口 3</span>
+        <div class="label">お問い合わせフォーム</div>
+        <div class="value num">11<small>件</small></div>
+        <p class="note">腹腔鏡手術受付・採用応募フォーム。開いた77人のうち入力を始めたのは20人で、7割以上が入力前に離れています。</p>
+      </div>
+    </div>
+    <p class="callout">よく見られている「診察について」「休診日のお知らせ」「ペットパス」は、<b>来院を決める直前に確かめるページ</b>です。ここから迷わず予約・お電話へ進める形に整えることが、成果を増やすいちばんの近道です。なお、スマホのメニュー内にある「診察について」ボタンはリンク先が空のままで、押しても移動しません。</p>
   </section>
 
   <section class="block">
@@ -329,26 +351,84 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">04</span><h2>サイトの健康状態</h2></div>
+    <div class="sec-head"><span class="no num">04</span><h2>症例紹介の運用について</h2></div>
+    <p class="text">以前に追加した症例紹介は、腹腔鏡手術など<b>手形山すずき動物病院ならではの専門性</b>を伝えられる場所です。ただ、2025年2月を最後に更新が止まっています。</p>
+    <div class="cv">
+      <div>
+        <span class="k">掲載数</span>
+        <div class="label">症例紹介の記事</div>
+        <div class="value num">3<small>件</small></div>
+        <p class="note">最後の投稿は2025年2月18日。1年半以上、新しい記事がありません。</p>
+      </div>
+      <div>
+        <span class="k">9月の閲覧</span>
+        <div class="label">症例紹介の一覧</div>
+        <div class="value num">100<small>人</small></div>
+        <p class="note">一覧を見た人。1人あたり16秒と短く、記事を開いたのは延べ57人です。</p>
+      </div>
+      <div>
+        <span class="k">記事の形</span>
+        <div class="label">1本あたりの分量</div>
+        <div class="value num">約800<small>字</small></div>
+        <p class="note">3本とも「病気の説明・診断・手術・術後の経過」の同じ流れで書かれています。</p>
+      </div>
+    </div>
+    <h3 style="font-size:17px;font-weight:700">運用でお困りの点はありませんか</h3>
+    <ul class="asks">
+      <li>診療が忙しく、文章を書く時間がとれない</li>
+      <li>どの症例を載せればよいか迷う</li>
+      <li>写真の選び方や、飼い主さまの了解の取り方が分からない</li>
+      <li>管理画面での入力・公開の手順が分かりにくい</li>
+      <li>専門的な内容を、飼い主さま向けにどこまでかみ砕くか迷う</li>
+      <li>書いても読まれているのか分からない</li>
+    </ul>
+    <p class="note-s">※ 当てはまるものをお聞かせください。お困りの点に合わせて、下の改善方法を組み合わせます。</p>
+    <h3 style="font-size:17px;font-weight:700">改善方法の案</h3>
+    <div class="opts">
+      <div class="opt">
+        <span class="k">案 A</span>
+        <h3>書く項目を決めた<br>入力の型を用意</h3>
+        <p>「病気の説明・診断・治療・経過」の4項目と写真欄を最初から並べた入力ひな形を用意します。空欄を埋めるだけで、いまの記事と同じ形になります。</p>
+        <div class="who">病院：項目を埋める ／ 当社：ひな形の設定</div>
+      </div>
+      <div class="opt rec">
+        <span class="k">案 B（おすすめ）</span>
+        <h3>聞き取りから<br>当社が原稿を作成</h3>
+        <p>月1回、先生に10〜15分ほどお話を伺い、当社が原稿にまとめます。先生は内容の確認と写真の提供だけで済みます。</p>
+        <div class="who">病院：お話・確認・写真 ／ 当社：原稿・入力・公開</div>
+      </div>
+      <div class="opt">
+        <span class="k">案 C</span>
+        <h3>1本をGoogleマップや<br>SNSにも活用</h3>
+        <p>公開した症例を、Googleマップの投稿やThreadsでも短く紹介します。1回の作業で、地図・SNS・ホームページの3か所に届きます。</p>
+        <div class="who">病院：なし ／ 当社：要約・投稿</div>
+      </div>
+    </div>
+    <p class="callout">目標は<b>2か月に1本</b>から。腹腔鏡手術の症例が増えると、「犬 腹腔鏡 秋田」のように<b>専門の治療を探している飼い主さま</b>に見つけてもらいやすくなり、遠方からの来院にもつながります。</p>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><span class="no num">05</span><h2>サイトの健康状態</h2></div>
     <ul class="status">
       <li><span class="st">正常</span><div><b>サイトの表示</b><p>8月20日〜23日の停止は23日に復旧済み。現在は全ページ正常に表示されています。</p></div></li>
       <li><span class="st">正常</span><div><b>WordPress本体・SSL（通信の暗号化）</b><p>本体は最新の7.1.2に自動更新済み。SSLは2026年11月28日まで有効で、自動で更新されます。</p></div></li>
       <li><span class="st ng">要対応</span><div><b>プラグイン（追加機能）</b><p>16本のうち13本が更新待ちで、自動更新もされない設定です。本体だけが更新され、プラグインが古いまま残る状態は、8月の停止と同じ構造です。</p></div></li>
       <li><span class="st ng">要対応</span><div><b>お問い合わせフォーム・ログイン保護</b><p>サーバーの実行環境（PHP）が古く、フォームの機能を最新版に更新できません。不正ログインを防ぐ機能も停止したままです。</p></div></li>
+      <li><span class="st ng">要対応</span><div><b>仮の投稿が公開のまま</b><p>制作時の「タイトルが入ります」という仮の記事が公開されています（9月に4人が閲覧）。非公開にします。</p></div></li>
     </ul>
     <p class="note-s">※ プラグインの状況は2026年9月10日時点の確認です。</p>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">05</span><h2>改善施策と期待効果</h2></div>
+    <div class="sec-head"><span class="no num">06</span><h2>改善施策と期待効果</h2></div>
     <div class="fixes">
       <article class="fix">
-        <div class="fix-title"><span class="no num">1</span><h3>予約・電話の導線と計測</h3><span class="pri high">優先度 高</span></div>
-        <div class="cell"><span class="k">現状</span><p>予約ボタンは126人が押しているが、電話はタップできず件数も分からない</p></div>
+        <div class="fix-title"><span class="no num">1</span><h3>予約・電話への導線づくり</h3><span class="pri high">優先度 高</span></div>
+        <div class="cell"><span class="k">現状</span><p>予約ページへ進むのは来訪者の約9%。予約の入口はメニューの中やアプリ紹介ページの先にあり、電話はタップできない</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>電話番号をタップで発信できる形に。スマホ画面の下に「ネット予約」「電話」のボタンを常に表示し、押された数を自動で記録する</p></div>
+        <div class="cell"><span class="k">施策</span><p>スマホ画面の下に「ネット予約」「電話する」ボタンを常に表示。電話番号をタップで発信できる形にし、休診日のお知らせなどにも予約ボタンを置く。空のリンクも直す</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell exp"><span class="k">期待効果</span><div class="big">予約・電話<small>を毎月数で把握</small></div><p>どのページから予約が生まれているかが分かり、改善の効果を測れる</p></div>
+        <div class="cell exp"><span class="k">期待効果</span><div class="big">予約・電話<small>へ進む人を増やす</small></div><p>どのページを見ていても1回のタップで予約・お電話へ進める。押された数を毎月数え、改善の効果を確かめる</p></div>
       </article>
       <article class="fix">
         <div class="fix-title"><span class="no num">2</span><h3>Googleビジネスプロフィールの整備</h3><span class="pri high">優先度 高</span></div>
@@ -382,40 +462,49 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell exp"><span class="k">期待効果</span><div class="big">安全性<small>と送信率の向上</small></div><p>入力を始めた20人のうち、送信まで進む人を増やす</p></div>
       </article>
+      <article class="fix">
+        <div class="fix-title"><span class="no num">6</span><h3>症例紹介の更新をラクにする</h3><span class="pri">優先度 中</span></div>
+        <div class="cell"><span class="k">現状</span><p>記事は3件で、2025年2月から更新が止まっている</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell"><span class="k">施策</span><p>お困りの点を伺ったうえで、入力の型（案A）か聞き取り代行（案B）で、2か月に1本のペースをつくる</p></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="cell exp"><span class="k">期待効果</span><div class="big">専門治療<small>で見つかる病院へ</small></div><p>腹腔鏡手術などを探す飼い主さまに、検索・地図から届く</p></div>
+      </article>
     </div>
     <p class="note-s">※ 期待効果は9月の実績にもとづく見込みです。月次レポートで実際の効果を検証します。</p>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">06</span><h2>今後の進め方</h2></div>
+    <div class="sec-head"><span class="no num">07</span><h2>今後の進め方</h2></div>
     <div class="plan">
       <div class="phase now">
         <div class="when num">10<small>月</small></div>
         <h3>早期に着手</h3>
-        <ul><li>定期点検（保守）開始のご判断</li><li>施策1　電話のタップ発信化と計測の設定</li><li>施策2　Googleマップのオーナー登録</li></ul>
+        <ul><li>定期点検（保守）開始のご判断</li><li>症例紹介のお困りごとのヒアリング</li><li>施策1　電話のタップ発信化・空のリンクの修正</li><li>施策2　Googleマップのオーナー登録</li></ul>
       </div>
       <div class="phase">
         <div class="when num">11<small>月上旬</small></div>
         <h3>効果測定</h3>
-        <ul><li>10月分の月次レポート提出</li><li>予約・電話の数をはじめて集計</li><li>施策2　営業時間・写真の整備、口コミ返信の開始</li></ul>
+        <ul><li>10月分の月次レポート提出</li><li>電話ボタンが押された数をはじめて集計</li><li>施策2　営業時間・写真の整備、口コミ返信の開始</li></ul>
       </div>
       <div class="phase">
         <div class="when num">12<small>月〜</small></div>
         <h3>改善の実施</h3>
-        <ul><li>施策1　スマホの予約・電話ボタン常時表示</li><li>施策4　休診日のトップ表示</li><li>施策5　フォームの作り直し</li></ul>
+        <ul><li>施策1　スマホの予約・電話ボタン常時表示</li><li>施策4　休診日のトップ表示</li><li>施策5　フォームの作り直し</li><li>施策6　症例紹介の更新再開</li></ul>
       </div>
     </div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">07</span><h2>ご確認事項</h2></div>
+    <div class="sec-head"><span class="no num">08</span><h2>ご確認事項</h2></div>
     <ul class="asks">
-      <li>9月のネット予約件数（ペットパスの管理画面）</li>
-      <li>1日あたりのお電話件数のおおよその目安</li>
+      <li>ネット予約で優先してご案内したいのは、アプリ（ペットパス）とWebの予約ページのどちらか</li>
       <li>Googleマップのオーナー登録を進めてよいか（病院あてに確認コードが届きます）</li>
       <li>Googleマップに載せる正しい営業時間</li>
       <li>口コミへの返信をどなたが行うか</li>
       <li>定期点検（保守）を始めてよいか</li>
+      <li>症例紹介の更新でお困りの点（上の6項目）</li>
+      <li>次に紹介したい症例があるか</li>
     </ul>
   </section>
 
