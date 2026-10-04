@@ -211,9 +211,20 @@ section.block{padding-top:64px;display:grid;gap:24px}
 .tool-btn::after{content:"↗";font-weight:400}
 .tool-btn:hover{background:#333}
 
+/* セクション末の課題 */
+.task{border:1px solid var(--ink);display:grid;grid-template-columns:5.5em minmax(0,1fr)}
+.task .k{background:var(--ink);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;padding:12px 8px}
+.task .b{padding:14px 20px;display:grid;gap:6px}
+.task ul{margin:0;padding-left:1.1em;font-size:15.5px;display:grid;gap:4px}
+.task ul b{font-weight:700}
+.task .to{font-size:14px;font-weight:700;color:var(--sub)}
+
 footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--sub);display:flex;flex-wrap:wrap;gap:4px 24px}
 
 @media (max-width:760px){
+  .task{grid-template-columns:minmax(0,1fr)}
+  .task .k{justify-content:flex-start;padding:8px 14px}
+  .task .b{padding:12px 14px}
   .tools{grid-template-columns:minmax(0,1fr)}
   .tool{border-right:0;border-bottom:1px solid var(--line)}
   .tool:last-child{border-bottom:0}
@@ -326,6 +337,10 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="prow hot"><span class="name">近江度量衡の歴史</span><span class="bar"><i class="num" style="width:26%">89</i></span><span class="time num">2分10秒</span></div>
       <div class="prow"><span class="name">納入実績</span><span class="bar"><i class="num" style="width:23%">78</i></span><span class="time num">56秒</span></div>
     </div>
+    <div class="task"><div class="k">課題</div><div class="b"><ul>
+      <li>社名以外の言葉では、まだクリックにつながっていない（「生籾」435回表示・「度量衡」142回表示で、いずれもクリック<b>0回</b>）</li>
+      <li>来訪の多くがお取引先・関係者で、<b>まだ御社を知らない新しいお客様</b>への広がりはこれから</li>
+    </ul><span class="to">→ 04 施策1　製品別紹介ページの新設／05 専門コラム</span></div></div>
   </section>
 
   <section class="block">
@@ -344,6 +359,10 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       </tbody>
     </table>
     <p class="note-s">※ 一般的な目安は、フォーム分析サービスZukoが公開している業種横断の平均値です。</p>
+    <div class="task"><div class="k">課題</div><div class="b"><ul>
+      <li>入力を始めた人のうち、送信まで進むのは<b>約5割</b>（一般的な目安は約66%）</li>
+      <li>同じ人が何度も送信している例があり、<b>営業メールが含まれている可能性</b>がある。現状は内容を当社側で分析できない</li>
+    </ul><span class="to">→ 04 施策2　内容の分析とフォームの改善</span></div></div>
   </section>
 
   <section class="block">
@@ -355,6 +374,10 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="step"><div class="shape" style="--w:4%">入力開始</div><div class="count num">0<small>人</small><span class="rate">0%</span></div></div>
     </div>
     <p class="note-s">※ 9月24日〜10月2日（終日）の集計。エントリーページは中途・新卒の合計（重複を含む）。</p>
+    <div class="task"><div class="k">課題</div><div class="b"><ul>
+      <li>採用情報を見た人のうち、エントリーページまで進むのは<b>約3割</b>。入力を始めた人はまだ<b>0人</b></li>
+      <li>社員インタビュー・募集要項を読み終えた場所に、<b>エントリーへ進むボタンがない</b></li>
+    </ul><span class="to">→ 04 施策3　エントリーへの導線追加</span></div></div>
   </section>
 
   <section class="block">
