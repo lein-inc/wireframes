@@ -311,6 +311,11 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
 }
 .tools.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
 .step .shape{min-width:max-content}
+.tools.one{grid-template-columns:minmax(0,1fr)}
+.tools.one .mets{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:28px;padding-block:8px}
+.tools.one .mets li:nth-last-child(-n+3){border-bottom:0}
+@media (max-width:760px){.tools.one .mets{grid-template-columns:minmax(0,1fr)}.tools.one .mets li:nth-last-child(-n+3){border-bottom:1px solid var(--line)}.tools.one .mets li:last-child{border-bottom:0}}
+
 @media (max-width:760px){.tools.two-col{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
@@ -328,30 +333,25 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
 
   <section class="hl" aria-labelledby="hl-title">
     <div class="hl-head"><span class="k">HIGHLIGHTS</span><h2 id="hl-title">9月の注目の数値</h2></div>
-    <p class="hl-lead">ホームページに連携したGoogleアナリティクスと、Googleマップの掲載情報から取得した数値です。各ボタンから実際の画面をご覧いただけます。</p>
-    <div class="tools two-col">
+    <p class="hl-lead">ホームページに連携したGoogleアナリティクスから取得した数値です。ボタンから実際の画面をご覧いただけます。</p>
+    <div class="tools one">
       <div class="tool">
         <div class="tool-name"><h3>Googleアナリティクス</h3><p>来訪者の数と、サイト内での行動</p></div>
         <ul class="mets">
-          <li><span class="l">来訪者数</span><span class="v num">1,410<small>人</small></span><span class="n">8月とほぼ同じ水準。約8割がスマホから</span></li>
+          <li><span class="l">来訪者数</span><span class="v num">1,410<small>人</small></span><span class="n">8月とほぼ同じ水準で安定しています</span></li>
+          <li><span class="l">スマホからの来訪</span><span class="v num">約8<small>割</small></span><span class="n">飼い主さまの多くがスマホで確認しています</span></li>
+          <li><span class="l">検索からの来訪</span><span class="v num">70<small>%</small></span><span class="n">Google・Yahoo!・Bing経由。直接の来訪は25%</span></li>
           <li><span class="l">秋田県からの来訪</span><span class="v num">486<small>人</small></span><span class="n">地域が分かる来訪の中でいちばん多く、地元の飼い主さまに使われています</span></li>
-          <li><span class="l">予約ボタンからWeb予約ページへ</span><span class="v num">126<small>人</small></span><span class="n">来訪の約9%。うち122人がスマホから（予約が完了した数ではありません）</span></li>
           <li><span class="l">休診日のお知らせの閲覧</span><span class="v num">513<small>人</small></span><span class="n">9月・10月分の延べ人数。来院前の確認に使われています</span></li>
+          <li><span class="l">ごあいさつ・専門診療の閲覧時間</span><span class="v num">1<small>分半</small></span><span class="n">1人あたりの平均。病院の考え方がじっくり読まれています</span></li>
+          <li><span class="l">予約ボタンからWeb予約ページへ</span><span class="v num">126<small>人</small></span><span class="n">来訪の約9%。うち122人がスマホから（予約が完了した数ではありません）</span></li>
+          <li><span class="l">予約アプリの入手へ</span><span class="v num">103<small>人</small></span><span class="n">App Store 77人・Google Play 26人</span></li>
           <li><span class="l">フォーム送信</span><span class="v num">11<small>件</small></span><span class="n">腹腔鏡手術受付・採用応募フォーム</span></li>
         </ul>
         <a class="tool-btn" href="https://analytics.google.com/analytics/web/#/a285330479p406910144/reports/intelligenthome" target="_blank" rel="noopener">アナリティクスを開く</a>
       </div>
-      <div class="tool">
-        <div class="tool-name"><h3>Googleマップ</h3><p>地図検索での表示と口コミ</p></div>
-        <ul class="mets">
-          <li><span class="l">評価</span><span class="v num">4.3<small>（67件）</small></span><span class="n">口コミの件数は近隣でも多いほうです</span></li>
-          <li><span class="l">口コミで多い声</span><span class="v t">「先生の説明が丁寧」</span><span class="n">診察の丁寧さが評価されています</span></li>
-          <li><span class="l">オーナー登録</span><span class="v t">未登録</span><span class="n">登録すると、営業時間の修正や口コミへの返信ができるようになります</span></li>
-        </ul>
-        <a class="tool-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%89%8B%E5%BD%A2%E5%B1%B1%E3%81%99%E3%81%9A%E3%81%8D%E5%8B%95%E7%89%A9%E7%97%85%E9%99%A2" target="_blank" rel="noopener">Googleマップを開く</a>
-      </div>
     </div>
-    <p class="note-s">※ アナリティクスは9月1日〜30日の集計（9月18日の海外からの迷惑アクセス約300人分を除く）。Googleマップは10月2日時点。</p>
+    <p class="note-s">※ 9月1日〜30日の集計（9月18日の海外からの迷惑アクセス約300人分を除く）。</p>
   </section>
 
   <section class="block">
@@ -380,9 +380,8 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
     </div>
     <p class="note-s">※ 9月18日に海外から約300人分の機械的なアクセス（迷惑アクセス）がありました。実際の閲覧ではないため、このレポートの数値からは除いています。サイトへの被害はありません。トップの閲覧時間はこの影響を受けるため省略しています。</p>
     <div class="task"><div class="k">課題</div><div class="b"><ul>
-      <li>毎月の休診日のお知らせ（9月・10月分で延べ<b>513人</b>）は、お知らせ一覧から探して開く作りで、トップページからすぐに見られない</li>
       <li>確認したページから、<b>そのまま予約へ進むボタンがない</b>ページが多い</li>
-    </ul><span class="to">→ 05 施策1　予約への導線づくり／施策4　休診日のトップ表示</span></div></div>
+    </ul><span class="to">→ 05 施策1　予約への導線づくり</span></div></div>
   </section>
 
   <section class="block">
@@ -491,15 +490,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
         <div class="cell exp"><span class="k">期待効果</span><div class="big">用件別<small>に数えて改善</small></div><p>手術のご相談・採用応募をそれぞれ毎月数えられ、安全に使い続けられる</p></div>
       </article>
       <article class="fix">
-        <div class="fix-title"><span class="no num">4</span><h3>休診日をトップページに常に表示</h3><span class="pri">優先度 中</span></div>
-        <div class="cell"><span class="k">現状</span><p>毎月のお知らせ記事に延べ513人。お知らせ一覧から探して開いている</p></div>
-        <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>トップページの目立つ場所に、今月・来月の休診日を常に表示する</p></div>
-        <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell exp"><span class="k">期待効果</span><div class="big">ひと目<small>で確認</small></div><p>飼い主さまが迷わず確認でき、そのまま予約へ進みやすくなる</p></div>
-      </article>
-      <article class="fix">
-        <div class="fix-title"><span class="no num">5</span><h3>プラグインの更新と定期点検</h3><span class="pri high">優先度 高</span></div>
+        <div class="fix-title"><span class="no num">4</span><h3>プラグインの更新と定期点検</h3><span class="pri high">優先度 高</span></div>
         <div class="cell"><span class="k">現状</span><p>13本が更新待ち。本体だけが自動更新され、ずれが広がっていく状態</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell"><span class="k">施策</span><p>月1回、バックアップを取ってから更新し、表示とフォームを確認する</p></div>
@@ -586,7 +577,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="phase now">
         <div class="when num">10<small>月</small></div>
         <h3>早期に着手</h3>
-        <ul><li>施策1　電話番号・動かないボタンの修正</li><li>施策2　Googleマップのオーナー登録</li><li>施策5　定期点検（保守）開始のご判断</li><li>症例紹介のお困りごとのヒアリング</li></ul>
+        <ul><li>施策1　電話番号・動かないボタンの修正</li><li>施策2　Googleマップのオーナー登録</li><li>施策4　定期点検（保守）開始のご判断</li><li>症例紹介のお困りごとのヒアリング</li></ul>
       </div>
       <div class="phase">
         <div class="when num">11<small>月上旬</small></div>
@@ -596,7 +587,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="phase">
         <div class="when num">12<small>月〜</small></div>
         <h3>改善の実施</h3>
-        <ul><li>施策1　スマホの予約ボタン常時表示</li><li>施策3　フォームの分割・作り直し</li><li>施策4　休診日のトップ表示</li><li>症例紹介の更新再開</li></ul>
+        <ul><li>施策1　スマホの予約ボタン常時表示</li><li>施策3　フォームの分割・作り直し</li><li>症例紹介の更新再開</li></ul>
       </div>
     </div>
     <div class="ways">
