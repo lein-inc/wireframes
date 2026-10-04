@@ -184,6 +184,16 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
 .opt p{font-size:15px;line-height:1.7}
 .opt .who{font-size:13.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:8px}
 .opt.rec{background:var(--soft)}
+.opts.ab{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opt .lead2{font-size:15px;color:var(--sub)}
+.opt ol{list-style:none;counter-reset:st;display:grid;gap:8px;margin:4px 0 2px;padding:0}
+.opt ol li{counter-increment:st;display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:8px;font-size:15px;line-height:1.65}
+.opt ol li::before{content:counter(st);width:1.7em;height:1.7em;display:grid;place-items:center;background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;margin-top:1px}
+.opt ol li b{font-weight:700}
+.opt .ai{font-size:11.5px;font-weight:700;border:1px solid var(--ink);padding:0 5px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+.load{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;border-top:1px solid var(--line);padding-top:10px;font-size:14px}
+.load dt{font-weight:700}
+.load dd{margin:0;color:var(--sub)}
 @media (max-width:760px){
   .opts{grid-template-columns:minmax(0,1fr)}
   .opt{border-right:0;border-bottom:1px solid var(--line)}
@@ -382,28 +392,41 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       <li>専門的な内容を、飼い主さま向けにどこまでかみ砕くか迷う</li>
       <li>書いても読まれているのか分からない</li>
     </ul>
-    <p class="note-s">※ 当てはまるものをお聞かせください。お困りの点に合わせて、下の改善方法を組み合わせます。</p>
-    <h3 style="font-size:17px;font-weight:700">改善方法の案</h3>
-    <div class="opts">
+    <p class="note-s">※ 当てはまるものをお聞かせください。お困りの点に合わせて、下のどちらかの方法をご提案します。</p>
+    <h3 style="font-size:17px;font-weight:700">改善方法の案（どちらもAIで手間を減らします）</h3>
+    <p class="note-s">いまの3本と同じ「病気の説明・診断・治療・術後の経過」の形と、病院の書きぶりをAIに覚えさせておきます。先生が文章を一から書く必要はありません。</p>
+    <div class="opts ab">
       <div class="opt">
         <span class="k">案 A</span>
-        <h3>書く項目を決めた<br>入力の型を用意</h3>
-        <p>「病気の説明・診断・治療・経過」の4項目と写真欄を最初から並べた入力ひな形を用意します。空欄を埋めるだけで、いまの記事と同じ形になります。</p>
-        <div class="who">病院：項目を埋める ／ 当社：ひな形の設定</div>
+        <h3>病院で、AIを使って<br>その場で下書き</h3>
+        <p class="lead2">院内で完結させたい場合。症例専用のAIをご用意します。</p>
+        <ol>
+          <li><div>診察や手術のあとに、<b>スマホで話す・メモを貼る</b>だけ（病名・診断・行ったこと・経過を一言ずつ）<span class="ai">AI</span></div></li>
+          <li><div>AIが飼い主さま向けの言葉で<b>記事の下書き</b>を作成し、ホームページに「下書き」として保存<span class="ai">AI</span></div></li>
+          <li><div>先生が写真を添えて読み直し、<b>公開ボタンを押す</b></div></li>
+        </ol>
+        <dl class="load">
+          <dt>病院</dt><dd>1本 15〜20分ほど（話す・確認・公開）</dd>
+          <dt>当社</dt><dd>最初の設定と使い方のご説明のみ</dd>
+        </dl>
       </div>
       <div class="opt rec">
         <span class="k">案 B（おすすめ）</span>
-        <h3>聞き取りから<br>当社が原稿を作成</h3>
-        <p>月1回、先生に10〜15分ほどお話を伺い、当社が原稿にまとめます。先生は内容の確認と写真の提供だけで済みます。</p>
-        <div class="who">病院：お話・確認・写真 ／ 当社：原稿・入力・公開</div>
-      </div>
-      <div class="opt">
-        <span class="k">案 C</span>
-        <h3>1本をGoogleマップや<br>SNSにも活用</h3>
-        <p>公開した症例を、Googleマップの投稿やThreadsでも短く紹介します。1回の作業で、地図・SNS・ホームページの3か所に届きます。</p>
-        <div class="who">病院：なし ／ 当社：要約・投稿</div>
+        <h3>写真とメモを送るだけ。<br>あとは当社にお任せ</h3>
+        <p class="lead2">先生の手間を最小にしたい場合。</p>
+        <ol>
+          <li><div>先生が<b>写真と短いメモ（または音声）をLINEなどで送る</b>だけ</div></li>
+          <li><div>当社がAIで原稿にまとめ、<b>飼い主さまに伝わる言葉に整えます</b><span class="ai">AI</span></div></li>
+          <li><div>確認用のURLをお送りし、先生は<b>スマホで読んで「OK」と返すだけ</b>。入力・公開は当社が行います</div></li>
+          <li><div>同じ内容を短くまとめ、<b>Googleマップの投稿</b>にも載せます（地図のオーナー登録後）<span class="ai">AI</span></div></li>
+        </ol>
+        <dl class="load">
+          <dt>病院</dt><dd>1本 5〜10分ほど（送る・読んでOK）</dd>
+          <dt>当社</dt><dd>原稿・入力・公開・地図への投稿</dd>
+        </dl>
       </div>
     </div>
+    <p class="note-s">※ どちらの案も、公開前に必ず先生に内容をご確認いただきます。飼い主さまのお名前など個人が分かる情報は載せず、写真の掲載は飼い主さまの了解を得たものに限ります。手間の時間は目安です。</p>
     <p class="callout">目標は<b>2か月に1本</b>から。腹腔鏡手術の症例が増えると、「犬 腹腔鏡 秋田」のように<b>専門の治療を探している飼い主さま</b>に見つけてもらいやすくなり、遠方からの来院にもつながります。</p>
   </section>
 
@@ -466,7 +489,7 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
         <div class="fix-title"><span class="no num">6</span><h3>症例紹介の更新をラクにする</h3><span class="pri">優先度 中</span></div>
         <div class="cell"><span class="k">現状</span><p>記事は3件で、2025年2月から更新が止まっている</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>お困りの点を伺ったうえで、入力の型（案A）か聞き取り代行（案B）で、2か月に1本のペースをつくる</p></div>
+        <div class="cell"><span class="k">施策</span><p>AIで下書きを作る形にして、院内で作成（案A）か、写真とメモを送るだけで当社が仕上げる（案B）で、2か月に1本のペースをつくる</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell exp"><span class="k">期待効果</span><div class="big">専門治療<small>で見つかる病院へ</small></div><p>腹腔鏡手術などを探す飼い主さまに、検索・地図から届く</p></div>
       </article>
