@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <script src="_auth.js"></script>
-<title>近江度量衡 運用レポート</title>
+<title>近江度量衡 運用レポート 11月</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
@@ -260,140 +260,198 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   .ct:nth-child(even){border-right:0}
   .asks li:nth-child(odd){padding-right:4px}
 }
+/* 週ごとの推移 */
+.weeks{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:end;height:220px;border-bottom:1px solid var(--ink);padding-top:8px}
+.wk{display:grid;grid-template-rows:auto 1fr;height:100%;min-width:0}
+.wk .v{font-size:15px;font-weight:700;text-align:center;align-self:end}
+.wk .b{background:var(--bar);height:var(--h);align-self:end}
+.wk.part .b{background:repeating-linear-gradient(45deg,var(--bar) 0 6px,var(--soft) 6px 12px)}
+.wlabels{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;font-size:12.5px;color:var(--sub);text-align:center;line-height:1.4}
+.sum3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+.sum3 div{padding:16px 18px;border-right:1px solid var(--line);display:grid;gap:4px;min-width:0}
+.sum3 div:last-child{border-right:0}
+.sum3 .l{font-size:13.5px;font-weight:700;color:var(--sub)}
+.sum3 .v{font-size:clamp(28px,3.2vw,38px);font-weight:700;line-height:1.1}
+.sum3 .v small{font-size:.42em;margin-left:3px}
+.sum3 .n{font-size:13.5px;color:var(--sub)}
+.status{display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border:1px solid var(--ink);white-space:nowrap;margin-left:6px;vertical-align:2px}
+.status.done{background:var(--ink);color:#fff}
+@media (max-width:760px){
+  .weeks{gap:4px;height:180px}
+  .wk .v{font-size:12px}
+  .wlabels{gap:4px;font-size:10.5px}
+  .sum3{grid-template-columns:minmax(0,1fr)}
+  .sum3 div{border-right:0;border-bottom:1px solid var(--line)}
+}
 </style>
 </head>
 <body>
+
 
 <main class="wrap">
 
   <header class="cover">
     <div class="kicker">運用レポート</div>
-    <h1>新ホームページ 公開後の状況とご提案</h1>
-    <p class="lead">公開後の注目の数値と、アクセス状況・今後の改善の方向性をご報告します。</p>
-    <p class="meta">集計期間　2026年9月24日〜10月2日（10月2日は13時時点。お問い合わせ・エントリーの流れは10月2日終日）　／　株式会社レイン</p>
+    <h1>新ホームページ 公開から6週間の状況とご提案</h1>
+    <p class="lead">公開から6週間の数値と、保守作業のご報告、今後の改善の方向性をまとめました。</p>
+    <p class="meta">集計期間　2026年9月24日〜11月8日（サーチコンソールは11月6日まで）　／　株式会社レイン</p>
   </header>
 
   <section class="hl" aria-labelledby="hl-title">
-    <div class="hl-head"><span class="k">HIGHLIGHTS</span><h2 id="hl-title">公開後の注目の数値</h2></div>
+    <div class="hl-head"><span class="k">HIGHLIGHTS</span><h2 id="hl-title">公開から6週間の注目の数値</h2></div>
     <p class="hl-lead">ホームページに連携したGoogleのツール（アナリティクス・サーチコンソール）から取得した数値です。各ボタンから実際の画面をご覧いただけます。</p>
     <div class="tools">
       <div class="tool">
         <div class="tool-name"><h3>Googleアナリティクス</h3><p>来訪者の数と、サイト内での行動</p></div>
         <ul class="mets">
-          <li><span class="l">来訪者数</span><span class="v num">541<small>人</small></span><span class="n">ページは合計2,564回見られました</span></li>
-          <li><span class="l">検索からの来訪</span><span class="v num">64<small>%</small></span><span class="n">Google・Bing・Yahoo経由。AI（ChatGPT）からの来訪も始まっています</span></li>
-          <li><span class="l">採用情報・歴史の閲覧時間</span><span class="v num">2<small>分超</small></span><span class="n">1人あたりの平均。じっくり読まれています</span></li>
-          <li><span class="l">お問い合わせの入力開始率</span><span class="v num">54<small>%</small></span><span class="n">一般的な目安（40〜50%）を上回っています</span></li>
-          <li><span class="l">お問い合わせ送信</span><span class="v num">23<small>件</small></span><span class="n">9月30日〜10月2日の3日間（当社テストを除く）</span></li>
+          <li><span class="l">来訪者数</span><span class="v num">2,476<small>人</small></span><span class="n">ページは合計8,483回見られました（10月の1か月で1,751人）</span></li>
+          <li><span class="l">検索からの来訪</span><span class="v num">60<small>%</small></span><span class="n">Google・Bing・Yahoo経由。ChatGPTからの来訪も24回ありました</span></li>
+          <li><span class="l">歴史・製品ページの閲覧時間</span><span class="v num">1分半〜2<small>分</small></span><span class="n">1人あたりの平均。歴史2分03秒、計量機器1分40秒、農産物1分32秒</span></li>
+          <li><span class="l">お問い合わせの入力開始率</span><span class="v num">61<small>%</small></span><span class="n">一般的な目安（40〜50%）を上回っています</span></li>
+          <li><span class="l">採用エントリー</span><span class="v num">1<small>件</small></span><span class="n">新しいホームページからの初めてのエントリー（中途採用）</span></li>
         </ul>
         <a class="tool-btn" href="https://analytics.google.com/analytics/web/#/a409265434p555643963/reports/intelligenthome" target="_blank" rel="noopener">アナリティクスを開く</a>
       </div>
       <div class="tool">
         <div class="tool-name"><h3>Googleサーチコンソール</h3><p>Google検索での表示とクリック</p></div>
         <ul class="mets">
-          <li><span class="l">検索結果での表示回数</span><span class="v num">1,640<small>回</small></span><span class="n">8日間でGoogle検索に表示された回数</span></li>
-          <li><span class="l">検索からのクリック</span><span class="v num">297<small>回</small></span><span class="n">クリック率18.2%</span></li>
-          <li><span class="l">平均掲載順位</span><span class="v num">4.8<small>位</small></span><span class="n">検索結果の1ページ目に表示されています</span></li>
-          <li><span class="l">「生籾」での表示</span><span class="v num">435<small>回</small></span><span class="n">製品・専門用語での表示も始まっています（「度量衡」142回）</span></li>
+          <li><span class="l">検索結果での表示回数</span><span class="v num">5,477<small>回</small></span><span class="n">6週間でGoogle検索に表示された回数</span></li>
+          <li><span class="l">検索からのクリック</span><span class="v num">1,020<small>回</small></span><span class="n">クリック率18.6%</span></li>
+          <li><span class="l">平均掲載順位</span><span class="v num">5.4<small>位</small></span><span class="n">検索結果の1ページ目に表示されています</span></li>
+          <li><span class="l">「度量衡」での表示</span><span class="v num">762<small>回</small></span><span class="n">専門用語での表示が伸びています（「生籾」445回）</span></li>
         </ul>
         <a class="tool-btn" href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fwww.omiscale.co.jp%2F" target="_blank" rel="noopener">サーチコンソールを開く</a>
       </div>
     </div>
-    <p class="note-s">※ アナリティクスは9月24日〜10月2日、サーチコンソールは9月24日〜10月1日の集計。入力開始率の目安はZuko社の公開データ。</p>
+    <p class="note-s">※ アナリティクスは9月24日〜11月8日、サーチコンソールは9月24日〜11月6日の集計。お問い合わせの数値は送信完了の計測を始めた9月30日から。入力開始率の目安はZuko社の公開データ。</p>
   </section>
 
-
-
+  <section class="block">
+    <div class="sec-head"><span class="no num">01</span><h2>保守作業のご報告</h2></div>
+    <p class="text">10月25日から保守を開始し、10月30日に1回目の定期保守を行いました。作業の前にデータベースとプログラム一式のバックアップを取り、作業後は主要なページとフォームが正しく表示されることを確認しています。</p>
+    <table class="vt">
+      <thead><tr><th>項目</th><th>内容</th><th>状態</th></tr></thead>
+      <tbody>
+        <tr><td>WordPress本体</td><td>7.1.4（最新）</td><td class="st">最新</td></tr>
+        <tr><td>Secure Custom Fields（ページの入力欄）</td><td>6.9.5 → 6.9.7</td><td class="st">アップデート済み</td></tr>
+        <tr><td>Contact Form 7（フォーム）</td><td>6.1.7。最新版はサーバーのPHPを8.3以上にする必要あり</td><td class="st warn">今後のご相談</td></tr>
+        <tr><td>表示の確認</td><td>主要10ページ・製品詳細・募集要項・フォーム3種</td><td class="st">問題なし</td></tr>
+      </tbody>
+    </table>
+    <p class="note-s">※ 現在のサーバー（KAGOYA）のPHPは8.0が上限です。フォームのプログラムを今後も最新に保つには、PHPを上げられるプランへの変更が必要になります。進め方は別途ご相談させてください。</p>
+  </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">01</span><h2>アクセスの概要</h2></div>
-    <p class="text">訪問の約6割が検索経由です。会社案内・採用情報・歴史のページがよく読まれており、特に採用情報と歴史は1人あたり2分以上閲覧されています。直接の来訪（ブックマーク・メールなど）や社名での検索も多く、お取引先・関係者の方によく見られています。</p>
-    <div class="split" role="img" aria-label="検索64%、直接32%、その他4%">
-      <div class="s1 num" style="flex:64">64%</div>
-      <div class="s2 num" style="flex:32">32%</div>
+    <div class="sec-head"><span class="no num">02</span><h2>アクセスの概要</h2></div>
+    <p class="text">公開直後の一時的な増加のあとも、<b>毎週350〜510人</b>の来訪が安定して続いています。訪問の約6割が検索経由で、会社案内・製品・歴史のページがよく読まれています。製品ページの中でも「計量機器」「農産物」は1人あたり1分半以上と、じっくり読まれています。</p>
+    <div>
+      <div class="weeks" role="img" aria-label="週ごとの来訪者数。9月24日〜27日204人、9月28日〜10月4日470人、10月5日〜11日513人、10月12日〜18日368人、10月19日〜25日422人、10月26日〜11月1日347人、11月2日〜8日354人">
+        <div class="wk part"><span class="v num">204</span><span class="b" style="--h:40%"></span></div>
+        <div class="wk"><span class="v num">470</span><span class="b" style="--h:92%"></span></div>
+        <div class="wk"><span class="v num">513</span><span class="b" style="--h:100%"></span></div>
+        <div class="wk"><span class="v num">368</span><span class="b" style="--h:72%"></span></div>
+        <div class="wk"><span class="v num">422</span><span class="b" style="--h:82%"></span></div>
+        <div class="wk"><span class="v num">347</span><span class="b" style="--h:68%"></span></div>
+        <div class="wk"><span class="v num">354</span><span class="b" style="--h:69%"></span></div>
+      </div>
+      <div class="wlabels num" aria-hidden="true"><span>9/24〜27<br>（4日間）</span><span>9/28〜</span><span>10/5〜</span><span>10/12〜</span><span>10/19〜</span><span>10/26〜</span><span>11/2〜8</span></div>
+    </div>
+    <p class="note-s">※ 週ごとの来訪者数（人）。最初の週は公開日からの4日間です。</p>
+    <div class="split" role="img" aria-label="検索60%、直接36%、その他4%">
+      <div class="s1 num" style="flex:60">60%</div>
+      <div class="s2 num" style="flex:36">36%</div>
       <div class="s3 num" style="flex:4">4%</div>
     </div>
     <div class="legend">
       <span style="--c:var(--ink)">検索（Google・Bing・Yahoo）</span>
       <span style="--c:#8a8a8a">直接（ブックマーク・メールなど）</span>
-      <span style="--c:var(--line)">その他（他サイト・広告・AI）</span>
+      <span style="--c:var(--line)">その他（他サイト・AI）</span>
     </div>
     <div class="pages">
       <div class="phead"><span style="text-align:right">ページ</span><span>見た人の数</span><span>1人の閲覧時間</span></div>
-      <div class="prow"><span class="name">トップ</span><span class="bar"><i class="num" style="width:100%">336</i></span><span class="time num">37秒</span></div>
-      <div class="prow"><span class="name">会社案内</span><span class="bar"><i class="num" style="width:70%">235</i></span><span class="time num">1分06秒</span></div>
-      <div class="prow"><span class="name">製品・技術</span><span class="bar"><i class="num" style="width:42%">142</i></span><span class="time num">34秒</span></div>
-      <div class="prow hot"><span class="name">採用情報</span><span class="bar"><i class="num" style="width:32%">107</i></span><span class="time num">2分05秒</span></div>
-      <div class="prow"><span class="name">お問い合わせ</span><span class="bar"><i class="num" style="width:28%">93</i></span><span class="time num">34秒</span></div>
-      <div class="prow hot"><span class="name">近江度量衡の歴史</span><span class="bar"><i class="num" style="width:26%">89</i></span><span class="time num">2分10秒</span></div>
-      <div class="prow"><span class="name">納入実績</span><span class="bar"><i class="num" style="width:23%">78</i></span><span class="time num">56秒</span></div>
+      <div class="prow"><span class="name">トップ</span><span class="bar"><i class="num" style="width:100%">1,372</i></span><span class="time num">29秒</span></div>
+      <div class="prow"><span class="name">会社案内</span><span class="bar"><i class="num" style="width:71%">972</i></span><span class="time num">1分01秒</span></div>
+      <div class="prow"><span class="name">製品・技術</span><span class="bar"><i class="num" style="width:39%">541</i></span><span class="time num">41秒</span></div>
+      <div class="prow"><span class="name">採用情報</span><span class="bar"><i class="num" style="width:21%">293</i></span><span class="time num">1分30秒</span></div>
+      <div class="prow hot"><span class="name">近江度量衡の歴史</span><span class="bar"><i class="num" style="width:18%">248</i></span><span class="time num">2分03秒</span></div>
+      <div class="prow"><span class="name">納入実績</span><span class="bar"><i class="num" style="width:18%">243</i></span><span class="time num">53秒</span></div>
+      <div class="prow hot"><span class="name">計量機器</span><span class="bar"><i class="num" style="width:16%">221</i></span><span class="time num">1分40秒</span></div>
+      <div class="prow hot"><span class="name">農産物</span><span class="bar"><i class="num" style="width:15%">210</i></span><span class="time num">1分32秒</span></div>
+      <div class="prow"><span class="name">サービス</span><span class="bar"><i class="num" style="width:13%">176</i></span><span class="time num">49秒</span></div>
     </div>
+    <p class="note-s">※ お問い合わせページ（426人）は02で取り上げます。他サイトからの来訪は、選果機の情報サイト（21回）、日刊工業新聞のサイト、製品比較サイト、求人サイトなどからありました。</p>
     <div class="task"><div class="k">課題</div><div class="b"><ul>
-      <li>社名以外の言葉では、まだクリックにつながっていない（「生籾」435回表示・「度量衡」142回表示で、いずれもクリック<b>0回</b>）</li>
-      <li>来訪の多くがお取引先・関係者で、<b>まだ御社を知らない新しいお客様</b>への広がりはこれから</li>
-    </ul><span class="to">→ 04 施策4　製品別紹介ページの新設／05 専門コラム</span></div></div>
+      <li>「度量衡」762回・「生籾」445回と専門用語での表示は増えたが、<b>クリックはまだ0回</b>（掲載順位は5〜6位）</li>
+      <li>製品名でのクリックは「オートチェッカー」「パッカースケール」「籾計量器」などで<b>各1回</b>と、始まったばかり</li>
+    </ul><span class="to">→ 05 施策4　製品別紹介ページの新設／06 専門コラム</span></div></div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">02</span><h2>お問い合わせまでの流れ</h2></div>
-    <p class="text">お問い合わせページを見た人の<b>半数以上が入力を始めて</b>おり、一般的な水準を上回っています。</p>
+    <div class="sec-head"><span class="no num">03</span><h2>お問い合わせまでの流れ</h2></div>
+    <p class="text">お問い合わせページを見た人の<b>6割以上が入力を始めて</b>おり、一般的な水準を上回っています。一方で、届いた内容を確認すると、<b>ほとんどが営業・売り込みのメール</b>でした。お客様からのご相談は3件です。</p>
     <div class="funnel">
-      <div class="step"><div class="shape" style="--w:100%">お問い合わせページ閲覧</div><div class="count num">46<small>人</small><span class="rate">100%</span></div></div>
-      <div class="step"><div class="shape" style="--w:54%">入力開始</div><div class="count num">25<small>人</small><span class="rate">54%</span></div></div>
-      <div class="step key"><div class="shape" style="--w:26%">送信完了</div><div class="count num">12<small>人</small><span class="rate">26%</span></div></div>
+      <div class="step"><div class="shape" style="--w:100%">お問い合わせページ閲覧</div><div class="count num">369<small>人</small><span class="rate">100%</span></div></div>
+      <div class="step"><div class="shape" style="--w:61%">入力開始</div><div class="count num">226<small>人</small><span class="rate">61%</span></div></div>
+      <div class="step key"><div class="shape" style="--w:48%">送信完了</div><div class="count num">177<small>人</small><span class="rate">48%</span></div></div>
     </div>
-    <p class="note-s">※ 送信完了の計測を始めた9月30日〜10月2日（終日）の集計。お問い合わせフォームのみ（採用エントリーは03）。送信完了12人で23件の送信、当社テスト送信は除いています。</p>
+    <p class="note-s">※ 流れの数値は、送信完了の計測を始めた9月30日〜11月8日の集計。お問い合わせフォームのみ（採用エントリーは04）。送信した人の79%（140人）は、お問い合わせページに直接来て、ほかのページを見ずに送信していました。フォーム営業によく見られる動きです。</p>
+    <div class="sum3">
+      <div><span class="l">届いたお問い合わせ</span><span class="v num">239<small>件</small></span><span class="n">10月5日〜11月8日の受信分</span></div>
+      <div><span class="l">お客様からのご相談</span><span class="v num">3<small>件</small></span><span class="n">設備の改造のご相談、トラックスケールの修理、旧設備の資料のご依頼</span></div>
+      <div><span class="l">営業・売り込み</span><span class="v num">234<small>件</small></span><span class="n">全体の98%。ほかに協賛・学術調査のご依頼が2件</span></div>
+    </div>
     <table class="bench">
       <thead><tr><th>段階</th><th>御社</th><th>一般的な目安</th></tr></thead>
       <tbody>
-        <tr><td>ページを見た人のうち、入力を始める割合</td><td class="me num">54%</td><td class="num">40〜50%</td></tr>
+        <tr><td>ページを見た人のうち、入力を始める割合</td><td class="me num">61%</td><td class="num">40〜50%</td></tr>
       </tbody>
     </table>
     <p class="note-s">※ 一般的な目安は、フォーム分析サービスZukoが公開している業種横断の平均値です。</p>
     <div class="task"><div class="k">課題</div><div class="b"><ul>
-      <li>入力を始めた人のうち、送信まで進むのは<b>約5割</b>（一般的な目安は約66%）</li>
-      <li>同じ人が何度も送信している例があり、<b>営業メールが含まれている可能性</b>がある</li>
-    </ul><span class="to">→ 04 施策1　内容の分析とフォームの改善</span></div></div>
+      <li>届いたお問い合わせの<b>98%が営業・売り込み</b>。お客様からのご相談は<b>3件</b>で、1日7件ほどの営業メールの中に埋もれている</li>
+      <li>本当のお問い合わせが埋もれると、<b>見落としや対応の遅れ</b>につながるおそれがある</li>
+    </ul><span class="to">→ 05 施策1　営業メール対策とフォームの改善</span></div></div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">03</span><h2>採用エントリーまでの流れ</h2></div>
-    <p class="text">採用情報は1人あたり<b>2分以上</b>、社員インタビュー5ページは計177回読まれており、会社や仕事への関心の高さがうかがえます。</p>
+    <div class="sec-head"><span class="no num">04</span><h2>採用エントリーまでの流れ</h2></div>
+    <p class="text">採用情報は1人あたり<b>1分半</b>、社員インタビューは5ページで<b>計263回</b>読まれています。新しいホームページから<b>初めてのエントリー（中途採用）</b>がありました。</p>
     <div class="funnel">
-      <div class="step"><div class="shape" style="--w:100%">採用情報ページ閲覧</div><div class="count num">111<small>人</small><span class="rate">100%</span></div></div>
-      <div class="step"><div class="shape" style="--w:29%">エントリーページ閲覧</div><div class="count num">32<small>人</small><span class="rate">29%</span></div></div>
-      <div class="step"><div class="shape" style="--w:4%">入力開始</div><div class="count num">0<small>人</small><span class="rate">0%</span></div></div>
+      <div class="step"><div class="shape" style="--w:100%">採用情報ページ閲覧</div><div class="count num">293<small>人</small><span class="rate">100%</span></div></div>
+      <div class="step"><div class="shape" style="--w:31%">エントリーページ閲覧</div><div class="count num">92<small>人</small><span class="rate">31%</span></div></div>
+      <div class="step"><div class="shape" style="--w:4%">入力開始</div><div class="count num">2<small>人</small><span class="rate">0.7%</span></div></div>
+      <div class="step key"><div class="shape" style="--w:2%">送信完了</div><div class="count num">1<small>人</small><span class="rate">0.3%</span></div></div>
     </div>
-    <p class="note-s">※ 9月24日〜10月2日（終日）の集計。エントリーページは中途・新卒の合計（重複を含む）。</p>
+    <p class="note-s">※ 9月24日〜11月8日の集計。エントリーページは中途・新卒の合計（重複を含む）。中途採用のエントリーページは57人、新卒は26人が閲覧。</p>
     <div class="task"><div class="k">課題</div><div class="b"><ul>
-      <li>採用情報を見た人のうち、エントリーページまで進むのは<b>約3割</b>。入力を始めた人はまだ<b>0人</b></li>
-      <li>社員インタビュー・募集要項を読み終えた場所に、<b>エントリーへ進むボタンがない</b></li>
-    </ul><span class="to">→ 04 施策2　エントリーへの導線追加</span></div></div>
+      <li>エントリーページまで来た人のうち、入力を始めたのは<b>2人</b>。ページを見て離れる人が多い</li>
+      <li>社員インタビュー・募集要項を読み終えた場所に、<b>エントリーへ進むボタンがまだない</b></li>
+    </ul><span class="to">→ 05 施策2　エントリーへの導線追加</span></div></div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">04</span><h2>改善の方向性　3つのポイント</h2></div>
-    <p class="text">公開後の数字を見ながら、<b>新しいお客様の開拓・お問い合わせ・採用</b>の3つを重点に改善していきます。</p>
+    <div class="sec-head"><span class="no num">05</span><h2>改善の方向性</h2></div>
+    <p class="text">6週間の数字をふまえ、<b>お問い合わせ・採用・新しいお客様の開拓</b>の3つを重点に改善していきます。</p>
     <div class="fixes">
       <article class="fix">
-        <div class="fix-title"><span class="no num">1</span><h3>お問い合わせ　内容の分析とフォームの改善</h3><span class="pri high">優先度 高</span></div>
-        <div class="cell"><span class="k">現状</span><p>入力開始率は一般的な水準以上。送信完了の計測も始まり、件数を追えるようになった</p></div>
+        <div class="fix-title"><span class="no num">1</span><h3>お問い合わせ　営業メール対策とフォームの改善</h3><span class="pri high">優先度 高</span></div>
+        <div class="cell"><span class="k">現状</span><p>届いたお問い合わせ239件のうち234件が営業・売り込み。お客様からのご相談は3件</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>お問い合わせの内容を分析し、営業メール・迷惑メールを判別。製品ページから製品名入りで問い合わせできるようにする</p></div>
+        <div class="cell"><span class="k">施策</span><p>お問い合わせ種別に「営業・ご提案」を設けて振り分ける。迷惑送信を防ぐ仕組みを追加する。製品ページから製品名入りで問い合わせできるようにする</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell exp"><span class="k">期待効果</span><div class="big">見込み客数<small>を把握</small></div><p>本当のお問い合わせ件数と内容を毎月追える</p></div>
+        <div class="cell exp"><span class="k">期待効果</span><div class="big">本当のお問い合わせ<small>を見落とさない</small></div><p>件数と内容を毎月正しく追える</p></div>
       </article>
       <article class="fix">
         <div class="fix-title"><span class="no num">2</span><h3>採用　エントリーへの導線追加</h3><span class="pri high">優先度 高</span></div>
-        <div class="cell"><span class="k">現状</span><p>採用情報・社員インタビューがじっくり読まれている</p></div>
+        <div class="cell"><span class="k">現状</span><p>社員インタビューは計263回読まれているが、エントリーページへ進むのは約3割</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>社員インタビュー・募集要項の最後にエントリーボタンを置く</p></div>
+        <div class="cell"><span class="k">施策</span><p>社員インタビュー・募集要項の最後にエントリーボタンを置く。エントリーフォームの入力項目を見直す</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell exp"><span class="k">期待効果</span><div class="big num">4〜5<small>割へ</small></div><p>エントリーページまで進む人が増える</p></div>
       </article>
       <article class="fix">
         <div class="fix-title"><span class="no num">3</span><h3>Googleビジネスプロフィール（Googleマップ）の整備</h3><span class="pri high">優先度 高</span></div>
-        <div class="cell"><span class="k">現状</span><p>Googleマップに御社が2件表示（本社と、別住所・別電話番号のもの）。写真・クチコミは未掲載</p></div>
+        <div class="cell"><span class="k">現状</span><p>Googleマップに御社が3件表示（本社、大津の旧所在地、電装部門）。いずれもオーナー未登録で、写真・クチコミは未掲載</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell"><span class="k">施策</span><p>オーナー登録を行い、会社情報・写真・製品カテゴリを整える。重複している情報を整理する（オーナー登録は御社のGoogleアカウントで実施、手順は当社がご案内）</p></div>
         <div class="arrow" aria-hidden="true">→</div>
@@ -401,15 +459,15 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
       </article>
       <article class="fix">
         <div class="fix-title"><span class="no num">4</span><h3>新しいお客様の開拓　製品別紹介ページの新設</h3><span class="pri">優先度 中</span></div>
-        <div class="cell"><span class="k">現状</span><p>「オートチェッカー」「パッカースケール」など、製品名での検索表示が始まっている</p></div>
+        <div class="cell"><span class="k">現状</span><p>「オートチェッカー」「パッカースケール」「籾計量器」など、製品名からのクリックが始まった</p></div>
         <div class="arrow" aria-hidden="true">→</div>
-        <div class="cell"><span class="k">施策</span><p>オートチェッカー、パッカースケール、ホッパースケールなど、製品ごとにページを作る。専門コラム（05）と組み合わせる</p></div>
+        <div class="cell"><span class="k">施策</span><p>オートチェッカー、パッカースケール、ホッパースケールなど、製品ごとにページを作る。専門コラム（06）と組み合わせる</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell exp"><span class="k">期待効果</span><div class="big num">3〜6<small>か月で効果</small></div><p>製品名で探す新しいお客様に届く</p></div>
       </article>
       <article class="fix">
         <div class="fix-title"><span class="no num">5</span><h3>新着情報の定期更新</h3><span class="pri">優先度 中</span></div>
-        <div class="cell"><span class="k">現状</span><p>新着情報の一覧を見た人は17人</p></div>
+        <div class="cell"><span class="k">現状</span><p>10月7日にスポーツ協賛・YouTubeなど3件を追加。新着情報の一覧を見た人は61人</p></div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="cell"><span class="k">施策</span><p>展示会・納入事例などを月1〜2本、御社で投稿</p></div>
         <div class="arrow" aria-hidden="true">→</div>
@@ -420,27 +478,27 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">05</span><h2>今後のコンテンツ拡充</h2></div>
-    <p class="text">製品を探している人だけでなく、計量・選別について調べている人にも届くよう、専門性を生かした読み物を増やします。検索だけでなく、ChatGPTなどのAIからの来訪（9日間で5回）も始まっており、正確な解説記事はAIに引用されやすくなります。</p>
+    <div class="sec-head"><span class="no num">06</span><h2>今後のコンテンツ拡充</h2></div>
+    <p class="text">製品を探している人だけでなく、計量・選別について調べている人にも届くよう、専門性を生かした読み物を増やします。ChatGPTなどのAIからの来訪（6週間で24回）も続いており、正確な解説記事はAIに引用されやすくなります。</p>
     <div class="contents">
       <div class="ct main">
         <span class="tag">柱となる施策</span>
         <h3>専門コラム「計量の基礎知識」</h3>
         <p>計量・選別の専門家として、業界の人が調べる言葉を解説する記事を月1〜2本掲載します。すでに検索で表示されている言葉から始めるため、早く結果が出やすいテーマです。</p>
-        <div class="topics"><span>生籾とは（8日間で435回表示）</span><span>度量衡とは（142回表示）</span><span>オートパッカーとは</span><span>計量法と検定の基本</span><span>選果の自動化とは</span><span>126年でみる計量の歴史</span></div>
+        <div class="topics"><span>度量衡とは（6週間で762回表示）</span><span>生籾とは（445回表示）</span><span>オートチェッカーとは</span><span>パッカースケールとは</span><span>計量法と検定の基本</span><span>126年でみる計量の歴史</span></div>
         <dl><dt>狙う人</dt><dd>JA・農業法人・食品工場の担当者、計量を学ぶ学生</dd><dt>体制</dt><dd>御社の技術者に30分ほど取材 → 当社が記事化 → 御社で内容確認</dd></dl>
       </div>
       <div class="ct">
         <span class="tag">比較検討中の人へ</span>
         <h3>導入事例の詳細ページ</h3>
         <p>納入実績の一覧から、課題・導入した設備・効果がわかる事例ページへ。導入を検討している人の決め手になります。</p>
-        <dl><dt>根拠</dt><dd>納入実績は78人が閲覧、平均56秒</dd><dt>頻度</dt><dd>2〜3か月に1本</dd></dl>
+        <dl><dt>根拠</dt><dd>納入実績は243人が閲覧、平均53秒</dd><dt>頻度</dt><dd>2〜3か月に1本</dd></dl>
       </div>
       <div class="ct">
         <span class="tag">問い合わせの手前の人へ</span>
         <h3>カタログ・技術資料のダウンロード</h3>
         <p>製品カタログをメールアドレスと引き換えにダウンロードできるようにし、すぐには問い合わせない見込み客とつながります。</p>
-        <dl><dt>根拠</dt><dd>製品ページの閲覧は1人30秒〜1分台と短め</dd><dt>準備</dt><dd>既存カタログのPDF化と申込フォーム</dd></dl>
+        <dl><dt>根拠</dt><dd>製品ページは1分半以上読まれている</dd><dt>準備</dt><dd>既存カタログのPDF化と申込フォーム</dd></dl>
       </div>
       <div class="ct">
         <span class="tag">疑問を持った人へ</span>
@@ -452,12 +510,12 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
         <span class="tag">応募を考えている人へ</span>
         <h3>社員インタビューの追加</h3>
         <p>採用情報とインタビューはよく読まれています。職種や拠点を広げて本数を増やし、働く姿を具体的に伝えます。</p>
-        <dl><dt>根拠</dt><dd>インタビュー5ページで計177回閲覧</dd><dt>頻度</dt><dd>半年に1〜2名</dd></dl>
+        <dl><dt>根拠</dt><dd>インタビュー5ページで計263回閲覧</dd><dt>頻度</dt><dd>半年に1〜2名</dd></dl>
       </div>
       <div class="ct">
         <span class="tag">現場を見たい人へ</span>
         <h3>動画の活用</h3>
-        <p>撮影済みの工場・設備の映像を、短い動画にして製品ページや新着情報に載せます。動いている様子は写真より伝わります。</p>
+        <p>撮影済みの工場・設備の映像を短い動画にして、製品ページや新着情報、YouTube公式チャンネルに載せます。動いている様子は写真より伝わります。</p>
         <dl><dt>準備</dt><dd>撮影済みの素材を編集（新規撮影は不要）</dd></dl>
       </div>
       <div class="ct">
@@ -471,22 +529,22 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">06</span><h2>今後の進め方</h2></div>
+    <div class="sec-head"><span class="no num">07</span><h2>今後の進め方</h2></div>
     <div class="plan">
       <div class="phase now">
-        <div class="when num">10<small>月</small></div>
+        <div class="when num">11<small>月</small></div>
         <h3>早期に着手</h3>
-        <ul><li>施策2　採用エントリーへの導線追加</li><li>施策1　お問い合わせ内容の分析</li><li>営業ご担当者へのヒアリング</li><li>送信完了の計測開始（済）</li></ul>
+        <ul><li>施策1　お問い合わせ種別の追加・迷惑送信対策</li><li>施策2　採用エントリーへの導線追加</li><li>施策3　Googleマップのオーナー登録のご案内</li><li>11月末　2回目の定期保守</li></ul>
       </div>
       <div class="phase">
-        <div class="when num">11<small>月上旬</small></div>
-        <h3>効果測定</h3>
-        <ul><li>10月分の月次レポート提出</li><li>お問い合わせ件数・内訳の把握</li><li>施策2の効果を確認</li></ul>
+        <div class="when num">12<small>月</small></div>
+        <h3>効果測定と改善</h3>
+        <ul><li>11月分の月次レポート提出</li><li>施策1・2の効果を確認</li><li>施策4　製品別紹介ページの新設</li><li>PHP（サーバー）の方針を決定</li></ul>
       </div>
       <div class="phase">
-        <div class="when num">12<small>月〜</small></div>
-        <h3>改善の実施</h3>
-        <ul><li>施策1　フォームの改善</li><li>施策4　製品別紹介ページの新設</li><li>専門コラムの連載開始</li><li>月次レポートで効果を検証</li></ul>
+        <div class="when num">1<small>月〜</small></div>
+        <h3>コンテンツの拡充</h3>
+        <ul><li>専門コラムの連載開始</li><li>導入事例・よくあるご質問の準備</li><li>月次レポートで効果を検証</li></ul>
       </div>
     </div>
     <div class="ways">
@@ -499,35 +557,26 @@ footer{margin-top:64px;padding-top:14px;border-top:1px solid var(--line);font-si
         <p>月単位でご契約いただき、当社から改善案をご提案しながら毎週のサイクルで改善を重ねます。社内のご要望もその場で反映できます（費用は別途ご相談）。</p>
       </div>
     </div>
-    <div class="hear">
-      <h3>社内の皆さまへのヒアリングのお願い</h3>
-      <p class="text">ホームページは部署ごとに使い方が異なります。営業ご担当者を中心に、次の点を伺えれば改善の優先順位を決めやすくなります。</p>
-      <ul>
-        <li>商談やメールで、ホームページ（製品情報など）を案内・提示できているか</li>
-        <li>営業の場で「このページがあれば説明しやすい」と感じるもの</li>
-        <li>採用・広報など各部署で、ホームページに期待すること</li>
-      </ul>
-    </div>
   </section>
 
   <section class="block">
-    <div class="sec-head"><span class="no num">07</span><h2>ご確認事項</h2></div>
+    <div class="sec-head"><span class="no num">08</span><h2>ご確認事項</h2></div>
     <ul class="asks">
-      <li>23件の送信のうち、実際のお問い合わせの件数（受信メールでのご確認）</li>
-      <li>施策1・2を10月中に進めてよいか</li>
-      <li>営業ご担当者へのヒアリングの日程</li>
+      <li>お客様からのご相談3件（設備の改造・トラックスケールの修理・旧設備の資料）への対応状況</li>
+      <li>施策1・2を11月中に進めてよいか</li>
+      <li>お問い合わせ種別に「営業・ご提案」を追加してよいか</li>
+      <li>Googleビジネスプロフィール（Googleマップ）のオーナー権限の有無</li>
+      <li>PHPを上げるためのサーバープラン変更のご検討</li>
       <li>製品別ページで優先したい製品</li>
       <li>新着情報を投稿するご担当者</li>
       <li>コラムの取材にご協力いただける技術者の方</li>
-      <li>コラム・導入事例で取り上げたいテーマ</li>
-      <li>ネット広告の出稿状況</li>
-      <li>Googleビジネスプロフィール（Googleマップ）のオーナー権限の有無</li>
-      <li>アクセス解析を共有するGoogleアカウント</li>
+      <li>出展予定の展示会</li>
+      <li>営業ご担当者へのヒアリングの日程</li>
     </ul>
   </section>
 
   <footer>
-    <span>出典：Googleアナリティクス4（9月24日〜10月2日。お問い合わせ・エントリーの流れは10月2日終日まで）、Googleサーチコンソール（9月24日〜10月1日）、フォームの目安はZuko社公開データ</span>
+    <span>出典：Googleアナリティクス4（9月24日〜11月8日。お問い合わせは9月30日から）、Googleサーチコンソール（9月24日〜11月6日）、フォームの目安はZuko社公開データ</span>
     <span>作成：株式会社レイン 関 直史</span>
   </footer>
 </main>
