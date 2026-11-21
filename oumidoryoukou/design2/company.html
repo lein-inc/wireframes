@@ -1679,9 +1679,9 @@ html,body{overflow-x:clip;max-width:100%}
       <div class="statement__main">
         <p class="statement__body">私たち近江度量衡が社名に冠した「度量衡」という言葉。「度」は長さ、「量」は容積、「衡」は重量を表し、いずれも「はかる」と読むことができます。古代より人は、計量単位を統一し、複雑な計算を可能にする計量システムを生み出すことで、文明を進化させてきました。標準化された「はかる」技術を用いることで、言葉や文化の異なる人の間にコミュニケーションが生まれ、「はかる」を通して世界が繋がっていきます。私たちは、計量に関するあらゆる技術を開発し、組合せ、提供する計量装置の総合システムメーカーです。伝統の技と先進のテクノロジーで、分野や規模を超えた様々な現場に最適なソリューションをお届けし、「はかる」技術で社会を豊かに繋いでいくことが、私たちの使命です。</p>
         <div class="creed">
-      <div class="creed__item"><div class="creed__no">社是 01</div><p class="creed__txt">吾々は企業を通じ社会に貢献すると共に、お互いの幸福と平和な生活の向上に努力します。</p></div>
-      <div class="creed__item"><div class="creed__no">社是 02</div><p class="creed__txt">経営の向上と技術の昂揚により、優良品の生産に努めます。</p></div>
-      <div class="creed__item"><div class="creed__no">社是 03</div><p class="creed__txt">互助の精神をもって職場の繁栄に協力一致邁進します。</p></div>
+      <div class="creed__item"><div class="creed__no">社是 <b>01</b></div><p class="creed__txt">吾々は企業を通じ社会に貢献すると共に、お互いの幸福と平和な生活の向上に努力します。</p></div>
+      <div class="creed__item"><div class="creed__no">社是 <b>02</b></div><p class="creed__txt">経営の向上と技術の昂揚により、優良品の生産に努めます。</p></div>
+      <div class="creed__item"><div class="creed__no">社是 <b>03</b></div><p class="creed__txt">互助の精神をもって職場の繁栄に協力一致邁進します。</p></div>
     </div>
         </div>
       </div>
@@ -1711,7 +1711,7 @@ html,body{overflow-x:clip;max-width:100%}
 
     <!-- ② 導入 -->
     <div class="pmsg__intro rv">
-      <p class="pmsg__lead">私たち近江度量衡は、1900年の創業以来、125年以上にわたり「はかる」という技術を通じて社会を支えてきました。</p>
+      <p class="pmsg__lead">私たち近江度量衡は、<br class="pmsg__br">1900年の創業以来、<br class="pmsg__br">125年以上にわたり「はかる」<br class="pmsg__br">という技術を通じて社会を<br class="pmsg__br">支えてきました。</p>
       <div class="pmsg__body">
         <p class="pmsg__lines">重さをはかる。<br>量をはかる。<br>品質をはかる。<br>それが私たちの原点です。</p>
         <p>しかし、私たちが本当に大切にしているのは、数字そのものではありません。<br>その先にある、お客様の安心や喜び、そして未来です。<br>私たちは、お客様一人ひとりの課題に真摯に向き合いながら、新しい価値づくりに挑戦し続けています。</p>
@@ -1736,7 +1736,7 @@ html,body{overflow-x:clip;max-width:100%}
         <p class="pmsg__lines">人を育てる。<br>技術を磨く。<br>挑戦を続ける。</p>
         <p>そして、お客様や地域社会、共に働く仲間とともに、より良い未来を創っていきたいと考えています。</p>
         <p class="pmsg__end">We Measure the Future.<br>未来を測り、未来を創る。<br>それが私たち近江度量衡の変わらぬ使命です。</p>
-        <p class="pmsg__sign"><span>代表取締役社長</span><b>小谷 俊彦</b></p>
+        <!-- 2026-09-29 関さん指示：末尾の署名（代表取締役社長 小谷 俊彦）は削除。KV側に大きく出しているため -->
       </div>
     </div>
   </div>
@@ -1847,7 +1847,7 @@ html,body{overflow-x:clip;max-width:100%}
     </div>
     <div class="grid-2 rv rv-d1">
       <div class="card">
-        <i class="card__ph" style="background-image:url(cert-iso.jpg)"></i><div class="card__no">ISO 9001</div>
+        <i class="card__ph" style="background-image:url(cert-iso-2026.jpg)"></i><div class="card__no">ISO 9001</div>
         <div class="card__ttl">品質マネジメントシステム認証</div>
         <p class="card__txt">2000年2月、ISO（国際標準化機構）が定めた国際的な品質保証規格「ISO9001」の認証を取得（登録番号 JQA-QM4385）。製品の受注・開発・設計・生産・保管出荷等、各過程の管理体制が国際的に評価されています。</p>
       </div>
@@ -2932,6 +2932,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
 <style id="page-logo">
+/* 2026-09-29 先方修正点：SPで左上の会社名が二重に重なる。
+   ヒーロー通過後は白枠のミニロゴ（.nav__mini）が出るのに、固定ロゴ（.site-logo）も残っていて二重になっていた。
+   ⚠️ミニロゴを消すと、固定ロゴが赤い面や見出しの上に下地なしで乗ってしまう → SPは固定ロゴの方を隠す。 */
+.site-logo{transition:opacity .18s ease,visibility 0s}
+@media(max-width:900px){
+  body:not(.menu-open):has(.nav.is-mini) .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .18s ease,visibility 0s .18s}
+}
 /* ⚠️下層は2段組み(flex-direction:column)＋900px以下で position:absolute になっていた。
    TOPに合わせて1列・追従（fixed）に統一する。色は白反転せず素の赤のまま。
    サイズはTOPと同じ刻み（社名:周年 = 1.5:1、幅なりに縮む）。 */
@@ -3011,6 +3019,10 @@ p,li,dd,dt,figcaption,.body-txt,.flow__lead,.lineup__lead,.tfd-in__tx,
   .creed__no{font-size:12.5px}
   .creed__txt{font-size:14.5px}
 }
+/* 2026-09-29 関さん指示：番号(01〜03)を一回り大きく太字に／社是ごとに2pxの赤線（上に引く区切り線） */
+.creed__item{border-top:2px solid var(--red);padding-top:clamp(14px,1.4vw,20px)}
+.creed__no{display:flex;align-items:baseline;gap:.5em}
+.creed__no b{font-family:var(--en);font-weight:700;font-size:clamp(18px,1.5vw,22px);letter-spacing:.06em;line-height:1}
 </style>
 
 <!-- ══ ボタン：白地・赤枠・赤文字／ホバーで赤帯が入って白文字（採用ページと共通ルール） ══ -->
@@ -3154,6 +3166,37 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .prow__ttl,.lcard__nm,.fitem h3,.sf h3,.tfd__ttl,.tfd__catch,.yoko-h2,.yoko-job,
 .bene__ttl,.wstance__ttl,.base-card__name,.card__ttl,.news-row__title,.news-article__ttl,
 .interview-card__quote,.ivcard .q,.chrono__t{word-break:auto-phrase;text-wrap:pretty}
+</style>
+<!-- ══ 2026-09-29 先方修正点：SPで社長の立ち姿が全体映らない ══ -->
+<style id="fix-0929-pres">
+/* ⚠️SPは上52%を赤いベタ面にし、写真(2000×930)を箱全体に cover で敷いていたため、
+     縦長の箱に合わせて写真が大きく拡大され、顔が赤面の裏に隠れていた。
+     → 写真は下部に 4:3 の枠で置き、写真の縦いっぱい（頭〜手元）を見せる。赤面はその上まで。
+       横位置は人物（x中心≒0.6）が枠の中央に来るよう 76% に合わせている。 */
+@media(max-width:900px){
+  .pmsg__kv{padding-bottom:calc(75vw + clamp(32px,8vw,48px))}
+  .pmsg__kv::after{top:0;bottom:75vw;height:auto}
+  .pmsg__kvph{top:auto;bottom:0;height:75vw;background-position:76% center}
+}
+</style>
+<!-- ══ 2026-09-29 代表挨拶の調整（関さん指示） ══ -->
+<style id="fix-0929-msg">
+/* ① 導入リード：PCだけ指定位置で改行（原稿の文字は変えない。SPは従来どおり自然折り返し） */
+.pmsg__lead{text-wrap:wrap}
+@media(max-width:900px){ .pmsg__br{display:none} }
+/* ⚠️PCは最長行「125年以上にわたり「はかる」」(14字)が段幅(≒0.35vw)に収まるよう少しだけ小さく、途中で折り返さない */
+@media(min-width:901px){ .pmsg__lead{font-size:clamp(1.25rem,2.3vw,2.4rem);white-space:nowrap} }
+/* ② We Measure the Future 下の署名：肩書きを少し大きく、氏名は明朝で大きく */
+.pmsg__who{gap:clamp(14px,1.4vw,22px)}
+.pmsg__who span{font-size:clamp(14px,1.2vw,17px)}
+.pmsg__who b{font-family:var(--mincho);font-weight:700;
+  font-size:clamp(28px,2.8vw,44px);letter-spacing:.1em;line-height:1.2}
+/* ③ 締めブロック：導入と同じ2段組みの左段だけに入っていて狭く、途中で折り返していた
+     → 全幅の1段組み（横位置）にし、PCでは各行を途中で折り返さない。SPは従来どおり */
+.pmsg__intro--end{grid-template-columns:minmax(0,1fr)}
+@media(min-width:901px){
+  .pmsg__intro--end .pmsg__body p{white-space:nowrap}
+}
 </style>
 </body>
 </html>

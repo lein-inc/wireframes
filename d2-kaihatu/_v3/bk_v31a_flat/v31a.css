@@ -1,0 +1,106 @@
+/* =========================================================
+   v3.1-A 地形図：等高線の線画がFVからTOP全体に流れる
+   ・背景 img/v31/a-terrain.svg（FV〜NEWS を1枚でつなぐ／PC1440基準で描画、幅に合わせて伸縮）
+   ・線のトーンは v1〜v3 FV の3Dワイヤー地形を踏襲（白地＋細いグレー→高所ほど青）
+   ・撮影写真は地図上の「測点ピン」
+   ========================================================= */
+.land31 { position:relative; }
+.land31__bg { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; z-index:0; pointer-events:none; user-select:none; }
+.land31 > section, .land31 > div:not(.land31__bg) { position:relative; z-index:1; }
+
+/* 既存セクションの背景を外して地形を見せる */
+.v31a .statement, .v31a .service, .v31a .founder, .v31a .news { background:transparent; }
+.v31a .statement::before { display:none; }
+.v31a .statement { padding:150px 0 120px; }
+.v31a .service .bg-word { color:transparent; -webkit-text-stroke:1px rgba(1,91,158,.16); }
+.v31a .fv-note { background:#fff; border:1px solid var(--border); border-left:3px solid var(--aqua); }
+.v31a .news { padding-bottom:150px; }
+.v31a .top-news-item { background:rgba(255,255,255,.9); }
+
+/* ---------- HERO ---------- */
+.h31a { background:transparent; padding:0; position:relative; height:clamp(720px, calc(100vh - 125px), 820px); }
+.h31a__in { position:relative; height:100%; }
+.h31a__copy { position:absolute; left:32px; bottom:12%; max-width:620px; }
+.h31a__coord {
+  display:inline-block; font-family:"Inter",monospace; font-size:11.5px; letter-spacing:.18em; color:var(--blue);
+  background:#fff; border:1px solid var(--blue); padding:6px 12px; margin-bottom:26px;
+}
+.h31a h1 { font-size:clamp(40px,5.2vw,74px); font-weight:900; line-height:1.28; letter-spacing:.04em; color:var(--blue-dark); }
+.h31a h1 { text-shadow:0 0 0 #fff; }
+.h31a__en { margin-top:16px; font-family:"Inter",sans-serif; font-weight:700; font-size:clamp(15px,1.4vw,19px); letter-spacing:.04em; color:var(--blue); }
+.h31a__sub { margin-top:14px; font-size:14.5px; line-height:2; color:var(--txt-2); background:#fff; display:inline-block; padding:2px 10px 2px 0; }
+.h31a__btns { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+
+/* 測点ピン（写真）：しずく型・先端が地図上の点 */
+.mpin {
+  position:absolute; left:var(--x); top:var(--y); z-index:3;
+  width:150px; transform:translate(-50%,0); display:flex; flex-direction:column; align-items:center;
+  transition:transform .3s var(--ease);
+}
+.mpin:hover { transform:translate(-50%,-6px); }
+.mpin__ph {
+  width:132px; height:132px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); overflow:hidden;
+  border:4px solid #fff; outline:1.5px solid var(--blue); background:var(--blue-mist); position:relative;
+}
+.mpin__ph img { position:absolute; left:-21%; top:-21%; width:142%; height:142%; max-width:none; object-fit:cover; transform:rotate(45deg); }
+.mpin__tag {
+  margin-top:26px; display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+  background:var(--blue-dark); color:#fff; font-size:13px; font-weight:700; letter-spacing:.06em; padding:5px 12px 5px 6px;
+}
+.mpin__tag b { font-family:"Inter",sans-serif; font-size:11px; background:var(--yellow); color:#3A2B00; padding:2px 7px; }
+.mpin::after { display:none; /* 測点（三角点） */
+  content:""; position:absolute; left:50%; top:178px; width:0; height:0; transform:translateX(-50%);
+  border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid var(--blue);
+}
+.mpin .mpin__tag { order:2; }
+
+/* 方位・縮尺 */
+.h31a__legend { position:absolute; right:40px; top:26px; display:flex; align-items:flex-end; gap:26px; z-index:2;
+  font-family:"Inter",sans-serif; font-size:11px; letter-spacing:.12em; color:var(--blue-dark); }
+.h31a__legend .north { display:flex; flex-direction:column; align-items:center; gap:4px; font-weight:700; }
+.h31a__legend .north i { width:0; height:0; border-left:9px solid transparent; border-right:9px solid transparent; border-bottom:26px solid var(--blue); }
+.h31a__legend .scale { display:grid; grid-template-columns:repeat(4,30px); row-gap:6px; }
+.h31a__legend .scale i { height:6px; border:1px solid var(--blue-dark); }
+.h31a__legend .scale i:nth-child(odd) { background:var(--blue-dark); }
+.h31a__legend .scale em { grid-column:1/-1; font-style:normal; }
+
+/* Service：写真に測点番号 */
+.v31a .svc-card { position:relative; }
+.v31a .svc-card .pt {
+  position:absolute; z-index:3; right:0; top:calc(var(--svc-pt, 0px)); font-family:"Inter",sans-serif; font-size:11.5px; font-weight:700;
+  letter-spacing:.1em; color:#fff; background:var(--blue); padding:4px 10px;
+}
+
+/* ---------- STRENGTHS：海（深浅測量の等深線）＋波打つ海岸線 ---------- */
+.v31a .strengths {
+  clip-path:none; margin:110px 0; padding:120px 0 110px;
+  background:var(--blue-dark) url(../img/v31/a-sea.svg) center / cover no-repeat;
+}
+.v31a .strengths::before, .v31a .strengths::after {
+  content:""; position:absolute; left:0; right:0; height:90px; inset:auto 0; opacity:1;
+  mask-image:none; -webkit-mask-image:none; background-size:100% 100%; background-repeat:no-repeat;
+}
+.v31a .strengths::before { top:-89px; background-image:url(../img/v31/a-coast-top.svg); }
+.v31a .strengths::after { bottom:-89px; background-image:url(../img/v31/a-coast-bottom.svg); }
+.v31a .str-item { background:transparent; }
+
+/* ---------- SP ---------- */
+@media (max-width:900px){
+  .land31__bg { display:none; }
+  .h31a { height:auto; min-height:0; max-height:none; padding:300px 0 56px;
+    background:url(../img/v31/a-terrain.svg) 62% 0 / 1440px 6619px no-repeat; }
+  .h31a__copy { position:static; padding:0; }
+  .h31a__in { height:auto; }
+  .mpin { width:96px; }
+  .mpin__ph { width:84px; height:84px; border-width:3px; }
+  .mpin__tag { margin-top:16px; font-size:11px; }
+  .mpin::after { top:114px; }
+  .mpin:nth-of-type(n+4) { display:none; }
+  .mpin:nth-of-type(1) { left:18% !important; top:30px !important; }
+  .mpin:nth-of-type(2) { left:50% !important; top:84px !important; }
+  .mpin:nth-of-type(3) { left:82% !important; top:30px !important; }
+  .h31a__legend { display:none; }
+  .v31a .strengths { margin:60px 0; padding:80px 0 70px; }
+  .v31a .strengths::before, .v31a .strengths::after { height:50px; }
+  .v31a .strengths::before { top:-49px; } .v31a .strengths::after { bottom:-49px; }
+}

@@ -1674,7 +1674,7 @@ html,body{overflow-x:clip;max-width:100%}
       <a class="news-row" href="#"><span class="news-row__date">2026.09.20</span><span class="news-row__cat">お知らせ</span><span class="news-row__title">立命館大学ASTERフェスティバル出展（10月8日開催）</span></a>
       <a class="news-row" href="#"><span class="news-row__date">2026.09.01</span><span class="news-row__cat">お知らせ</span><span class="news-row__title">東京営業所を「関東営業所」に名称変更し、移転しました</span></a>
       <a class="news-row" href="#"><span class="news-row__date">2026.08.06</span><span class="news-row__cat">お知らせ</span><span class="news-row__title">札幌営業所を移転しました</span></a>
-      <a class="news-row" href="#"><span class="news-row__date">2026.03.03</span><span class="news-row__cat">お知らせ</span><span class="news-row__title">創立126周年を迎えました</span></a>
+      <a class="news-row" href="#"><span class="news-row__date">2026.03.03</span><span class="news-row__cat">お知らせ</span><span class="news-row__title">創業126周年を迎えました</span></a>
     </div>
     <p class="body-txt rv rv-d1" style="margin-top:26px;color:rgba(0,0,0,.5)">※ 記事内の動画埋め込み・画像ギャラリー、カレンダーからの日付絞り込みに対応（WordPressで自社更新）。</p>
   </div>
@@ -2695,6 +2695,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
 <style id="page-logo">
+/* 2026-09-29 先方修正点：SPで左上の会社名が二重に重なる。
+   ヒーロー通過後は白枠のミニロゴ（.nav__mini）が出るのに、固定ロゴ（.site-logo）も残っていて二重になっていた。
+   ⚠️ミニロゴを消すと、固定ロゴが赤い面や見出しの上に下地なしで乗ってしまう → SPは固定ロゴの方を隠す。 */
+.site-logo{transition:opacity .18s ease,visibility 0s}
+@media(max-width:900px){
+  body:not(.menu-open):has(.nav.is-mini) .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .18s ease,visibility 0s .18s}
+}
 /* ⚠️下層は2段組み(flex-direction:column)＋900px以下で position:absolute になっていた。
    TOPに合わせて1列・追従（fixed）に統一する。色は白反転せず素の赤のまま。
    サイズはTOPと同じ刻み（社名:周年 = 1.5:1、幅なりに縮む）。 */

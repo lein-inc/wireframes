@@ -2592,6 +2592,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
 <style id="page-logo">
+/* 2026-09-29 先方修正点：SPで左上の会社名が二重に重なる。
+   ヒーロー通過後は白枠のミニロゴ（.nav__mini）が出るのに、固定ロゴ（.site-logo）も残っていて二重になっていた。
+   ⚠️ミニロゴを消すと、固定ロゴが赤い面や見出しの上に下地なしで乗ってしまう → SPは固定ロゴの方を隠す。 */
+.site-logo{transition:opacity .18s ease,visibility 0s}
+@media(max-width:900px){
+  body:not(.menu-open):has(.nav.is-mini) .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .18s ease,visibility 0s .18s}
+}
 /* ⚠️下層は2段組み(flex-direction:column)＋900px以下で position:absolute になっていた。
    TOPに合わせて1列・追従（fixed）に統一する。色は白反転せず素の赤のまま。
    サイズはTOPと同じ刻み（社名:周年 = 1.5:1、幅なりに縮む）。 */

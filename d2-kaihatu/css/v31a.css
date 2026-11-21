@@ -1,0 +1,134 @@
+/* =========================================================
+   v3.1 TOP（A）：FV の3Dワイヤー地形（固定の iframe）がページの最後まで背景に残る
+   ・スクロールすると js/v31a.js がいまのセクションを iframe に送り、カメラが各コンテンツの画角へ「ぐーんっ」と動く
+     Statement=山の三角点 / Service=市街地 / Strengths=真上から点群 / Founder=橋 / Recruit=道路 / News=全景
+   ・コンテンツはサン防災TOPのように「イラストの上に乗るパネル」。角は角欠け（角丸は使わない）
+   ・パネルは画面に入ると、角欠けの形が開くように出てくる
+   ========================================================= */
+.v31a { --c31: 28px; }
+.v31a .fv-bg.is-off { visibility:visible; }
+.land31 { position:relative; z-index:1; }
+.land31 > section, .land31 > div { position:relative; z-index:1; }
+.v31a .statement, .v31a .service, .v31a .founder, .v31a .news, .v31a .recruit, .v31a .strengths { background:transparent; overflow:visible; }
+.v31a .service ~ section { z-index:1; }
+.v31a .statement::before { display:none; }
+
+/* ---------- パネル（角欠け＋上辺の青い帯） ---------- */
+.v31a .p31 {
+  position:relative; background:rgba(255,255,255,.95);
+  clip-path:polygon(var(--c31) 0, 100% 0, 100% calc(100% - var(--c31)), calc(100% - var(--c31)) 100%, 0 100%, 0 var(--c31));
+  opacity:0; transform:translateY(70px);
+  transition:opacity .8s ease, transform 1.1s cubic-bezier(.2,.8,.2,1);
+}
+.v31a .p31::before {           /* 上辺の帯：左の角欠けから伸びる */
+  content:""; position:absolute; left:var(--c31); right:0; top:0; height:4px; background:var(--blue);
+  transform:scaleX(0); transform-origin:left; transition:transform 1.2s .3s cubic-bezier(.2,.8,.2,1);
+}
+.v31a .p31.is-in { opacity:1; transform:none; }
+.v31a .p31.is-in::before { transform:scaleX(1); }
+
+/* ---------- STATEMENT：左に文章、右は3Dの山（三角点）の上にピン ---------- */
+.v31a .statement { min-height:100vh; padding:170px 0 200px; }
+.v31a .statement p { max-width:620px; background:rgba(255,255,255,.88); }
+.st-pins { position:absolute; inset:0; z-index:2; pointer-events:none; }
+.mpin {
+  position:absolute; left:var(--x); top:var(--y); pointer-events:auto;
+  width:150px; transform:translate(-50%,0); display:flex; flex-direction:column; align-items:center;
+  animation:bob31 5s ease-in-out infinite;
+}
+.mpin:nth-of-type(2) { animation-delay:-1.2s; } .mpin:nth-of-type(3) { animation-delay:-2.6s; } .mpin:nth-of-type(4) { animation-delay:-3.7s; }
+@keyframes bob31 { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,-12px); } }
+.mpin:hover { animation-play-state:paused; }
+.mpin__ph {
+  width:132px; height:132px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); overflow:hidden; position:relative;
+  border:4px solid #fff; outline:1.5px solid var(--blue); background:var(--blue-mist);
+}
+.mpin__ph img { position:absolute; left:-21%; top:-21%; width:142%; height:142%; max-width:none; object-fit:cover; transform:rotate(45deg); transition:transform .5s; }
+.mpin:hover .mpin__ph img { transform:rotate(45deg) scale(1.08); }
+.mpin__tag {
+  margin-top:30px; display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+  background:var(--blue-dark); color:#fff; font-size:13px; font-weight:700; letter-spacing:.06em; padding:5px 12px 5px 6px;
+}
+.mpin__tag b { font-family:"Inter",sans-serif; font-size:11px; background:var(--yellow); color:#3A2B00; padding:2px 7px; }
+
+/* ---------- SERVICE：上に市街地の3Dを見せてから、大きなパネルがせり上がる ---------- */
+.v31a .service { padding:52vh 0 22vh; }
+.v31a .service .p31 { padding:80px 64px 72px; max-width:1260px; }
+.v31a .service .bg-word { color:transparent; -webkit-text-stroke:1px rgba(1,91,158,.16); }
+.v31a .svc-card { position:relative; transition:transform .4s cubic-bezier(.2,.8,.2,1); }
+.v31a .svc-card:hover { transform:translateY(-8px); }
+.v31a .svc-card .pt {
+  position:absolute; z-index:3; right:0; top:0; font-family:"Inter",sans-serif; font-size:11.5px; font-weight:700;
+  letter-spacing:.1em; color:#fff; background:var(--blue); padding:4px 10px;
+}
+
+/* ---------- STRENGTHS：左のパネル、右は真上から見た点群スキャン ---------- */
+.v31a .strengths { clip-path:none; margin:0; padding:30vh 0 30vh; color:var(--txt); }
+.v31a .strengths::before, .v31a .strengths::after { display:none; }
+.v31a .strengths .p31 { max-width:660px; margin-left:max(5vw,40px); margin-right:auto; padding:72px 56px 60px; }
+.v31a .strengths .sec-head .en-label { color:var(--blue); }
+.v31a .strengths .sec-head h2 { color:var(--blue-dark); }
+.v31a .strengths .sec-head h2 .big { color:var(--blue); }
+.v31a .strengths .sec-head .sub { color:var(--txt-2); }
+.v31a .str-grid { grid-template-columns:1fr; border-top:1px solid var(--blue); }
+.v31a .str-item, .v31a .str-item + .str-item { padding:26px 0 24px; border-left:none; border-bottom:1px solid var(--border); }
+.v31a .str-item .icon { color:var(--blue); margin-bottom:10px; }
+.v31a .str-item p, .v31a .str-note { color:var(--txt-2); }
+.v31a .strengths .pill.ghost { background:#fff; color:var(--blue-dark); border-color:var(--blue); --bd:var(--blue); }
+.v31a .strengths .pill.ghost .circ { background:var(--blue); color:#fff; }
+
+/* ---------- FOUNDER：左のパネル、右は橋の3D ---------- */
+.v31a .founder { padding:18vh 0 26vh; }
+.v31a .founder .p31 { max-width:1000px; margin-left:max(5vw,40px); margin-right:auto; padding:72px 56px 60px; }
+.v31a .fv-note { background:#fff; border:1px solid var(--border); border-left:3px solid var(--aqua); }
+
+/* ---------- 社員写真マーキー ---------- */
+.v31a .people-strip { margin:0; }
+.v31a .people-strip + .recruit { padding-top:46vh; }
+
+/* ---------- RECRUIT：道路の3Dの上にパネル（写真は角欠けで額装） ---------- */
+.v31a .recruit { color:var(--txt); padding:46vh 0 24vh; overflow:visible; }
+.v31a .rec-grid { max-width:1200px; margin:0 auto; gap:56px; align-items:center; padding:64px 56px; }
+.v31a .rec-txt { padding:0; }
+.v31a .recruit .en-label { color:var(--blue); }
+.v31a .recruit h2 { color:var(--blue-dark); }
+.v31a .recruit .lead { color:var(--txt-2); }
+.v31a .rec-nums { border-top:1px solid var(--blue); }
+.v31a .rec-num { border-bottom:1px solid var(--border); border-right:1px solid var(--border); }
+.v31a .rec-num .v { color:var(--blue); }
+.v31a .rec-num .l { color:var(--txt-2); }
+.v31a .recruit .pill.ghost { background:#fff; color:var(--blue-dark); border-color:var(--blue); --bd:var(--blue); }
+.v31a .recruit .pill.ghost .circ { background:var(--blue); color:#fff; }
+.v31a .rec-photo { min-height:440px; clip-path:polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 40px 100%, 0 calc(100% - 40px)); overflow:visible; }
+.v31a .rec-photo::after { display:none; }
+.v31a .rec-photo .circ-photo { left:-56px; border-color:#fff; }
+
+/* ---------- NEWS：右のパネル、左は全景 ---------- */
+.v31a .news { padding:24vh 0 30vh; }
+.v31a .news .p31 { max-width:1000px; margin-left:auto; margin-right:max(5vw,40px); padding:64px 56px 56px; }
+.v31a .news-flex { grid-template-columns:220px 1fr; gap:40px; }
+
+/* ---------- SP ---------- */
+@media (max-width:900px){
+  .v31a { --c31: 18px; }
+  .v31a .statement { min-height:0; padding:72px 0 300px; }
+  .st-pins { top:auto; bottom:30px; height:250px; }
+  .mpin { width:96px; }
+  .mpin__ph { width:84px; height:84px; border-width:3px; }
+  .mpin__tag { margin-top:18px; font-size:11px; }
+  .mpin:nth-of-type(1) { left:18% !important; top:0 !important; }
+  .mpin:nth-of-type(2) { left:50% !important; top:56px !important; }
+  .mpin:nth-of-type(3) { left:82% !important; top:0 !important; }
+  .mpin:nth-of-type(n+4) { display:none; }
+  .v31a .service { padding:40vh 0 14vh; }
+  .v31a .service .p31, .v31a .strengths .p31, .v31a .founder .p31, .v31a .news .p31 { margin:0 14px; padding:48px 22px 40px; max-width:none; }
+  .v31a .strengths, .v31a .founder, .v31a .news { padding:30vh 0 16vh; }
+  .v31a .people-strip + .recruit, .v31a .recruit { padding:34vh 0 16vh; }
+  .v31a .rec-grid { margin:0 14px; padding:44px 22px; gap:36px; }
+  .v31a .rec-photo { min-height:300px; }
+  .v31a .rec-photo .circ-photo { left:auto; right:12px; bottom:-40px; width:130px; height:130px; }
+  .v31a .news-flex { grid-template-columns:1fr; }
+}
+
+/* CTA・フッターを固定の3D背景より前に（v3 の .service ~ footer の指定が land31 の外には効かないため） */
+.v31a .cta3, .v31a .site-footer, .v31a footer { position:relative; z-index:2; }

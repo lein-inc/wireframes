@@ -1,0 +1,69 @@
+/* =========================================================
+   v3.1-B アイソメ線画のまち：FVのワイヤーメッシュの地面とまちが TOP 全体に広がる
+   ・FV img/v31/b-town.svg（1440×820）／下層の地面 b-ground.svg（PC1440基準・幅に合わせて伸縮）
+   ・事業カードに小景 b-vig-*.svg、Strengths は夜の地形 b-night.svg、Founder は空と月 b-sky.svg
+   ・線のトーンは v1〜v3 FV の3Dワイヤー地形を踏襲（白地＋細い線、差し色はブランドの青だけ）
+   ========================================================= */
+.land31 { position:relative; }
+.land31__bg { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; z-index:0; pointer-events:none; user-select:none; }
+.land31 > section, .land31 > div:not(.land31__bg) { position:relative; z-index:1; }
+.v31b .statement, .v31b .service, .v31b .founder, .v31b .news { background:transparent; }
+.v31b .statement::before { display:none; }
+.v31b .statement { padding:120px 0 130px; }
+.v31b .statement p { max-width:640px; }
+.v31b .service .bg-word { color:transparent; -webkit-text-stroke:1px rgba(1,91,158,.14); }
+.v31b .news { padding-bottom:300px; }
+.v31b .top-news-item { background:rgba(255,255,255,.92); }
+
+/* ---------- HERO ---------- */
+.h31b { background:transparent; padding:0; position:relative; height:clamp(720px, calc(100vh - 125px), 820px); overflow:hidden; }
+.h31b__town { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top; }
+.h31b__in { position:relative; height:100%; }
+.h31b__copy { position:absolute; left:32px; bottom:8%; max-width:640px; }
+.h31b__en {
+  font-family:"Inter",sans-serif; font-weight:900; font-size:clamp(48px,5.6vw,80px); line-height:.98; letter-spacing:-.01em;
+  color:var(--blue-dark); margin-bottom:22px;
+}
+.h31b h1 { font-size:clamp(22px,2.3vw,32px); font-weight:900; letter-spacing:.08em; color:var(--txt); }
+.h31b h1 { display:inline-block; background:var(--blue); color:#fff; padding:6px 16px; }
+.h31b__sub { margin-top:18px; font-size:14.5px; line-height:2; color:var(--txt-2); }
+.h31b__btns { display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; }
+
+/* ---------- SERVICE：カードの上に小景 ---------- */
+.v31b .svc-card { position:relative; }
+.v31b .svc-card .vig { position:absolute; z-index:4; width:230px; right:-34px; top:-108px; pointer-events:none; }
+.v31b .svc-card .svc-ph { position:relative; }
+.v31b .svc-grid { padding-top:60px; }
+
+/* ---------- STRENGTHS：夜の地形（FVの反転）---------- */
+.v31b .strengths {
+  clip-path:none; padding:300px 0 140px; margin-top:0;
+  background:var(--blue-dark) url(../img/v31/b-night.svg) center top / 1440px auto no-repeat;
+}
+.v31b .strengths::before { display:none; }
+.v31b .strengths::after {
+  content:""; position:absolute; left:0; right:0; top:-1px; height:120px; pointer-events:none;
+  background:linear-gradient(#fff, rgba(255,255,255,0));
+  opacity:0;
+}
+
+/* ---------- FOUNDER：空と月（円形写真＝月） ---------- */
+.v31b .founder { padding:150px 0 140px; }
+.v31b .founder .sky31 { position:absolute; left:50%; top:0; width:1440px; transform:translateX(-50%); height:auto; pointer-events:none; z-index:0; }
+.v31b .founder .wrap { position:relative; z-index:1; }
+.v31b .fv-circle { border:1.5px solid #8A9099; }
+.v31b .fv-tri { display:none; }
+.v31b .fv-note { background:#fff; border:1px solid var(--border); border-left:3px solid var(--aqua); }
+
+/* ---------- SP ---------- */
+@media (max-width:900px){
+  .land31__bg { display:none; }
+  .h31b { height:auto; padding:340px 0 48px; }
+  .h31b__town { height:380px; object-fit:cover; object-position:72% 0; }
+  .h31b__copy { position:static; }
+  .h31b__in { height:auto; }
+  .v31b .svc-card .vig { width:170px; right:-6px; top:-70px; }
+  .v31b .strengths { padding:180px 0 90px; background-size:900px auto; }
+  .v31b .founder .sky31 { width:900px; left:30%; top:-40px; }
+  .v31b .news { padding-bottom:110px; }
+}

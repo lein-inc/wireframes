@@ -1,0 +1,74 @@
+/* =========================================================
+   v3.1 TOP：FV（v3 の3Dワイヤー地形・動画）の下を、立体感のあるワイヤー地形の線画が NEWS まで流れる
+   ・背景 img/v31/a-terrain.svg（Statement〜NEWS を1枚でつなぐ／PC1440の実測位置で描画、幅に合わせて伸縮）
+   ・線のトーンは FV と同じ：白地＋細いグレー、高いところほど青
+   ・撮影写真は Statement 右の山に立つ「測点ピン」
+   ========================================================= */
+.land31 { position:relative; z-index:1; background:#fff; }
+.land31__bg { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:fill; z-index:0; pointer-events:none; user-select:none; }
+.land31 > section, .land31 > div:not(.land31__bg) { position:relative; z-index:1; }
+
+/* 既存セクションの背景を外して地形を見せる */
+.v31a .statement, .v31a .service, .v31a .founder, .v31a .news { background:transparent; }
+.v31a .statement::before { display:none; }
+.v31a .statement { padding:150px 0 160px; }
+.v31a .statement p { max-width:620px; background:rgba(255,255,255,.85); }
+.v31a .service .bg-word { color:transparent; -webkit-text-stroke:1px rgba(1,91,158,.16); }
+.v31a .fv-note { background:#fff; border:1px solid var(--border); border-left:3px solid var(--aqua); }
+.v31a .news { padding-bottom:170px; }
+.v31a .top-news-item { background:rgba(255,255,255,.92); }
+
+/* ---------- 測点ピン（写真）：しずく型・先端が山の上の点 ---------- */
+.st-pins { position:absolute; inset:0; z-index:2; pointer-events:none; }
+.mpin {
+  position:absolute; left:var(--x); top:var(--y); pointer-events:auto;
+  width:150px; transform:translate(-50%,0); display:flex; flex-direction:column; align-items:center;
+  transition:transform .3s var(--ease);
+}
+.mpin:hover { transform:translate(-50%,-6px); }
+.mpin__ph {
+  width:132px; height:132px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); overflow:hidden; position:relative;
+  border:4px solid #fff; outline:1.5px solid var(--blue); background:var(--blue-mist);
+}
+.mpin__ph img { position:absolute; left:-21%; top:-21%; width:142%; height:142%; max-width:none; object-fit:cover; transform:rotate(45deg); }
+.mpin__tag {
+  margin-top:30px; display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+  background:var(--blue-dark); color:#fff; font-size:13px; font-weight:700; letter-spacing:.06em; padding:5px 12px 5px 6px;
+}
+.mpin__tag b { font-family:"Inter",sans-serif; font-size:11px; background:var(--yellow); color:#3A2B00; padding:2px 7px; }
+
+/* Service：写真に測点番号 */
+.v31a .svc-card { position:relative; }
+.v31a .svc-card .pt {
+  position:absolute; z-index:3; right:0; top:0; font-family:"Inter",sans-serif; font-size:11.5px; font-weight:700;
+  letter-spacing:.1em; color:#fff; background:var(--blue); padding:4px 10px;
+}
+
+/* ---------- STRENGTHS：海（等深線のワイヤー）＋波打つ海岸線 ---------- */
+.v31a .strengths {
+  clip-path:none; margin:110px 0; padding:120px 0 110px;
+  background:var(--blue-dark) url(../img/v31/a-sea.svg) center / cover no-repeat;
+}
+.v31a .strengths::before, .v31a .strengths::after {
+  content:""; position:absolute; left:0; right:0; height:90px; inset:auto 0; opacity:1;
+  mask-image:none; -webkit-mask-image:none; background-size:100% 100%; background-repeat:no-repeat;
+}
+.v31a .strengths::before { top:-89px; background-image:url(../img/v31/a-coast-top.svg); }
+.v31a .strengths::after { bottom:-89px; background-image:url(../img/v31/a-coast-bottom.svg); }
+
+/* ---------- SP ---------- */
+@media (max-width:900px){
+  .land31__bg { object-fit:cover; object-position:center top; opacity:.7; }
+  .v31a .statement { padding:72px 0 300px; }
+  .st-pins { top:auto; bottom:30px; height:250px; }
+  .mpin { width:96px; }
+  .mpin__ph { width:84px; height:84px; border-width:3px; }
+  .mpin__tag { margin-top:18px; font-size:11px; }
+  .mpin:nth-of-type(1) { left:18% !important; top:0 !important; }
+  .mpin:nth-of-type(2) { left:50% !important; top:56px !important; }
+  .mpin:nth-of-type(3) { left:82% !important; top:0 !important; }
+  .mpin:nth-of-type(n+4) { display:none; }
+  .v31a .strengths { margin:60px 0; padding:80px 0 70px; }
+  .v31a .strengths::before, .v31a .strengths::after { height:50px; }
+  .v31a .strengths::before { top:-49px; } .v31a .strengths::after { bottom:-49px; }
+}

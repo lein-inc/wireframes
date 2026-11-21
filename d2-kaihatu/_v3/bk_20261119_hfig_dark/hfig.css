@@ -1,0 +1,42 @@
+/* 網点の図（js/hfig.js）  C案 Fig.01 の表現を A案・v3 下層で使う版。地は濃紺寄りのチャコール＋細かい点の地紋 */
+figure.hfig {
+  position: absolute; inset: 0; margin: 0; overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 60%, rgba(255,255,255,.07), transparent 70%),
+    radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1.2px) 0 0 / 22px 22px,
+    #14212E;
+  font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .08em; color: #8C9AA8; line-height: 1.7;
+}
+.has-hfig { position: relative; background: #14212E !important; }
+.has-hfig::before, .has-hfig::after { display: none !important; }
+figure.hfig canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+figure.hfig b { font-weight: 500; color: #fff; font-variant-numeric: tabular-nums; }
+figure.hfig > span { position: absolute; pointer-events: none; white-space: nowrap; }
+.hfig__fig { top: 16px; left: 20px; color: #fff; }
+.hfig__fig::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #FFD54F; margin-right: 9px; vertical-align: 1px; }
+.hfig__mode { top: 16px; right: 20px; }
+.hfig__h { top: 40px; left: 20px; }
+.hfig__xy { bottom: 16px; left: 20px; }
+.hfig__az { bottom: 16px; right: 20px; }
+.hfig__scale { bottom: 52px; right: 20px; text-align: right; }
+.hfig__scale i { display: block; width: 130px; height: 6px; margin: 0 0 5px auto; border: 1px solid #8C9AA8; border-top: none;
+  background: linear-gradient(90deg, #8C9AA8 0 33.3%, transparent 33.3% 66.6%, #8C9AA8 66.6%) 0 100%/100% 2px no-repeat; }
+.hfig__c { position: absolute; width: 14px; height: 14px; border: 0 solid rgba(255,255,255,.5); }
+.hfig__c.tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; } .hfig__c.tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+.hfig__c.bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; } .hfig__c.br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+/* 小さい枠（カード内など）は注記を減らす */
+figure.hfig.is-s { font-size: 10px; }
+figure.hfig.is-s .hfig__mode, figure.hfig.is-s .hfig__scale, figure.hfig.is-s .hfig__xy { display: none; }
+figure.hfig.is-s .hfig__fig { top: 12px; left: 14px; } figure.hfig.is-s .hfig__h { top: 32px; left: 14px; } figure.hfig.is-s .hfig__az { bottom: 12px; right: 14px; }
+/* ph-clip（斜めカットの写真枠）に入れたとき：枠の高さはそのまま */
+.ph-clip.has-hfig figure.hfig { z-index: 1; }
+
+/* A案 TOP の強み：各項目の右に図 */
+.v31a .str-item.has-fig { display: grid; grid-template-columns: 1fr minmax(240px, 42%); grid-template-rows: auto auto 1fr; gap: 0 40px; align-items: start; }
+.v31a .str-item.has-fig .str-fig { grid-column: 2; grid-row: 1 / span 3; position: relative; height: 220px; }
+@media (max-width: 760px) {
+  .v31a .str-item.has-fig { grid-template-columns: 1fr; }
+  .v31a .str-item.has-fig .str-fig { grid-column: 1; grid-row: auto; height: 200px; margin-top: 14px; }
+}
+/* 断面図（strata）は方位・縮尺が無意味なので出さない */
+figure.hfig.is-2d .hfig__az, figure.hfig.is-2d .hfig__scale { display: none; }

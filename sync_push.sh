@@ -7,6 +7,9 @@ MSG="${2:-デザイン更新}"
 [ -z "$TOKEN" ] && { echo "usage: sync_push.sh <github_token> [commit message]"; exit 1; }
 rsync -a --delete --exclude='bk/' --exclude='_shot_tmp.html' \
   /Users/apple/site/oumidoryoukou/design /Users/apple/site/oumidoryoukou/design2 /Users/apple/site/oumidoryoukou/wier /Users/apple/site/oumidoryoukou/report ./oumidoryoukou/
+# 近江 11/27ご提案の画面案（本番HTMLから _build.py で生成。元HTML・撮影用・生成スクリプトは公開しない）
+rsync -a --delete --exclude='_src/' --exclude='_shot/' --exclude='_build.py' --exclude='.DS_Store' \
+  /Users/apple/site/oumidoryoukou/proposal1127 ./oumidoryoukou/
 # belife（BELIEF inc. 不動産買取LP）— wp-export/バックアップは公開対象外
 rsync -a --delete --exclude='wp-export/' --exclude='*.bak_*' --exclude='.DS_Store' \
   /Users/apple/site/belife ./

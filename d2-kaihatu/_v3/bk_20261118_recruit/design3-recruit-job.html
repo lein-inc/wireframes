@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- D2_AUTH_GATE -->
+<script>
+(function(){
+  var K='d2wf_auth',P='daini';
+  if(localStorage.getItem(K)==='1')return;
+  document.documentElement.style.visibility='hidden';
+  function u(){
+    document.documentElement.style.visibility='';
+    var s=document.createElement('style');
+    s.textContent='#d2g{position:fixed;inset:0;background:#fff;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;cursor:auto}#d2g *{box-sizing:border-box;cursor:auto}#d2g .c{width:100%;max-width:420px;padding:48px 40px;background:#fff;border:1px solid #dcdcdc}#d2g .l{font-family:"Inter",monospace;font-size:11px;letter-spacing:.3em;color:#57B0A2;text-transform:uppercase;margin-bottom:14px;display:block}#d2g h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:8px;line-height:1.4;letter-spacing:.02em}#d2g p.d{font-size:13px;color:#555;line-height:1.7}#d2g hr{border:0;border-top:1px solid #dcdcdc;margin:24px 0}#d2g input{width:100%;padding:14px 16px;font-size:14px;border:1px solid #dcdcdc;background:#f5f5f5;outline:0;font-family:inherit;margin-bottom:16px}#d2g input:focus{border-color:#015B9E;background:#fff}#d2g input.err{border-color:#c62828;background:#fff5f5;animation:d2s .35s}@keyframes d2s{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#d2g button{width:100%;padding:16px;font-size:14px;font-weight:700;letter-spacing:.15em;background:#015B9E;color:#fff;border:0;cursor:pointer;font-family:inherit}#d2g button:hover{background:#013D6A;filter:brightness(.95)}#d2g .mk{position:fixed;top:24px;left:32px;font-weight:700;font-size:15px;color:#015B9E;letter-spacing:.02em;display:flex;align-items:center}#d2g .dc{position:fixed;pointer-events:none;display:flex}#d2g .dc.tr{top:0;right:0}#d2g .dc.tr>i{display:block;width:8px;height:60px}#d2g .dc.tr>i:nth-child(1){background:#015B9E}#d2g .dc.tr>i:nth-child(2){background:#57B0A2}#d2g .dc.tr>i:nth-child(3){background:#FFD54F}#d2g .dc.tr>i:nth-child(4){background:#013D6A}#d2g .dc.bl{bottom:0;left:0}#d2g .dc.bl>i{display:block;width:60px;height:8px}#d2g .dc.bl>i:nth-child(1){background:#015B9E}#d2g .dc.bl>i:nth-child(2){background:#E4EFF7}#d2g .dc.bl>i:nth-child(3){background:#F5F5F5}#d2g .ft{text-align:center;margin-top:24px;font-family:"Inter",monospace;font-size:10px;letter-spacing:.25em;color:#888;text-transform:uppercase}';
+    document.head.appendChild(s);
+    var d=document.createElement('div');
+    d.id='d2g';
+    d.innerHTML='<div class="mk">株式会社第二開発技工</div><div class="dc tr"><i></i><i></i><i></i><i></i></div><div class="dc bl"><i></i><i></i><i></i></div><div><div class="c"><span class="l">— PROTECTED PREVIEW</span><h1>第二開発技工 リニューアル WF</h1><p class="d">アクセスにはパスワードが必要です</p><hr><input id="d2p" type="password" placeholder="パスワードを入力"><button id="d2b" type="button">PREVIEW を開く</button></div><div class="ft">DAINI KAIHATSU GIKO / RENEWAL WF</div></div>';
+    document.body.appendChild(d);
+    var i=document.getElementById('d2p'),b=document.getElementById('d2b');
+    function sub(){if(i.value===P){localStorage.setItem(K,'1');d.remove();}else{i.classList.add('err');i.value='';setTimeout(function(){i.classList.remove('err');},400);i.focus();}}
+    i.addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+    b.addEventListener('click',sub);
+    i.focus();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u);else u();
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>職種紹介（デザイン案 v3） | 株式会社第二開発技工</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/design3.css?v=1">
+<link rel="stylesheet" href="css/v3.css?v=1">
+</head>
+<body class="d2-sub">
+
+<div class="wf-banner"><span>DESIGN v3 | 職種紹介 | /recruit/job/（v3で新規追加／原稿待ちの箇所はバッジ表示）</span><a href="index.html">← 一覧に戻る</a></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="design3-top.html" class="site-logo"><img src="img/logo-clear.png" alt="株式会社第二開発技工"></a>
+    <div class="header-right">
+      <nav class="gnav"><ul><li><a href="design3-top.html">ホーム</a></li><li><a href="design3-service.html">事業案内</a></li><li><a href="design3-strengths.html">強み・技術</a></li><li><a href="design3-social.html">社会活動</a></li><li><a href="design3-about.html">会社案内</a></li><li><a href="design3-recruit.html">採用情報</a></li><li><a href="design3-news.html">ニュース</a></li><li><a href="design3-contact.html">お問い合わせ</a></li></ul></nav>
+      <a href="tel:0864231899" class="tel-box">
+        <div class="tel-label">お電話でのお問い合わせ</div>
+        <div class="tel-num">086-423-1899</div>
+        <div class="tel-hours">平日 9:00〜17:00</div>
+      </a>
+      <a href="design3-recruit.html" class="header-cta">採用情報</a>
+    </div>
+  </div>
+</header>
+
+
+<section class="phero v3"><div class="wrap"><div class="pcrumb"><a href="design3-top.html">ホーム</a> ／ <a href="design3-recruit.html">採用情報</a> ／ 職種紹介</div><div class="phero__bar"><h1>職種紹介</h1><span class="phero__en">JOBS</span></div><p class="phero__lead">測量助手・測量作業員・施工管理技術者。未経験からのスタートも、経験を活かした転職も、入口はひとつではありません。</p></div><div class="phero__ph"><img src="img/photo/S1200350.jpg" alt=""><span class="en">Three Ways to Start</span></div></section><nav class="sibnav"><div class="wrap"><ul><li><a href="design3-recruit.html" class="">採用トップ</a></li><li><a href="design3-recruit-job.html" class="cur">職種紹介</a></li><li><a href="design3-recruit-interview.html" class="">社員インタビュー</a></li><li><a href="design3-recruit-requirements.html" class="">募集要項</a></li><li><a href="design3-recruit-faq.html" class="">よくある質問</a></li><li><a href="design3-recruit-entry.html" class=" entry">エントリー</a></li></ul></div></nav><section class="has-bgword ">
+  <div class="bg-word" aria-hidden="true">JOBS</div>
+  <div class="wrap">
+    <div class="sec-head fade-target">
+      <h2><span class="hbox"><span class="big">3</span>つの職種</span></h2><span class="en-label">Jobs</span>
+    </div>
+    <div class="job fade-target" id="job1">
+      <div>
+        <div class="ph"><img src="img/photo/S1200336.jpg" alt="" loading="lazy"></div>
+        <div class="ph" style="width:56%; margin:16px 0 0 auto; aspect-ratio:3/2;"><img src="img/photo/S1200094.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div>
+        <div class="no">01</div>
+        <h3>測量助手</h3><div class="sub">Survey Assistant</div>
+        <p>測量現場のサポート業務からスタート。器械の設置、記帳、後方整理などを通じて、測量の基本を学びます。先輩と同じ現場に入り、「何を・なぜ測るのか」を一つずつ覚えていく、いちばん最初の入口です。</p>
+        <dl><div><dt>おもな仕事</dt><dd>器械（TS・レベル）の据付補助、標尺・プリズム持ち、記帳、杭打ち、機材の準備・片付け</dd></div><div><dt>応募条件</dt><dd>未経験可・35歳以下（長期キャリア形成のため）</dd></div><div><dt>必要な資格</dt><dd>不要（普通自動車免許 AT限定可）</dd></div><div><dt>入社後</dt><dd>約1年で測量作業員へ。測量士補の取得を会社が支援</dd></div></dl>
+        <div class="btns">
+          <a href="design3-recruit-requirements.html" class="pill ghost">募集要項 <span class="circ">→</span></a>
+          <a href="design3-recruit-entry.html?job=job1" class="pill yellow">この職種にエントリー <span class="circ">→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="job rev fade-target" id="job2">
+      <div>
+        <div class="ph"><img src="img/photo/S1200290.jpg" alt="" loading="lazy"></div>
+        <div class="ph" style="width:56%; margin:16px 0 0 auto; aspect-ratio:3/2;"><img src="img/photo/S1200157.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div>
+        <div class="no">02</div>
+        <h3>測量作業員</h3><div class="sub">Surveyor</div>
+        <p>測量業務全般を担当。TS・GNSS・ドローン・3Dレーザースキャナーなどの機材操作を含む、現場の主軸を担う仕事です。観測したデータは会社に持ち帰り、CADや点群処理で成果品にまとめます。</p>
+        <dl><div><dt>おもな仕事</dt><dd>基準点・水準・地形・路線測量、工事測量（丁張り・出来形）、ドローン空撮、データ整理</dd></div><div><dt>応募条件</dt><dd>測量士補以上、または同等の実務経験</dd></div><div><dt>必要な資格</dt><dd>普通自動車免許（AT限定可）</dd></div><div><dt>入社後</dt><dd>測量士の取得を支援。3〜5年で施工管理技術者へのキャリアシフトも</dd></div></dl>
+        <div class="btns">
+          <a href="design3-recruit-requirements.html" class="pill ghost">募集要項 <span class="circ">→</span></a>
+          <a href="design3-recruit-entry.html?job=job2" class="pill yellow">この職種にエントリー <span class="circ">→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="job fade-target" id="job3">
+      <div>
+        <div class="ph"><img src="img/photo/S1200130.jpg" alt="" loading="lazy"></div>
+        <div class="ph" style="width:56%; margin:16px 0 0 auto; aspect-ratio:3/2;"><img src="img/photo/S1200311.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div>
+        <div class="no">03</div>
+        <h3>施工管理技術者</h3><div class="sub">Construction Manager</div>
+        <p>官公庁・ゼネコンの工事現場に派遣され、施工管理業務を担当します。測量の現場感覚を活かし、「実際に施工できる計画」と精度の高い出来形管理で現場を支えます。</p>
+        <dl><div><dt>おもな仕事</dt><dd>工程・品質・出来形・安全の管理、測量（丁張り・出来形）、写真管理・書類作成</dd></div><div><dt>応募条件</dt><dd>土木施工管理技士、または同等の実務経験</dd></div><div><dt>必要な資格</dt><dd>普通自動車免許（AT限定可）</dd></div><div><dt>入社後</dt><dd>1級土木施工管理技士などの資格取得を支援</dd></div></dl>
+        <div class="btns">
+          <a href="design3-recruit-requirements.html" class="pill ghost">募集要項 <span class="circ">→</span></a>
+          <a href="design3-recruit-entry.html?job=job3" class="pill yellow">この職種にエントリー <span class="circ">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="has-bgword tone">
+  <div class="bg-word" aria-hidden="true">CAREER</div>
+  <div class="wrap">
+    <div class="sec-head fade-target">
+      <h2><span class="hbox">キャリアステップ</span></h2><span class="en-label">Career Path</span>
+      <p class="sub">多くの社員が「測量助手 → 測量作業員 → 施工管理技術者」と段階を踏んで成長しています。</p>
+    </div>
+    <div class="steps" style="grid-template-columns:repeat(3,1fr);">
+      <div class="step fade-target"><div class="term">STEP 01</div><h4>測量助手</h4><p>入社〜1年。器械の据付・記帳・後方整理で基本を覚える。</p></div>
+      <div class="step fade-target"><div class="term">STEP 02</div><h4>測量作業員</h4><p>1年〜。現場を任され、ドローン・3Dスキャナーも担当。測量士補・測量士へ。</p></div>
+      <div class="step fade-target"><div class="term">STEP 03</div><h4>施工管理技術者</h4><p>3〜5年〜。測量の経験を活かして施工管理へ。土木施工管理技士へ。</p></div>
+    </div>
+    <div class="fade-target" style="margin-top:44px;"><a href="design3-recruit.html#first-step" class="arw-link">未経験からの1年を見る <span class="circ">→</span></a></div>
+  </div>
+</section>
+<section class="cta3">
+  <div class="pair">
+    <a href="design3-contact.html" class="panel biz">
+      <img src="img/photo/S1200313.jpg" alt="" loading="lazy">
+      <span class="en">Contact</span>
+      <h3>測量・調査設計・施工管理のご相談</h3>
+      <p>公共測量から民間の工事測量、施工管理技術者の派遣まで。まずはお気軽にご相談ください。</p>
+      <div class="go"><span class="tel">086-423-1899<small>平日 9:00〜17:00</small></span><span class="circ">→</span></div>
+    </a>
+    <a href="design3-recruit-entry.html" class="panel rec">
+      <img src="img/photo/S1200268.jpg" alt="" loading="lazy">
+      <span class="en">Entry</span>
+      <h3>採用エントリー</h3>
+      <p>未経験から、測量のプロへ。会社見学だけのご応募も歓迎しています。</p>
+      <div class="go"><span class="circ">→</span></div>
+    </a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">株式会社第二開発技工</div>
+      <div class="addr">株式会社 第二開発技工<br>〒710-0845 岡山県倉敷市西富井446-2<br>TEL: 086-423-1899 ／ FAX: 086-423-2034</div>
+    </div>
+    <div><h4>事業案内</h4><ul>
+      <li><a href="design3-service.html">事業案内 トップ</a></li>
+      <li><a href="design3-service-survey.html">測量</a></li>
+      <li><a href="design3-service-design.html">調査・設計</a></li>
+      <li><a href="design3-service-management.html">施工管理</a></li>
+      <li><a href="design3-strengths.html">強み・技術</a></li>
+      <li><a href="design3-social.html">社会活動</a></li>
+    </ul></div>
+    <div><h4>会社案内</h4><ul>
+      <li><a href="design3-about.html#greeting">代表あいさつ</a></li>
+      <li><a href="design3-about.html#company">会社概要</a></li>
+      <li><a href="design3-about.html#history">沿革</a></li>
+      <li><a href="design3-about.html#clients">主要取引先</a></li>
+      <li><a href="design3-about.html#access">アクセス</a></li>
+      <li><a href="design3-news.html">ニュース</a></li>
+      <li><a href="design3-contact.html">お問い合わせ</a></li>
+      <li><a href="design3-privacy.html">プライバシーポリシー</a></li>
+    </ul></div>
+    <div><h4>採用情報</h4><ul>
+      <li><a href="design3-recruit.html">採用トップ</a></li>
+      <li><a href="design3-recruit-job.html">職種紹介</a></li>
+      <li><a href="design3-recruit-interview.html">社員インタビュー</a></li>
+      <li><a href="design3-recruit-requirements.html">募集要項</a></li>
+      <li><a href="design3-recruit-faq.html">よくある質問</a></li>
+      <li><a href="design3-recruit-entry.html">エントリー</a></li>
+    </ul></div>
+    <div class="copyright">© 株式会社第二開発技工 All Rights Reserved.</div>
+  </div>
+</footer>
+<script src="css/wireframe.js" defer></script>
+<div class="sp-cta">
+  <a href="tel:0864231899" class="c-tel">電話する</a>
+  <a href="design3-recruit-entry.html" class="c-entry">採用エントリー</a>
+</div>
+<script>
+(function(){
+  var t=document.querySelectorAll('.fade-target');
+  if(!('IntersectionObserver' in window)){t.forEach(function(e){e.classList.add('is-visible');});}
+  else{var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');o.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    t.forEach(function(e){o.observe(e);});}
+  var links=[].slice.call(document.querySelectorAll('.section-nav a[href^="#"]'));
+  if(links.length){
+    var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+    var upd=function(){
+      var y=window.scrollY+200,cur=-1;
+      secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+      links.forEach(function(a,i){a.classList.toggle('is-current',i===cur);});
+    };
+    window.addEventListener('scroll',upd,{passive:true});upd();
+  }
+})();
+</script>
+<script src="js/d3-news-hover.js" defer></script>
+</body>
+</html>

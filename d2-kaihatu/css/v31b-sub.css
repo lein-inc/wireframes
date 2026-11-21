@@ -1,0 +1,145 @@
+/* =========================================================
+   v3.1 B案 下層（design31b-*.html）：kopetzki.law のトンマナ
+   v31b.css（ヘッダー・CTA・フッター）の後に読む。中身は v3 の下層と同じ
+   ・白と青みのグレー、黒の罫線、Inter Tight の大きな見出し、強調は明るい青
+   ・見出しは「● ラベル｜和文」の2カラム（塗り箱はやめる）
+   ・写真はモノクロ→ホバーでカラー。斜めカットはやめ、右上だけ小さく欠く
+   ・ぼかし影・角丸は使わない
+   ========================================================= */
+.v31b.d2-sub {
+  --blue:#2E86E8; --blue-dark:#0B0D10; --blue-light:#9AA3AE; --blue-pale:#E3E7ED; --blue-mist:#F1F3F6;
+  --aqua:#2E86E8; --aqua-text:#2E86E8; --aqua-on-dark:#9CCBFF; --aqua-pale:#E3E7ED;
+  --txt:#0B0D10; --txt-2:#3B434C; --muted:#6B7480; --border:#D5DAE1; --border-strong:#0B0D10; --bg-subtle:#E3E7ED;
+  --cut-l:0px; --cut:10px;
+}
+.v31b.d2-sub h1, .v31b.d2-sub h2, .v31b.d2-sub h3, .v31b.d2-sub h4 { font-feature-settings:"palt" 1; }
+.v31b .kcut { clip-path:polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); }
+
+/* ---------- ヒーロー：黒の太罫線の上に巨大な見出し ---------- */
+.v31b .phero { background:#fff; }
+.v31b .pcrumb { font-size:12.5px; color:var(--muted); }
+.v31b .phero__bar { border-bottom:7px solid var(--k-ink); padding-bottom:22px; align-items:flex-end; }
+.v31b .phero h1 { font-family:var(--k-f); font-weight:600; font-size:clamp(46px,7vw,112px); line-height:1; letter-spacing:-.04em; }
+.v31b .phero__en { display:flex; align-items:center; gap:8px; font-family:var(--k-f); font-size:13px; letter-spacing:.02em; text-transform:none; color:var(--k-ink); }
+.v31b .phero__en::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+.v31b .phero__en::after { content:none; }
+.v31b .phero.v3 .phero__lead { margin-top:26px; }
+.v31b .phero__ph { margin:10px var(--wrap-pad) 0; height:clamp(260px,32vw,500px); background:var(--k-navy);
+  clip-path:polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%); }
+.v31b .phero__ph img { filter:grayscale(1) contrast(1.05); mix-blend-mode:luminosity; opacity:.88; }
+.v31b .phero__ph .en { right:auto; left:22px; bottom:18px; font-family:var(--k-f); font-weight:600; font-size:clamp(28px,3.4vw,52px); letter-spacing:-.03em; text-transform:none; }
+
+/* ---------- セクション見出し：上罫＋「● ラベル｜和文」 ---------- */
+.v31b.d2-sub :is(.sec-h, .sec-head) { display:grid; grid-template-columns:1fr 3fr; column-gap:40px; align-items:start;
+  border-top:1px solid var(--k-ink); padding-top:24px; }
+.v31b.d2-sub :is(.sec-h, .sec-head) > h2 { grid-column:2; grid-row:1; }
+.v31b.d2-sub :is(.sec-h .en, .sec-head .en-label) { grid-column:1; grid-row:1; margin:6px 0 0; display:flex; align-items:center; gap:8px;
+  font-family:var(--k-f); font-size:13px; font-weight:500; letter-spacing:.02em; text-transform:none; color:var(--k-ink); }
+.v31b.d2-sub :is(.sec-h .en, .sec-head .en-label)::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+.v31b.d2-sub :is(.sec-h .en, .sec-head .en-label)::after { content:none; }
+.v31b.d2-sub .sec-head > :not(h2):not(.en-label) { grid-column:2; }
+.v31b.d2-sub :is(.sec-h, .sec-head) h2 { font-family:var(--k-f); font-weight:600; font-size:clamp(28px,3.2vw,50px); line-height:1.25; letter-spacing:-.025em; }
+.v31b.d2-sub .hbox { background:none; color:inherit; padding:0; }
+.v31b.d2-sub .hbox .big, .v31b .sec-head h2 .big { color:var(--k-acc); font-family:var(--k-f); font-weight:600; font-size:1.5em; }
+.v31b.d2-sub .dark :is(.sec-h, .sec-head) { border-top-color:rgba(255,255,255,.5); }
+.v31b.d2-sub .dark :is(.sec-h .en, .sec-head .en-label) { color:#fff; }
+.v31b.d2-sub .dark .hbox { background:none; color:#fff; }
+.v31b .section-lead { color:var(--txt-2); }
+
+/* 透かしの英字は「巨大なグレーのベタ文字」に */
+.v31b .bg-word { font-family:var(--k-f); font-weight:600; letter-spacing:-.05em; color:#EEF1F4; -webkit-text-stroke:0; top:auto; bottom:-0.12em; }
+.v31b .dark .bg-word { color:rgba(255,255,255,.05); }
+.v31b section.tone .bg-word, .v31b section[style*="F7F9FB"] .bg-word { color:#D9DEE5; }
+
+/* 面の色：tone＝青みのグレー／dark-band＝濃紺（斜めの境はやめて水平に） */
+.v31b section.tone, .v31b section[style*="F7F9FB"] { background:var(--k-gray) !important; }
+.v31b section.dark-band, .v31b .dark-band { background:var(--k-navy); clip-path:none; margin-top:0; }
+.v31b .dark-band::before, .v31b .dark-band::after { display:none; }
+
+/* ---------- 写真 ---------- */
+.v31b .ph-clip { clip-path:polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); background:var(--k-gray); }
+.v31b .ph-clip img, .v31b .img-ph.has-photo img, .v31b .iv-index img, .v31b .job .ph img, .v31b .phgrid img { filter:grayscale(1) contrast(1.05); transition:filter .5s, transform .9s var(--ease); }
+.v31b :is(.dcard, .hov, .card, .iv-index a, .job, .phgrid > *):hover img { filter:none; }
+.v31b .ph-clip .veil { background:linear-gradient(0deg, rgba(46,134,232,.85), rgba(46,134,232,0) 70%); }
+.v31b .ph-clip .en { font-family:var(--k-f); letter-spacing:.06em; }
+.v31b .ph-clip::after { background:var(--k-acc); }
+.v31b .img-ph { background:var(--k-gray); border-color:transparent; }
+
+/* ---------- 事業カード：グレーの面＋小さな番号、ホバーで青 ---------- */
+.v31b .stagger > *:nth-child(n) { margin-top:0; }
+.v31b .stagger { gap:10px; }
+.v31b .dcard { padding:18px 18px 22px; background:var(--k-gray); transition:background .35s, color .35s; }
+.v31b .dcard .no { position:static; display:block; margin-bottom:40px; font-family:"Inter",sans-serif; font-size:12px; font-weight:400; line-height:1; color:var(--muted); -webkit-text-stroke:0; }
+.v31b .dcard:hover .no { transform:none; color:#fff; }
+.v31b .dcard h3 { font-family:var(--k-f); font-weight:600; font-size:28px; letter-spacing:-.01em; }
+.v31b .dcard:hover { background:var(--k-acc); color:#fff; }
+.v31b .dcard:hover h3, .v31b .dcard:hover p, .v31b .dcard:hover .arw-link { color:#fff; }
+.v31b .dark .dcard { background:rgba(255,255,255,.08); }
+
+/* ---------- ボタン：黒い長方形＋白い四角の矢印（右上だけ角欠け） ---------- */
+html .v31b :is(.pill, .btn, button[type="submit"], input[type="submit"]) { border-radius:0; clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
+.v31b .pill { justify-content:space-between; gap:40px; min-width:280px; padding:14px 12px 14px 20px; background:var(--k-ink); color:#fff; font-size:14px; font-weight:600; border:none; }
+.v31b .pill .circ { width:26px; height:26px; border-radius:0; background:#fff; color:var(--k-ink); font-size:13px; }
+.v31b .pill.ghost { background:var(--k-gray); color:var(--k-ink); border:none; }
+.v31b .pill.ghost .circ { background:#fff; color:var(--k-ink); }
+.v31b .pill.yellow { background:var(--k-acc); color:#fff; }
+.v31b .pill.yellow .circ { background:#fff; color:var(--k-acc); }
+.v31b .pill:hover { background:var(--k-acc); color:#fff; transform:none; }
+.v31b .dark .pill.ghost { background:#fff; color:var(--k-ink); border:none; }
+.v31b .dark .pill.ghost .circ { background:var(--k-ink); color:#fff; }
+.v31b .arw-link .circ { border-radius:0; background:var(--k-ink); }
+.v31b .arw-link:hover .circ { background:var(--k-acc); }
+.v31b .btn { background:var(--k-ink); border-color:var(--k-ink); color:#fff; }
+.v31b .btn.outline { background:var(--k-gray); border-color:var(--k-gray); color:var(--k-ink); }
+.v31b .btn:hover { background:var(--k-acc); border-color:var(--k-acc); color:#fff; }
+
+/* ---------- 数字・工程・Q&A・表 ---------- */
+.v31b .facts-row { border-top:1px solid var(--k-ink); }
+.v31b .facts-row .v { font-family:var(--k-f); font-weight:500; font-size:clamp(44px,5vw,76px); letter-spacing:-.05em; color:var(--k-ink); line-height:1; }
+.v31b .dark .facts-row { border-top-color:#fff; }
+.v31b .dark .facts-row .v { color:#fff; }
+.v31b .steps .step { border-top:1px solid var(--k-ink); }
+.v31b .steps .step::before { top:-1px; height:3px; background:var(--k-acc); }
+.v31b .steps .step .term { font-family:var(--k-f); font-size:12.5px; letter-spacing:.04em; color:var(--k-acc); }
+.v31b .steps .step h4 { font-family:var(--k-f); font-weight:600; font-size:22px; letter-spacing:-.01em; }
+.v31b .qa { border-top-color:var(--k-ink); }
+.v31b .qa .q { font-family:var(--k-f); font-weight:600; font-size:18px; }
+.v31b .qa .q::before { font-family:var(--k-f); color:var(--k-acc); }
+.v31b .qa .a::before { color:var(--muted); }
+.v31b :is(.info-table, .req-table) { border-top:1px solid var(--k-ink); }
+.v31b :is(.info-table, .req-table) th { color:var(--k-ink); }
+.v31b .flow b, .v31b .flow i { color:var(--k-ink); }
+.v31b ul.ticks li::before { width:6px; height:6px; border-radius:50%; top:.8em; background:var(--k-acc); }
+
+/* ---------- ナビ・タブ・ニュース・フォーム ---------- */
+.v31b .sibnav, .v31b .section-nav { background:#fff; border-top:1px solid var(--k-ink); border-bottom:1px solid var(--k-ink); }
+.v31b .sibnav a, .v31b .section-nav a { font-weight:600; }
+.v31b .sibnav a.cur, .v31b .section-nav a.is-current { color:var(--k-ink); border-bottom-color:var(--k-acc); }
+.v31b .sibnav a.entry { background:var(--k-ink); color:#fff; }
+.v31b .tabs { border-bottom:1px solid var(--k-ink); }
+.v31b .tabs button { font-family:var(--k-f); font-weight:600; border-radius:0; }
+.v31b .tabs button.on { background:var(--k-ink); color:#fff; }
+.v31b .news-list { border-top:1px solid var(--k-ink); }
+.v31b .news-list .news-cat { background:var(--k-gray); color:var(--k-ink); border:none; }
+.v31b .news-list .news-date { font-family:"Inter",sans-serif; color:var(--muted); }
+.v31b .news-list .news-item:hover { background:transparent; color:var(--k-acc); }
+.v31b .form-row input, .v31b .form-row textarea, .v31b .form-row select { border-radius:0; border:none; border-bottom:1px solid var(--k-ink); background:var(--blue-mist); }
+.v31b .form-row input:focus, .v31b .form-row textarea:focus, .v31b .form-row select:focus { border-bottom-color:var(--k-acc); background:#fff; }
+.v31b .req { background:var(--k-acc); color:#fff; border-radius:0; }
+
+@media (max-width:900px){
+  .v31b.d2-sub :is(.sec-h, .sec-head) { grid-template-columns:1fr; row-gap:14px; padding-top:18px; }
+  .v31b.d2-sub :is(.sec-h, .sec-head) > h2, .v31b.d2-sub .sec-head > :not(h2):not(.en-label) { grid-column:1; grid-row:auto; }
+  .v31b.d2-sub :is(.sec-h .en, .sec-head .en-label) { grid-row:1; }
+  .v31b .phero__bar { border-bottom-width:5px; }
+  .v31b .phero__ph { margin:10px 20px 0; height:240px; }
+  .v31b .pill { min-width:0; }
+  .v31b .stagger { grid-template-columns:1fr; }
+}
+
+/* グレーの面の上のカードは白に */
+.v31b :is(section.tone, section[style*="F7F9FB"]) .dcard { background:#fff; }
+.v31b :is(section.tone, section[style*="F7F9FB"]) .dcard:hover { background:var(--k-acc); }
+.v31b.d2-sub form .req { background:var(--k-acc); color:#fff; }
+@media (max-width:900px){ .v31b .phero__bar { align-items:flex-start; } }
+.v31b .is-logo img, .v31b .is-logo:hover img { filter:none !important; }

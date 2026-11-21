@@ -1,0 +1,165 @@
+/* =========================================================
+   v3.1 TOP（D案）：wedding.s-tmro.com のトンマナ
+   ・FV は3Dライン映像を生成りテーマ（#theme=paper）で。右上に小さなタブ
+   ・生成りの紙面×チャコール、細い英字（Montserrat 200）＋筆記体（Pinyon Script）、明朝の本文（Shippori Mincho）
+   ・写真はサイズと位置をずらしたコラージュ、大きな曲線で切り抜いた写真、チャコールの「表」のセクション、薄いグレーの英字マーキー
+   ・番号つきの行が少しずつずれて重なる入口。角丸は使わない（曲線は写真の切り抜きだけ）
+   ========================================================= */
+.v31d { --w-bg:#F1F0EC; --w-ink:#2C2C2C; --w-sub:#6B6A66; --w-line:#CFCCC4; --w-dk:#333331; --w-tab:#E2E0DA;
+  --w-en:"Montserrat","Inter",sans-serif; --w-sc:"Pinyon Script",cursive; --w-mc:"Shippori Mincho","Noto Serif JP",serif; }
+body.v31d { background:var(--w-bg); color:var(--w-ink); }
+
+.v31d [data-rv] { opacity:0; transform:translateY(26px); transition:opacity 1.2s var(--d,0s) ease, transform 1.3s var(--d,0s) cubic-bezier(.2,.8,.2,1); }
+.v31d [data-rv].is-in { opacity:1; transform:none; }
+
+/* ---------- ヘッダー・FV ---------- */
+.v31d .site-header .wrap { background:rgba(241,240,236,.9); -webkit-backdrop-filter:none; backdrop-filter:none; border-bottom:1px solid var(--w-line); }
+.v31d .hero-copy .en-label { color:var(--w-sub); font-family:var(--w-en); }
+.v31d .hero-copy h1 { font-family:var(--w-en); font-weight:300; color:var(--w-ink); font-size:clamp(40px,5vw,76px); line-height:1.12; letter-spacing:-.01em; }
+.v31d .hero-copy .cursor { color:var(--w-ink); font-weight:200; }
+.v31d .hero-copy .hero-sub { background:none; font-family:var(--w-mc); color:var(--w-sub); letter-spacing:.12em; }
+.v31d .scroll-cue { color:var(--w-sub); font-family:var(--w-en); } .v31d .scroll-cue::after { background:var(--w-ink); }
+.v31d .w-hero-tabs { position:absolute; right:40px; top:26px; z-index:60; display:flex; gap:6px; }
+.v31d .w-hero-tabs span, .v31d .w-tab { display:inline-flex; align-items:center; gap:14px; padding:6px 14px; background:var(--w-tab); color:var(--w-ink); font-family:var(--w-en); font-size:11px; letter-spacing:.12em; text-transform:uppercase; transition:background .3s, color .3s; }
+.v31d .w-hero-tabs .on, .v31d .w-tab--dk { background:var(--w-ink); color:#fff; }
+.v31d .w-tab { margin-top:34px; padding:9px 20px; font-size:12px; }
+.v31d .w-tab:hover { background:var(--w-ink); color:#fff; }
+.v31d .w-tab--w { background:rgba(255,255,255,.12); color:#fff; } .v31d .w-tab--w:hover { background:#fff; color:var(--w-ink); }
+
+/* ---------- 共通 ---------- */
+.v31d .w-sec { position:relative; z-index:2; background:var(--w-bg); padding:170px 0; overflow:hidden; }
+.v31d .w-wrap { max-width:1240px; margin:0 auto; padding:0 48px; position:relative; }
+.v31d .w-thin { font-family:var(--w-en); font-weight:300; font-size:clamp(40px,4.4vw,64px); line-height:1.05; letter-spacing:0; color:var(--w-ink); }
+.v31d .w-thin--w { color:#fff; }
+.v31d .w-script { font-family:var(--w-sc); font-weight:400; font-size:1.25em; letter-spacing:0; }
+.v31d .w-script--lg { display:block; font-size:clamp(40px,4.4vw,64px); margin:-6px 0 0 120px; color:var(--w-sub); }
+.v31d .w-head { display:flex; align-items:baseline; gap:18px; margin-bottom:46px; flex-wrap:wrap; }
+.v31d .w-head .w-script { font-size:clamp(40px,4.4vw,64px); color:var(--w-sub); }
+.v31d .w-ja { font-family:var(--w-mc); font-size:13px; letter-spacing:.2em; color:var(--w-sub); }
+.v31d .w-ja--w { color:rgba(255,255,255,.7); display:block; margin-top:10px; }
+.v31d .w-mincho { font-family:var(--w-mc); font-size:15px; line-height:2.5; letter-spacing:.12em; color:var(--w-ink); }
+.v31d .w-mincho--w { color:rgba(255,255,255,.85); }
+.v31d .w-mincho-h { font-family:var(--w-mc); font-weight:600; font-size:clamp(20px,1.9vw,26px); letter-spacing:.24em; margin-bottom:34px; }
+.v31d .w-mincho-h--s { font-size:clamp(18px,1.7vw,23px); letter-spacing:.14em; line-height:1.9; }
+.v31d .w-gap { margin-top:1.4em; }
+.v31d .w-en-body { font-family:var(--w-en); font-size:12px; line-height:2; color:var(--w-sub); max-width:440px; margin-top:34px; }
+.v31d .w-lead { max-width:640px; margin-bottom:70px; }
+
+/* ---------- Message ---------- */
+.v31d .w-msg__grid { max-width:1240px; margin:0 auto; padding:0 48px; display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; }
+.v31d .w-msg__body { background:#fff; padding:80px 70px; clip-path:polygon(0 0, 100% 0, 100% 100%, 60px 100%, 0 calc(100% - 60px)); }
+
+/* ---------- 大きな曲線で切り抜いた写真 ---------- */
+.v31d .w-curve { padding:0; height:min(78vw, 820px); }
+.v31d .w-curve__ph { position:absolute; inset:0; overflow:hidden; clip-path:ellipse(115% 100% at 100% 100%); }
+.v31d .w-curve__ph img { width:100%; height:100%; object-fit:cover; filter:saturate(.75) contrast(.95); }
+.v31d .w-curve__cap { position:absolute; left:48px; bottom:90px; z-index:2; background:var(--w-bg); padding:40px 48px; max-width:420px; }
+.v31d .w-curve__cap p { font-family:var(--w-mc); font-size:14px; line-height:2.2; letter-spacing:.12em; margin-top:18px; color:var(--w-sub); }
+
+/* ---------- 事業：コラージュ ---------- */
+.v31d .w-svc-grid { display:grid; grid-template-columns:repeat(12,1fr); row-gap:90px; column-gap:24px; }
+.v31d .w-svc { display:grid; gap:30px; align-items:end; color:var(--w-ink); }
+.v31d .w-svc--0 { grid-column:1 / 9; grid-template-columns:1.3fr 1fr; }
+.v31d .w-svc--1 { grid-column:6 / 13; grid-template-columns:1fr 1fr; }
+.v31d .w-svc--2 { grid-column:2 / 10; grid-template-columns:1fr 1.2fr; }
+.v31d .w-svc--1 .w-svc__ph { order:2; }
+.v31d .w-svc__ph { overflow:hidden; height:420px; background:var(--w-tab); }
+.v31d .w-svc--1 .w-svc__ph { height:300px; } .v31d .w-svc--2 .w-svc__ph { height:360px; }
+.v31d .w-svc__ph img { width:100%; height:100%; object-fit:cover; filter:saturate(.8); transition:filter .6s; }
+.v31d .w-svc:hover .w-svc__ph img { filter:none; }
+.v31d .w-no { font-family:var(--w-en); font-size:12px; letter-spacing:.2em; color:var(--w-sub); }
+.v31d .w-svc h3 { font-family:var(--w-mc); font-weight:600; font-size:22px; letter-spacing:.16em; margin:6px 0 16px; }
+.v31d .w-svc h3 .w-script { display:block; font-size:42px; color:var(--w-sub); letter-spacing:0; margin-bottom:-4px; }
+.v31d .w-svc p { font-family:var(--w-mc); font-size:13.5px; line-height:2.2; letter-spacing:.08em; }
+.v31d .w-arw { display:inline-block; margin-top:18px; font-family:var(--w-en); font-size:11px; letter-spacing:.16em; border-bottom:1px solid var(--w-ink); padding-bottom:4px; }
+.v31d .w-svcs .w-tab { margin-top:80px; }
+.v31d .w-mq { margin:130px 0 0; white-space:nowrap; overflow:hidden; font-family:var(--w-en); font-weight:300; font-size:clamp(60px,8vw,120px); line-height:1; color:#DEDBD4; }
+.v31d .w-mq span { display:inline-block; animation:wmq 50s linear infinite; }
+@keyframes wmq { to { transform:translateX(-100%); } }
+
+/* ---------- 強み：チャコールの表 ---------- */
+.v31d .w-dark { background:var(--w-dk); color:#fff;
+  background-image:radial-gradient(rgba(255,255,255,.18) 1.2px, transparent 1.6px); background-size:160px 160px; background-position:40px 40px; }
+.v31d .w-dark__grid { display:grid; grid-template-columns:1fr 1.25fr; gap:80px; }
+.v31d .w-big { margin:40px 0 24px; font-family:var(--w-mc); font-size:18px; letter-spacing:.14em; }
+.v31d .w-big b { display:block; font-family:var(--w-en); font-weight:200; font-size:110px; line-height:1; letter-spacing:-.02em; }
+.v31d .w-rows { border-top:1px solid rgba(255,255,255,.35); }
+.v31d .w-row { display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:baseline; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.35); }
+.v31d .w-row__k { font-family:var(--w-en); font-size:17px; font-weight:400; }
+.v31d .w-row__k small { font-family:var(--w-mc); font-size:11px; letter-spacing:.12em; color:rgba(255,255,255,.6); margin-left:10px; }
+.v31d .w-row__v { font-family:var(--w-mc); font-size:13.5px; line-height:2; letter-spacing:.06em; color:rgba(255,255,255,.85); text-align:right; }
+.v31d .w-row__v--num { font-family:var(--w-en); font-size:34px; font-weight:300; color:#fff; letter-spacing:0; }
+.v31d .w-dark__phs { max-width:1240px; margin:110px auto 0; padding:0 48px; display:grid; grid-template-columns:1fr 2.2fr 1fr; gap:22px; align-items:start; }
+.v31d .w-dark__phs img { width:100%; height:240px; object-fit:cover; filter:saturate(.75); }
+.v31d .w-dark__phs img:nth-child(2) { height:320px; } .v31d .w-dark__phs img:nth-child(3) { margin-top:60px; }
+
+/* ---------- 創業 ---------- */
+.v31d .w-fd__grid { display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:center; max-width:1340px; margin:0 auto; padding-right:48px; }
+.v31d .w-fd__ph { height:680px; overflow:hidden; clip-path:polygon(0 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%); }
+.v31d .w-fd__ph img { width:100%; height:100%; object-fit:cover; filter:saturate(.7); }
+.v31d .w-quote p { font-family:var(--w-mc); font-weight:500; font-size:clamp(20px,2vw,27px); line-height:2.2; letter-spacing:.16em; }
+.v31d .w-src { font-family:var(--w-mc); font-size:12.5px; color:var(--w-sub); margin:22px 0 30px; letter-spacing:.1em; }
+
+/* ---------- 社員：プロフィールのコラージュ ---------- */
+.v31d .w-iv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:48px; align-items:start; }
+.v31d .w-iv { display:block; color:var(--w-ink); }
+.v31d .w-iv--1 { margin-top:120px; } .v31d .w-iv--2 { margin-top:50px; }
+.v31d .w-iv__ph { height:420px; overflow:hidden; margin-bottom:22px; background:var(--w-tab); }
+.v31d .w-iv--1 .w-iv__ph { height:340px; }
+.v31d .w-iv__ph img { width:100%; height:100%; object-fit:cover; filter:saturate(.75); transition:transform .9s, filter .6s; }
+.v31d .w-iv:hover .w-iv__ph img { transform:scale(1.04); filter:none; }
+.v31d .w-iv__dept { font-family:var(--w-mc); font-size:12px; letter-spacing:.14em; color:var(--w-sub); }
+.v31d .w-iv h3 { font-family:var(--w-mc); font-weight:600; font-size:19px; letter-spacing:.1em; line-height:1.8; margin:8px 0; }
+.v31d .w-iv__m { font-family:var(--w-mc); font-size:12.5px; line-height:1.9; color:var(--w-sub); }
+.v31d .w-wait { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; color:#8A5A00; background:#FFF3C4; padding:1px 8px; font-family:"Noto Sans JP",sans-serif; }
+
+/* ---------- 採用：曲線の写真＋重なる番号の行 ---------- */
+.v31d .w-rec { padding-top:0; }
+.v31d .w-rec__ph { height:560px; overflow:hidden; clip-path:ellipse(120% 100% at 0% 0%); margin-bottom:110px; }
+.v31d .w-rec__ph img { width:100%; height:100%; object-fit:cover; filter:saturate(.75); }
+.v31d .w-rec__grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:60px; }
+.v31d .w-facts { list-style:none; display:flex; gap:0; margin:34px 0 50px; border-top:1px solid var(--w-line); border-bottom:1px solid var(--w-line); }
+.v31d .w-facts li { flex:1; padding:16px 0; text-align:center; font-family:var(--w-mc); font-size:12.5px; color:var(--w-sub); }
+.v31d .w-facts li + li { border-left:1px solid var(--w-line); }
+.v31d .w-facts b { display:block; font-size:19px; color:var(--w-ink); letter-spacing:.1em; }
+.v31d .w-accs { display:grid; }
+.v31d .w-acc { display:grid; grid-template-columns:200px 1fr auto; align-items:center; gap:20px; margin-left:calc(var(--i) * 18px); padding:16px 0 16px; border-top:1px solid var(--w-ink); color:var(--w-ink); transition:padding-left .4s, background .4s; }
+.v31d .w-acc span { font-family:var(--w-en); font-size:12px; letter-spacing:.08em; }
+.v31d .w-acc b { font-family:var(--w-mc); font-weight:600; font-size:19px; letter-spacing:.16em; }
+.v31d .w-acc i { font-style:normal; font-family:var(--w-en); }
+.v31d .w-acc:hover { padding-left:16px; background:#fff; }
+
+/* ---------- ニュース ---------- */
+.v31d .w-news__grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:60px; }
+.v31d .w-nlist { border-top:1px solid var(--w-ink); }
+.v31d .w-nrow { display:grid; grid-template-columns:110px 80px 1fr 24px; gap:20px; align-items:center; padding:20px 0; border-bottom:1px solid var(--w-line); color:var(--w-ink); font-family:var(--w-mc); font-size:14px; letter-spacing:.06em; transition:padding-left .3s; }
+.v31d .w-nrow:hover { padding-left:10px; }
+.v31d .w-nrow .d { font-family:var(--w-en); font-size:12.5px; color:var(--w-sub); }
+.v31d .w-nrow .c { font-size:11px; text-align:center; background:var(--w-tab); padding:3px 0; }
+.v31d .w-nrow i { font-style:normal; font-family:var(--w-en); }
+
+/* ---------- SP ---------- */
+@media (max-width:900px){
+  .v31d .w-sec { padding:100px 0; }
+  .v31d .w-wrap, .v31d .w-msg__grid { padding:0 20px; }
+  .v31d .w-hero-tabs { display:none; }
+  .v31d .w-msg__grid, .v31d .w-dark__grid, .v31d .w-fd__grid, .v31d .w-rec__grid, .v31d .w-news__grid { grid-template-columns:1fr; gap:40px; padding-right:0; }
+  .v31d .w-msg__body { padding:48px 26px; }
+  .v31d .w-script--lg { margin-left:40px; }
+  .v31d .w-curve { height:520px; } .v31d .w-curve__cap { left:20px; right:20px; bottom:30px; padding:26px; }
+  .v31d .w-svc-grid { grid-template-columns:1fr; row-gap:60px; }
+  .v31d .w-svc { grid-column:auto !important; grid-template-columns:1fr !important; }
+  .v31d .w-svc--1 .w-svc__ph { order:0; }
+  .v31d .w-svc__ph, .v31d .w-svc--1 .w-svc__ph, .v31d .w-svc--2 .w-svc__ph { height:280px; }
+  .v31d .w-row { grid-template-columns:1fr; gap:4px; } .v31d .w-row__v { text-align:left; }
+  .v31d .w-dark__phs { grid-template-columns:1fr 1fr; padding:0 20px; } .v31d .w-dark__phs img:nth-child(2) { grid-column:span 2; order:-1; }
+  .v31d .w-fd__ph { height:420px; }
+  .v31d .w-fd__tx { padding:0 20px; }
+  .v31d .w-iv-grid { grid-template-columns:1fr; } .v31d .w-iv--1, .v31d .w-iv--2 { margin-top:0; }
+  .v31d .w-rec__ph { height:320px; margin-bottom:60px; }
+  .v31d .w-acc { grid-template-columns:1fr auto; } .v31d .w-acc span { grid-column:1 / -1; }
+  .v31d .w-nrow { grid-template-columns:96px 1fr; } .v31d .w-nrow .c, .v31d .w-nrow i { display:none; }
+}
+
+/* CTA・フッターは固定の3D（FV）より手前に */
+.v31d .cta3, .v31d .site-footer, .v31d footer { position:relative; z-index:2; }

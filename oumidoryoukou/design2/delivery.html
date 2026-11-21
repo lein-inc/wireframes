@@ -1662,14 +1662,14 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
   <div class="phero__intro">
     <h2 class="phero__catch rv">全国の現場へ、<br>一品一様を届けてきた。</h2>
-    <p class="phero__lead rv rv-d1">農産物選果場・穀類の乾燥調整施設・工業ラインまで、全国そして海外の現場に「はかる」技術を届けてきました。</p>
+    <p class="phero__lead rv rv-d1">農産物選果場・穀類の乾燥調製施設・工業ラインまで、全国そして海外の現場に「はかる」技術を届けてきました。</p>
   </div>
 </section>
 
 <section class="section section--ink section--tight">
   <div class="container">
     <div class="stat-row rv" style="border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.2)">
-      <div class="stat"><div class="stat__val">2,000<small>+</small></div><div class="stat__label">乾燥調整施設 施設内設備の納入</div></div>
+      <div class="stat"><div class="stat__val">2,000<small>+</small></div><div class="stat__label">乾燥調製施設 施設内設備の納入</div></div>
       <div class="stat"><div class="stat__val">200<small>+</small></div><div class="stat__label">農産物選別プラント 選別機の納入</div></div>
       <div class="stat"><div class="stat__val">9<small>拠点</small></div><div class="stat__label">国内外サービス網（国内6＋海外3）</div></div>
       <div class="stat"><div class="stat__val">3<small>分野</small></div><div class="stat__label">農産物・穀類・工業</div></div>
@@ -2751,6 +2751,14 @@ body.menu-open .nav .nav__cta{background:var(--red);color:#fff;box-shadow:none;b
 
 <!-- ══ 左上ロゴ：TOPと同じ仕様（1列・座布団なし）。下層は最初から赤・スクロール追従 ══ -->
 <style id="page-logo">
+/* 2026-09-29 先方修正点：SPで左上の会社名が二重に重なる。
+   ヒーロー通過後は白枠のミニロゴ（.nav__mini）が出るのに、固定ロゴ（.site-logo）も残っていて二重になっていた。
+   ⚠️ミニロゴを消すと、固定ロゴが赤い面や見出しの上に下地なしで乗ってしまう → SPは固定ロゴの方を隠す。 */
+.site-logo{transition:opacity .18s ease,visibility 0s}
+@media(max-width:900px){
+  body:not(.menu-open):has(.nav.is-mini) .site-logo{opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .18s ease,visibility 0s .18s}
+}
 /* ⚠️下層は2段組み(flex-direction:column)＋900px以下で position:absolute になっていた。
    TOPに合わせて1列・追従（fixed）に統一する。色は白反転せず素の赤のまま。
    サイズはTOPと同じ刻み（社名:周年 = 1.5:1、幅なりに縮む）。 */
